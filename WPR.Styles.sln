@@ -6,6 +6,9 @@ MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WPR.Styles", "WPR.Styles\WPR.Styles.csproj", "{D2794CB2-6BBA-49B4-A64F-DB9089AFF008}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WPR.Demo", "WPR.Demo\WPR.Demo.csproj", "{3C9FE1EB-9DF3-491A-A2E5-2DC324E280BD}"
+	ProjectSection(ProjectDependencies) = postProject
+		{D2794CB2-6BBA-49B4-A64F-DB9089AFF008} = {D2794CB2-6BBA-49B4-A64F-DB9089AFF008}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

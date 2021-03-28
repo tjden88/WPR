@@ -4,6 +4,6 @@
              xmlns:local="clr-namespace:WPR.Demo"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-         
+        <ResourceDictionary Source = "pack://application:,,,/WPR.Styles;component/Styles.xaml" />
     </Application.Resources>
 </Application>

@@ -1,5 +1,6 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:converters="clr-namespace:WPR.Styles.Converters">
     <!--Кисти и цвета-->
     <SolidColorBrush x:Key="PrimaryColorBrush" Color="#3F51B5"/>
     <SolidColorBrush x:Key="DarkPrimaryColorBrush" Color="#FF212E80"/>
@@ -32,13 +33,11 @@
     <ElasticEase EasingMode="EaseInOut" x:Key="ElasticEaseInOut" Oscillations="1"/>
 
     <!--Конвертеры-->
-    <converters:BoolToVisibilityConverter x:Key="bool2VisibilityConverter"/>
+    <converters:BoolToVisibilityConverter x:Key="Bool2VisibilityConverter"/>
     <converters:TextIsNotNullConverter x:Key="TextIsNotNullConverter"/>
     <converters:BoolNotConverter x:Key="BoolNotConverter"/>
     <converters:BrushLightOrDarkConverter x:Key="BrushLightOrDarkConverter"/>
-    <converters:SignPlusMinusConverter x:Key="SignPlusMinusConverter"/>
-    <converters:DoubleConverter x:Key="ToDoubleConverter"/>
-    <converters:Int32Converter x:Key="ToInt32Converter"/>
+
 
     <!--Стиль для элемента в фокусе-->
     <Style x:Key="BaseFocusVisualStyle" TargetType="{x:Type Control}">
@@ -58,7 +57,7 @@
     <!--Базовый стиль для всех контролов-->
     <Style x:Key="BaseControl" TargetType="{x:Type Control}">
         <Setter Property="Foreground" Value="{DynamicResource PrimaryTextColorBrush}"/>
-        <Setter Property="Background" Value="Transparent" />
+        <!--<Setter Property="Background" Value="Transparent" />-->
         <Setter Property="FontSize" Value="14"/>
         <Setter Property="FocusVisualStyle" Value="{StaticResource BaseFocusVisualStyle}"/>
     </Style>
