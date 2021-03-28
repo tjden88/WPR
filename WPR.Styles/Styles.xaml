@@ -3,6 +3,7 @@
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="Themes.xaml"/>
         <ResourceDictionary Source="Styles\ChromeWindow.xaml"/>
+        <ResourceDictionary Source="Styles\ToolTips.xaml"/>
     </ResourceDictionary.MergedDictionaries>
 
     <!--Стили по умолчанию-->
@@ -26,11 +27,6 @@
     <Style TargetType="MenuItem" BasedOn="{StaticResource PRMenuItem}"/>
     <Style TargetType="Slider" BasedOn="{StaticResource PRSlider}"/>
     <Style TargetType="Expander" BasedOn="{StaticResource PRExpander}"/>
+    <Style TargetType="ToolTip" BasedOn="{StaticResource WPRToolTip}"/>
 
-
-    <!--ToolTip-->
-    <Style TargetType="{x:Type ToolTip}">
-        <Setter Property="Background" Value="{DynamicResource SecondaryTextColorBrush}"/>
-        <Setter Property="Foreground" Value="{DynamicResource TextColorBrush}"/>
-    </Style>
 </ResourceDictionary>
