@@ -35,5 +35,23 @@ namespace WPR.Styles.Helpers
         public static readonly DependencyProperty BorderClipContentProperty =
             DependencyProperty.RegisterAttached("BorderClipContent", typeof(bool), typeof(ButtonHelper), new PropertyMetadata(true));
         #endregion
+
+        #region Attached property MouseAnimationVisibility : Visibility - Выключает анимацию при MouseOver
+
+        /// <summary>Выключает анимацию при MouseOver</summary>
+        public static readonly DependencyProperty MouseAnimationVisibilityProperty =
+            DependencyProperty.RegisterAttached(
+                "MouseAnimationVisibility",
+                typeof(Visibility),
+                typeof(ButtonHelper),
+                new PropertyMetadata(Visibility.Visible));
+
+        /// <summary>Выключает анимацию при MouseOver</summary>
+        public static void SetMouseAnimationVisibility(DependencyObject d, Visibility value) => d.SetValue(MouseAnimationVisibilityProperty, value);
+
+        /// <summary>Выключает анимацию при MouseOver</summary>
+        public static Visibility GetMouseAnimationVisibility(DependencyObject d) => (Visibility) d.GetValue(MouseAnimationVisibilityProperty);
+
+        #endregion  
     }
 }

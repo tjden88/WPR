@@ -4,11 +4,17 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:l="clr-namespace:WPR.Demo"
+        xmlns:helpers="clr-namespace:WPR.Styles.Helpers;assembly=WPR.Styles"
         Style="{StaticResource ChromeWindow}"
        
         Title="WPR.Styles.Demo" Height="450" Width="800">
-    <Grid Margin="35">
-        <Button Content="Buttonfxfgdfgbcxvb" HorizontalAlignment="Left" />
-
-    </Grid>
+    <StackPanel Width="150" Margin="35" >
+        <Button Content="Flat Button" Margin="10"/>
+        <Button Content="PRIMARY Button" Style="{StaticResource PrimaryWPRButton}"  Margin="10"/>
+        <Button Content="ACCENT Button" Style="{StaticResource AccentWPRButton}"  Margin="10"/>
+        <Button Content="Tool" Style="{StaticResource WPRToolButton}"  Margin="10"/>
+        <Button Content="ToolNoRip" Style="{StaticResource WPRToolButtonNoRipple}"  Margin="10"/>
+        <Button Content="Menu Button" Style="{StaticResource MenuButton}"  Margin="10"/>
+        <Button Content="A" Style="{StaticResource RoundedButtonWithFloatingHintPrimary}" helpers:TextHelper.Hint="Hint!" Margin="10"/>
+    </StackPanel>
 </Window>
