@@ -8,6 +8,7 @@
        
         Title="WPR.Styles.Demo" Height="450" Width="800">
     <Grid Margin="35">
+        <Button Content="Buttonfxfgdfgbcxvb" HorizontalAlignment="Left" />
 
     </Grid>
 </Window>

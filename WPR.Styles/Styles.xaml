@@ -2,14 +2,17 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="Themes.xaml"/>
+        <ResourceDictionary Source="Controls\Controls.xaml"/>
         <ResourceDictionary Source="Styles\ChromeWindow.xaml"/>
         <ResourceDictionary Source="Styles\ToolTips.xaml"/>
+        <ResourceDictionary Source="Styles\Buttons.xaml"/>
+        <ResourceDictionary Source="Styles\Buttons.xaml"/>
     </ResourceDictionary.MergedDictionaries>
 
     <!--Стили по умолчанию-->
     <Style TargetType="{x:Type Control}" BasedOn="{StaticResource BaseControl}"/>
 
-    <Style TargetType="Button" BasedOn="{StaticResource PRButton}"/>
+    <Style TargetType="Button" BasedOn="{StaticResource WPRFlatButton}"/>
     <Style TargetType="CheckBox" BasedOn="{StaticResource PRCheckBox}"/>
     <Style TargetType="RadioButton" BasedOn="{StaticResource PRRadioButton}"/>
     <Style TargetType="TextBox" BasedOn="{StaticResource PRSimpleTextBox}"/>
