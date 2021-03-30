@@ -5,6 +5,94 @@
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="..\Themes.xaml"/>
     </ResourceDictionary.MergedDictionaries>
+
+
+<ControlTemplate TargetType="{x:Type Button}" x:Key="WPRButtonTemplate">
+    <controls:ClippingBorder CornerRadius="{Binding Path=(helpers:ButtonHelper.BorderRadius), RelativeSource={RelativeSource TemplatedParent}}"
+                             BorderThickness="{TemplateBinding BorderThickness }" 
+                             ClipToBounds="{Binding Path=(helpers:ButtonHelper.BorderClipContent), RelativeSource={RelativeSource TemplatedParent}}"
+                             Background="{TemplateBinding Background}"
+                             BorderBrush="{TemplateBinding BorderBrush}" 
+                             SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
+                    <Grid>
+                        <Border x:Name="BackGrid"
+                                                    Background="{DynamicResource AnimationEnterColorBrush}" 
+                                                    CornerRadius="{Binding Path=(helpers:ButtonHelper.BorderRadius), RelativeSource={RelativeSource TemplatedParent}}"
+                                                    BorderThickness="0"
+                                                    SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                                                    Opacity="0.4"
+                                                    Visibility="{Binding Path=(helpers:ButtonHelper.MouseAnimationVisibility), RelativeSource={RelativeSource TemplatedParent}}">
+                        </Border>
+                        <controls:Ripple x:Name="Ripple" 
+                                                SnapsToDevicePixels="False"
+                                                RippleSpeed="0.7"
+                                                RippleMouseDownSpeed="0.7"
+                                                HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                                VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+                                                Background="{Binding Path=(helpers:RippleHelper.FeedbackBrush), RelativeSource={RelativeSource TemplatedParent}}"
+                                                RippleInCenter="{Binding Path=(helpers:RippleHelper.IsCentered), RelativeSource={RelativeSource TemplatedParent}}"
+                                                IsEnabled="{Binding Path=(helpers:RippleHelper.IsRippleEnabled), RelativeSource={RelativeSource TemplatedParent}}">
+                            <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                                  VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                                  Margin="{TemplateBinding Padding}"/>
+                        </controls:Ripple>
+                    </Grid>
+                </controls:ClippingBorder>
+                <ControlTemplate.Triggers>
+                    <EventTrigger RoutedEvent="Loaded">
+                        <EventTrigger.Actions>
+                            <BeginStoryboard>
+                                <Storyboard>
+                                    <DoubleAnimation Storyboard.TargetProperty="Opacity"
+                                                         Duration="0:0:0.25"
+                                                         From="0"
+                                                         AccelerationRatio="0.5"/>
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger.Actions>
+                    </EventTrigger>
+                    <Trigger Property="IsMouseOver" Value="False">
+                        <Trigger.EnterActions>
+                            <BeginStoryboard>
+                                <Storyboard>
+                                    <DoubleAnimation Duration="0:0:0.2"
+                                                         Storyboard.TargetName="BackGrid"  
+                                                         Storyboard.TargetProperty="Opacity"
+                                                         To="0"/>
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </Trigger.EnterActions>
+                        <Trigger.ExitActions>
+                            <BeginStoryboard>
+                                <Storyboard>
+                                    <DoubleAnimation Duration="0:0:0.2"
+                                                         Storyboard.TargetName="BackGrid"  
+                                                         Storyboard.TargetProperty="Opacity"/>
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </Trigger.ExitActions>
+                    </Trigger>
+                    <Trigger Property="IsPressed" Value="True">
+                        <Setter Property="Opacity" TargetName="BackGrid" Value="0"/>
+                        <Setter TargetName="Ripple" Property="RippleSpeed" Value="0.1"/>
+                        <Trigger.ExitActions>
+                            <BeginStoryboard>
+                                <Storyboard>
+                                    <DoubleAnimation Duration="0:0:0.3"
+                                                         Storyboard.TargetName="BackGrid"  
+                                                         Storyboard.TargetProperty="Opacity"
+                                                         From="0"/>
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </Trigger.ExitActions>
+                    </Trigger>
+
+                    <Trigger Property="IsEnabled" Value="False" >
+                        <Setter Property="Opacity" Value="0.5"/>
+                    </Trigger>
+                </ControlTemplate.Triggers>
+            </ControlTemplate>
+
     <!--Кнопки-->
     <Style x:Key="WPRFlatButton" TargetType="{x:Type Button}" BasedOn="{StaticResource BaseControl}">
         <Setter Property="Foreground" Value="{DynamicResource PrimaryColorBrush }"/>
@@ -15,96 +103,7 @@
         <Setter Property="helpers:ButtonHelper.BorderRadius" Value="3"/>
         <Setter Property="helpers:RippleHelper.FeedbackBrush" Value="{DynamicResource LightPrimaryColorBrush}"/>
         <!--<Setter Property="helpers:ButtonHelper.AnimationColor" Value="{StaticResource AnimationEnterColorBrush}"/>-->
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate TargetType="{x:Type Button}">
-
-                    <controls:ClippingBorder CornerRadius="{Binding Path=(helpers:ButtonHelper.BorderRadius), RelativeSource={RelativeSource TemplatedParent}}"
-                                                    BorderThickness="{TemplateBinding BorderThickness }" 
-                                                    ClipToBounds="{Binding Path=(helpers:ButtonHelper.BorderClipContent), RelativeSource={RelativeSource TemplatedParent}}"
-                                                    Background="{TemplateBinding Background}"
-                                                    BorderBrush="{TemplateBinding BorderBrush}" 
-                                                    SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
-                        <Grid>
-                            <Border x:Name="BackGrid"
-                                                    Background="{DynamicResource AnimationEnterColorBrush}" 
-                                                    CornerRadius="{Binding Path=(helpers:ButtonHelper.BorderRadius), RelativeSource={RelativeSource TemplatedParent}}"
-                                                    BorderThickness="0"
-                                                    SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
-                                                    Opacity="0.4"
-                                                    Visibility="{Binding Path=(helpers:ButtonHelper.MouseAnimationVisibility), RelativeSource={RelativeSource TemplatedParent}}">
-                            </Border>
-                            <controls:Ripple x:Name="Ripple" 
-                                                SnapsToDevicePixels="False"
-                                                RippleSpeed="0.7"
-                                                RippleMouseDownSpeed="0.7"
-                                                HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                                VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
-                                                Background="{Binding Path=(helpers:RippleHelper.FeedbackBrush), RelativeSource={RelativeSource TemplatedParent}}"
-                                                RippleInCenter="{Binding Path=(helpers:RippleHelper.IsCentered), RelativeSource={RelativeSource TemplatedParent}}"
-                                                IsEnabled="{Binding Path=(helpers:RippleHelper.IsRippleEnabled), RelativeSource={RelativeSource TemplatedParent}}">
-                                <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                                  VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-                                                  Margin="{TemplateBinding Padding}"/>
-                            </controls:Ripple>
-                        </Grid>
-                    </controls:ClippingBorder>
-                    <ControlTemplate.Triggers>
-                        <EventTrigger RoutedEvent="Loaded">
-                            <EventTrigger.Actions>
-                                <BeginStoryboard>
-                                    <Storyboard>
-                                        <DoubleAnimation Storyboard.TargetProperty="Opacity"
-                                                         Duration="0:0:0.25"
-                                                         From="0"
-                                                         AccelerationRatio="0.5"/>
-                                    </Storyboard>
-                                </BeginStoryboard>
-                            </EventTrigger.Actions>
-                        </EventTrigger>
-                        <Trigger Property="IsMouseOver" Value="False">
-                            <Trigger.EnterActions>
-                                <BeginStoryboard>
-                                    <Storyboard>
-                                        <DoubleAnimation Duration="0:0:0.2"
-                                                         Storyboard.TargetName="BackGrid"  
-                                                         Storyboard.TargetProperty="Opacity"
-                                                         To="0"/>
-                                    </Storyboard>
-                                </BeginStoryboard>
-                            </Trigger.EnterActions>
-                            <Trigger.ExitActions>
-                                <BeginStoryboard>
-                                    <Storyboard>
-                                        <DoubleAnimation Duration="0:0:0.2"
-                                                         Storyboard.TargetName="BackGrid"  
-                                                         Storyboard.TargetProperty="Opacity"/>
-                                    </Storyboard>
-                                </BeginStoryboard>
-                            </Trigger.ExitActions>
-                        </Trigger>
-                        <Trigger Property="IsPressed" Value="True">
-                            <Setter Property="Opacity" TargetName="BackGrid" Value="0"/>
-                            <Setter TargetName="Ripple" Property="RippleSpeed" Value="0.1"/>
-                            <Trigger.ExitActions>
-                                <BeginStoryboard>
-                                    <Storyboard>
-                                        <DoubleAnimation Duration="0:0:0.3"
-                                                         Storyboard.TargetName="BackGrid"  
-                                                         Storyboard.TargetProperty="Opacity"
-                                                         From="0"/>
-                                    </Storyboard>
-                                </BeginStoryboard>
-                            </Trigger.ExitActions>
-                        </Trigger>
-
-                        <Trigger Property="IsEnabled" Value="False" >
-                            <Setter Property="Opacity" Value="0.5"/>
-                        </Trigger>
-                    </ControlTemplate.Triggers>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
+        <Setter Property="Template" Value="{StaticResource WPRButtonTemplate}"/>
     </Style>
 
     <Style x:Key="PrimaryWPRButton" TargetType="{x:Type Button}" BasedOn="{StaticResource WPRFlatButton}">

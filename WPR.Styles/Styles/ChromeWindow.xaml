@@ -2,17 +2,24 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:wh="clr-namespace:WPR.Styles.Helpers"
                     x:Class="WPR.Styles.Styles.ChromeWindow">
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="Buttons.xaml"/>
+    </ResourceDictionary.MergedDictionaries>
 
-    <Style x:Key="WindowTitleButton" TargetType="{x:Type Button}">
+    <Style x:Key="WindowTitleButton" TargetType="{x:Type Button}" BasedOn="{StaticResource WPRFlatButton}">
+        <Setter Property="FontSize" Value="10"/>
+        <Setter Property="WindowChrome.IsHitTestVisibleInChrome" Value="True" />
+        <Setter Property="Foreground" Value="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=(wh:WindowHelper.WindowHeaderForeground)}" />
+        <Setter Property="Focusable" Value="False"/>
+        <Setter Property="wh:ButtonHelper.BorderRadius" Value="0"/>
+    </Style>
+
+<Style x:Key="WindowHeaderMaxNormButton" TargetType="{x:Type Button}" BasedOn="{StaticResource WindowTitleButton}">
         <Setter Property="Background" Value="#00CBCACA"/>
         <Setter Property="BorderThickness" Value="0"/>
         <Setter Property="Width" Value="46"/>
         <Setter Property="Margin" Value="0,0,0,3"/>
-        <Setter Property="WindowChrome.IsHitTestVisibleInChrome" Value="True" />
-        <Setter Property="FontSize" Value="10"/>
         <Setter Property="FontFamily" Value="Segoe MDL2 Assets"/>
-        <Setter Property="Foreground" Value="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=(wh:WindowHelper.WindowHeaderForeground)}" />
-        <Setter Property="Focusable" Value="False"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Button}">
@@ -42,7 +49,7 @@
         </Setter>
     </Style>
 
-    <Style x:Key="WindowCloseButton" TargetType="{x:Type Button}" BasedOn="{ StaticResource WindowTitleButton }" >
+    <Style x:Key="WindowHeaderCloseButton" TargetType="{x:Type Button}" BasedOn="{ StaticResource WindowHeaderMaxNormButton }" >
         <Setter Property="Background" Value="#00FF0000"/>
         <Setter Property="Template">
             <Setter.Value>
@@ -99,11 +106,11 @@
                         <FrameworkElement DockPanel.Dock="Left"
                                       Width="{Binding Path=(wh:WindowHelper.TitleLeftMargin) , RelativeSource={RelativeSource TemplatedParent}}" />
                         <TextBlock  DockPanel.Dock="Left"
-                                Margin="3,0,0,0" VerticalAlignment="Center"
+                                Margin="5,0,0,0" VerticalAlignment="Center"
                                 Foreground="{Binding Path=(wh:WindowHelper.WindowHeaderForeground) , RelativeSource={RelativeSource TemplatedParent}}"
                                 FontSize="14"
                                 Text="{TemplateBinding Title}"/>
-                        <Button x:Name="btnClose" Style="{StaticResource WindowCloseButton}"
+                        <Button x:Name="btnClose" Style="{StaticResource  WindowHeaderCloseButton}"
                             DockPanel.Dock="Right"
                             Click="Close_Click"
                             Content="&#xe106;" 
@@ -112,7 +119,7 @@
                             Click="MaximizeRestoreClick"
                             DockPanel.Dock="Right">
                             <Button.Style>
-                                <Style TargetType="{x:Type Button }" BasedOn="{StaticResource WindowTitleButton}">
+                                <Style TargetType="{x:Type Button }" BasedOn="{StaticResource WindowHeaderMaxNormButton}">
                                     <Setter Property="Content" Value="&#xe739;"/>
                                     <Style.Triggers>
                                         <DataTrigger Binding="{Binding WindowState, RelativeSource={RelativeSource AncestorType=Window}}" 
@@ -129,7 +136,7 @@
                                 </Style>
                             </Button.Style>
                         </Button>
-                        <Button x:Name="btnMinimize" Style="{StaticResource WindowTitleButton}"
+                        <Button x:Name="btnMinimize" Style="{StaticResource  WindowHeaderMaxNormButton}"
                             DockPanel.Dock="Right"
                             Click="MinimizeClick"
                             Content="&#xe949;" ToolTip="Свернуть"/>
