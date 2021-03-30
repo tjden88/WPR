@@ -42,8 +42,9 @@
                         </ToggleButton>
                     </StackPanel>
                 </controls:ClippingBorder>
-
-            </StackPanel>
+                <ToggleButton Style="{StaticResource WPRSwitchToggleButton}" Content="Switcher" Margin="5"/>
+                <ToggleButton Style="{StaticResource WPRSwitchToggleButton}" IsChecked="True" Content="SwitcherChecked" Margin="5"/>
+                </StackPanel>
             <StackPanel Width="200">
                 <TextBlock Text="Радио баттоны" Margin="5"/>
                 <RadioButton Content="Selected" Margin="5" IsChecked="True"/>

@@ -21,6 +21,13 @@ namespace WPR.Styles.Styles
             Canvas.SetLeft(ellipse, e.GetPosition(toggleButton).X - maxWidth / 2);
             Canvas.SetTop(ellipse, e.GetPosition(toggleButton).Y - maxWidth / 2);
         }
+        void WPRSwither_MouseUp(object sender, MouseButtonEventArgs e)
+        {
+            if (sender is not ToggleButton toggleButton) return;
+            if (toggleButton.Template.FindName("Ripple", toggleButton) is not Ripple ripple) return;
+            ripple.StartRipple();
+
+        }
 
     }
 }
