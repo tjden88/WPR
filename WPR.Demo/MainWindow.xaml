@@ -24,7 +24,8 @@
             </Button>-->
         </StackPanel>
         <!--Основной контент в 1 строке грида-->
-        <Grid Grid.Row="1">
+        <Grid Grid.Row="1" Background="{DynamicResource BackgroundColorBrush}">
+            <TextBlock Text="fgddgssdsdf" Style="{StaticResource WPRText}"></TextBlock>
         </Grid>
     </Grid>
 </Window>

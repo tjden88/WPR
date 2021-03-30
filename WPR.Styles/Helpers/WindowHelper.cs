@@ -27,31 +27,12 @@ namespace WPR.Styles.Helpers
         }
 
 
-
-        public static Brush GetWindowHeaderBackGround(DependencyObject obj)
+        public static SolidColorBrush GetWindowHeaderForeground(DependencyObject obj)
         {
-            return (Brush)obj.GetValue(WindowHeaderBackGroundProperty);
+            return (SolidColorBrush)obj.GetValue(WindowHeaderForegroundProperty);
         }
 
-        public static void SetWindowHeaderBackGround(DependencyObject obj, Brush value)
-        {
-            obj.SetValue(WindowHeaderBackGroundProperty, value);
-        }
-
-        /// <summary>
-        /// Фон строки заголовка окна
-        /// </summary>
-        public static readonly DependencyProperty WindowHeaderBackGroundProperty =
-            DependencyProperty.RegisterAttached("WindowHeaderBackGround", typeof(Brush), typeof(WindowHelper), new PropertyMetadata(null));
-
-
-
-        public static Brush GetWindowHeaderForeground(DependencyObject obj)
-        {
-            return (Brush)obj.GetValue(WindowHeaderForegroundProperty);
-        }
-
-        public static void SetWindowHeaderForeground(DependencyObject obj, Brush value)
+        public static void SetWindowHeaderForeground(DependencyObject obj, SolidColorBrush value)
         {
             obj.SetValue(WindowHeaderForegroundProperty, value);
         }
@@ -60,6 +41,6 @@ namespace WPR.Styles.Helpers
         /// Цвет текста строки заголовка окна
         /// </summary>
         public static readonly DependencyProperty WindowHeaderForegroundProperty =
-            DependencyProperty.RegisterAttached("WindowHeaderForeground", typeof(Brush), typeof(WindowHelper), new PropertyMetadata(null));
+            DependencyProperty.RegisterAttached("WindowHeaderForeground", typeof(SolidColorBrush), typeof(WindowHelper), new PropertyMetadata(null));
     }
 }

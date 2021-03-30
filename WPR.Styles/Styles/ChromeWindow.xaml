@@ -55,7 +55,7 @@
                             <Trigger.EnterActions>
                                 <BeginStoryboard>
                                     <Storyboard>
-                                        <ColorAnimation To="#8EFF0000" Duration="0:0:0.25" Storyboard.TargetProperty="Background.Color"/>
+                                        <ColorAnimation To="#CDFF0000" Duration="0:0:0.25" Storyboard.TargetProperty="Background.Color"/>
                                     </Storyboard>
                                 </BeginStoryboard>
                             </Trigger.EnterActions>
@@ -75,9 +75,9 @@
 
     <ControlTemplate TargetType="{x:Type Window}" x:Key="ChromeWindowTemplate">
         <AdornerDecorator>
-            <Border Background="{TemplateBinding Background }"  
-                BorderThickness="1"
-                BorderBrush="{Binding Path=(wh:WindowHelper.WindowHeaderBackGround) , RelativeSource={RelativeSource TemplatedParent}}">
+            <Border Background="{TemplateBinding Background }"
+                    BorderThickness="1"
+                BorderBrush="{TemplateBinding Background }">
                 <Border.Style>
                     <Style TargetType="{x:Type Border}">
                         <Style.Triggers>
@@ -88,16 +88,13 @@
                     </Style>
                 </Border.Style>
                 <Grid>
-                    <Border Height="35"
-                        VerticalAlignment="Top"
-                        Background="{Binding Path=(wh:WindowHelper.WindowHeaderBackGround) , RelativeSource={RelativeSource TemplatedParent}}"/>
 
                     <ContentPresenter/>
 
-                    <DockPanel Height="35" 
-                           VerticalAlignment="Top"
-                           HorizontalAlignment="Stretch"
-                           LastChildFill="False">
+                        <DockPanel Height="35" 
+                                   VerticalAlignment="Top"
+                                   HorizontalAlignment="Stretch"
+                                   LastChildFill="False">
 
                         <FrameworkElement DockPanel.Dock="Left"
                                       Width="{Binding Path=(wh:WindowHelper.TitleLeftMargin) , RelativeSource={RelativeSource TemplatedParent}}" />
@@ -154,9 +151,8 @@
                               UseAeroCaptionButtons="False" />
             </Setter.Value>
         </Setter>
-        <Setter Property="wh:WindowHelper.WindowHeaderBackGround" Value="{DynamicResource PrimaryColorBrush}"/>
-        <Setter Property="wh:WindowHelper.WindowHeaderForeground" Value="{DynamicResource TextColorBrush}"/>
-        <Setter Property="Background" Value="{DynamicResource BackgroundColorBrush}" />
+        <Setter Property="Background" Value="{DynamicResource PrimaryColorBrush}" />
+        <Setter Property="wh:WindowHelper.WindowHeaderForeground" Value="{DynamicResource TextColorBrush}" />
         <Setter Property="UseLayoutRounding" Value="True"/>
         <Setter Property="Template" Value="{StaticResource ChromeWindowTemplate}"/>
     </Style>
