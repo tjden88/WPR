@@ -1,9 +1,51 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net5.0-windows</TargetFramework>
     <UseWPF>true</UseWPF>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Resources\Roboto\Roboto-Black.ttf" />
+    <None Remove="Resources\Roboto\Roboto-BlackItalic.ttf" />
+    <None Remove="Resources\Roboto\Roboto-Bold.ttf" />
+    <None Remove="Resources\Roboto\Roboto-BoldItalic.ttf" />
+    <None Remove="Resources\Roboto\Roboto-Italic.ttf" />
+    <None Remove="Resources\Roboto\Roboto-Light.ttf" />
+    <None Remove="Resources\Roboto\Roboto-LightItalic.ttf" />
+    <None Remove="Resources\Roboto\Roboto-Medium.ttf" />
+    <None Remove="Resources\Roboto\Roboto-MediumItalic.ttf" />
+    <None Remove="Resources\Roboto\Roboto-Regular.ttf" />
+    <None Remove="Resources\Roboto\Roboto-Thin.ttf" />
+    <None Remove="Resources\Roboto\Roboto-ThinItalic.ttf" />
+    <None Remove="Resources\Roboto\RobotoCondensed-Bold.ttf" />
+    <None Remove="Resources\Roboto\RobotoCondensed-BoldItalic.ttf" />
+    <None Remove="Resources\Roboto\RobotoCondensed-Italic.ttf" />
+    <None Remove="Resources\Roboto\RobotoCondensed-Light.ttf" />
+    <None Remove="Resources\Roboto\RobotoCondensed-LightItalic.ttf" />
+    <None Remove="Resources\Roboto\RobotoCondensed-Regular.ttf" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Resources\Roboto\Roboto-Black.ttf" />
+    <Content Include="Resources\Roboto\Roboto-BlackItalic.ttf" />
+    <Content Include="Resources\Roboto\Roboto-Bold.ttf" />
+    <Content Include="Resources\Roboto\Roboto-BoldItalic.ttf" />
+    <Content Include="Resources\Roboto\Roboto-Italic.ttf" />
+    <Content Include="Resources\Roboto\Roboto-Light.ttf" />
+    <Content Include="Resources\Roboto\Roboto-LightItalic.ttf" />
+    <Content Include="Resources\Roboto\Roboto-Medium.ttf" />
+    <Content Include="Resources\Roboto\Roboto-MediumItalic.ttf" />
+    <Content Include="Resources\Roboto\Roboto-Regular.ttf" />
+    <Content Include="Resources\Roboto\Roboto-Thin.ttf" />
+    <Content Include="Resources\Roboto\Roboto-ThinItalic.ttf" />
+    <Content Include="Resources\Roboto\RobotoCondensed-Bold.ttf" />
+    <Content Include="Resources\Roboto\RobotoCondensed-BoldItalic.ttf" />
+    <Content Include="Resources\Roboto\RobotoCondensed-Italic.ttf" />
+    <Content Include="Resources\Roboto\RobotoCondensed-Light.ttf" />
+    <Content Include="Resources\Roboto\RobotoCondensed-LightItalic.ttf" />
+    <Content Include="Resources\Roboto\RobotoCondensed-Regular.ttf" />
+  </ItemGroup>
 
   <ItemGroup>
     <Folder Include="Extensions\" />

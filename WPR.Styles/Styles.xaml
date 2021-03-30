@@ -13,6 +13,7 @@
     <Style TargetType="{x:Type Control}" BasedOn="{StaticResource BaseControl}"/>
     <Style TargetType="ToolTip" BasedOn="{StaticResource WPRToolTip}"/>
     <Style TargetType="Button" BasedOn="{StaticResource WPRFlatButton}"/>
+    <Style TargetType="TextBlock" BasedOn="{StaticResource WPRText}"/>
 
     <!--
     <Style TargetType="CheckBox" BasedOn="{StaticResource PRCheckBox}"/>

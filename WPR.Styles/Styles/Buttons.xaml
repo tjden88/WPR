@@ -96,7 +96,7 @@
     <!--Кнопки-->
     <Style x:Key="WPRFlatButton" TargetType="{x:Type Button}" BasedOn="{StaticResource BaseControl}">
         <Setter Property="Foreground" Value="{DynamicResource PrimaryColorBrush }"/>
-        <Setter Property="Padding" Value="5"/>
+        <Setter Property="Padding" Value="12,6"/>
         <Setter Property="FontWeight" Value="Medium"/>
         <Setter Property="VerticalContentAlignment" Value="Center"/>
         <Setter Property="HorizontalContentAlignment" Value="Center"/>
@@ -145,7 +145,7 @@
         <Setter Property="Height" Value="28"/>
         <Setter Property="Margin" Value="1,0,1,0"/>
         <Setter Property="helpers:ButtonHelper.BorderRadius" Value="14"/>
-        <Setter Property="Foreground" Value="{DynamicResource SecondaryTextColorBrush}"/>
+        <Setter Property="Foreground" Value="{DynamicResource PrimaryTextColorBrush}"/>
         <!--<Setter Property="FontSize" Value="13"/>-->
         <!--<Setter Property="HorizontalAlignment" Value="Left"/>-->
         <Setter Property="Padding" Value="50,0,15,0"/>

@@ -12,8 +12,8 @@ namespace WPR.Styles.Controls
     /// </summary>
     public class Ripple : ContentControl
     {
-        private readonly Storyboard _rippleAnimation = new() { DecelerationRatio = 0.5 };
-        private Ellipse _ellipse;
+        private readonly Storyboard _RippleAnimation = new() { DecelerationRatio = 0.5 };
+        private Ellipse _Ellipse;
 
         private const double OverSize = 2.0;
         static Ripple()
@@ -23,20 +23,20 @@ namespace WPR.Styles.Controls
         public Ripple()
         {
             // Подготовка анимации
-            _rippleAnimation.Children.Add(new DoubleAnimation(0, 0, TimeSpan.FromSeconds(0.3)));
-            _rippleAnimation.Children.Add(new ThicknessAnimation() { Duration = TimeSpan.FromSeconds(0.3) });
-            _rippleAnimation.Children.Add(new DoubleAnimation(1, 0.0, TimeSpan.FromSeconds(0.3)));
-            _rippleAnimation.Children.Add(new DoubleAnimation(0, TimeSpan.Zero) { BeginTime = TimeSpan.FromSeconds(0.3) });
+            _RippleAnimation.Children.Add(new DoubleAnimation(0, 0, TimeSpan.FromSeconds(0.3)));
+            _RippleAnimation.Children.Add(new ThicknessAnimation() { Duration = TimeSpan.FromSeconds(0.3) });
+            _RippleAnimation.Children.Add(new DoubleAnimation(1, 0.0, TimeSpan.FromSeconds(0.3)));
+            _RippleAnimation.Children.Add(new DoubleAnimation(0, TimeSpan.Zero) { BeginTime = TimeSpan.FromSeconds(0.3) });
 
-            Storyboard.SetTargetProperty(_rippleAnimation.Children[0], new PropertyPath(WidthProperty));
-            Storyboard.SetTargetProperty(_rippleAnimation.Children[1], new PropertyPath(MarginProperty));
-            Storyboard.SetTargetProperty(_rippleAnimation.Children[2], new PropertyPath(OpacityProperty));
-            Storyboard.SetTargetProperty(_rippleAnimation.Children[3], new PropertyPath(WidthProperty));
+            Storyboard.SetTargetProperty(_RippleAnimation.Children[0], new PropertyPath(WidthProperty));
+            Storyboard.SetTargetProperty(_RippleAnimation.Children[1], new PropertyPath(MarginProperty));
+            Storyboard.SetTargetProperty(_RippleAnimation.Children[2], new PropertyPath(OpacityProperty));
+            Storyboard.SetTargetProperty(_RippleAnimation.Children[3], new PropertyPath(WidthProperty));
 
-            _rippleAnimation.Completed += (o,e) => IsAnimationActive = false;
-            MouseDown += (o, e) => _rippleAnimation.SetSpeedRatio(_ellipse, RippleMouseDownSpeed);
-            MouseUp += (o, e) => _rippleAnimation.SetSpeedRatio(_ellipse, RippleSpeed);
-            MouseLeave += (o, e) => _rippleAnimation.SetSpeedRatio(_ellipse, RippleSpeed);
+            _RippleAnimation.Completed += (o,e) => IsAnimationActive = false;
+            MouseDown += (o, e) => _RippleAnimation.SetSpeedRatio(_Ellipse, RippleMouseDownSpeed);
+            MouseUp += (o, e) => _RippleAnimation.SetSpeedRatio(_Ellipse, RippleSpeed);
+            MouseLeave += (o, e) => _RippleAnimation.SetSpeedRatio(_Ellipse, RippleSpeed);
         }
         
 
@@ -93,7 +93,7 @@ namespace WPR.Styles.Controls
 
         private static void OnRippleSpeedPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            if (d is Ripple ripple && ripple._ellipse != null) ripple._rippleAnimation.SetSpeedRatio(ripple._ellipse, (double)e.NewValue);
+            if (d is Ripple ripple && ripple._Ellipse != null) ripple._RippleAnimation.SetSpeedRatio(ripple._Ellipse, (double)e.NewValue);
         }
 
 
@@ -117,7 +117,8 @@ namespace WPR.Styles.Controls
         public override void OnApplyTemplate()
         {
             base.OnApplyTemplate();
-            _ellipse = Template.FindName("PART_ellipse", this) as Ellipse;
+            _Ellipse = Template.FindName("PART_ellipse", this) as Ellipse;
+            if (_Ellipse == null) throw new NullReferenceException("Эллипс в шаблоне не найден!");
         }
 
         protected override void OnPreviewMouseLeftButtonDown(MouseButtonEventArgs e)
@@ -130,31 +131,30 @@ namespace WPR.Styles.Controls
 
         public void StartRipple(Point e = new Point())
         {
-            if (_rippleAnimation.Children.Count < 2) return;
+            if (_RippleAnimation.Children.Count < 2) return;
 
 
-            _rippleAnimation.Stop(_ellipse);
-            // RippleAnimation.SpeedRatio = RippleMouseDownSpeed;
+            _RippleAnimation.Stop(_Ellipse);
             var targetWidth = Math.Max(ActualWidth, ActualHeight) * OverSize;
-            ((DoubleAnimation) _rippleAnimation.Children[0]).To = targetWidth;
+            ((DoubleAnimation) _RippleAnimation.Children[0]).To = targetWidth;
 
             if (RippleInCenter)
             {
                 var position = new Point(ActualWidth / 2, ActualHeight / 2);
                 var startMargin = new Thickness(position.X, position.Y, 0, 0);
-                _ellipse.Margin = startMargin;
-                ((ThicknessAnimation) _rippleAnimation.Children[1]).From = startMargin;
-                ((ThicknessAnimation) _rippleAnimation.Children[1]).To = new Thickness(position.X - targetWidth / 2, position.Y - targetWidth / 2, 0, 0);
+                _Ellipse.Margin = startMargin;
+                ((ThicknessAnimation) _RippleAnimation.Children[1]).From = startMargin;
+                ((ThicknessAnimation) _RippleAnimation.Children[1]).To = new Thickness(position.X - targetWidth / 2, position.Y - targetWidth / 2, 0, 0);
             }
             else
             {
                 var mousePosition = (e);
                 var startMargin = new Thickness(mousePosition.X, mousePosition.Y, 0, 0);
-                _ellipse.Margin = startMargin;
-                ((ThicknessAnimation) _rippleAnimation.Children[1]).From = startMargin;
-                ((ThicknessAnimation) _rippleAnimation.Children[1]).To = new Thickness(mousePosition.X - targetWidth / 2, mousePosition.Y - targetWidth / 2, 0, 0);
+                _Ellipse.Margin = startMargin;
+                ((ThicknessAnimation) _RippleAnimation.Children[1]).From = startMargin;
+                ((ThicknessAnimation) _RippleAnimation.Children[1]).To = new Thickness(mousePosition.X - targetWidth / 2, mousePosition.Y - targetWidth / 2, 0, 0);
             }
-            _rippleAnimation.Begin(_ellipse, true);
+            _RippleAnimation.Begin(_Ellipse, true);
             IsAnimationActive = true;
         }
     }
