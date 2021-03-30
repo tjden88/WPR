@@ -38,6 +38,23 @@ namespace WPR.Demo.ViewModels
         }
         #endregion
 
+        #region Command SetDarkThemeCommand - Установить тёмную тему
+
+        private ICommand _SetDarkThemeCommand;
+
+        /// <summary>Установить тёмную тему</summary>
+        public ICommand SetDarkThemeCommand => _SetDarkThemeCommand
+            ??= new Command(OnSetDarkThemeCommandExecuted);
+
+        private void OnSetDarkThemeCommandExecuted()
+        {
+            if (Design.IsDarkThemeCurrent)
+                Design.SetLightColorTheme();
+            else
+                Design.SetDarkColorTheme();
+        }
+        #endregion
+
         #region SelectedPage : Page - Выбранная страница для отображения
 
         private Page _SelectedPage;

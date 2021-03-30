@@ -9,54 +9,31 @@
       Title="_Hello!_" HorizontalAlignment="Stretch" VerticalAlignment="Center">
 
     <StackPanel Orientation="Vertical">
+        <StackPanel.Resources>
+            <Style TargetType="TextBlock">
+                <Setter Property="Foreground" Value="{Binding Path=Background, RelativeSource={RelativeSource Self}, Converter={StaticResource BrushLightOrDarkConverter}}"/>
+                <Setter Property="Margin" Value="5"></Setter>
+                <Setter Property="TextAlignment" Value="Center"></Setter>
+                <Setter Property="FontSize" Value="16"></Setter>
+                <Setter Property="Padding" Value="6"></Setter>
+            </Style>
+        </StackPanel.Resources>
         <TextBlock Text="Привет!" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="70" Foreground="{DynamicResource PrimaryColorBrush}"/>
-        <TextBlock Margin="5" TextAlignment="Center"
-                                   Padding="5"
-                                   FontSize="16"
-                                   Foreground="{DynamicResource TextColorBrush}"
-                                   Text="PrimaryColorBrush"
-                                   Background="{DynamicResource PrimaryColorBrush}" />
-        <TextBlock Margin="5" TextAlignment="Center"
-                                   Padding="5"
-                                   FontSize="16"
-                                   Foreground="{DynamicResource TextColorBrush}"
-                                   Text="DarkPrimaryColorBrush"
-                                   Background="{DynamicResource DarkPrimaryColorBrush}" />
-        <TextBlock Margin="5" TextAlignment="Center"
-                                   Padding="5"
-                                   FontSize="16"
-                                   Foreground="{DynamicResource TextColorBrush}"
-                                   Text="LightPrimaryColorBrush"
-                                   Background="{DynamicResource LightPrimaryColorBrush}" />
-        <TextBlock Margin="5" TextAlignment="Center"
-                                   Padding="5"
-                                   FontSize="16"
-                                   Foreground="{DynamicResource TextColorBrush}"
-                                   Text="AccentColorBrush"
-                                   Background="{DynamicResource AccentColorBrush}" />
-        <TextBlock Margin="5" TextAlignment="Center"
-                                   Padding="5"
-                                   FontSize="16"
-                                   Foreground="{DynamicResource PrimaryTextColorBrush}"
-                                   Text="TextColorBrush"
-                                   Background="{DynamicResource TextColorBrush}" />
-        <TextBlock Margin="5" TextAlignment="Center"
-                                   Padding="5"
-                                   FontSize="16"
-                                   Foreground="{DynamicResource TextColorBrush}"
-                                   Text="PrimaryTextColorBrush"
-                                   Background="{DynamicResource PrimaryTextColorBrush}" />
-        <TextBlock Margin="5" TextAlignment="Center"
-                                   Padding="5"
-                                   FontSize="16"
-                                   Foreground="{DynamicResource TextColorBrush}"
-                                   Text="SecondaryTextColorBrush"
-                                   Background="{DynamicResource SecondaryTextColorBrush}" />
-        <TextBlock Margin="5" TextAlignment="Center"
-                                   Padding="5"
-                                   FontSize="16"
-                                   Foreground="{DynamicResource PrimaryTextColorBrush}"
-                                   Text="DividerColorBrush"
-                                   Background="{DynamicResource DividerColorBrush}" />
+        <TextBlock Text="PrimaryColorBrush"
+                   Background="{DynamicResource PrimaryColorBrush}" />
+        <TextBlock Text="DarkPrimaryColorBrush"
+                   Background="{DynamicResource DarkPrimaryColorBrush}" />
+        <TextBlock Text="LightPrimaryColorBrush"
+                   Background="{DynamicResource LightPrimaryColorBrush}" />
+        <TextBlock Text="AccentColorBrush"
+                   Background="{DynamicResource AccentColorBrush}" />
+        <TextBlock Text="TextColorBrush"
+                   Background="{DynamicResource TextColorBrush}" />
+        <TextBlock Text="PrimaryTextColorBrush" 
+                   Background="{DynamicResource PrimaryTextColorBrush}" />
+        <TextBlock Text="SecondaryTextColorBrush"
+                   Background="{DynamicResource SecondaryTextColorBrush}" />
+        <TextBlock Text="DividerColorBrush"
+                   Background="{DynamicResource DividerColorBrush}" />
     </StackPanel>
 </Page>

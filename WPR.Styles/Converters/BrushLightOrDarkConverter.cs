@@ -2,6 +2,7 @@
 using System.Globalization;
 using System.Windows.Data;
 using System.Windows.Media;
+using WPR.Styles.Services;
 
 namespace WPR.Styles.Converters
 {
@@ -12,9 +13,9 @@ namespace WPR.Styles.Converters
     [ValueConversion(typeof(SolidColorBrush), typeof(SolidColorBrush))]
     public class BrushLightOrDarkConverter : ValueConverter
     {
-        public Brush HighValue { get; set; } = Brushes.White;
+        public SolidColorBrush HighValue { get; set; } = new(ColorService.WhiteColor);
 
-        public Brush LowValue { get; set; } = Brushes.Black;
+        public SolidColorBrush LowValue { get; set; } = new(ColorService.DarkColor);
 
         protected override object Convert(object v, Type t, object p, CultureInfo c)
         {
@@ -24,7 +25,7 @@ namespace WPR.Styles.Converters
 
             var brightness = 0.3 * color.R + 0.59 * color.G + 0.11 * color.B;
 
-            return brightness < 123 ? LowValue : HighValue;
+            return brightness > 123 ? LowValue : HighValue;
         }
 
         protected override object ConvertBack(object v, Type t, object p, CultureInfo c) => Convert(v, t, p, c);
