@@ -30,7 +30,7 @@
          SelectedValue="{Binding SelectedPage}">
     <ListBox.ItemTemplate>
         <DataTemplate>
-            <TextBlock Text="{Binding Title}"></TextBlock>
+            <TextBlock FontFamily="{StaticResource RobotoFont}" Text="{Binding Title}"></TextBlock>
         </DataTemplate>
     </ListBox.ItemTemplate>
 </ListBox>

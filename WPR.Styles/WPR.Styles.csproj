@@ -6,45 +6,24 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="Resources\Roboto\Roboto-Black.ttf" />
-    <None Remove="Resources\Roboto\Roboto-BlackItalic.ttf" />
-    <None Remove="Resources\Roboto\Roboto-Bold.ttf" />
-    <None Remove="Resources\Roboto\Roboto-BoldItalic.ttf" />
-    <None Remove="Resources\Roboto\Roboto-Italic.ttf" />
-    <None Remove="Resources\Roboto\Roboto-Light.ttf" />
-    <None Remove="Resources\Roboto\Roboto-LightItalic.ttf" />
-    <None Remove="Resources\Roboto\Roboto-Medium.ttf" />
-    <None Remove="Resources\Roboto\Roboto-MediumItalic.ttf" />
-    <None Remove="Resources\Roboto\Roboto-Regular.ttf" />
-    <None Remove="Resources\Roboto\Roboto-Thin.ttf" />
-    <None Remove="Resources\Roboto\Roboto-ThinItalic.ttf" />
-    <None Remove="Resources\Roboto\RobotoCondensed-Bold.ttf" />
-    <None Remove="Resources\Roboto\RobotoCondensed-BoldItalic.ttf" />
-    <None Remove="Resources\Roboto\RobotoCondensed-Italic.ttf" />
-    <None Remove="Resources\Roboto\RobotoCondensed-Light.ttf" />
-    <None Remove="Resources\Roboto\RobotoCondensed-LightItalic.ttf" />
-    <None Remove="Resources\Roboto\RobotoCondensed-Regular.ttf" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Content Include="Resources\Roboto\Roboto-Black.ttf" />
-    <Content Include="Resources\Roboto\Roboto-BlackItalic.ttf" />
-    <Content Include="Resources\Roboto\Roboto-Bold.ttf" />
-    <Content Include="Resources\Roboto\Roboto-BoldItalic.ttf" />
-    <Content Include="Resources\Roboto\Roboto-Italic.ttf" />
-    <Content Include="Resources\Roboto\Roboto-Light.ttf" />
-    <Content Include="Resources\Roboto\Roboto-LightItalic.ttf" />
-    <Content Include="Resources\Roboto\Roboto-Medium.ttf" />
-    <Content Include="Resources\Roboto\Roboto-MediumItalic.ttf" />
-    <Content Include="Resources\Roboto\Roboto-Regular.ttf" />
-    <Content Include="Resources\Roboto\Roboto-Thin.ttf" />
-    <Content Include="Resources\Roboto\Roboto-ThinItalic.ttf" />
-    <Content Include="Resources\Roboto\RobotoCondensed-Bold.ttf" />
-    <Content Include="Resources\Roboto\RobotoCondensed-BoldItalic.ttf" />
-    <Content Include="Resources\Roboto\RobotoCondensed-Italic.ttf" />
-    <Content Include="Resources\Roboto\RobotoCondensed-Light.ttf" />
-    <Content Include="Resources\Roboto\RobotoCondensed-LightItalic.ttf" />
-    <Content Include="Resources\Roboto\RobotoCondensed-Regular.ttf" />
+    <Resource Include="Fonts\Roboto-Black.ttf" />
+    <Resource Include="Fonts\Roboto-BlackItalic.ttf" />
+    <Resource Include="Fonts\Roboto-Bold.ttf" />
+    <Resource Include="Fonts\Roboto-BoldItalic.ttf" />
+    <Resource Include="Fonts\Roboto-Italic.ttf" />
+    <Resource Include="Fonts\Roboto-Light.ttf" />
+    <Resource Include="Fonts\Roboto-LightItalic.ttf" />
+    <Resource Include="Fonts\Roboto-Medium.ttf" />
+    <Resource Include="Fonts\Roboto-MediumItalic.ttf" />
+    <Resource Include="Fonts\Roboto-Regular.ttf" />
+    <Resource Include="Fonts\Roboto-Thin.ttf" />
+    <Resource Include="Fonts\Roboto-ThinItalic.ttf" />
+    <Resource Include="Fonts\RobotoCondensed-Bold.ttf" />
+    <Resource Include="Fonts\RobotoCondensed-BoldItalic.ttf" />
+    <Resource Include="Fonts\RobotoCondensed-Italic.ttf" />
+    <Resource Include="Fonts\RobotoCondensed-Light.ttf" />
+    <Resource Include="Fonts\RobotoCondensed-LightItalic.ttf" />
+    <Resource Include="Fonts\RobotoCondensed-Regular.ttf" />
   </ItemGroup>
 
   <ItemGroup>

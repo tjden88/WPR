@@ -18,7 +18,12 @@
                 <Setter Property="Padding" Value="6"></Setter>
             </Style>
         </StackPanel.Resources>
-        <TextBlock Text="Привет!" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="70" Foreground="{DynamicResource PrimaryColorBrush}"/>
+        <TextBlock Text="Привет!"
+                   HorizontalAlignment="Center" 
+                   VerticalAlignment="Center"
+                   FontSize="80" 
+                   FontFamily="{StaticResource RobotoFontLight}"
+                   Foreground="{DynamicResource PrimaryColorBrush}"/>
         <TextBlock Text="PrimaryColorBrush"
                    Background="{DynamicResource PrimaryColorBrush}" />
         <TextBlock Text="DarkPrimaryColorBrush"

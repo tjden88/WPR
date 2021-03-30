@@ -160,6 +160,7 @@
         <Setter Property="Background" Value="{DynamicResource PrimaryColorBrush}" />
         <Setter Property="wh:WindowHelper.WindowHeaderForeground" Value="{DynamicResource TextColorBrush}" />
         <Setter Property="UseLayoutRounding" Value="True"/>
+        <Setter Property="FontFamily" Value="{StaticResource RobotoFont}"/>
         <Setter Property="Template" Value="{StaticResource ChromeWindowTemplate}"/>
     </Style>
 
