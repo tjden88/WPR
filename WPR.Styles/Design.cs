@@ -39,9 +39,16 @@ namespace WPR.Styles
             SetAccentColor(Color.FromRgb((byte)rnd.Next(0, 255), (byte)rnd.Next(0, 255), (byte)rnd.Next(0, 255)));
         }
 
+        //public static void SetPrimaryColor(Color color)
+        //{
+        //    Application.Current.Resources["PrimaryColorBrush"] = new SolidColorBrush(color);
+        //    Application.Current.Resources["DarkPrimaryColorBrush"] = new SolidColorBrush(Darken(color, 1.2));
+        //    Application.Current.Resources["LightPrimaryColorBrush"] = new SolidColorBrush(Lighten(color, 1.5));
+        //    StyleChanged?.Invoke(null, EventArgs.Empty);
+        //}
         public static void SetPrimaryColor(Color color)
         {
-            Application.Current.Resources["PrimaryColorBrush"] = new SolidColorBrush(color);
+            Application.Current.Resources["PrimaryColor"] = color;
             Application.Current.Resources["DarkPrimaryColorBrush"] = new SolidColorBrush(Darken(color, 1.2));
             Application.Current.Resources["LightPrimaryColorBrush"] = new SolidColorBrush(Lighten(color, 1.5));
             StyleChanged?.Invoke(null, EventArgs.Empty);

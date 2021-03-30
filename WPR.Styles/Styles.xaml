@@ -1,7 +1,7 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     <ResourceDictionary.MergedDictionaries>
-        <ResourceDictionary Source="Themes.xaml"/>
+        <ResourceDictionary Source="Styles\Base.xaml"/>
         <ResourceDictionary Source="Controls\Controls.xaml"/>
         <ResourceDictionary Source="Styles\ChromeWindow.xaml"/>
         <ResourceDictionary Source="Styles\ToolTips.xaml"/>
@@ -11,9 +11,11 @@
 
     <!--Стили по умолчанию-->
     <Style TargetType="{x:Type Control}" BasedOn="{StaticResource BaseControl}"/>
-
+    <Style TargetType="ToolTip" BasedOn="{StaticResource WPRToolTip}"/>
     <Style TargetType="Button" BasedOn="{StaticResource WPRFlatButton}"/>
-    <!--<Style TargetType="CheckBox" BasedOn="{StaticResource PRCheckBox}"/>
+
+    <!--
+    <Style TargetType="CheckBox" BasedOn="{StaticResource PRCheckBox}"/>
     <Style TargetType="RadioButton" BasedOn="{StaticResource PRRadioButton}"/>
     <Style TargetType="TextBox" BasedOn="{StaticResource PRSimpleTextBox}"/>
     <Style TargetType="ComboBox" BasedOn="{StaticResource PRComboBox}"/>
@@ -30,6 +32,6 @@
     <Style TargetType="MenuItem" BasedOn="{StaticResource PRMenuItem}"/>
     <Style TargetType="Slider" BasedOn="{StaticResource PRSlider}"/>
     <Style TargetType="Expander" BasedOn="{StaticResource PRExpander}"/>
-    <Style TargetType="ToolTip" BasedOn="{StaticResource WPRToolTip}"/>-->
+    -->
 
 </ResourceDictionary>

@@ -3,7 +3,7 @@
                     xmlns:helpers="clr-namespace:WPR.Styles.Helpers"
                     xmlns:controls="clr-namespace:WPR.Styles.Controls">
     <ResourceDictionary.MergedDictionaries>
-        <ResourceDictionary Source="..\Themes.xaml"/>
+        <ResourceDictionary Source="Base.xaml"/>
     </ResourceDictionary.MergedDictionaries>
 
 
