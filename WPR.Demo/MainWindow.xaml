@@ -8,7 +8,7 @@
         xmlns:pages="clr-namespace:WPR.Demo.Pages"
         DataContext="{Binding Source={StaticResource Locator}, Path=MainWindowViewModel}"
         Style="{StaticResource ChromeWindow}" helpers:WindowHelper.TitleLeftMargin ="{Binding ElementName=TitleButtonsPanel, Path=ActualWidth}"
-        Title="{Binding Title}" Height="450" Width="800">
+        Title="{Binding Title}" Height="650" Width="800">
 
     <Grid>
         <Grid.RowDefinitions>
@@ -27,14 +27,20 @@
         <!--Основной контент в 1 строке грида-->
         <Grid Grid.Row="1" Background="{DynamicResource BackgroundColorBrush}">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="49*"/>
-                <ColumnDefinition Width="751*"/>
+                <ColumnDefinition Width="200"/>
+                <ColumnDefinition/>
             </Grid.ColumnDefinitions>
-            <Frame Grid.ColumnSpan="2">
-                <Frame.Content>
-                    <pages:Buttons/>
-                </Frame.Content>
-            </Frame>
+
+<ListBox ItemsSource="{Binding Pages}"
+         SelectedValue="{Binding SelectedPage}">
+    <ListBox.ItemTemplate>
+        <DataTemplate>
+            <TextBlock Text="{Binding Title}"></TextBlock>
+        </DataTemplate>
+    </ListBox.ItemTemplate>
+</ListBox>
+
+            <Frame NavigationUIVisibility="Hidden" Grid.Column="1" Content="{Binding SelectedPage}"/>
         </Grid>
     </Grid>
 </Window>
