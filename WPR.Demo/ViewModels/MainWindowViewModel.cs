@@ -5,6 +5,7 @@ using System.Windows.Input;
 using WPR.Demo.Commands.Base;
 using WPR.Demo.Services;
 using WPR.Demo.ViewModels.Base;
+using WPR.Styles;
 
 namespace WPR.Demo.ViewModels
 {
@@ -33,7 +34,7 @@ namespace WPR.Demo.ViewModels
 
         private void OnSetNewStyleCommandExecuted()
         {
-
+            Design.SetNewRandomStyle();
         }
         #endregion
 
