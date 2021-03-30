@@ -10,12 +10,7 @@ namespace WPR.Styles.Styles
 {
     partial class Toggles
     {
-        void PRCheckBox_MouseUp(object sender, EventArgs e)
-        {
-            CheckBox checkBox = sender as CheckBox;
-            Ripple ripple = checkBox.Template.FindName("Ripple", checkBox) as Ripple;
-            ripple.StartRipple();
-        }
+
         void PRRadioButton_MouseDown(object sender, EventArgs e)
         {
             RadioButton radioButton = sender as RadioButton;
