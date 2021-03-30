@@ -14,9 +14,7 @@
         <Button Content="Flat Button" Margin="10"/>
         <Button Content="PRIMARY Button" Style="{StaticResource PrimaryWPRButton}"  Margin="10"/>
         <Button Content="ACCENT Button" Style="{StaticResource AccentWPRButton}"  Margin="10"/>
-        <Button Content="Tool" Style="{StaticResource WPRToolButton}"  Margin="10"/>
-        <Button Content="ToolNoRip" Style="{StaticResource WPRToolButtonNoRipple}"  Margin="10"/>
-        <Button Content="Menu Button" Style="{StaticResource MenuButton}"  Margin="10"/>
+            <Button Content="Menu Button" Style="{StaticResource MenuButton}"  Margin="10"/>
         <Button Content="A" Style="{StaticResource RoundedButtonWithFloatingHintPrimary}" helpers:TextHelper.Hint="Hint!" Margin="10" HorizontalContentAlignment="Left"/>
         <Button Content="B" Style="{StaticResource RoundedButtonWithFloatingHintPrimary}" helpers:TextHelper.Hint="Hint!" Margin="10"/>
     </StackPanel>
@@ -38,6 +36,22 @@
                     Style="{StaticResource PrimaryWPRButton}"
                     Height="30"
                     Width="120"/>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="10">
+                <Button Style="{StaticResource WPRToolButton}"
+                        Padding="3">
+                    <icons:Icon Source="Star"/>
+                </Button>
+                <Button Style="{StaticResource WPRToolButton}"
+                        helpers:RippleHelper.FeedbackBrush="{DynamicResource AccentColorBrush }"
+                        Padding="3">
+                    <icons:Icon Source="Like"/>
+                </Button>
+                <Button Style="{StaticResource WPRToolButton}"
+                        helpers:RippleHelper.FeedbackBrush="{DynamicResource  DarkPrimaryColorBrush }"
+                        Padding="3">
+                    <icons:Icon Source="Dislike"/>
+                </Button>
+            </StackPanel>
         </StackPanel>
     </StackPanel>
 </Page>

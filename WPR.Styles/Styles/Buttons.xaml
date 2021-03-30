@@ -20,8 +20,7 @@
                                                     CornerRadius="{Binding Path=(helpers:ButtonHelper.BorderRadius), RelativeSource={RelativeSource TemplatedParent}}"
                                                     BorderThickness="0"
                                                     SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
-                                                    Opacity="0.4"
-                                                    Visibility="{Binding Path=(helpers:ButtonHelper.MouseAnimationVisibility), RelativeSource={RelativeSource TemplatedParent}}">
+                                                    Opacity="0.4">
                         </Border>
                         <controls:Ripple x:Name="Ripple" 
                                                 SnapsToDevicePixels="False"
@@ -117,12 +116,11 @@
     </Style>
 
     <Style x:Key="WPRToolButton" TargetType="{x:Type Button}" BasedOn="{StaticResource WPRFlatButton}">
-        <Setter Property="Padding" Value="2"/>
+        <Setter Property="Padding" Value="4"/>
         <Setter Property="Foreground" Value="{DynamicResource SecondaryTextColorBrush}"/>
         <Setter Property="helpers:RippleHelper.FeedbackBrush" Value="{DynamicResource AnimationEnterColorBrush}"/>
         <Setter Property="helpers:RippleHelper.IsCentered" Value="True"/>
         <Setter Property="helpers:ButtonHelper.BorderRadius" Value="100"/>
-        <Setter Property="helpers:ButtonHelper.MouseAnimationVisibility" Value="Hidden"/>
         <Setter Property="Height" Value="Auto"/>
         <Setter Property="helpers:ButtonHelper.BorderClipContent" Value="False"/>
         <Setter Property="Cursor" Value="Hand"/>
