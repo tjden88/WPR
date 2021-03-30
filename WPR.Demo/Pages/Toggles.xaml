@@ -1,0 +1,88 @@
+﻿<Page x:Class="WPR.Demo.Pages.Toggles"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:WPR.Demo.Pages"
+      xmlns:controls="clr-namespace:WPR.Styles.Controls;assembly=WPR.Styles"
+      xmlns:helpers="clr-namespace:WPR.Styles.Helpers;assembly=WPR.Styles"
+      xmlns:icons="clr-namespace:WPR.Styles.Icons;assembly=WPR.Styles"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="Переключатели">
+
+    <Grid>
+        <StackPanel Orientation="Horizontal" Background="White" >
+            <StackPanel Width="200">
+                <TextBlock Text="Чекбоксы" Margin="5"/>
+                <CheckBox Content="Checked" Margin="5" IsChecked="True"/>
+                <CheckBox Content="Unchecked" Margin="5"/>
+                <CheckBox Content="CheckedDisabled" Margin="5" IsChecked="True" IsEnabled="False"/>
+                <CheckBox Content="UncheckedDisabled" Margin="5" IsEnabled="False"/>
+                <CheckBox Content="Tristate" Margin="5" IsThreeState="True" IsChecked="{x:Null}"/>
+                <CheckBox Content="TristateDisabled" Margin="5" IsEnabled="False" IsChecked="{x:Null}"/>
+                <TextBlock Text="Toggle Buttons" Margin="5"/>
+                <controls:ClippingBorder ClipToBounds="True"
+                                            CornerRadius="3"
+                                            Background="#FFF0F0F0"
+                                            HorizontalAlignment="Center" 
+                                            Margin="5">
+                    <StackPanel Orientation="Horizontal">
+                        <ToggleButton IsChecked="True" helpers:ButtonHelper.BorderRadius="0"
+                              ToolTip="Полужирный">
+                            <icons:Icon Source="FormatBold" Width="34" IconSize="18"/>
+                        </ToggleButton>
+                        <ToggleButton helpers:ButtonHelper.BorderRadius="0"
+                              ToolTip="Наклонный">
+                            <icons:Icon Source="FormatItalic" Width="34" IconSize="18"/>
+                        </ToggleButton>
+                        <ToggleButton helpers:ButtonHelper.BorderRadius="0"
+                                      ToolTip="Подчёркнутый">
+                            <icons:Icon Source="FormatUnderlined" Width="34" IconSize="18"/>
+                        </ToggleButton>
+                    </StackPanel>
+                </controls:ClippingBorder>
+
+            </StackPanel>
+            <StackPanel Width="200">
+                <TextBlock Text="Радио баттоны" Margin="5"/>
+                <RadioButton Content="Selected" Margin="5" IsChecked="True"/>
+                <RadioButton Content="Not selected" Margin="5"/>
+                <RadioButton Content="Not selected" Margin="5"/>
+                <RadioButton Content="TriState" Margin="5" IsThreeState="True" IsChecked="{x:Null}"/>
+                <RadioButton Content="Selected Disabled" Margin="5" GroupName="1" IsEnabled="False" IsChecked="True"/>
+                <RadioButton Content="Not Selected Disabled" Margin="5" GroupName="1" IsEnabled="False"/>
+                <RadioButton Content="TriState Disabled" Margin="5" IsThreeState="True" IsChecked="{x:Null}" IsEnabled="False" GroupName="1"/>
+                <TextBlock Text="Button-Styled" Margin="5"/>
+                <controls:ClippingBorder ClipToBounds="True"
+                                            CornerRadius="3"
+                                            Background="#FFF0F0F0"
+                                            HorizontalAlignment="Center" 
+                                            Margin="5">
+                    <!--<StackPanel Orientation="Horizontal">
+                        <RadioButton Style="{StaticResource PRRadioButtonButtonStyle}" IsChecked="True"
+                                     helpers:ButtonHelper.BorderRadius="0"
+                              ToolTip="По левому краю">
+                            <icons:Icon Source="FormatAlignLeft" Width="34" Height="18"/>
+                        </RadioButton>
+                        <RadioButton Style="{StaticResource PRRadioButtonButtonStyle}" 
+                                     helpers:ButtonHelper.BorderRadius="0"
+                              ToolTip="По центру">
+                            <icons:Icon Source="FormatAlignCenter" Width="34" Height="18"/>
+                        </RadioButton>
+                        <RadioButton Style="{StaticResource PRRadioButtonButtonStyle}" 
+                                     helpers:ButtonHelper.BorderRadius="0"
+                              ToolTip="По правому краю">
+                            <icons:Icon Source="FormatAlignRight" Width="34" Height="18"/>
+                        </RadioButton>
+                        <RadioButton Style="{StaticResource PRRadioButtonButtonStyle}" 
+                                     helpers:ButtonHelper.BorderRadius="0"
+                              ToolTip="По ширине">
+                            <icons:Icon Source="FormatAlignJustify" Width="34" Height="18"/>
+                        </RadioButton>
+                    </StackPanel>-->
+                </controls:ClippingBorder>
+            </StackPanel>
+        </StackPanel>
+    </Grid>
+</Page>

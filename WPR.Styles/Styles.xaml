@@ -8,6 +8,7 @@
         <ResourceDictionary Source="Styles\ToolTips.xaml"/>
         <ResourceDictionary Source="Styles\Buttons.xaml"/>
         <ResourceDictionary Source="Styles\TextBlocks.xaml"/>
+        <ResourceDictionary Source="Styles\Toggles.xaml"/>
     </ResourceDictionary.MergedDictionaries>
 
     <!--Стили по умолчанию-->
@@ -15,13 +16,13 @@
     <Style TargetType="ToolTip" BasedOn="{StaticResource WPRToolTip}"/>
     <Style TargetType="Button" BasedOn="{StaticResource WPRFlatButton}"/>
     <Style TargetType="TextBlock" BasedOn="{StaticResource WPRText}"/>
+    <Style TargetType="ToggleButton"  BasedOn="{StaticResource WPRToggleButton}"/>
 
     <!--
     <Style TargetType="CheckBox" BasedOn="{StaticResource PRCheckBox}"/>
     <Style TargetType="RadioButton" BasedOn="{StaticResource PRRadioButton}"/>
     <Style TargetType="TextBox" BasedOn="{StaticResource PRSimpleTextBox}"/>
     <Style TargetType="ComboBox" BasedOn="{StaticResource PRComboBox}"/>
-    <Style TargetType="ToggleButton"  BasedOn="{StaticResource PRToggleButton}"/>
     <Style TargetType="TabControl" BasedOn="{StaticResource PRTabControl}"/>
     <Style TargetType="DataGrid" BasedOn="{StaticResource PRDataGrid}"/>
     <Style TargetType="ScrollViewer" BasedOn="{StaticResource PRScrollViewer}"/>
