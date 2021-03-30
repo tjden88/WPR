@@ -59,28 +59,28 @@
                                             Background="#FFF0F0F0"
                                             HorizontalAlignment="Center" 
                                             Margin="5">
-                    <!--<StackPanel Orientation="Horizontal">
-                        <RadioButton Style="{StaticResource PRRadioButtonButtonStyle}" IsChecked="True"
+                    <StackPanel Orientation="Horizontal">
+                        <RadioButton Style="{StaticResource WPRRadioButtonButtonStyle}" IsChecked="True"
                                      helpers:ButtonHelper.BorderRadius="0"
                               ToolTip="По левому краю">
                             <icons:Icon Source="FormatAlignLeft" Width="34" Height="18"/>
                         </RadioButton>
-                        <RadioButton Style="{StaticResource PRRadioButtonButtonStyle}" 
+                        <RadioButton Style="{StaticResource WPRRadioButtonButtonStyle}" 
                                      helpers:ButtonHelper.BorderRadius="0"
                               ToolTip="По центру">
                             <icons:Icon Source="FormatAlignCenter" Width="34" Height="18"/>
                         </RadioButton>
-                        <RadioButton Style="{StaticResource PRRadioButtonButtonStyle}" 
+                        <RadioButton Style="{StaticResource WPRRadioButtonButtonStyle}" 
                                      helpers:ButtonHelper.BorderRadius="0"
                               ToolTip="По правому краю">
                             <icons:Icon Source="FormatAlignRight" Width="34" Height="18"/>
                         </RadioButton>
-                        <RadioButton Style="{StaticResource PRRadioButtonButtonStyle}" 
+                        <RadioButton Style="{StaticResource WPRRadioButtonButtonStyle}" 
                                      helpers:ButtonHelper.BorderRadius="0"
                               ToolTip="По ширине">
                             <icons:Icon Source="FormatAlignJustify" Width="34" Height="18"/>
                         </RadioButton>
-                    </StackPanel>-->
+                    </StackPanel>
                 </controls:ClippingBorder>
             </StackPanel>
         </StackPanel>

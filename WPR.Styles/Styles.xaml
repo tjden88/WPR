@@ -10,6 +10,7 @@
         <ResourceDictionary Source="Styles\TextBlocks.xaml"/>
         <ResourceDictionary Source="Styles\Toggles.xaml"/>
         <ResourceDictionary Source="Styles\CheckBoxes.xaml"/>
+        <ResourceDictionary Source="Styles\RadioButtons.xaml"/>
     </ResourceDictionary.MergedDictionaries>
 
     <!--Стили по умолчанию-->
@@ -19,10 +20,9 @@
     <Style TargetType="TextBlock" BasedOn="{StaticResource WPRText}"/>
     <Style TargetType="ToggleButton"  BasedOn="{StaticResource WPRToggleButton}"/>
     <Style TargetType="CheckBox" BasedOn="{StaticResource WPRCheckBox}"/>
-
+    <Style TargetType="RadioButton" BasedOn="{StaticResource WPRRadioButton}"/>
 
     <!--
-    <Style TargetType="RadioButton" BasedOn="{StaticResource PRRadioButton}"/>
     <Style TargetType="TextBox" BasedOn="{StaticResource PRSimpleTextBox}"/>
     <Style TargetType="ComboBox" BasedOn="{StaticResource PRComboBox}"/>
     <Style TargetType="TabControl" BasedOn="{StaticResource PRTabControl}"/>

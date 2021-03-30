@@ -10,13 +10,6 @@ namespace WPR.Styles.Styles
 {
     partial class Toggles
     {
-
-        void PRRadioButton_MouseDown(object sender, EventArgs e)
-        {
-            RadioButton radioButton = sender as RadioButton;
-            Ripple ripple = radioButton.Template.FindName("Ripple", radioButton) as Ripple;
-            ripple.StartRipple();
-        }
         void WPRToggleButton_MouseUp(object sender, MouseButtonEventArgs e)
         {
             if(sender is not ToggleButton toggleButton) return;
