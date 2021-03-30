@@ -13,7 +13,7 @@
     <Style TargetType="{x:Type Control}" BasedOn="{StaticResource BaseControl}"/>
 
     <Style TargetType="Button" BasedOn="{StaticResource WPRFlatButton}"/>
-    <Style TargetType="CheckBox" BasedOn="{StaticResource PRCheckBox}"/>
+    <!--<Style TargetType="CheckBox" BasedOn="{StaticResource PRCheckBox}"/>
     <Style TargetType="RadioButton" BasedOn="{StaticResource PRRadioButton}"/>
     <Style TargetType="TextBox" BasedOn="{StaticResource PRSimpleTextBox}"/>
     <Style TargetType="ComboBox" BasedOn="{StaticResource PRComboBox}"/>
@@ -30,6 +30,6 @@
     <Style TargetType="MenuItem" BasedOn="{StaticResource PRMenuItem}"/>
     <Style TargetType="Slider" BasedOn="{StaticResource PRSlider}"/>
     <Style TargetType="Expander" BasedOn="{StaticResource PRExpander}"/>
-    <Style TargetType="ToolTip" BasedOn="{StaticResource WPRToolTip}"/>
+    <Style TargetType="ToolTip" BasedOn="{StaticResource WPRToolTip}"/>-->
 
 </ResourceDictionary>

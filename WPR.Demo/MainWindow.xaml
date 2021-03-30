@@ -5,16 +5,26 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:l="clr-namespace:WPR.Demo"
         xmlns:helpers="clr-namespace:WPR.Styles.Helpers;assembly=WPR.Styles"
-        Style="{StaticResource ChromeWindow}"
-       
-        Title="WPR.Styles.Demo" Height="450" Width="800">
-    <StackPanel Width="150" Margin="35" >
-        <Button Content="Flat Button" Margin="10"/>
-        <Button Content="PRIMARY Button" Style="{StaticResource PrimaryWPRButton}"  Margin="10"/>
-        <Button Content="ACCENT Button" Style="{StaticResource AccentWPRButton}"  Margin="10"/>
-        <Button Content="Tool" Style="{StaticResource WPRToolButton}"  Margin="10"/>
-        <Button Content="ToolNoRip" Style="{StaticResource WPRToolButtonNoRipple}"  Margin="10"/>
-        <Button Content="Menu Button" Style="{StaticResource MenuButton}"  Margin="10"/>
-        <Button Content="A" Style="{StaticResource RoundedButtonWithFloatingHintPrimary}" helpers:TextHelper.Hint="Hint!" Margin="10"/>
-    </StackPanel>
+        DataContext="{Binding Source={StaticResource Locator}, Path=MainWindowViewModel}"
+        Style="{StaticResource ChromeWindow}" helpers:WindowHelper.TitleLeftMargin ="{Binding ElementName=TitleButtonsPanel, Path=ActualWidth}"
+        Title="{Binding Title}" Height="450" Width="800">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="35"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <!-- Панель в заголовке для кнопок-->
+        <StackPanel Margin="3" x:Name="TitleButtonsPanel" Orientation="Horizontal" HorizontalAlignment="Left" Width="Auto" >
+            <Button Content="Новый стиль" Command="{Binding SetNewStyleCommand}" Width="75" FontSize="10" Foreground="White" WindowChrome.IsHitTestVisibleInChrome ="True" Height="Auto"/>
+            <!--<Button Content="Тёмная тема" Click="ButtonDarkTheme_Click" Width="75" FontSize="10" Foreground="White" WindowChrome.IsHitTestVisibleInChrome ="True" Height="Auto"/>
+            <Button Width="30" FontSize="10" Foreground="White" WindowChrome.IsHitTestVisibleInChrome ="True" Click="Button_Click"
+                    ToolTip="Кнопка в заголовке.&#10;Смещение текста задаётся присоединённым свойством родительского окна" Height="Auto">
+                <ex:PRIcon Kind="OpenInNew"/>
+            </Button>-->
+        </StackPanel>
+        <!--Основной контент в 1 строке грида-->
+        <Grid Grid.Row="1">
+        </Grid>
+    </Grid>
 </Window>
