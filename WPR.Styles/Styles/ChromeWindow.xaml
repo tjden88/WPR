@@ -14,7 +14,7 @@
         <Setter Property="wh:ButtonHelper.BorderRadius" Value="0"/>
     </Style>
 
-<Style x:Key="WindowHeaderMaxNormButton" TargetType="{x:Type Button}" BasedOn="{StaticResource WindowTitleButton}">
+    <Style x:Key="WindowHeaderMaxNormButton" TargetType="{x:Type Button}" BasedOn="{StaticResource WindowTitleButton}">
         <Setter Property="Background" Value="#00CBCACA"/>
         <Setter Property="BorderThickness" Value="0"/>
         <Setter Property="Width" Value="46"/>

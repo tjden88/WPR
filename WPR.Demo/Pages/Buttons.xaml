@@ -5,6 +5,7 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:WPR.Demo.Pages"
       xmlns:helpers="clr-namespace:WPR.Styles.Helpers;assembly=WPR.Styles"
+      xmlns:icons="clr-namespace:WPR.Styles.Icons;assembly=WPR.Styles"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="Кнопки">
@@ -29,8 +30,9 @@
             <Button Margin="5" helpers:ButtonHelper.BorderRadius="50"
                     Style="{StaticResource AccentWPRButton}"
                     Height="40"
+                    Padding="5"
                     Width="{Binding Path=ActualHeight, RelativeSource={RelativeSource Self}}">
-                <!--<WPR:PRIcon Kind="EmoticonDevil" Width="22" Height="22"/>-->
+                <icons:Icon Source="EmoticonDevil" IconSize="20"/>
             </Button>
             <Button Content="OVAL" Margin="5" helpers:ButtonHelper.BorderRadius="15"
                     Style="{StaticResource PrimaryWPRButton}"

@@ -3,6 +3,7 @@
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="Styles\Base.xaml"/>
         <ResourceDictionary Source="Controls\Controls.xaml"/>
+        <ResourceDictionary Source="Icons\Icon.xaml"/>
         <ResourceDictionary Source="Styles\ChromeWindow.xaml"/>
         <ResourceDictionary Source="Styles\ToolTips.xaml"/>
         <ResourceDictionary Source="Styles\Buttons.xaml"/>
