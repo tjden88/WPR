@@ -11,6 +11,7 @@
         <ResourceDictionary Source="Styles\Toggles.xaml"/>
         <ResourceDictionary Source="Styles\CheckBoxes.xaml"/>
         <ResourceDictionary Source="Styles\RadioButtons.xaml"/>
+        <ResourceDictionary Source="Styles\ListBoxes.xaml"/>
     </ResourceDictionary.MergedDictionaries>
 
     <!--Стили по умолчанию-->
@@ -21,6 +22,8 @@
     <Style TargetType="ToggleButton"  BasedOn="{StaticResource WPRToggleButton}"/>
     <Style TargetType="CheckBox" BasedOn="{StaticResource WPRCheckBox}"/>
     <Style TargetType="RadioButton" BasedOn="{StaticResource WPRRadioButton}"/>
+    <Style TargetType="ListBox" BasedOn="{StaticResource WPRListBox}"/>
+    <Style TargetType="ListBoxItem" BasedOn="{StaticResource WPRListBoxItem}"/>
 
     <!--
     <Style TargetType="TextBox" BasedOn="{StaticResource PRSimpleTextBox}"/>
@@ -28,8 +31,6 @@
     <Style TargetType="TabControl" BasedOn="{StaticResource PRTabControl}"/>
     <Style TargetType="DataGrid" BasedOn="{StaticResource PRDataGrid}"/>
     <Style TargetType="ScrollViewer" BasedOn="{StaticResource PRScrollViewer}"/>
-    <Style TargetType="ListBox" BasedOn="{StaticResource PRListBox}"/>
-    <Style TargetType="ListBoxItem" BasedOn="{StaticResource PRListBoxItem}"/>
     <Style TargetType="ToolBarTray" BasedOn="{StaticResource PRToolBarTray}"/>
     <Style TargetType="ToolBar" BasedOn="{StaticResource PRToolBar}"/>
     <Style TargetType="Menu" BasedOn="{StaticResource PRMenu}"/>
