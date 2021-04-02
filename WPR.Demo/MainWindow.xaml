@@ -27,6 +27,8 @@
             </Grid.ColumnDefinitions>
 
 <ListBox ItemsSource="{Binding Pages}"
+         Style="{StaticResource WPRMenuListBox}"
+         Foreground="{DynamicResource AccentColorBrush}"
          SelectedValue="{Binding SelectedPage}">
     <ListBox.ItemTemplate>
         <DataTemplate>

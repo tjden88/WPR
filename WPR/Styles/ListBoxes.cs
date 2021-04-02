@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Media;
-using System.Windows.Media.Animation;
-using WPR.Services;
+using WPR.Extensions;
 
 namespace WPR.Styles
 {
@@ -12,28 +10,22 @@ namespace WPR.Styles
         private void ListBoxItem_Selected(object sender, RoutedEventArgs e) 
         {
             if(sender is not ListBoxItem item) return;
-            ColorAnimation animation = new()
+            BrushAnimation animation = new()
             {
-                To = Design.GetBrushFromResource( Design.StyleBrush.TextColorBrush).Color,
+                To = Design.GetBrushFromResource( Design.StyleBrush.TextColorBrush),
                 Duration = TimeSpan.FromSeconds(0.2),
             };
-            Storyboard.SetTargetProperty(animation, new PropertyPath(Control.ForegroundProperty));
-            Storyboard storyboard = new Storyboard();
-            storyboard.Children.Add(animation);
-            storyboard.Begin(item);
+            item.BeginAnimation(Control.ForegroundProperty, animation);
         }
 
         private void ListBoxItem_UnSelected(object sender, RoutedEventArgs e)
         {
             if (sender is not ListBoxItem item) return;
-            ColorAnimation animation = new()
+            BrushAnimation animation = new()
             {
                 Duration = TimeSpan.FromSeconds(0.2),
             };
-            Storyboard.SetTargetProperty(animation, new PropertyPath(Control.ForegroundProperty));
-            Storyboard storyboard = new();
-            storyboard.Children.Add(animation);
-            storyboard.Begin(item);
+            item.BeginAnimation(Control.ForegroundProperty, animation);
         }
     }
 }

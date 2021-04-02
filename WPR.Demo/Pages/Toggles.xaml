@@ -12,7 +12,7 @@
       Title="Переключатели">
 
     <Grid>
-        <StackPanel Orientation="Horizontal" Background="White" >
+        <StackPanel Orientation="Horizontal">
             <StackPanel Width="200">
                 <TextBlock Text="Чекбоксы" Margin="5"/>
                 <CheckBox Content="Checked" Margin="5" IsChecked="True"/>
@@ -30,15 +30,15 @@
                     <StackPanel Orientation="Horizontal">
                         <ToggleButton IsChecked="True" helpers:ButtonHelper.BorderRadius="0"
                               ToolTip="Полужирный">
-                            <icons:Icon Source="FormatBold" Width="34" IconSize="18"/>
+                            <icons:WPRIcon Source="FormatBold" Width="34" IconSize="18"/>
                         </ToggleButton>
                         <ToggleButton helpers:ButtonHelper.BorderRadius="0"
                               ToolTip="Наклонный">
-                            <icons:Icon Source="FormatItalic" Width="34" IconSize="18"/>
+                            <icons:WPRIcon Source="FormatItalic" Width="34" IconSize="18"/>
                         </ToggleButton>
                         <ToggleButton helpers:ButtonHelper.BorderRadius="0"
                                       ToolTip="Подчёркнутый">
-                            <icons:Icon Source="FormatUnderlined" Width="34" IconSize="18"/>
+                            <icons:WPRIcon Source="FormatUnderlined" Width="34" IconSize="18"/>
                         </ToggleButton>
                     </StackPanel>
                 </controls:ClippingBorder>
@@ -64,22 +64,22 @@
                         <RadioButton Style="{StaticResource WPRRadioButtonButtonStyle}" IsChecked="True"
                                      helpers:ButtonHelper.BorderRadius="0"
                               ToolTip="По левому краю">
-                            <icons:Icon Source="FormatAlignLeft" Width="34" Height="18"/>
+                            <icons:WPRIcon Source="FormatAlignLeft" Width="34" Height="18"/>
                         </RadioButton>
                         <RadioButton Style="{StaticResource WPRRadioButtonButtonStyle}" 
                                      helpers:ButtonHelper.BorderRadius="0"
                               ToolTip="По центру">
-                            <icons:Icon Source="FormatAlignCenter" Width="34" Height="18"/>
+                            <icons:WPRIcon Source="FormatAlignCenter" Width="34" Height="18"/>
                         </RadioButton>
                         <RadioButton Style="{StaticResource WPRRadioButtonButtonStyle}" 
                                      helpers:ButtonHelper.BorderRadius="0"
                               ToolTip="По правому краю">
-                            <icons:Icon Source="FormatAlignRight" Width="34" Height="18"/>
+                            <icons:WPRIcon Source="FormatAlignRight" Width="34" Height="18"/>
                         </RadioButton>
                         <RadioButton Style="{StaticResource WPRRadioButtonButtonStyle}" 
                                      helpers:ButtonHelper.BorderRadius="0"
                               ToolTip="По ширине">
-                            <icons:Icon Source="FormatAlignJustify" Width="34" Height="18"/>
+                            <icons:WPRIcon Source="FormatAlignJustify" Width="34" Height="18"/>
                         </RadioButton>
                     </StackPanel>
                 </controls:ClippingBorder>
