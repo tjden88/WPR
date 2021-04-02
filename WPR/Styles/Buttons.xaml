@@ -1,7 +1,8 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:helpers="clr-namespace:WPR.Helpers"
-                    xmlns:controls="clr-namespace:WPR.Controls">
+                    xmlns:controls="clr-namespace:WPR.Controls"
+                    xmlns:wpr="clr-namespace:WPR">
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="Base.xaml"/>
     </ResourceDictionary.MergedDictionaries>
@@ -116,7 +117,7 @@
     </Style>
 
     <Style x:Key="WPRToolButton" TargetType="{x:Type Button}" BasedOn="{StaticResource WPRFlatButton}">
-        <Setter Property="Padding" Value="4"/>
+        <Setter Property="Padding" Value="2"/>
         <Setter Property="Foreground" Value="{DynamicResource SecondaryTextColorBrush}"/>
         <Setter Property="helpers:RippleHelper.FeedbackBrush" Value="{DynamicResource AnimationEnterColorBrush}"/>
         <Setter Property="helpers:RippleHelper.IsCentered" Value="True"/>
@@ -254,6 +255,42 @@
         <Setter Property="Background" Value="{DynamicResource AccentColorBrush}"/>
         <Setter Property="Foreground" Value="{DynamicResource TextColorBrush}"/>
 
+    </Style>
+
+<!--Служебная кнопка действий, изчезает если неактивна-->
+    <Style x:Key="WPRToolHiddenButton" TargetType="{x:Type Button}" BasedOn="{StaticResource WPRToolButtonNoRipple}">
+        <Setter Property="RenderTransformOrigin" Value="0.5,0.5"/>
+        <Setter Property="RenderTransform">
+            <Setter.Value>
+                <ScaleTransform/>
+            </Setter.Value>
+        </Setter>
+        <Style.Triggers>
+            <Trigger Property="IsEnabled" Value="False">
+                <Trigger.EnterActions>
+                    <BeginStoryboard>
+                        <Storyboard>
+                            <DoubleAnimation Duration="0:0:0.2"
+                                             To="0"
+                                             Storyboard.TargetProperty="(RenderTransform).(ScaleTransform.ScaleX)"/>
+                            <DoubleAnimation Duration="0:0:0.2"
+                                             To="0"
+                                             Storyboard.TargetProperty="(RenderTransform).(ScaleTransform.ScaleY)"/>
+                        </Storyboard>
+                    </BeginStoryboard>
+                </Trigger.EnterActions>
+                <Trigger.ExitActions>
+                    <BeginStoryboard>
+                        <Storyboard>
+                            <DoubleAnimation Duration="0:0:0.2"
+                                             Storyboard.TargetProperty="(RenderTransform).(ScaleTransform.ScaleX)"/>
+                            <DoubleAnimation Duration="0:0:0.2"
+                                             Storyboard.TargetProperty="(RenderTransform).(ScaleTransform.ScaleY)"/>
+                        </Storyboard>
+                    </BeginStoryboard>
+                </Trigger.ExitActions>
+            </Trigger>
+        </Style.Triggers>
     </Style>
 
 </ResourceDictionary>

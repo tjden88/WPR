@@ -26,6 +26,13 @@
             <TextBox Margin="15" helpers:TextHelper.Hint="Подсказка" 
                      helpers:TextHelper.Description="Описание"
                      Text="Текст"/>
+            <Border Background="Azure" CornerRadius="15">
+                <TextBox x:Name="Clearable" Margin="10"
+                         Style="{StaticResource WPRFlatTextBox}" 
+                         helpers:TextHelper.ShowClearButton="True"
+                         helpers:TextHelper.Hint="Flat Clearable TextBox"/>
+            </Border>
         </StackPanel>
+        
     </Grid>
 </Page>

@@ -35,5 +35,23 @@ namespace WPR.Helpers
 
         #endregion
 
+        #region Attached property ShowClearButton : bool - Показать ли кнопку очистки текстбокса
+
+        /// <summary>Показать ли кнопку очистки текстбокса</summary>
+        public static readonly DependencyProperty ShowClearButtonProperty =
+            DependencyProperty.RegisterAttached(
+                "ShowClearButton",
+                typeof(bool),
+                typeof(TextHelper),
+                new PropertyMetadata(default(bool)));
+
+        /// <summary>Показать ли кнопку очистки текстбокса</summary>
+        public static void SetShowClearButton(DependencyObject d, bool value) => d.SetValue(ShowClearButtonProperty, value);
+
+        /// <summary>Показать ли кнопку очистки текстбокса</summary>
+        public static bool GetShowClearButton(DependencyObject d) => (bool) d.GetValue(ShowClearButtonProperty);
+
+        #endregion
+
     }
 }
