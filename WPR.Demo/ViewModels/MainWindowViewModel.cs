@@ -5,7 +5,7 @@ using System.Windows.Input;
 using WPR.Demo.Commands.Base;
 using WPR.Demo.Services;
 using WPR.Demo.ViewModels.Base;
-using WPR.Styles;
+using WPR;
 
 namespace WPR.Demo.ViewModels
 {
@@ -13,7 +13,7 @@ namespace WPR.Demo.ViewModels
     {
         #region Title : string - Заголовок
 
-        private string _Title = "WPR.Styles.Demo";
+        private string _Title = "WPR..Demo";
 
         /// <summary>Заголовок</summary>
         public string Title

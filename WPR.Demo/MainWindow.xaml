@@ -4,7 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:l="clr-namespace:WPR.Demo"
-        xmlns:helpers="clr-namespace:WPR.Styles.Helpers;assembly=WPR.Styles"
+        xmlns:helpers="clr-namespace:WPR.Helpers;assembly=WPR"
         DataContext="{Binding Source={StaticResource Locator}, Path=MainWindowViewModel}"
         Style="{StaticResource ChromeWindow}" helpers:WindowHelper.TitleLeftMargin ="{Binding ElementName=TitleButtonsPanel, Path=ActualWidth}"
         Title="{Binding Title}" Height="650" Width="800">
