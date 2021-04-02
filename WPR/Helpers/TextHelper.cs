@@ -34,5 +34,6 @@ namespace WPR.Helpers
         public static object GetDescription(UIElement element) => element?.GetValue(DescriptionProperty);
 
         #endregion
+
     }
 }

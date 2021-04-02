@@ -13,7 +13,7 @@ namespace WPR.Demo.ViewModels
     {
         #region Title : string - Заголовок
 
-        private string _Title = "WPR..Demo";
+        private string _Title = "WPR.Demo";
 
         /// <summary>Заголовок</summary>
         public string Title

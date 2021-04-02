@@ -1,0 +1,31 @@
+﻿<Page x:Class="WPR.Demo.Pages.Fields"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:WPR.Demo.Pages"
+      xmlns:helpers="clr-namespace:WPR.Helpers;assembly=WPR"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      DataContext="{Binding TestViewModel, Source={StaticResource Locator}}"
+      Title="Поля и текстбоксы">
+
+    <Grid>
+        <StackPanel Width="200" Margin="10">
+            <TextBox Margin="15" helpers:TextHelper.Hint="Подсказка" 
+                     helpers:TextHelper.Description="Описание">
+                <TextBox.Text>
+                    <Binding Path="Age"
+                             UpdateSourceTrigger="PropertyChanged" >
+                        <Binding.ValidationRules>
+                            <local:AgeRangeRule Min="21" Max="100"/>
+                        </Binding.ValidationRules>
+                    </Binding>
+                </TextBox.Text>
+            </TextBox>
+            <TextBox Margin="15" helpers:TextHelper.Hint="Подсказка" 
+                     helpers:TextHelper.Description="Описание"
+                     Text="Текст"/>
+        </StackPanel>
+    </Grid>
+</Page>

@@ -26,17 +26,16 @@
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
 
-<ListBox ItemsSource="{Binding Pages}"
+            <ListBox ItemsSource="{Binding Pages}"
          Style="{StaticResource WPRMenuListBox}"
          Foreground="{DynamicResource AccentColorBrush}"
          SelectedValue="{Binding SelectedPage}">
-    <ListBox.ItemTemplate>
-        <DataTemplate>
-            <TextBlock FontFamily="{StaticResource RobotoFont}" Text="{Binding Title}"></TextBlock>
-        </DataTemplate>
-    </ListBox.ItemTemplate>
-</ListBox>
-
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock FontFamily="{StaticResource RobotoFont}" Text="{Binding Title}"></TextBlock>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
             <Frame NavigationUIVisibility="Hidden" Grid.Column="1" Content="{Binding SelectedPage}"/>
         </Grid>
     </Grid>

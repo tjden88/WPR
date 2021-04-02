@@ -12,6 +12,7 @@
         <ResourceDictionary Source="Styles\CheckBoxes.xaml"/>
         <ResourceDictionary Source="Styles\RadioButtons.xaml"/>
         <ResourceDictionary Source="Styles\ListBoxes.xaml"/>
+        <ResourceDictionary Source="Styles\TextBoxes.xaml"/>
     </ResourceDictionary.MergedDictionaries>
 
     <!--Стили по умолчанию-->
@@ -24,9 +25,9 @@
     <Style TargetType="RadioButton" BasedOn="{StaticResource WPRRadioButton}"/>
     <Style TargetType="ListBox" BasedOn="{StaticResource WPRListBox}"/>
     <Style TargetType="ListBoxItem" BasedOn="{StaticResource WPRListBoxItem}"/>
+    <Style TargetType="TextBox" BasedOn="{StaticResource WPRTextBox}"/>
 
     <!--
-    <Style TargetType="TextBox" BasedOn="{StaticResource PRSimpleTextBox}"/>
     <Style TargetType="ComboBox" BasedOn="{StaticResource PRComboBox}"/>
     <Style TargetType="TabControl" BasedOn="{StaticResource PRTabControl}"/>
     <Style TargetType="DataGrid" BasedOn="{StaticResource PRDataGrid}"/>
