@@ -4,9 +4,9 @@ using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
-using WPRControls.Icons;
+using WPR.Icons;
 
-namespace WPR.Icons
+namespace WPR
 {
     public class WPRIcon : Control
     {

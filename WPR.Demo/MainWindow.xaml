@@ -7,7 +7,7 @@
         xmlns:helpers="clr-namespace:WPR.Helpers;assembly=WPR"
         DataContext="{Binding Source={StaticResource Locator}, Path=MainWindowViewModel}"
         Style="{StaticResource ChromeWindow}" helpers:WindowHelper.TitleLeftMargin ="{Binding ElementName=TitleButtonsPanel, Path=ActualWidth}"
-        Title="{Binding Title}" Height="650" Width="800">
+        Title="{Binding Title}" Height="650" Width="1000">
 
     <Grid>
         <Grid.RowDefinitions>
