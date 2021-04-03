@@ -5,6 +5,7 @@
     <Style TargetType="{x:Type local:WPRIcon}">
         <Setter Property="HorizontalAlignment" Value="Center" />
         <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="Margin" Value="0"/>
         <Setter Property="Focusable" Value="False" />
         <Setter Property="FlowDirection" Value="LeftToRight" />
         <Setter Property="Template">

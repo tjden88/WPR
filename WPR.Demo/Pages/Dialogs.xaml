@@ -6,12 +6,21 @@
       xmlns:local="clr-namespace:WPR.Demo.Pages"
       xmlns:controls="clr-namespace:WPR.Controls;assembly=WPR"
       mc:Ignorable="d" 
+      DataContext="{Binding RelativeSource={RelativeSource Self}}"
       d:DesignHeight="450" d:DesignWidth="800"
       Title="Диалоги">
 
-    <controls:WPRCard>
-        <controls:EditDialog IconSource="QuestionMarkBox" Header="Диалог пользователя">
-            Привет!
-        </controls:EditDialog>
+    <controls:WPRCard >
+        <controls:WPRDialogPanel x:Name="DialogPanel">
+            <controls:WPRDialogPanel.Header>
+                <controls:EditDialog IconSource="QuestionMarkBox" Header="Диалог пользователя">
+                    <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center">Привет!</TextBlock>
+                </controls:EditDialog>
+            </controls:WPRDialogPanel.Header>
+            <StackPanel Margin="10">
+                <Button Content="Show User Dialog" HorizontalAlignment="Center" VerticalAlignment="Center" Command="{Binding ShowUserDialogCommand}"/>
+                <Button Content="Show Window Dialog" HorizontalAlignment="Center" VerticalAlignment="Center" Command="{Binding ShowWindowDialogCommand}"/>
+            </StackPanel>
+        </controls:WPRDialogPanel>
     </controls:WPRCard>
 </Page>

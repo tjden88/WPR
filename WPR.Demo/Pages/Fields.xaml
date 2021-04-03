@@ -12,8 +12,8 @@
 
     <Grid>
         <StackPanel Width="200" Margin="10">
-            <TextBox Margin="15" helpers:TextHelper.Hint="Подсказка" 
-                     helpers:TextHelper.Description="Описание">
+            <TextBox Margin="15" helpers:TextHelper.Hint="Возраст: 21-100" 
+                     helpers:TextHelper.Description="ValidatedTextBox">
                 <TextBox.Text>
                     <Binding Path="Age"
                              UpdateSourceTrigger="PropertyChanged" >

@@ -36,6 +36,10 @@
                             <Setter Property="Effect" TargetName="ShadowBorder" Value="{StaticResource PopupBigShadow}"/>
                             <Setter Property="Margin" Value="20"/>
                         </Trigger>
+                        <Trigger Property="IsDialogShadowStyle" Value="True">
+                            <Setter Property="Effect" TargetName="ShadowBorder" Value="{StaticResource DialogShadow}"/>
+                            <Setter Property="Margin" Value="20"/>
+                        </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>

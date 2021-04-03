@@ -28,15 +28,15 @@
                                             HorizontalAlignment="Center" 
                                             Margin="5">
                     <StackPanel Orientation="Horizontal">
-                        <ToggleButton IsChecked="True" helpers:ButtonHelper.BorderRadius="0"
+                        <ToggleButton IsChecked="True" helpers:ButtonHelper.BorderRadius="0" Margin="0"
                               ToolTip="Полужирный">
                             <wpr:WPRIcon Source="FormatBold" Width="34" IconSize="18"/>
                         </ToggleButton>
-                        <ToggleButton helpers:ButtonHelper.BorderRadius="0"
+                        <ToggleButton helpers:ButtonHelper.BorderRadius="0" Margin="0"
                               ToolTip="Наклонный">
                             <wpr:WPRIcon Source="FormatItalic" Width="34" IconSize="18"/>
                         </ToggleButton>
-                        <ToggleButton helpers:ButtonHelper.BorderRadius="0"
+                        <ToggleButton helpers:ButtonHelper.BorderRadius="0" Margin="0"
                                       ToolTip="Подчёркнутый">
                             <wpr:WPRIcon Source="FormatUnderlined" Width="34" IconSize="18"/>
                         </ToggleButton>
@@ -61,22 +61,22 @@
                                             HorizontalAlignment="Center" 
                                             Margin="5">
                     <StackPanel Orientation="Horizontal">
-                        <RadioButton Style="{StaticResource WPRRadioButtonButtonStyle}" IsChecked="True"
+                        <RadioButton Style="{StaticResource WPRRadioButtonButtonStyle}" IsChecked="True" Margin="0"
                                      helpers:ButtonHelper.BorderRadius="0"
                               ToolTip="По левому краю">
                             <wpr:WPRIcon Source="FormatAlignLeft" Width="34" Height="18"/>
                         </RadioButton>
-                        <RadioButton Style="{StaticResource WPRRadioButtonButtonStyle}" 
+                        <RadioButton Style="{StaticResource WPRRadioButtonButtonStyle}"  Margin="0"
                                      helpers:ButtonHelper.BorderRadius="0"
                               ToolTip="По центру">
                             <wpr:WPRIcon Source="FormatAlignCenter" Width="34" Height="18"/>
                         </RadioButton>
-                        <RadioButton Style="{StaticResource WPRRadioButtonButtonStyle}" 
+                        <RadioButton Style="{StaticResource WPRRadioButtonButtonStyle}"  Margin="0"
                                      helpers:ButtonHelper.BorderRadius="0"
                               ToolTip="По правому краю">
                             <wpr:WPRIcon Source="FormatAlignRight" Width="34" Height="18"/>
                         </RadioButton>
-                        <RadioButton Style="{StaticResource WPRRadioButtonButtonStyle}" 
+                        <RadioButton Style="{StaticResource WPRRadioButtonButtonStyle}"  Margin="0"
                                      helpers:ButtonHelper.BorderRadius="0"
                               ToolTip="По ширине">
                             <wpr:WPRIcon Source="FormatAlignJustify" Width="34" Height="18"/>

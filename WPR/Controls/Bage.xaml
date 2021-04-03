@@ -6,6 +6,7 @@
     </ResourceDictionary.MergedDictionaries>
 
     <Style TargetType="{x:Type local:Bage}">
+        <Setter Property="Margin" Value="0"/>
         <Setter Property="Background" Value="{DynamicResource AccentColorBrush}"/>
         <Setter Property="Foreground" Value="{DynamicResource TextColorBrush }"/>
         <Setter Property="Padding" Value="-5"/>

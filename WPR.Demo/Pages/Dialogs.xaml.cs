@@ -1,17 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+using WPR.Controls;
+using WPR.Demo.Commands.Base;
 
 namespace WPR.Demo.Pages
 {
@@ -24,5 +16,39 @@ namespace WPR.Demo.Pages
         {
             InitializeComponent();
         }
+
+        #region Command ShowUserDialogCommand - Показать диалог пользователя
+
+        private ICommand _ShowUserDialogCommand;
+
+        /// <summary>Показать диалог пользователя</summary>
+        public ICommand ShowUserDialogCommand => _ShowUserDialogCommand
+            ??= new Command(OnShowUserDialogCommandExecuted, CanShowUserDialogCommandExecute);
+
+        private bool CanShowUserDialogCommandExecute() => true;
+
+        private void OnShowUserDialogCommandExecuted()
+        {
+            DialogPanel.Show(false);
+        }
+
+        #endregion
+
+        #region Command ShowWindowDialogCommand - Показать диалог окна
+
+        private ICommand _ShowWindowDialogCommand;
+
+        /// <summary>Показать диалог окна</summary>
+        public ICommand ShowWindowDialogCommand => _ShowWindowDialogCommand
+            ??= new Command(OnShowWindowDialogCommandExecuted, CanShowWindowDialogCommandExecute);
+
+        private bool CanShowWindowDialogCommandExecute() => true;
+
+        private void OnShowWindowDialogCommandExecuted()
+        {
+            WPRDialogPanel.ShowOnWindow(Application.Current.MainWindow, "sdklfjsklwsefmes", false);
+        }
+
+        #endregion
     }
 }
