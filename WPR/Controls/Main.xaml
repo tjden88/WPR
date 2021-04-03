@@ -4,5 +4,6 @@
         <ResourceDictionary Source="Ripple.xaml"/>
         <ResourceDictionary Source="Bage.xaml"/>
         <ResourceDictionary Source="EditDialog.xaml"/>
-        </ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="WPRCard.xaml"/>
+</ResourceDictionary.MergedDictionaries>
 </ResourceDictionary>

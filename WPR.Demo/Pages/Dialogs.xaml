@@ -9,9 +9,9 @@
       d:DesignHeight="450" d:DesignWidth="800"
       Title="Диалоги">
 
-    <Grid>
+    <controls:WPRCard>
         <controls:EditDialog IconSource="QuestionMarkBox" Header="Диалог пользователя">
             Привет!
         </controls:EditDialog>
-    </Grid>
+    </controls:WPRCard>
 </Page>
