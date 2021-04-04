@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using WPR.Controls;
@@ -15,6 +12,8 @@ namespace WPR
         // Найти панель для отображения диалога
         private static WPRDialogPanel FindDialogPanel(DependencyObject uIElement)
         {
+            if (uIElement == null) return null;
+            
             if (uIElement is WPRDialogPanel panel)
             {
                 return panel;
@@ -51,6 +50,46 @@ namespace WPR
 
         #endregion
 
+        #region ShowDialog
+        public static bool? ShowModal(DependencyObject sender, string Caption, string Title = "", bool CancelButton = false, bool YesNoButtons = false)
+        {
+            bool? result = null;
+
+            WPRMsgBox messageBox = new()
+            {
+                Title = Title,
+                Caption = Caption,
+                CancelButtonVisible = CancelButton,
+                YesNoButtonsVisible = YesNoButtons
+            };
+
+            Window owner = sender is Window w ? w : sender.FindVisualParent<Window>();
+
+            WPRDialogPanel panel = FindDialogPanel(owner);
+
+            Window dlg = new()
+            {
+                WindowStartupLocation = WindowStartupLocation.CenterOwner,
+                Owner = owner,
+                Content = messageBox,
+                Style = (Style)Application.Current.Resources["WPRModalWindow"]
+            };
+
+            messageBox.DialogResult += B =>
+            {
+                result = B;
+                dlg.Close();
+            };
+
+            panel?.Show(null,true);
+
+            dlg.ShowDialog();
+
+            panel?.Hide();
+
+            return result;
+        } 
+        #endregion
 
         #region Information
         /// <summary>Показать информационное окно</summary>

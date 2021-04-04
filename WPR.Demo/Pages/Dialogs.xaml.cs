@@ -77,5 +77,20 @@ namespace WPR.Demo.Pages
         }
 
         #endregion
+
+        #region Command ShowModalDialogCommand - Показать модальный диалог
+
+        private ICommand _ShowModalDialogCommand;
+
+        /// <summary>Показать модальный диалог</summary>
+        public ICommand ShowModalDialogCommand => _ShowModalDialogCommand
+            ??= new Command(OnShowModalDialogCommandExecuted);
+
+        private void OnShowModalDialogCommandExecuted()
+        {
+            Debug.WriteLine(WPRMessageBox.ShowModal(this, "Модальный диалог", "Заголовок", true));
+        }
+
+        #endregion
     }
 }

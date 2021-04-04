@@ -2,7 +2,7 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:wh="clr-namespace:WPR.Helpers"
                     xmlns:controls="clr-namespace:WPR.Controls"
-                    x:Class="WPR.Styles.ChromeWindow">
+                    x:Class="WPR.Styles.Windows">
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="Buttons.xaml"/>
     </ResourceDictionary.MergedDictionaries>
@@ -166,6 +166,48 @@
         <Setter Property="UseLayoutRounding" Value="True"/>
         <Setter Property="FontFamily" Value="{StaticResource RobotoFont}"/>
         <Setter Property="Template" Value="{StaticResource ChromeWindowTemplate}"/>
+    </Style>
+
+    <!--Модальное окно с сообщением-->
+    <Style TargetType="{x:Type Window}" x:Key="WPRModalWindow">
+        <Setter Property="SizeToContent" Value="WidthAndHeight"/>
+        <Setter Property="WindowStyle" Value="None"/>
+        <Setter Property="AllowsTransparency" Value="True"/>
+        <Setter Property="ShowInTaskbar" Value="False"/>
+        <EventSetter Event="MouseMove" Handler="ModalWindow_MouseMove"/>
+        <EventSetter Event="Loaded" Handler="ModalWindow_Loaded"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Window}">
+                    <Grid x:Name="RootGrid" 
+                          Margin="20"
+                          Background="Transparent">
+                        <controls:WPRCard IsDialogShadowStyle="True"     
+                                          Background="{TemplateBinding Background}"
+                                          BorderBrush="{TemplateBinding BorderBrush}"
+                                          BorderThickness="{TemplateBinding BorderThickness}"
+                                          RenderTransformOrigin="0.5,0.5"
+                                          Content="{TemplateBinding Content}">
+                            <controls:WPRCard.RenderTransform>
+                                <ScaleTransform x:Name="Transform" ScaleX="0" ScaleY="{Binding RelativeSource={RelativeSource Self}, Path=ScaleX}"/>
+                            </controls:WPRCard.RenderTransform>
+                        </controls:WPRCard>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <EventTrigger RoutedEvent="Loaded">
+                            <BeginStoryboard>
+                                <Storyboard>
+                                    <DoubleAnimation Storyboard.TargetName="Transform"
+                                                     Storyboard.TargetProperty="ScaleX"
+                                                     To="1"
+                                                     Duration="0:0:0.25"/>
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
     </Style>
 
 </ResourceDictionary>

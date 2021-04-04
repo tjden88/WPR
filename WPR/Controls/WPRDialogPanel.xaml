@@ -126,8 +126,9 @@
                                         <DoubleAnimation Duration="0:0:0.3"
                                                          To="0"
                                                          Storyboard.TargetProperty="Opacity"
+                                                         BeginTime="0:0:0.2"
                                                          Storyboard.TargetName="PART_Rect"/>
-                                        <DoubleAnimation Duration="0:0:0.4"
+                                        <DoubleAnimation Duration="0:0:0.3"
                                                          To="0"
                                                          EasingFunction="{StaticResource ElasticEaseIn}"
                                                          Storyboard.TargetProperty="ScaleX"
