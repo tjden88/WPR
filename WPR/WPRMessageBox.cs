@@ -232,5 +232,25 @@ namespace WPR
             await complete.Task.ConfigureAwait(false);
         }
         #endregion
+
+        #region Bubble
+
+        /// <summary>Показать всплывающее сообщение</summary>
+        public static void Bubble(DependencyObject sender, string Text, int Duration = 3000)
+        {
+            var p = FindDialogPanel(sender);
+            p?.ShowBubble(Text, Duration);
+        }
+
+        /// <summary>Показать всплывающее сообщение с кнопкой</summary>
+        public static void Bubble(DependencyObject sender, string Text, string ButtonText, Action Callback, int Duration = 4000)
+        {
+            if (FindDialogPanel(sender) is WPRDialogPanel p)
+            {
+                
+                p.ShowBubble(Text, Duration, ButtonText, Callback);
+            }
+        }
+        #endregion
     }
 }

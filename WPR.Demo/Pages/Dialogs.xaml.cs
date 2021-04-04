@@ -92,5 +92,15 @@ namespace WPR.Demo.Pages
         }
 
         #endregion
+
+        private void ButtonBase_OnClick(object Sender, RoutedEventArgs E)
+        {
+            WPRMessageBox.Bubble(this, "Всплывающее сообщение");
+        }
+
+        private void Button2_OnClick(object Sender, RoutedEventArgs E)
+        {
+            WPRMessageBox.Bubble(this, "Всплывающее сообщение с кнопкой", "YEP!", () => Debug.WriteLine("Clicked!"));
+        }
     }
 }

@@ -63,6 +63,7 @@
                                        Margin="15"/>
                                 <Button  Margin="7"
                                          x:Name="BubbleButton"
+                                         Background="{x:Null}"
                                          Foreground="{DynamicResource AccentColorBrush}"
                                          Visibility="Collapsed"/>
                             </StackPanel>

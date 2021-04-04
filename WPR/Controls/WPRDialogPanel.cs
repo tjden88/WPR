@@ -12,8 +12,6 @@ namespace WPR.Controls
     /// <summary> Контрол для обёртки диалоговых окон </summary>
     public class WPRDialogPanel : HeaderedContentControl
     {
-        public event EventHandler ButtonClicked;
-
         static WPRDialogPanel()
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(WPRDialogPanel), new FrameworkPropertyMetadata(typeof(WPRDialogPanel)));
@@ -123,9 +121,9 @@ namespace WPR.Controls
         /// <param name="Text">Текст сообщения</param>
         /// <param name="Duration">Длительность</param>
         /// <param name="ButtonCommandText">Текст кнопки команды</param>
-        public void ShowBubble(string Text, int Duration = 2000, string ButtonCommandText = "")
+        public void ShowBubble(string Text, int Duration = 2000, string ButtonCommandText = "", Action Callback = null)
         {
-            _StackBubblesQueue.Enqueue(new StackBubbles() { Text = Text, Duration = Duration, Buttontext = ButtonCommandText });
+            _StackBubblesQueue.Enqueue(new StackBubbles() { Text = Text, Duration = Duration, Buttontext = ButtonCommandText, Action=Callback });
             if (_StackBubblesQueue.Count == 1) ShowBubbleinStack();
         }
 
@@ -177,8 +175,7 @@ namespace WPR.Controls
 
         private void BubbleButton_Click(object sender, RoutedEventArgs e)
         {
-            ButtonClicked?.Invoke(sender, e);
-            ButtonClicked = null;
+            _StackBubblesQueue.Peek().Action?.Invoke();
             HideBubble();
         }
 
@@ -196,6 +193,7 @@ namespace WPR.Controls
             public string Text;
             public int Duration;
             public string Buttontext;
+            public Action Action;
         }
         #endregion
     }
