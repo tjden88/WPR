@@ -19,7 +19,6 @@
             </controls:WPRDialogPanel.Header>
             <StackPanel Margin="10">
                 <Button Content="Show User Dialog" HorizontalAlignment="Center" VerticalAlignment="Center" Command="{Binding ShowUserDialogCommand}"/>
-                <Button Content="Show Window Dialog" HorizontalAlignment="Center" VerticalAlignment="Center" Command="{Binding ShowWindowDialogCommand}"/>
                 <controls:WPRCard HorizontalAlignment="Center" >
                     <controls:WPRMsgBox Title="Заголовок"
                                         x:Name="MsgBox"
@@ -27,6 +26,9 @@
                                         CancelButtonVisible="True"
                                         YesNoButtonsVisible="True"/>
                 </controls:WPRCard>
+                <Button Content="Show Window Dialog" HorizontalAlignment="Center" VerticalAlignment="Center" Command="{Binding ShowWindowDialogCommand}"/>
+                <Button Content="Show Window Dialog Async" HorizontalAlignment="Center" VerticalAlignment="Center" Command="{Binding ShowWindowDialogCommandAsync}"/>
+
             </StackPanel>
         </controls:WPRDialogPanel>
     </controls:WPRCard>

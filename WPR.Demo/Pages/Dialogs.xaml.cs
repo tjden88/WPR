@@ -47,13 +47,29 @@ namespace WPR.Demo.Pages
 
         /// <summary>Показать диалог окна</summary>
         public ICommand ShowWindowDialogCommand => _ShowWindowDialogCommand
-            ??= new Command(OnShowWindowDialogCommandExecuted, CanShowWindowDialogCommandExecute);
-
-        private bool CanShowWindowDialogCommandExecute() => true;
+            ??= new Command(OnShowWindowDialogCommandExecuted);
 
         private void OnShowWindowDialogCommandExecuted()
         {
-            WPRDialogPanel.ShowOnWindow(Application.Current.MainWindow, "sdklfjsklwsefmes", false);
+            //WPRMessageBox.Information(this, "Текст диалога пользователя", "Заголовок", () => Debug.WriteLine("Диалог закрыт"));
+            WPRMessageBox.CancelInformation(this, "Текст диалога пользователя", "Заголовок", (b) => Debug.WriteLine($"Диалог закрыт: {b}"));
+        }
+
+        #endregion
+
+        #region Command ShowWindowDialogCommandAsync - Показать диалог асинхронно
+
+        private ICommand _ShowWindowDialogCommandAsync;
+
+        /// <summary>Показать диалог асинхронно</summary>
+        public ICommand ShowWindowDialogCommandAsync => _ShowWindowDialogCommandAsync
+            ??= new Command(OnShowWindowDialogCommandAsyncExecuted);
+
+        private async void OnShowWindowDialogCommandAsyncExecuted()
+        {
+            //await WPRMessageBox.InformationAsync(this, "Текст диалога пользователя");
+          var res= await WPRMessageBox.CancelInformationAsync(this, "Текст диалога пользователя");
+            Debug.WriteLine($"Асинхронный диалог закрыт: {res}");
         }
 
         #endregion

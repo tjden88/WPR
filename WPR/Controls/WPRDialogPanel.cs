@@ -97,7 +97,7 @@ namespace WPR.Controls
         /// </summary>
         /// <param name="content">Объект - содержимое для показа в качестве диалога</param>
         /// <param name="staysOpen">Не позволять закрыть содержимое при клике за его пределы</param>
-        public void Show(object content, bool staysOpen = true)
+        public void Show(object content, bool staysOpen)
         {
             Header = content;
             Show(staysOpen);
