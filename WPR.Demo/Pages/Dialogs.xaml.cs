@@ -52,7 +52,9 @@ namespace WPR.Demo.Pages
         private void OnShowWindowDialogCommandExecuted()
         {
             //WPRMessageBox.Information(this, "Текст диалога пользователя", "Заголовок", () => Debug.WriteLine("Диалог закрыт"));
-            WPRMessageBox.CancelInformation(this, "Текст диалога пользователя", "Заголовок", (b) => Debug.WriteLine($"Диалог закрыт: {b}"));
+            //WPRMessageBox.InformationCancel(this, "Текст диалога пользователя", "Заголовок", (b) => Debug.WriteLine($"Диалог закрыт: {b}"));
+            //WPRMessageBox.Question(this, "Текст диалога пользователя", "Заголовок", (b) => Debug.WriteLine($"Диалог закрыт: {b}"));
+            WPRMessageBox.QuestionCancel(this, "Текст диалога пользователя", "Заголовок", (b) => Debug.WriteLine($"Диалог закрыт: {b}"));
         }
 
         #endregion
@@ -67,8 +69,10 @@ namespace WPR.Demo.Pages
 
         private async void OnShowWindowDialogCommandAsyncExecuted()
         {
-            //await WPRMessageBox.InformationAsync(this, "Текст диалога пользователя");
-          var res= await WPRMessageBox.CancelInformationAsync(this, "Текст диалога пользователя");
+            await WPRMessageBox.InformationAsync(MsgBox, "Текст диалога пользователя");
+            //var res = await WPRMessageBox.InformationCancelAsync(this, "Текст диалога пользователя");
+            //var res = await WPRMessageBox.QuestionAsync(this, "Текст диалога пользователя");
+            var res = await WPRMessageBox.QuestionCancelAsync(this, "Текст диалога пользователя");
             Debug.WriteLine($"Асинхронный диалог закрыт: {res}");
         }
 

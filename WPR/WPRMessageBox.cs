@@ -83,40 +83,115 @@ namespace WPR
         }
         #endregion
 
-        #region CancelInformation
+        #region InformationCancel
 
         /// <summary>Показать диалог с кнопками ОК, ОТМЕНА</summary>
-        public static void CancelInformation(DependencyObject sender, string Caption, Action<bool> Callback = null)
+        public static void InformationCancel(DependencyObject sender, string Caption, Action<bool> Callback = null)
         {
-            CancelInformation(sender, Caption, string.Empty, Callback);
+            InformationCancel(sender, Caption, string.Empty, Callback);
         }
         /// <summary>Показать диалог с кнопками ОК, ОТМЕНА</summary>
-        public static void CancelInformation(DependencyObject sender, string Caption, string Title, Action<bool> Callback = null)
+        public static void InformationCancel(DependencyObject sender, string Caption, string Title, Action<bool> Callback = null)
         {
             Show(sender, Caption, Title, B => Callback?.Invoke(B ?? false), true, false);
         }
         #endregion
 
-        #region CancelInformationAsync
+        #region InformationCancelAsync
 
         /// <summary>Показать диалог с кнопками ОК, ОТМЕНА</summary>
-        public static async Task<bool> CancelInformationAsync(DependencyObject sender, string Caption)
+        public static async Task<bool> InformationCancelAsync(DependencyObject sender, string Caption)
         {
-            return await CancelInformationAsync(sender, Caption, string.Empty);
+            return await InformationCancelAsync(sender, Caption, string.Empty);
         }
         /// <summary>Показать диалог с кнопками ОК, ОТМЕНА</summary>
-        public static async Task<bool> CancelInformationAsync(DependencyObject sender, string Caption, string Title)
+        public static async Task<bool> InformationCancelAsync(DependencyObject sender, string Caption, string Title)
         {
             TaskCompletionSource<bool> complete = new();
-            CancelInformation(sender, Caption, Title, (b) => complete.TrySetResult(b));
+            InformationCancel(sender, Caption, Title, (b) => complete.TrySetResult(b));
             return await complete.Task.ConfigureAwait(false);
         }
         #endregion
 
-        #region ShowQuestion
+        #region Question
+        /// <summary>Показать диалог с кнопками ДА, НЕТ</summary>
+        public static void Question(DependencyObject sender, string Caption, Action<bool> Callback = null)
+        {
+            Question(sender, Caption, string.Empty, Callback);
+        }
 
-        
+        /// <summary>Показать диалог с кнопками ДА, НЕТ</summary>
+        public static void Question(DependencyObject sender, string Caption, string Title, Action<bool> Callback = null)
+        {
+            Show(sender, Caption, Title, B => Callback?.Invoke(B ?? false), false, true);
+        }
+        #endregion
 
+        #region QuestionAsync
+        /// <summary>Показать диалог с кнопками ДА, НЕТ</summary>
+        public static async Task<bool> QuestionAsync(DependencyObject sender, string Caption)
+        {
+            return await QuestionAsync(sender, Caption, string.Empty);
+        }
+        /// <summary>Показать диалог с кнопками ДА, НЕТ</summary>
+        public static async Task<bool> QuestionAsync(DependencyObject sender, string Caption, string Title)
+        {
+            TaskCompletionSource<bool> complete = new();
+            Question(sender, Caption, Title, (b) => complete.TrySetResult(b));
+            return await complete.Task.ConfigureAwait(false);
+        }
+
+        #endregion
+
+        #region QuestionCancel
+        /// <summary>Показать диалог с кнопками ДА, НЕТ, ОТМЕНА</summary>
+        public static void QuestionCancel(DependencyObject sender, string Caption, Action<bool?> Callback = null)
+        {
+            QuestionCancel(sender, Caption, string.Empty, Callback);
+        }
+
+        /// <summary>Показать диалог с кнопками ДА, НЕТ, ОТМЕНА</summary>
+        public static void QuestionCancel(DependencyObject sender, string Caption, string Title, Action<bool?> Callback = null)
+        {
+            Show(sender, Caption, Title, Callback, true, true);
+        }
+        #endregion
+
+        #region QuestionCancelAsync
+
+        /// <summary>Показать диалог с кнопками ДА, НЕТ, ОТМЕНА</summary>
+        public static async Task<bool?> QuestionCancelAsync(DependencyObject sender, string Caption)
+        {
+            return await QuestionCancelAsync(sender, Caption, string.Empty);
+        }
+        /// <summary>Показать диалог с кнопками ДА, НЕТ, ОТМЕНА</summary>
+        public static async Task<bool?> QuestionCancelAsync(DependencyObject sender, string Caption, string Title)
+        {
+            TaskCompletionSource<bool?> complete = new();
+            QuestionCancel(sender, Caption, Title, (b) => complete.TrySetResult(b));
+            return await complete.Task.ConfigureAwait(false);
+        }
+        #endregion
+
+        #region Error
+
+        /// <summary>Показать информационное окно с сообщением об ошибке</summary>
+        public static void Error(DependencyObject sender, Exception e, Action Callback = null)
+        {
+            Show(sender, e.Message, "Ошибка!", B => Callback?.Invoke(), false, false);
+        }
+        #endregion
+
+        #region ErrorAsync
+
+        /// <summary>Показать информационное окно с сообщением об ошибке</summary>
+        public static async Task ErrorAsync(DependencyObject sender, Exception e)
+        {
+            TaskCompletionSource complete = new();
+
+            Error(sender, e, () => complete.TrySetResult());
+            await complete.Task.ConfigureAwait(false);
+        }
         #endregion
     }
 }
