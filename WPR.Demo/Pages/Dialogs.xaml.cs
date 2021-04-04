@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Diagnostics;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -15,6 +16,12 @@ namespace WPR.Demo.Pages
         public Dialogs()
         {
             InitializeComponent();
+            MsgBox.DialogResult += DialogResult;
+        }
+
+        private void DialogResult(bool? Obj)
+        {
+            Debug.WriteLine(Obj);
         }
 
         #region Command ShowUserDialogCommand - Показать диалог пользователя

@@ -9,6 +9,7 @@
 
     <Style x:Key="WindowTitleButton" TargetType="{x:Type Button}" BasedOn="{StaticResource WPRFlatButton}">
         <Setter Property="FontSize" Value="11"/>
+        <Setter Property="Margin" Value="0"></Setter>
         <Setter Property="WindowChrome.IsHitTestVisibleInChrome" Value="True" />
         <Setter Property="Foreground" Value="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=(wh:WindowHelper.WindowHeaderForeground)}" />
         <Setter Property="Focusable" Value="False"/>

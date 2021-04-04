@@ -5,5 +5,6 @@
         <ResourceDictionary Source="EditDialog.xaml"/>
         <ResourceDictionary Source="WPRCard.xaml"/>
         <ResourceDictionary Source="WPRDialogPanel.xaml"/>
+        <ResourceDictionary Source="WPRMsgBox.xaml"/>
 </ResourceDictionary.MergedDictionaries>
 </ResourceDictionary>
