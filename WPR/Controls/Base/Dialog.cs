@@ -14,6 +14,7 @@ namespace WPR.Controls.Base
         protected Dialog()
         {
             SetDialogResultCommand = new ResultCommand(this);
+            CancelCommand = new CancCommand(this);
         }
 
         #region Title : string - Заголовок
@@ -56,10 +57,36 @@ namespace WPR.Controls.Base
         }
         #endregion
 
+        #region CancelCommand : ICommand - Команда отмены
+
+        /// <summary>Команда отмены</summary>
+        public static readonly DependencyProperty CancelCommandProperty =
+            DependencyProperty.Register(
+                nameof(CancelCommand),
+                typeof(ICommand),
+                typeof(Dialog),
+                new PropertyMetadata(null));
+
+        /// <summary>Команда отмены</summary>
+        //[Category("")]
+        [Description("Команда отмены")]
+        public ICommand CancelCommand
+        {
+            get => (ICommand)GetValue(CancelCommandProperty);
+            set => SetValue(CancelCommandProperty, value);
+        }
+        #endregion
+
         /// <summary>Вызывается при срабатывании команды SetDialogResultCommand</summary>
-        protected virtual void OnSetCommandExecute(bool? parameter)
+        protected virtual void OnSetCommandExecute(bool parameter)
         {
             DialogResult?.Invoke(parameter);
+        }
+
+        /// <summary>Может ли выполниться команда SetDialogResultCommand</summary>
+        protected virtual bool CanSetCommandExecuted()
+        {
+            return true;
         }
 
         class ResultCommand : ICommand
@@ -70,14 +97,33 @@ namespace WPR.Controls.Base
             {
                _Dialog = dialog;
             }
+            public bool CanExecute(object parameter) => _Dialog.CanSetCommandExecuted();
+
+            public void Execute(object parameter)
+            {
+                bool result = (bool)parameter;
+                _Dialog.OnSetCommandExecute(result);
+            }
+            public event EventHandler CanExecuteChanged
+            {
+                add => CommandManager.RequerySuggested += value;
+                remove => CommandManager.RequerySuggested -= value;
+            }
+        }
+        class CancCommand : ICommand
+        {
+            private readonly Dialog _Dialog;
+
+            public CancCommand(Dialog dialog)
+            {
+                _Dialog = dialog;
+            }
             public bool CanExecute(object parameter) => true;
 
             public void Execute(object parameter)
             {
-                bool? result = (bool?)parameter;
-                _Dialog.OnSetCommandExecute(result);
+                _Dialog.DialogResult?.Invoke(null);
             }
-
             public event EventHandler CanExecuteChanged;
         }
     }

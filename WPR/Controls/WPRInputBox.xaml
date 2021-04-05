@@ -22,22 +22,11 @@
                                        Text="{TemplateBinding Title}" 
                                        FontSize="14"
                                        Margin="10"/>
-                            <TextBox Margin="10" x:Name="TextBox" >
-                                <TextBox.Text>
-                                    <Binding RelativeSource="{ RelativeSource TemplatedParent}"
-                                             Mode="TwoWay"
-                                             Path="TextValue"
-                                             UpdateSourceTrigger="PropertyChanged">
-                                        <Binding.ValidationRules>
-
-                                        </Binding.ValidationRules>
-                                    </Binding>
-                                </TextBox.Text>
-                            </TextBox>
+                            <TextBox Margin="10" x:Name="TextBox" 
+                                     Text="{Binding TextValue, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="6">
                                 <Button x:Name="Cancel" Content="ОТМЕНА" Width="85" Margin="3"  IsCancel="True" Style="{StaticResource WPRFlatButton}"
-                                        Command="{TemplateBinding SetDialogResultCommand}"
-                                        CommandParameter="{StaticResource False}"/>
+                                        Command="{TemplateBinding CancelCommand}"/>
                                 <Button x:Name="Ok" Content="OK" Width="85" Margin="3" IsDefault="True"
                                         Command="{TemplateBinding SetDialogResultCommand}"
                                         CommandParameter="{StaticResource True}"/>

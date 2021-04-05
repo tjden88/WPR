@@ -1,7 +1,5 @@
 ﻿using System;
 using System.ComponentModel;
-using System.Data;
-using System.Diagnostics;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -27,13 +25,25 @@ namespace WPR.Controls
                 {
                     binding.ValidationRules.Clear();
                     binding.ValidationRules.Add(_PredicateValidationRule);
+                    t.GetBindingExpression(TextBox.TextProperty)?.UpdateSource();
+                    t.Focus();
+                    t.SelectAll();
                 }
             }
         }
         private readonly PredicateValidationRule<string> _PredicateValidationRule = new( S => true);
 
         /// <summary>Предикат валидации значения. Если возвращает false - в текстовом поле возникает ошибка</summary>
-        public Predicate<string> ValidationPredicate { get => _PredicateValidationRule.Predicate; set => _PredicateValidationRule.Predicate = value; }
+        public Predicate<string> ValidationPredicate
+        {
+            get => _PredicateValidationRule.Predicate;
+            set
+            {
+                _PredicateValidationRule.Predicate = value;
+                if (Template.FindName("TextBox", this) is TextBox t)
+                    t.GetBindingExpression(TextBox.TextProperty)?.UpdateSource();
+            }
+        }
 
         /// <summary>Сообщение при ошибке валидации</summary>
         public string ErrorMessage { get => _PredicateValidationRule.Message ; set => _PredicateValidationRule.Message = value; }
@@ -60,24 +70,20 @@ namespace WPR.Controls
         public string TextValue
         {
             get => (string) GetValue(TextValueProperty);
-            set
-            {
-                SetValue(TextValueProperty, value);
-                if (ValidationPredicate?.Invoke(value) == false)
-                {
-                    throw new ArgumentException("Неверные данные");
-                }
-            }
+            set => SetValue(TextValueProperty, value);
         }
 
         #endregion
 
-        protected override void OnSetCommandExecute(bool? parameter)
+        protected override bool CanSetCommandExecuted()
         {
+            return _PredicateValidationRule.IsValid;
+        }
 
-
-
-            base.OnSetCommandExecute(parameter);
+        protected override void OnSetCommandExecute(bool parameter)
+        {
+            if (_PredicateValidationRule.IsValid)
+                base.OnSetCommandExecute(parameter);
         }
     }
 }

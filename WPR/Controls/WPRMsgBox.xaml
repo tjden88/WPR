@@ -29,7 +29,7 @@
                                        Margin="10"/>
                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="6">
                                 <Button x:Name="Cancel" Content="ОТМЕНА" Width="85" Margin="3"  IsCancel="True" Style="{StaticResource WPRFlatButton}"
-                                        Command="{TemplateBinding SetDialogResultCommand}"
+                                        Command="{TemplateBinding CancelCommand}"
                                         Visibility="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=CancelButtonVisible , Converter={StaticResource Bool2VisibilityConverter}}"/>
                                 <Button x:Name="Ok" Content="OK" Width="85" Margin="3" IsDefault="True"
                                         Command="{TemplateBinding SetDialogResultCommand}"
