@@ -6,5 +6,6 @@
         <ResourceDictionary Source="WPRCard.xaml"/>
         <ResourceDictionary Source="WPRDialogPanel.xaml"/>
         <ResourceDictionary Source="WPRMsgBox.xaml"/>
+        <ResourceDictionary Source="WPRInputBox.xaml"/>
 </ResourceDictionary.MergedDictionaries>
 </ResourceDictionary>

@@ -3,43 +3,16 @@ using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using WPR.Controls.Base;
 
 namespace WPR.Controls
 {
-    public class WPRMsgBox: Control
+    public class WPRMsgBox: Dialog
     {
-        /// <summary>Действие при вводе пользователя</summary>
-        public Action<bool?> DialogResult;
-
         static WPRMsgBox()
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(WPRMsgBox), new FrameworkPropertyMetadata(typeof(WPRMsgBox)));
         }
-
-        public WPRMsgBox()
-        {
-            SetDialogResultCommand = new ResultCommand(this);
-        }
-
-        #region Title : string - Заголовок сообщения
-
-        /// <summary>Заголовок сообщения</summary>
-        public static readonly DependencyProperty TitleProperty =
-            DependencyProperty.Register(
-                nameof(Title),
-                typeof(string),
-                typeof(WPRMsgBox),
-                new PropertyMetadata(default(string)));
-
-        /// <summary>Заголовок сообщения</summary>
-        [Description("Заголовок сообщения")]
-        public string Title
-        {
-            get => (string) GetValue(TitleProperty);
-            set => SetValue(TitleProperty, value);
-        }
-
-        #endregion
 
         #region Caption : string - Текст сообщения
 
@@ -104,45 +77,5 @@ namespace WPR.Controls
 
         #endregion
 
-
-        #region SetDialogResultCommand : ICommand - Команда нажатия контрольных кнопок
-
-        /// <summary>Команда нажатия контрольных кнопок</summary>
-        public static readonly DependencyProperty SetDialogResultCommandProperty =
-            DependencyProperty.Register(
-                nameof(SetDialogResultCommand),
-                typeof(ICommand),
-                typeof(WPRMsgBox),
-                new PropertyMetadata(null));
-
-        /// <summary>Команда нажатия контрольных кнопок</summary>
-        //[Category("")]
-        [Description("Команда нажатия контрольных кнопок")]
-        public ICommand SetDialogResultCommand
-        {
-            get => (ICommand) GetValue(SetDialogResultCommandProperty);
-            set => SetValue(SetDialogResultCommandProperty, value);
-        }
-
-        #endregion
-
-        class ResultCommand: ICommand
-        {
-            private readonly WPRMsgBox _MsgBox;
-
-            public ResultCommand(WPRMsgBox msgBox)
-            {
-                _MsgBox = msgBox;
-            }
-            public bool CanExecute(object parameter) => true;
-
-            public void Execute(object parameter)
-            {
-                bool? result = (bool?)parameter;
-                _MsgBox.DialogResult?.Invoke(result);
-            }
-
-            public event EventHandler CanExecuteChanged;
-        }
     }
 }

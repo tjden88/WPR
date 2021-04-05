@@ -1,9 +1,7 @@
 ﻿using System.Diagnostics;
-using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using WPR.Controls;
 using WPR.Demo.Commands.Base;
 
 namespace WPR.Demo.Pages
@@ -101,6 +99,11 @@ namespace WPR.Demo.Pages
         private void Button2_OnClick(object Sender, RoutedEventArgs E)
         {
             WPRMessageBox.Bubble(this, "Всплывающее сообщение с кнопкой", "YEP!", () => Debug.WriteLine("Clicked!"));
+        }
+
+        private void ValidateText(object Sender, RoutedEventArgs E)
+        {
+            InputBox.ValidationPredicate = O => O.Length > 3;
         }
     }
 }
