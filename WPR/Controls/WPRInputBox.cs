@@ -40,7 +40,7 @@ namespace WPR.Controls
             set
             {
                 _PredicateValidationRule.Predicate = value;
-                if (Template.FindName("TextBox", this) is TextBox t)
+                if (Template?.FindName("TextBox", this) is TextBox t)
                     t.GetBindingExpression(TextBox.TextProperty)?.UpdateSource();
             }
         }

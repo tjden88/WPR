@@ -252,5 +252,35 @@ namespace WPR
             }
         }
         #endregion
+
+        #region InputBoxes
+
+        public static void InputText(DependencyObject sender, string Title, Action<bool, string> Callback, string DefaultValue = "")
+        {
+            InputText(sender, Title, Callback, DefaultValue, S => true);
+        }
+
+        public static void InputText(DependencyObject sender, string Title, Action<bool,string> Callback, string DefaultValue , Predicate<string> ValidationRule , string ValidationErrorMessage = "Неверное значение")
+        {
+            // Ищем панель
+            WPRDialogPanel panel = FindDialogPanel(sender);
+
+            WPRInputBox inputBox = new()
+            {
+                Title = Title,
+                TextValue = DefaultValue,
+                ValidationPredicate = ValidationRule,
+                ErrorMessage = ValidationErrorMessage
+            };
+            // При клике по кнопке мессаджа закрыть окно и вернуть прозрачность как была
+            inputBox.DialogResult += (b) =>
+            {
+                panel.Hide();
+                Callback?.Invoke(b == true, inputBox.TextValue);
+            };
+            panel.Show(inputBox, true);
+        }
+
+        #endregion
     }
 }

@@ -1,4 +1,5 @@
-﻿using System.Diagnostics;
+﻿using System;
+using System.Diagnostics;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -105,5 +106,16 @@ namespace WPR.Demo.Pages
         {
             InputBox.ValidationPredicate = O => O.Length > 3;
         }
+
+        private void Button3_OnClick(object Sender, RoutedEventArgs E)
+        {
+            WPRMessageBox.InputText(this,
+                "Ввод текста:",
+                (B, S) => {if(B) Debug.WriteLine(S);},
+                "Стартовое значение",
+                S => S.Length>0,
+                "Поле не может быть пустым");
+        }
+
     }
 }
