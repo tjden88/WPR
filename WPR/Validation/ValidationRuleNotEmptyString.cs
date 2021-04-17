@@ -1,5 +1,5 @@
 ﻿using System.Globalization;
-using WPR.Validation.Base;
+using WPR.MVVM;
 
 namespace WPR.Validation
 {

@@ -1,21 +1,18 @@
-﻿using System;
-using System.Windows.Controls;
+﻿using System.Windows.Controls;
 using System.Windows.Input;
+using WPR.MVVM.Commands;
 
 namespace WPR.Commands
 {
-    internal class ClearTextBoxCommand: ICommand
+    internal class ClearTextBoxCommand: BaseCommand
     {
-        public bool CanExecute(object parameter) => true;
-
-        public void Execute(object parameter)
+        protected override void Execute(object p)
         {
-            if (parameter is TextBox tbox)
+            if (p is TextBox tbox)
             {
                 tbox.Text = "";
+                Keyboard.ClearFocus();
             }
         }
-
-        public event EventHandler CanExecuteChanged;
     }
 }

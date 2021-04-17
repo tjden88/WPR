@@ -10,6 +10,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WPR.Demo", "WPR.Demo\WPR.De
 		{D2794CB2-6BBA-49B4-A64F-DB9089AFF008} = {D2794CB2-6BBA-49B4-A64F-DB9089AFF008}
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WPR.MVVM", "WPR.MVVM\WPR.MVVM.csproj", "{F87DA523-1B54-4C79-A11E-DBFDEBAA7CA6}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -24,6 +26,10 @@ Global
 		{3C9FE1EB-9DF3-491A-A2E5-2DC324E280BD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3C9FE1EB-9DF3-491A-A2E5-2DC324E280BD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3C9FE1EB-9DF3-491A-A2E5-2DC324E280BD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F87DA523-1B54-4C79-A11E-DBFDEBAA7CA6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F87DA523-1B54-4C79-A11E-DBFDEBAA7CA6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F87DA523-1B54-4C79-A11E-DBFDEBAA7CA6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F87DA523-1B54-4C79-A11E-DBFDEBAA7CA6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

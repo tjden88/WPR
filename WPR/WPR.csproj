@@ -6,6 +6,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\WPR.MVVM\WPR.MVVM.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Resource Include="Fonts\Roboto-Black.ttf" />
     <Resource Include="Fonts\Roboto-BlackItalic.ttf" />
     <Resource Include="Fonts\Roboto-Bold.ttf" />
