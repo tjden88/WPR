@@ -6,23 +6,12 @@ using WPR.Demo.Commands.Base;
 using WPR.Demo.Services;
 using WPR.Demo.ViewModels.Base;
 using WPR;
+using WPR.MVVM.ViewModels;
 
 namespace WPR.Demo.ViewModels
 {
-    internal class MainWindowViewModel : ViewModel
+    internal class MainWindowViewModel : WindowViewModel
     {
-        #region Title : string - Заголовок
-
-        private string _Title = "WPR.Demo";
-
-        /// <summary>Заголовок</summary>
-        public string Title
-        {
-            get => _Title;
-            set => Set(ref _Title, value);
-        }
-
-        #endregion
 
         #region Command SetNewStyleCommand - Установить рандомный стиль
 
@@ -55,6 +44,24 @@ namespace WPR.Demo.ViewModels
         }
         #endregion
 
+        #region Command ShowTestWindowCommand - Показать тестовое окно
+
+        private ICommand _ShowTestWindowCommand;
+
+        /// <summary>Показать тестовое окно</summary>
+        public ICommand ShowTestWindowCommand => _ShowTestWindowCommand
+            ??= new Command(OnShowTestWindowCommandExecuted, CanShowTestWindowCommandExecute);
+
+        private bool CanShowTestWindowCommandExecute() => true;
+
+        private void OnShowTestWindowCommandExecuted()
+        {
+            Test test = new();
+            test.Show();
+        }
+
+        #endregion
+
         #region SelectedPage : Page - Выбранная страница для отображения
 
         private Page _SelectedPage;
@@ -82,6 +89,7 @@ namespace WPR.Demo.ViewModels
 
         public MainWindowViewModel()
         {
+            Title = "WPR.Demo";
             Pages = ServiceLocator.PageService.GetAllPages();
             SelectedPage = Pages.First();
         }

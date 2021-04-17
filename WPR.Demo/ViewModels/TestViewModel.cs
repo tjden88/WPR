@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using WPR.Demo.ViewModels.Base;
+using WPR.MVVM.ViewModels;
 
 namespace WPR.Demo.ViewModels
 {
@@ -21,5 +22,21 @@ namespace WPR.Demo.ViewModels
         }
 
         #endregion
+
+        public DirectoryViewModel RootDirectoryViewModel { get; } = new("d:\\");
+
+        #region SelectedDirectory : DirectoryViewModel - Выбранная папка
+
+        private DirectoryViewModel _SelectedDirectory;
+
+        /// <summary>Выбранная папка</summary>
+        public DirectoryViewModel SelectedDirectory
+        {
+            get => _SelectedDirectory;
+            set => Set(ref _SelectedDirectory, value);
+        }
+
+        #endregion
+
     }
 }

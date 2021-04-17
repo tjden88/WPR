@@ -18,6 +18,7 @@
         <StackPanel Margin="3" x:Name="TitleButtonsPanel" Orientation="Horizontal" HorizontalAlignment="Left" Width="Auto" >
             <Button Content="Новый стиль" Command="{Binding SetNewStyleCommand}"  Style="{StaticResource WindowTitleButton}"/>
             <Button Content="Переключить тему" Command="{Binding SetDarkThemeCommand}"  Style="{StaticResource WindowTitleButton}"/>
+            <Button Content="Тестовое окно" Command="{Binding ShowTestWindowCommand}"  Style="{StaticResource WindowTitleButton}"/>
         </StackPanel>
         <!--Основной контент в 1 строке грида-->
         <Grid Grid.Row="1" Background="{DynamicResource BackgroundColorBrush}">
