@@ -23,17 +23,13 @@ namespace WPR.Demo.ViewModels
     {
         private readonly DirectoryInfo _DirectoryInfo;
 
-        #region Name : string - Имя папки
-
         /// <summary>Имя папки</summary>
         public string Name => _DirectoryInfo.Name;
-
 
         /// <summary>Путь к папке</summary>
         public string Path => _DirectoryInfo.FullName;
 
         public bool IsRootPath => _DirectoryInfo.Parent is null;
-
 
         /// <summary>Подкаталоги</summary>
         public IEnumerable<DirectoryViewModel> SubDidectories
@@ -56,7 +52,6 @@ namespace WPR.Demo.ViewModels
             }
         }
 
-        #endregion
         public DirectoryViewModel(string Path)
         {
             _DirectoryInfo = new DirectoryInfo(Path);

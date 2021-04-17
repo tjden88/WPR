@@ -35,16 +35,18 @@
                     </controls:WPRCard>
                     <Button Content="ValidationInputBox" HorizontalAlignment="Center" VerticalAlignment="Center" Click="ValidateText"/>
                 </StackPanel>
-<StackPanel Width="200">
-    <Button Content="Show Window Dialog" HorizontalAlignment="Center" VerticalAlignment="Center" Command="{Binding ShowWindowDialogCommand}"/>
-    <Button Content="Show Window Dialog Async" HorizontalAlignment="Center" VerticalAlignment="Center" Command="{Binding ShowWindowDialogCommandAsync}"/>
-    <Button Content="Show Modal Dialog" HorizontalAlignment="Center" VerticalAlignment="Center" Command="{Binding ShowModalDialogCommand}"/>
+                <StackPanel Width="200">
+                    <Button Content="Show Window Dialog" HorizontalAlignment="Center" VerticalAlignment="Center" Command="{Binding ShowWindowDialogCommand}"/>
+                    <Button Content="Show Window Dialog Async" HorizontalAlignment="Center" VerticalAlignment="Center" Command="{Binding ShowWindowDialogCommandAsync}"/>
+                    <Button Content="Show Modal Dialog" HorizontalAlignment="Center" VerticalAlignment="Center" Command="{Binding ShowModalDialogCommand}"/>
 
-    <Button Content="Show Bubble" HorizontalAlignment="Center" VerticalAlignment="Center" Click="ButtonBase_OnClick"/>
-    <Button Content="Show Bubble Button" HorizontalAlignment="Center" VerticalAlignment="Center" Click="Button2_OnClick"/>
+                    <Button Content="Show Bubble" HorizontalAlignment="Center" VerticalAlignment="Center" Click="ButtonBase_OnClick"/>
+                    <Button Content="Show Bubble Button" HorizontalAlignment="Center" VerticalAlignment="Center" Click="Button2_OnClick"/>
 
-    <Button Content="Show InputTextBox" HorizontalAlignment="Center" VerticalAlignment="Center" Click="Button3_OnClick"/>
-</StackPanel>
+                    <Button Content="Show InputTextBox" HorizontalAlignment="Center" VerticalAlignment="Center" Click="Button3_OnClick"/>
+                </StackPanel>
+                <StackPanel Width="200">
+                </StackPanel>
             </StackPanel>
         </controls:WPRDialogPanel>
     </controls:WPRCard>

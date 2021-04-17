@@ -4,6 +4,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using WPR.Demo.Commands.Base;
+using WPR.Dialogs;
 
 namespace WPR.Demo.Pages
 {
@@ -116,6 +117,5 @@ namespace WPR.Demo.Pages
                 S => S.Length>0,
                 "Поле не может быть пустым");
         }
-
     }
 }
