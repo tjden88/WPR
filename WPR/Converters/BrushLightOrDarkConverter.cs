@@ -2,6 +2,7 @@
 using System.Globalization;
 using System.Windows.Data;
 using System.Windows.Media;
+using WPR.MVVM;
 using WPR.Services;
 
 namespace WPR.Converters
@@ -11,7 +12,7 @@ namespace WPR.Converters
     /// Пример: вернуть светлый цвет текста если фон тёмный
     /// </summary>
     [ValueConversion(typeof(SolidColorBrush), typeof(SolidColorBrush))]
-    public class BrushLightOrDarkConverter : ValueConverter
+    public class BrushLightOrDarkConverter : ConverterBase
     {
         public SolidColorBrush HighValue { get; set; } = new(ColorService.WhiteColor);
 

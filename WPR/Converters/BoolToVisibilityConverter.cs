@@ -2,6 +2,7 @@
 using System.Globalization;
 using System.Windows;
 using System.Windows.Data;
+using WPR.MVVM;
 
 namespace WPR.Converters
 {
@@ -10,7 +11,7 @@ namespace WPR.Converters
     /// Если Parameter = !, то всё наоборот делает
     /// </summary>
     [ValueConversion(typeof(bool?), typeof(Visibility))]
-    public class BoolToVisibilityConverter : ValueConverter
+    public class BoolToVisibilityConverter : ConverterBase
     {
         protected override object Convert(object v, Type t, object p, CultureInfo c)
         {

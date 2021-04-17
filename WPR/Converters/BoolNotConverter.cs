@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Globalization;
 using System.Windows.Data;
+using WPR.MVVM;
 
 namespace WPR.Converters
 {
@@ -8,7 +9,7 @@ namespace WPR.Converters
     /// Возвращает обратное значение
     /// </summary>
     [ValueConversion(typeof(bool), typeof(bool))]
-    public class BoolNotConverter : ValueConverter
+    public class BoolNotConverter : ConverterBase
     {
         protected  override object Convert(object v, Type t, object p, CultureInfo c) => !(bool)v;
 

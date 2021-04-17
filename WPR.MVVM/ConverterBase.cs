@@ -2,10 +2,10 @@
 using System.Globalization;
 using System.Windows.Data;
 
-namespace WPR.Converters
+namespace WPR.MVVM
 {
     /// <summary>Конвертер величин</summary>
-    public abstract class ValueConverter : IValueConverter
+    public abstract class ConverterBase : IValueConverter
     {
 
         /// <summary>Преобразование значения</summary>
