@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using System.Windows;
 using WPR.Controls;
+using WPR.Dialogs;
 
 namespace WPR
 {

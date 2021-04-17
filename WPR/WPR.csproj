@@ -30,4 +30,11 @@
     <Resource Include="Fonts\RobotoCondensed-Regular.ttf" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Page Update="Dialogs\Main.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+      <SubType>Designer</SubType>
+    </Page>
+  </ItemGroup>
+
 </Project>

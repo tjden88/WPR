@@ -5,6 +5,7 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:WPR.Demo.Pages"
       xmlns:controls="clr-namespace:WPR.Controls;assembly=WPR"
+      xmlns:dialogs="clr-namespace:WPR.Dialogs;assembly=WPR"
       mc:Ignorable="d" 
       DataContext="{Binding RelativeSource={RelativeSource Self}}"
       d:DesignHeight="450" d:DesignWidth="800"
@@ -21,14 +22,14 @@
                 <StackPanel Margin="10" Width="200">
                     <Button Content="Show User Dialog" HorizontalAlignment="Center" VerticalAlignment="Center" Command="{Binding ShowUserDialogCommand}"/>
                     <controls:WPRCard HorizontalAlignment="Center" >
-                        <controls:WPRMsgBox Title="Заголовок"
+                        <dialogs:WPRMsgBox Title="Заголовок"
                                             x:Name="MsgBox"
                                             Caption="Текст сообщения..." 
                                             CancelButtonVisible="True"
                                             YesNoButtonsVisible="True"/>
                     </controls:WPRCard>
                     <controls:WPRCard HorizontalAlignment="Center" >
-                        <controls:WPRInputBox Title="Введите что-нибудь"
+                        <dialogs:WPRInputBox Title="Введите что-нибудь"
                                               x:Name="InputBox"
                                               TextValue="По умолчанию"/>
                     </controls:WPRCard>

@@ -2,7 +2,7 @@
 using System.Windows;
 using WPR.Controls.Base;
 
-namespace WPR.Controls
+namespace WPR.Dialogs
 {
     public class WPRMsgBox: Dialog
     {

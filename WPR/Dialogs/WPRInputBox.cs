@@ -6,7 +6,7 @@ using System.Windows.Data;
 using WPR.Controls.Base;
 using WPR.Validation;
 
-namespace WPR.Controls
+namespace WPR.Dialogs
 {
     public class WPRInputBox : Dialog
     {
