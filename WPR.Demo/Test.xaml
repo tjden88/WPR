@@ -16,8 +16,7 @@
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
         <ListView x:Name="list"></ListView>
-        <TreeView Grid.Column="1" x:Name="Tree" ItemsSource="{Binding RootDirectoryViewModel.SubDidectories}">
-
+        <TreeView Grid.Column="1" x:Name="Tree" ItemsSource="{Binding RootDirectories}">
             <TreeView.Resources>
                 <Style TargetType="{x:Type wpr:WPRIcon}" BasedOn="{StaticResource {x:Type wpr:WPRIcon}}">
                     <Setter Property="Margin" Value="0,0,5,0"></Setter>
@@ -34,9 +33,15 @@
                 <HierarchicalDataTemplate DataType="viewModels:DirectoryViewModel"
                                           ItemsSource="{Binding SubDidectories}">
                     <StackPanel Orientation="Horizontal">
-                        <wpr:WPRIcon/>
+                        <wpr:WPRIcon x:Name="Icon"/>
                         <TextBlock Text="{Binding Name}"/>
                     </StackPanel>
+                    <HierarchicalDataTemplate.Triggers>
+                        <DataTrigger Binding="{Binding IsRootPath}" Value="True">
+                            <Setter TargetName="Icon" Property="Source" Value="FolderHome"></Setter>
+                            <Setter TargetName="Icon" Property="Foreground" Value="{DynamicResource DarkPrimaryColorBrush}"></Setter>
+                        </DataTrigger>
+                    </HierarchicalDataTemplate.Triggers>
                 </HierarchicalDataTemplate>
             </TreeView.ItemTemplate>
         </TreeView>

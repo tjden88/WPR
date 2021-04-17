@@ -32,6 +32,8 @@ namespace WPR.Demo.ViewModels
         /// <summary>Путь к папке</summary>
         public string Path => _DirectoryInfo.FullName;
 
+        public bool IsRootPath => _DirectoryInfo.Parent is null;
+
 
         /// <summary>Подкаталоги</summary>
         public IEnumerable<DirectoryViewModel> SubDidectories
