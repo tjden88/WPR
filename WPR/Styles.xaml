@@ -14,6 +14,7 @@
         <ResourceDictionary Source="Styles\RadioButtons.xaml"/>
         <ResourceDictionary Source="Styles\ListBoxes.xaml"/>
         <ResourceDictionary Source="Styles\TextBoxes.xaml"/>
+        <ResourceDictionary Source="Styles\ComboBox.xaml"/>
     </ResourceDictionary.MergedDictionaries>
 
     <!--Стили по умолчанию-->
@@ -27,6 +28,7 @@
     <Style TargetType="ListBox" BasedOn="{StaticResource WPRListBox}"/>
     <Style TargetType="ListBoxItem" BasedOn="{StaticResource WPRListBoxItem}"/>
     <Style TargetType="TextBox" BasedOn="{StaticResource WPRTextBox}"/>
+    <Style TargetType="ComboBox" BasedOn="{StaticResource WPRComboBox}"/>
 
     <!--
     <Style TargetType="ComboBox" BasedOn="{StaticResource PRComboBox}"/>

@@ -5,12 +5,13 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:WPR.Demo.Pages"
       xmlns:helpers="clr-namespace:WPR.Helpers;assembly=WPR"
+      xmlns:wpr="clr-namespace:WPR;assembly=WPR"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       DataContext="{Binding TestViewModel, Source={StaticResource Locator}}"
       Title="Поля и текстбоксы">
 
-    <Grid>
+    <DockPanel Background="{DynamicResource BackgroundColorBrush}">
         <StackPanel Width="200" Margin="10">
             <TextBox Margin="15" helpers:TextHelper.Hint="Возраст: 21-100" 
                      helpers:TextHelper.Description="ValidatedTextBox">
@@ -26,13 +27,39 @@
             <TextBox Margin="15" helpers:TextHelper.Hint="Подсказка" 
                      helpers:TextHelper.Description="Описание"
                      Text="Текст"/>
-            <Border Background="Azure" CornerRadius="15">
+            <Border Background="Cyan" CornerRadius="15">
                 <TextBox x:Name="Clearable" Margin="10"
                          Style="{StaticResource WPRFlatTextBox}" 
                          helpers:TextHelper.ShowClearButton="True"
                          helpers:TextHelper.Hint="Flat Clearable TextBox"/>
             </Border>
+            <DockPanel>
+                <wpr:WPRIcon Source="Person" Foreground="{Binding ElementName=NameText, Path=BorderBrush}"/>
+                <TextBox helpers:TextHelper.Hint="Имя"
+                         VerticalAlignment="Bottom" Margin="5,10,0,0"
+                         helpers:TextHelper.Description="Представьтесь"
+                         x:Name="NameText"
+                         Background="{DynamicResource AccentColorBrush}"></TextBox>
+            </DockPanel>
         </StackPanel>
-        
-    </Grid>
+        <StackPanel Width="200">
+            <ComboBox helpers:TextHelper.Description="Описание"  SelectedIndex="-1"
+          helpers:TextHelper.Hint="Not Editable"
+          Margin="10"
+          Name="Box">
+    <ComboBoxItem Content="Item 1"/>
+    <ComboBoxItem Content="Item 2"/>
+    <ComboBoxItem Content="Item 3"/>
+    <ComboBoxItem Content="Item 4"/>
+</ComboBox>
+            <Button Content="Clear" Click="ClearCB_Click"></Button>
+            <ComboBox helpers:TextHelper.Description="Описание 2" helpers:TextHelper.Hint="Editable" IsEditable="True" Margin="10">
+                <ComboBoxItem Content="Item 1"/>
+                <ComboBoxItem Content="Item 2"/>
+                <ComboBoxItem Content="Item 3"/>
+                <ComboBoxItem Content="Item 4"/>
+            </ComboBox>
+            
+        </StackPanel>
+    </DockPanel>
 </Page>
