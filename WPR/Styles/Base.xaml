@@ -21,6 +21,7 @@
     <Color x:Key="DividerColor">#FFE0E0E0</Color>
     <Color x:Key="MenuBodyColor">#f7f7f7</Color>
     <Color x:Key="BackgroundColor">#FFFFFF</Color>
+    <Color x:Key="AttentionColor">Red</Color>
 
     <SolidColorBrush x:Key="PrimaryColorBrush" Color="{StaticResource PrimaryColor}" p:Freeze="True"/>
     <SolidColorBrush x:Key="DarkPrimaryColorBrush" Color="{StaticResource DarkPrimaryColor}" p:Freeze="True"/>
@@ -32,6 +33,7 @@
     <SolidColorBrush x:Key="DividerColorBrush" Color="{StaticResource DividerColor}" p:Freeze="True"/>
     <SolidColorBrush x:Key="MenuBodyBrush" Color="{StaticResource MenuBodyColor}" p:Freeze="True"/>
     <SolidColorBrush x:Key="BackgroundColorBrush" Color="{StaticResource BackgroundColor}" p:Freeze="True"/>
+    <SolidColorBrush x:Key="AttentionColorBrush" Color="{StaticResource AttentionColor}" p:Freeze="True"/>
 
     <SolidColorBrush x:Key="AnimationEnterColorBrush" Color="#99858585" p:Freeze="True"/>
 

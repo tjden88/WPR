@@ -1,17 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
+using System.Collections.ObjectModel;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace WPR.Demo.Pages
 {
@@ -23,6 +12,34 @@ namespace WPR.Demo.Pages
         public GridAndSplitters()
         {
             InitializeComponent();
+            DataGrid1.ItemsSource = Customer.GetCustomerList();
+            Combo.ItemsSource = Enum.GetValues(typeof(OrderStatus));
+        }
+
+        public enum OrderStatus
+        {
+            InProgress, Delivered, Shipped
+        }
+
+        public class Customer
+        {
+            public string FirstName { get; set; }
+            public string LastName { get; set; }
+            public string Email { get; set; }
+            public bool IsMember { get; set; }
+            public OrderStatus Status { get; set; }
+
+            public static ObservableCollection<Customer> GetCustomerList()
+            {
+                ObservableCollection<Customer> collection = new()
+                {
+                    new Customer() { FirstName = "Jhon", LastName = "Doe", Email = "jhon.doe@mail.com", IsMember = true, Status = OrderStatus.InProgress },
+                    new Customer() { FirstName = "Jhon2", LastName = "Doe2", Email = "jhon.doe@mail.com", IsMember = true, Status = OrderStatus.InProgress },
+                    new Customer() { FirstName = "Jhon3", LastName = "Doe3", Email = "jhon.doe@mail.com", IsMember = true, Status = OrderStatus.Shipped },
+                    new Customer() { FirstName = "Денис", LastName = "Дулька", Email = "dulka@mail.com", IsMember = false, Status = OrderStatus.Delivered }
+                };
+                return collection;
+            }
         }
     }
 }

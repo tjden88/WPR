@@ -65,7 +65,7 @@
                                             HorizontalAlignment="Left"
                                             Foreground="{DynamicResource SecondaryTextColorBrush}"
                                             FontSize="11" Margin="0,3,0,0"/>
-                        <TextBlock Grid.Row="1" Foreground="Red" 
+                        <TextBlock Grid.Row="1" Foreground="{StaticResource AttentionColorBrush}" 
                                    x:Name="ErrorText"
                                    Text=""
                                    TextWrapping ="Wrap"
@@ -76,7 +76,7 @@
                     <ControlTemplate.Triggers>
 
                         <Trigger Property="Validation.HasError" Value="True">
-                            <Setter Property="Background" Value="Red"/>
+                            <Setter Property="Background" Value="{StaticResource AttentionColorBrush}"/>
                             <Setter TargetName="ErrorText" Property="Text" Value="{Binding Path=(Validation.Errors)[0].ErrorContent, RelativeSource={RelativeSource TemplatedParent}}"/>
                             <Setter TargetName="ErrorText" Property="Visibility" Value="Visible"/>
                             <Setter TargetName="Description" Property="Visibility" Value="Hidden"/>
