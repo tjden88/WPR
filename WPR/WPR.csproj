@@ -1,8 +1,26 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
+    <Version>0.0.1</Version>
+    <PackageReleaseNotes>
+      Стили базовых элементов и некоторые дополнительные контролы
+    </PackageReleaseNotes>
+  </PropertyGroup>
+
+  <PropertyGroup>
     <TargetFramework>net5.0-windows</TargetFramework>
     <UseWPF>true</UseWPF>
+    <PackageId>WPR.Styles</PackageId>
+    <Authors>tj_d</Authors>
+    <Product>tj_d</Product>
+    <Description>Пакет стилей и дополнительных контролов WPF под .netCore 5 в стиле Material Design</Description>
+    <Copyright>tj.den88@gmail.com</Copyright>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageProjectUrl>https://github.com/tjden88/WPR.Styles</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/tjden88/WPR.Styles</RepositoryUrl>
+    <PackageTags>WPF;Styles;Templates</PackageTags>
+    <PackageIcon>Style XP.png</PackageIcon>
+    <SignAssembly>false</SignAssembly>
   </PropertyGroup>
 
   <ItemGroup>
@@ -31,10 +49,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Page Update="Dialogs\Main.xaml">
-      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
-      <SubType>Designer</SubType>
-    </Page>
+    <None Include="..\..\..\Мусор\Иконки\Style XP.png">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
   </ItemGroup>
 
 </Project>
