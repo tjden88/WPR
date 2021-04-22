@@ -20,6 +20,8 @@
         <ResourceDictionary Source="Styles\Menus.xaml"/>
         <ResourceDictionary Source="Styles\Sliders.xaml"/>
         <ResourceDictionary Source="Styles\Toolbars.xaml"/>
+        <ResourceDictionary Source="Styles\ScrollBars.xaml"/>
+        <ResourceDictionary Source="Styles\GridSplitters.xaml"/>
     </ResourceDictionary.MergedDictionaries>
 
     <!--Стили по умолчанию-->
@@ -42,13 +44,11 @@
     <Style TargetType="ToolBarTray" BasedOn="{StaticResource WPRToolBarTray}"/>
     <Style TargetType="MenuItem" BasedOn="{StaticResource WPRMenuItem}"/>
     <Style TargetType="ContextMenu" BasedOn="{StaticResource WPRContextMenu}"/>
-
+    <Style TargetType="ScrollViewer" BasedOn="{StaticResource WPRScrollViewer}"/>
+    <Style TargetType="GridSplitter" BasedOn="{StaticResource WPRGridSplitter}"/>
 
     <!--
-    <Style TargetType="ComboBox" BasedOn="{StaticResource PRComboBox}"/>
-    <Style TargetType="TabControl" BasedOn="{StaticResource PRTabControl}"/>
     <Style TargetType="DataGrid" BasedOn="{StaticResource PRDataGrid}"/>
-    <Style TargetType="ScrollViewer" BasedOn="{StaticResource PRScrollViewer}"/>
 
     -->
 
