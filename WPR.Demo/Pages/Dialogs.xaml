@@ -1,0 +1,53 @@
+﻿<Page x:Class="WPR.Demo.Pages.Dialogs"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:WPR.Demo.Pages"
+      xmlns:controls="clr-namespace:WPR.Controls;assembly=WPR"
+      xmlns:dialogs="clr-namespace:WPR.Dialogs;assembly=WPR"
+      mc:Ignorable="d" 
+      DataContext="{Binding RelativeSource={RelativeSource Self}}"
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="Диалоги">
+
+    <controls:WPRCard >
+        <controls:WPRDialogPanel x:Name="DialogPanel">
+            <controls:WPRDialogPanel.Header>
+                <controls:EditDialog IconSource="QuestionMarkBox" Header="Диалог пользователя">
+                    <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center">Привет!</TextBlock>
+                </controls:EditDialog>
+            </controls:WPRDialogPanel.Header>
+            <StackPanel Orientation="Horizontal">
+                <StackPanel Margin="10" Width="200">
+                    <Button Content="Show User Dialog" HorizontalAlignment="Center" VerticalAlignment="Center" Command="{Binding ShowUserDialogCommand}"/>
+                    <controls:WPRCard HorizontalAlignment="Center" >
+                        <dialogs:WPRMsgBox Title="Заголовок"
+                                            x:Name="MsgBox"
+                                            Caption="Текст сообщения..." 
+                                            CancelButtonVisible="True"
+                                            YesNoButtonsVisible="True"/>
+                    </controls:WPRCard>
+                    <controls:WPRCard HorizontalAlignment="Center" >
+                        <dialogs:WPRInputBox Title="Введите что-нибудь"
+                                              x:Name="InputBox"
+                                              TextValue="По умолчанию"/>
+                    </controls:WPRCard>
+                    <Button Content="ValidationInputBox" HorizontalAlignment="Center" VerticalAlignment="Center" Click="ValidateText"/>
+                </StackPanel>
+                <StackPanel Width="200">
+                    <Button Content="Show Window Dialog" HorizontalAlignment="Center" VerticalAlignment="Center" Command="{Binding ShowWindowDialogCommand}"/>
+                    <Button Content="Show Window Dialog Async" HorizontalAlignment="Center" VerticalAlignment="Center" Command="{Binding ShowWindowDialogCommandAsync}"/>
+                    <Button Content="Show Modal Dialog" HorizontalAlignment="Center" VerticalAlignment="Center" Command="{Binding ShowModalDialogCommand}"/>
+
+                    <Button Content="Show Bubble" HorizontalAlignment="Center" VerticalAlignment="Center" Click="ButtonBase_OnClick"/>
+                    <Button Content="Show Bubble Button" HorizontalAlignment="Center" VerticalAlignment="Center" Click="Button2_OnClick"/>
+
+                    <Button Content="Show InputTextBox" HorizontalAlignment="Center" VerticalAlignment="Center" Click="Button3_OnClick"/>
+                </StackPanel>
+                <StackPanel Width="200">
+                </StackPanel>
+            </StackPanel>
+        </controls:WPRDialogPanel>
+    </controls:WPRCard>
+</Page>

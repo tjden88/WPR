@@ -1,0 +1,175 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:wpr="clr-namespace:WPR">
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="Base.xaml"/>
+    </ResourceDictionary.MergedDictionaries>
+
+    <Style x:Key="WPRExpanderToggleButton" TargetType="{x:Type ToggleButton}">
+        <Setter Property="RenderTransformOrigin" Value="0.5,0.5"/>
+        <Setter Property="Cursor" Value="Hand"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ToggleButton}">
+                    <Grid Background="Transparent">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+                        <wpr:WPRIcon x:Name="ExpandPath" Source="ChevronDown"
+                                            VerticalAlignment="Top"
+                                            Margin="5"
+                                            IconSize="24"
+                                            Foreground="{TemplateBinding BorderBrush}"
+                                            RenderTransformOrigin="0.5 0.5">
+                            <wpr:WPRIcon.RenderTransform>
+                                <RotateTransform x:Name="ExpandPathRotateTransform"
+                                                  Angle="{Binding Path=Tag, RelativeSource={RelativeSource TemplatedParent}}"/>
+                            </wpr:WPRIcon.RenderTransform>
+                        </wpr:WPRIcon>
+                        <ContentPresenter Margin="5" Content="{TemplateBinding Content}" Grid.Column="1"/>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsChecked" Value="True">
+                            <Trigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard Storyboard.TargetName="ExpandPathRotateTransform" 
+                                                Storyboard.TargetProperty="Angle">
+                                        <DoubleAnimation Duration="0:0:0.25" By="180"/>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.EnterActions>
+                            <Trigger.ExitActions>
+                                <BeginStoryboard>
+                                    <Storyboard Storyboard.TargetName="ExpandPathRotateTransform" 
+                                                Storyboard.TargetProperty="Angle">
+                                        <DoubleAnimation Duration="0:0:0.25" By="-180"/>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.ExitActions>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="WPRExpander" TargetType="{x:Type Expander}" BasedOn="{StaticResource BaseControl}">
+        <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+        <Setter Property="VerticalContentAlignment" Value="Stretch"/>
+        <Setter Property="BorderBrush" Value="{DynamicResource AccentColorBrush}"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Expander}">
+                    <ControlTemplate.Resources>
+                        <ScaleTransform x:Key="TopBottomScale" ScaleX="1" ScaleY="0"/>
+                        <ScaleTransform x:Key="LeftRightScale" ScaleX="0" ScaleY="1"/>
+                    </ControlTemplate.Resources>
+                    <Border Background="{TemplateBinding Background}">
+                        <DockPanel>
+                            <ToggleButton x:Name="HeaderSite" 
+                                          ContentTemplate="{TemplateBinding HeaderTemplate}"
+                                          ContentTemplateSelector="{TemplateBinding HeaderTemplateSelector}" 
+                                          Content="{TemplateBinding Header}" DockPanel.Dock="Top" 
+                                          BorderBrush ="{TemplateBinding BorderBrush}" 
+                                          Foreground="{TemplateBinding Foreground}"
+                                          FontWeight="{TemplateBinding FontWeight}"
+                                          FontStyle="{TemplateBinding FontStyle}"
+                                          FontStretch="{TemplateBinding FontStretch}"
+                                          FontSize="{TemplateBinding FontSize}"
+                                          FontFamily="{TemplateBinding FontFamily}"
+                                          HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                          IsChecked="{Binding IsExpanded, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}" 
+                                          Padding="{TemplateBinding Padding}" 
+                                          Style="{StaticResource WPRExpanderToggleButton}" 
+                                          Tag="0"
+                                          VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}">
+                                <ToggleButton.LayoutTransform>
+                                    <RotateTransform x:Name="HeaderRotation" Angle="{Binding ElementName=ExpandSite, Path=Tag}"/>
+                                </ToggleButton.LayoutTransform>
+                            </ToggleButton>
+                            <ContentPresenter x:Name="ExpandSite" 
+                                              Tag="0"
+                                              DockPanel.Dock="Bottom"
+                                              Opacity="0"
+                                              Focusable="false"
+                                              HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                              Margin="{TemplateBinding Padding}"
+                                              VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                              LayoutTransform="{StaticResource TopBottomScale}">
+                                <!--<ContentPresenter.LayoutTransform>
+                                    <ScaleTransform x:Name="ScaleContent" ScaleX="1" ScaleY="0"/>
+                                </ContentPresenter.LayoutTransform>-->
+                            </ContentPresenter>
+                        </DockPanel>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsExpanded" Value="True">
+                            <Trigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetName="ExpandSite"
+                                                         Storyboard.TargetProperty="Opacity"
+                                                         Duration="0:0:0.25"
+                                                         To="1"/>
+                                        <DoubleAnimation Storyboard.TargetName="ExpandSite"
+                                                         Storyboard.TargetProperty="(LayoutTransform).ScaleX"
+                                                         Duration="0:0:0.25"
+                                                         To="1"/>
+                                        <DoubleAnimation Storyboard.TargetName="ExpandSite"
+                                                         Storyboard.TargetProperty="(LayoutTransform).ScaleY"
+                                                         Duration="0:0:0.25"
+                                                         To="1"/>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.EnterActions>
+                            <Trigger.ExitActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetName="ExpandSite"
+                                                         Storyboard.TargetProperty="Opacity"
+                                                         Duration="0:0:0.25"
+                                                         To="0"/>
+                                        <DoubleAnimation Storyboard.TargetName="ExpandSite"
+                                                         Storyboard.TargetProperty="(LayoutTransform).ScaleX"
+                                                         Duration="0:0:0.25"/>
+                                        <DoubleAnimation Storyboard.TargetName="ExpandSite"
+                                                         Storyboard.TargetProperty="(LayoutTransform).ScaleY"
+                                                         Duration="0:0:0.25"/>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.ExitActions>
+                        </Trigger>
+                        
+                        <Trigger Property="ExpandDirection" Value="Right">
+                            <Setter Property="DockPanel.Dock" TargetName="ExpandSite" Value="Right"/>
+                            <Setter Property="DockPanel.Dock" TargetName="HeaderSite" Value="Left"/>
+                            <Setter Property="Tag"  TargetName="ExpandSite"  Value="90"/>
+                            <Setter Property="Tag" TargetName="HeaderSite"  Value="180"/>
+                            <Setter Property="RenderTransformOrigin" TargetName="ExpandSite" Value="1,0"/>
+                            <Setter TargetName="ExpandSite" Property="LayoutTransform" Value="{StaticResource LeftRightScale}"/>
+                        </Trigger>
+                        <Trigger Property="ExpandDirection" Value="Up">
+                            <Setter Property="DockPanel.Dock" TargetName="ExpandSite" Value="Top"/>
+                            <Setter Property="DockPanel.Dock" TargetName="HeaderSite" Value="Bottom"/>
+                            <Setter Property="Tag" TargetName="HeaderSite"  Value="180"/>
+                            <Setter Property="RenderTransformOrigin" TargetName="ExpandSite" Value="0,1"/>
+                        </Trigger>
+                        <Trigger Property="ExpandDirection" Value="Left">
+                            <Setter Property="DockPanel.Dock" TargetName="ExpandSite" Value="Left"/>
+                            <Setter Property="DockPanel.Dock" TargetName="HeaderSite" Value="Right"/>
+                            <Setter Property="Tag"  TargetName="ExpandSite"  Value="90"/>
+                            <Setter Property="RenderTransformOrigin" TargetName="ExpandSite" Value="0,0"/>
+                            <Setter TargetName="ExpandSite" Property="LayoutTransform" Value="{StaticResource LeftRightScale}"/>
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="false">
+                            <Setter Property="Opacity" Value="0.5"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+
+</ResourceDictionary>

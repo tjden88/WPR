@@ -1,4 +1,5 @@
-﻿using System.Windows.Controls;
+﻿using System.Windows;
+using System.Windows.Controls;
 
 namespace WPR.Demo.Pages
 {
@@ -10,6 +11,19 @@ namespace WPR.Demo.Pages
         public Buttons()
         {
             InitializeComponent();
+        }
+
+        private void Button_Click(object Sender, RoutedEventArgs E)
+        {
+            if (BageButton.BageVisible == Visibility.Hidden)
+            {
+                BageButton.BageContent = "1";
+                BageButton.BageVisible = Visibility.Visible;
+            }
+            else
+            {
+                BageButton.BageContent = (int.Parse((string)BageButton.BageContent) + 1).ToString();
+            }
         }
     }
 }

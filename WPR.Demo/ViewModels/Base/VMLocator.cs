@@ -20,5 +20,18 @@ namespace WPR.Demo.ViewModels.Base
         }
 
         #endregion
+
+        #region TestViewModel : TestViewModel - Для тестов вьюмодель
+
+        private TestViewModel _TestViewModel;
+
+        /// <summary>Для тестов вьюмодель</summary>
+        public TestViewModel TestViewModel
+        {
+            get => _TestViewModel ??= new();
+            set => _TestViewModel = value;
+        }
+
+        #endregion
     }
 }

@@ -1,0 +1,213 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:wh="clr-namespace:WPR.Helpers"
+                    xmlns:controls="clr-namespace:WPR.Controls"
+                    x:Class="WPR.Styles.Windows">
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="Buttons.xaml"/>
+    </ResourceDictionary.MergedDictionaries>
+
+    <Style x:Key="WindowTitleButton" TargetType="{x:Type Button}" BasedOn="{StaticResource WPRFlatButton}">
+        <Setter Property="FontSize" Value="11"/>
+        <Setter Property="Margin" Value="0"></Setter>
+        <Setter Property="WindowChrome.IsHitTestVisibleInChrome" Value="True" />
+        <Setter Property="Foreground" Value="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=(wh:WindowHelper.WindowHeaderForeground)}" />
+        <Setter Property="Focusable" Value="False"/>
+        <Setter Property="wh:ButtonHelper.BorderRadius" Value="0"/>
+    </Style>
+
+    <Style x:Key="WindowHeaderMaxNormButton" TargetType="{x:Type Button}" BasedOn="{StaticResource WindowTitleButton}">
+        <Setter Property="Background" Value="#00CBCACA"/>
+        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="Width" Value="46"/>
+        <Setter Property="Margin" Value="0,0,0,3"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Border Background="{TemplateBinding Background}" >
+                        <TextBlock FontSize="11" FontFamily="Segoe MDL2 Assets" Text="{TemplateBinding Content}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    </Border>
+                    <ControlTemplate.Triggers >
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Trigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <ColorAnimation To="#4CCBCACA" Duration="0:0:0.25" Storyboard.TargetProperty="Background.Color"/>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.EnterActions>
+                            <Trigger.ExitActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <ColorAnimation Duration="0:0:0.25"  Storyboard.TargetProperty="Background.Color"/>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.ExitActions>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="WindowHeaderCloseButton" TargetType="{x:Type Button}" BasedOn="{ StaticResource WindowHeaderMaxNormButton }" >
+        <Setter Property="Background" Value="#00FF0000"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Border Background="{TemplateBinding Background}" >
+                        <TextBlock FontSize="10" FontFamily="Segoe MDL2 Assets" Text="{TemplateBinding Content}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    </Border>
+                    <ControlTemplate.Triggers >
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Trigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <ColorAnimation To="#CDFF0000" Duration="0:0:0.25" Storyboard.TargetProperty="Background.Color"/>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.EnterActions>
+                            <Trigger.ExitActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <ColorAnimation Duration="0:0:0.25"  Storyboard.TargetProperty="Background.Color"/>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.ExitActions>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <ControlTemplate TargetType="{x:Type Window}" x:Key="ChromeWindowTemplate">
+        <AdornerDecorator>
+            <controls:WPRDialogPanel x:Name="WindowDialogPanel">
+            <Border Background="{TemplateBinding Background }"
+                    BorderThickness="1"
+                    BorderBrush="{TemplateBinding Background }">
+                <Border.Style>
+                    <Style TargetType="{x:Type Border}">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding Path=WindowState, RelativeSource={RelativeSource TemplatedParent}}" Value="Maximized">
+                                <Setter Property="Margin" Value="7"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Border.Style>
+                <Grid>
+
+                    <ContentPresenter/>
+
+                        <DockPanel Height="35" 
+                                   VerticalAlignment="Top"
+                                   HorizontalAlignment="Stretch"
+                                   LastChildFill="False">
+
+                        <FrameworkElement DockPanel.Dock="Left"
+                                      Width="{Binding Path=(wh:WindowHelper.TitleLeftMargin) , RelativeSource={RelativeSource TemplatedParent}}" />
+                        <TextBlock  DockPanel.Dock="Left"
+                                Margin="5,0,0,0" VerticalAlignment="Center"
+                                Foreground="{Binding Path=(wh:WindowHelper.WindowHeaderForeground) , RelativeSource={RelativeSource TemplatedParent}}"
+                                FontSize="14"
+                                Text="{TemplateBinding Title}"/>
+                        <Button x:Name="btnClose" Style="{StaticResource  WindowHeaderCloseButton}"
+                            DockPanel.Dock="Right"
+                            Click="Close_Click"
+                            Content="&#xe106;" 
+                            ToolTip="Закрыть"/>
+                        <Button x:Name="btnRestore"
+                            Click="MaximizeRestoreClick"
+                            DockPanel.Dock="Right">
+                            <Button.Style>
+                                <Style TargetType="{x:Type Button }" BasedOn="{StaticResource WindowHeaderMaxNormButton}">
+                                    <Setter Property="Content" Value="&#xe739;"/>
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding WindowState, RelativeSource={RelativeSource AncestorType=Window}}" 
+                                                 Value="Maximized">
+                                            <Setter Property="Content"  Value="&#xe923;"/>
+                                            <Setter Property="ToolTip" Value="Восстановить"/>
+                                        </DataTrigger>
+                                        <DataTrigger Binding="{Binding WindowState, RelativeSource={RelativeSource AncestorType=Window}}" 
+                                                 Value="Normal">
+                                            <Setter Property="Content"  Value="&#xe739;"/>
+                                            <Setter Property="ToolTip" Value="Развернуть"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Button.Style>
+                        </Button>
+                        <Button x:Name="btnMinimize" Style="{StaticResource  WindowHeaderMaxNormButton}"
+                            DockPanel.Dock="Right"
+                            Click="MinimizeClick"
+                            Content="&#xe949;" ToolTip="Свернуть"/>
+                    </DockPanel>
+                </Grid>
+            </Border>
+            </controls:WPRDialogPanel>
+        </AdornerDecorator>
+    </ControlTemplate>
+
+    <!--Окно с заголовком-->
+    <Style x:Key="ChromeWindow" TargetType="{x:Type Window}">
+        <Setter Property="WindowChrome.WindowChrome">
+            <Setter.Value>
+                <WindowChrome CaptionHeight="35"
+                              CornerRadius="0"
+                              GlassFrameThickness="0,0,0,1"
+                              NonClientFrameEdges="None"
+                              ResizeBorderThickness="5"
+                              UseAeroCaptionButtons="False" />
+            </Setter.Value>
+        </Setter>
+        <Setter Property="Background" Value="{DynamicResource PrimaryColorBrush}" />
+        <Setter Property="wh:WindowHelper.WindowHeaderForeground" Value="{DynamicResource TextColorBrush}" />
+        <Setter Property="UseLayoutRounding" Value="True"/>
+        <Setter Property="FontFamily" Value="{StaticResource RobotoFont}"/>
+        <Setter Property="Template" Value="{StaticResource ChromeWindowTemplate}"/>
+    </Style>
+
+    <!--Модальное окно с сообщением-->
+    <Style TargetType="{x:Type Window}" x:Key="WPRModalWindow">
+        <Setter Property="SizeToContent" Value="WidthAndHeight"/>
+        <Setter Property="WindowStyle" Value="None"/>
+        <Setter Property="AllowsTransparency" Value="True"/>
+        <Setter Property="ShowInTaskbar" Value="False"/>
+        <EventSetter Event="MouseMove" Handler="ModalWindow_MouseMove"/>
+        <EventSetter Event="Loaded" Handler="ModalWindow_Loaded"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Window}">
+                    <Grid x:Name="RootGrid" 
+                          Margin="20"
+                          Background="Transparent">
+                        <controls:WPRCard IsDialogShadowStyle="True"     
+                                          Background="{TemplateBinding Background}"
+                                          BorderBrush="{TemplateBinding BorderBrush}"
+                                          BorderThickness="{TemplateBinding BorderThickness}"
+                                          RenderTransformOrigin="0.5,0.5"
+                                          Content="{TemplateBinding Content}">
+                            <controls:WPRCard.RenderTransform>
+                                <ScaleTransform x:Name="Transform" ScaleX="0" ScaleY="{Binding RelativeSource={RelativeSource Self}, Path=ScaleX}"/>
+                            </controls:WPRCard.RenderTransform>
+                        </controls:WPRCard>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <EventTrigger RoutedEvent="Loaded">
+                            <BeginStoryboard>
+                                <Storyboard>
+                                    <DoubleAnimation Storyboard.TargetName="Transform"
+                                                     Storyboard.TargetProperty="ScaleX"
+                                                     To="1"
+                                                     Duration="0:0:0.25"/>
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+</ResourceDictionary>

@@ -4,18 +4,58 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:WPR.Demo.Pages"
-      xmlns:helpers="clr-namespace:WPR.Styles.Helpers;assembly=WPR.Styles"
+      xmlns:helpers="clr-namespace:WPR.Helpers;assembly=WPR"
+      xmlns:controls="clr-namespace:WPR.Controls;assembly=WPR"
+      xmlns:wpr="clr-namespace:WPR;assembly=WPR"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="Кнопки">
-
+    <StackPanel Orientation="Horizontal">
     <StackPanel Width="150" >
         <Button Content="Flat Button" Margin="10"/>
         <Button Content="PRIMARY Button" Style="{StaticResource PrimaryWPRButton}"  Margin="10"/>
         <Button Content="ACCENT Button" Style="{StaticResource AccentWPRButton}"  Margin="10"/>
-        <Button Content="Tool" Style="{StaticResource WPRToolButton}"  Margin="10"/>
-        <Button Content="ToolNoRip" Style="{StaticResource WPRToolButtonNoRipple}"  Margin="10"/>
-        <Button Content="Menu Button" Style="{StaticResource MenuButton}"  Margin="10"/>
-        <Button Content="A" Style="{StaticResource RoundedButtonWithFloatingHintPrimary}" helpers:TextHelper.Hint="Hint!" Margin="10"/>
+            <Button Content="Menu Button" Style="{StaticResource MenuButton}"  Margin="10"/>
+        <Button Content="A" Style="{StaticResource RoundedButtonWithFloatingHintPrimary}" helpers:TextHelper.Hint="Hint!" Margin="10" HorizontalContentAlignment="Left"/>
+        <Button Content="B" Style="{StaticResource RoundedButtonWithFloatingHintPrimary}" helpers:TextHelper.Hint="Hint!" Margin="10"/>
+    </StackPanel>
+        <StackPanel>
+            <Button Content="DISABLED" IsEnabled="False" Margin="10"/>
+            <Button Content="PRIMARY DISABLED" Style="{StaticResource PrimaryWPRButton}" IsEnabled="False" Margin="10"/>
+            <Button Content="CustomRadius"                    
+                    BorderThickness="1"
+                    Margin="5" helpers:ButtonHelper.BorderRadius="10,20,5,0" BorderBrush="{DynamicResource AccentColorBrush}"/>
+
+            <Button Margin="5" helpers:ButtonHelper.BorderRadius="50"
+                    Style="{StaticResource AccentWPRButton}"
+                    Height="40"
+                    Padding="5"
+                    Width="{Binding Path=ActualHeight, RelativeSource={RelativeSource Self}}">
+                <wpr:WPRIcon Source="EmoticonDevil" IconSize="20"/>
+            </Button>
+            <Button Content="OVAL" Margin="5" helpers:ButtonHelper.BorderRadius="15"
+                    Style="{StaticResource PrimaryWPRButton}"
+                    Height="30"
+                    Width="120"/>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="10">
+                <Button Style="{StaticResource WPRToolButton}"
+                        Padding="3">
+                    <wpr:WPRIcon Source="Star"/>
+                </Button>
+                <Button Style="{StaticResource WPRToolButton}"
+                        helpers:RippleHelper.FeedbackBrush="{DynamicResource AccentColorBrush }"
+                        Padding="3">
+                    <wpr:WPRIcon Source="Like"/>
+                </Button>
+                <Button Style="{StaticResource WPRToolButton}"
+                        helpers:RippleHelper.FeedbackBrush="{DynamicResource  DarkPrimaryColorBrush }"
+                        Padding="3">
+                    <wpr:WPRIcon Source="Dislike"/>
+                </Button>
+            </StackPanel>
+            <controls:Bage x:Name="BageButton" BageContent ="1">
+                <Button BorderThickness="1" Click="Button_Click" Content="КНОПКА С БЕЙДЖЕМ"/>
+            </controls:Bage>
+        </StackPanel>
     </StackPanel>
 </Page>

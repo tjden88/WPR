@@ -4,10 +4,10 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:l="clr-namespace:WPR.Demo"
-        xmlns:helpers="clr-namespace:WPR.Styles.Helpers;assembly=WPR.Styles"
+        xmlns:helpers="clr-namespace:WPR.Helpers;assembly=WPR"
         DataContext="{Binding Source={StaticResource Locator}, Path=MainWindowViewModel}"
         Style="{StaticResource ChromeWindow}" helpers:WindowHelper.TitleLeftMargin ="{Binding ElementName=TitleButtonsPanel, Path=ActualWidth}"
-        Title="{Binding Title}" Height="650" Width="800">
+        Title="{Binding Title}" Height="650" Width="1000">
 
     <Grid>
         <Grid.RowDefinitions>
@@ -18,6 +18,7 @@
         <StackPanel Margin="3" x:Name="TitleButtonsPanel" Orientation="Horizontal" HorizontalAlignment="Left" Width="Auto" >
             <Button Content="Новый стиль" Command="{Binding SetNewStyleCommand}"  Style="{StaticResource WindowTitleButton}"/>
             <Button Content="Переключить тему" Command="{Binding SetDarkThemeCommand}"  Style="{StaticResource WindowTitleButton}"/>
+            <Button Content="Тестовое окно" Command="{Binding ShowTestWindowCommand}"  Style="{StaticResource WindowTitleButton}"/>
         </StackPanel>
         <!--Основной контент в 1 строке грида-->
         <Grid Grid.Row="1" Background="{DynamicResource BackgroundColorBrush}">
@@ -26,15 +27,16 @@
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
 
-<ListBox ItemsSource="{Binding Pages}"
+            <ListBox ItemsSource="{Binding Pages}"
+         Style="{StaticResource WPRMenuListBox}"
+         Foreground="{DynamicResource AccentColorBrush}"
          SelectedValue="{Binding SelectedPage}">
-    <ListBox.ItemTemplate>
-        <DataTemplate>
-            <TextBlock Text="{Binding Title}"></TextBlock>
-        </DataTemplate>
-    </ListBox.ItemTemplate>
-</ListBox>
-
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock FontFamily="{StaticResource RobotoFont}" Text="{Binding Title}"></TextBlock>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
             <Frame NavigationUIVisibility="Hidden" Grid.Column="1" Content="{Binding SelectedPage}"/>
         </Grid>
     </Grid>

@@ -7,7 +7,7 @@
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source = "pack://application:,,,/WPR.Styles;component/Styles.xaml" />
+                <ResourceDictionary Source = "pack://application:,,,/WPR;component/Styles.xaml" />
             </ResourceDictionary.MergedDictionaries>
 
             <base:VMLocator x:Key="Locator"/>
