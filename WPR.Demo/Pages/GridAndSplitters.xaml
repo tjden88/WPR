@@ -21,7 +21,7 @@
         </Grid.ColumnDefinitions>
         <GridSplitter Grid.Column="1" Grid.RowSpan="3"  HorizontalAlignment="Center"></GridSplitter>
         <GridSplitter Grid.Row="1" Grid.ColumnSpan="3" HorizontalAlignment="Stretch" VerticalAlignment="Center"></GridSplitter>
-        <DataGrid x:Name="DataGrid1" Margin="10" >
+        <DataGrid x:Name="DataGrid1" Margin="10" HeadersVisibility="All" RowHeaderWidth="20" >
             <DataGrid.Columns>
                 <DataGridCheckBoxColumn Binding="{Binding IsMember}" Header="Check"/>
 

@@ -17,10 +17,10 @@
             <Grid Background="Transparent">
                 <Canvas>
                     <Ellipse UseLayoutRounding="False" SnapsToDevicePixels="False" x:Name="PART_ellipse"
-                             Canvas.Left="-500" Canvas.Top="-500"
+                             Canvas.Left="-5000" Canvas.Top="-5000"
                                 Fill="{Binding Path=(helpers:RippleHelper.FeedbackBrush), RelativeSource={RelativeSource TemplatedParent}}"  
                                 Opacity="0.6"
-                                Width="1000" Height="{Binding Path=Width, RelativeSource={RelativeSource Self}}"
+                                Width="10000" Height="{Binding Path=Width, RelativeSource={RelativeSource Self}}"
                                 HorizontalAlignment="Left" VerticalAlignment="Top"
                                 RenderTransformOrigin="0.5,0.5">
                         <Ellipse.RenderTransform>

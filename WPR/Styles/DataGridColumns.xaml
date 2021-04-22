@@ -1,9 +1,9 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    x:Class="WPR.Styles.DataGridCells.DgEvents">
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="Base.xaml"/>
+        <ResourceDictionary Source="DataGrids.xaml"/>
         <ResourceDictionary Source="CheckBoxes.xaml"/>
         <ResourceDictionary Source="ComboBox.xaml"/>
         <ResourceDictionary Source="TextBoxes.xaml"/>
