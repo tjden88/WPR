@@ -17,6 +17,9 @@
         <ResourceDictionary Source="Styles\ComboBox.xaml"/>
         <ResourceDictionary Source="Styles\TabControls.xaml"/>
         <ResourceDictionary Source="Styles\Expanders.xaml"/>
+        <ResourceDictionary Source="Styles\Menus.xaml"/>
+        <ResourceDictionary Source="Styles\Sliders.xaml"/>
+        <ResourceDictionary Source="Styles\Toolbars.xaml"/>
     </ResourceDictionary.MergedDictionaries>
 
     <!--Стили по умолчанию-->
@@ -33,19 +36,20 @@
     <Style TargetType="ComboBox" BasedOn="{StaticResource WPRComboBox}"/>
     <Style TargetType="TabControl" BasedOn="{StaticResource WPRTabControl}"/>
     <Style TargetType="Expander" BasedOn="{StaticResource WPRExpander}"/>
+    <Style TargetType="Menu" BasedOn="{StaticResource WPRMenu}"/>
+    <Style TargetType="Slider" BasedOn="{StaticResource WPRSlider}"/>
+    <Style TargetType="ToolBar" BasedOn="{StaticResource WPRToolBar}"/>
+    <Style TargetType="ToolBarTray" BasedOn="{StaticResource WPRToolBarTray}"/>
+    <Style TargetType="MenuItem" BasedOn="{StaticResource WPRMenuItem}"/>
+    <Style TargetType="ContextMenu" BasedOn="{StaticResource WPRContextMenu}"/>
+
 
     <!--
     <Style TargetType="ComboBox" BasedOn="{StaticResource PRComboBox}"/>
     <Style TargetType="TabControl" BasedOn="{StaticResource PRTabControl}"/>
     <Style TargetType="DataGrid" BasedOn="{StaticResource PRDataGrid}"/>
     <Style TargetType="ScrollViewer" BasedOn="{StaticResource PRScrollViewer}"/>
-    <Style TargetType="ToolBarTray" BasedOn="{StaticResource PRToolBarTray}"/>
-    <Style TargetType="ToolBar" BasedOn="{StaticResource PRToolBar}"/>
-    <Style TargetType="Menu" BasedOn="{StaticResource PRMenu}"/>
-    <Style TargetType="ContextMenu" BasedOn="{StaticResource PRContextMenu}"/>
-    <Style TargetType="MenuItem" BasedOn="{StaticResource PRMenuItem}"/>
-    <Style TargetType="Slider" BasedOn="{StaticResource PRSlider}"/>
-    <Style TargetType="Expander" BasedOn="{StaticResource PRExpander}"/>
+
     -->
 
 </ResourceDictionary>
