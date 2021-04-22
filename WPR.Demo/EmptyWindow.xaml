@@ -1,0 +1,31 @@
+﻿<Window x:Class="WPR.Demo.EmptyWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:l="clr-namespace:WPR.Demo" mc:Ignorable="d"
+        xmlns:wpr="clr-namespace:WPR;assembly=WPR"
+        xmlns:cnt="clr-namespace:WPR.Controls;assembly=WPR"
+        xmlns:helpers="clr-namespace:WPR.Helpers;assembly=WPR"
+        DataContext="{Binding Source={StaticResource Locator}, Path=MainWindowViewModel}"
+        Style="{StaticResource ChromeWindow}" helpers:WindowHelper.TitleLeftMargin ="{Binding ElementName=TitleButtonsPanel, Path=ActualWidth}"
+        Title="{Binding Title}" Height="650" Width="1000">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="35"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <!-- Панель в заголовке для кнопок-->
+        <StackPanel Margin="3" x:Name="TitleButtonsPanel" Orientation="Horizontal" HorizontalAlignment="Left" Width="Auto">
+        </StackPanel>
+        <!--Основной контент в 1 строке грида-->
+        <Grid Grid.Row="1"
+              Background="{DynamicResource BackgroundColorBrush}">
+            <TextBlock Text="Привет!" 
+                       Foreground="{DynamicResource PrimaryColorBrush}"
+                       FontSize="60"
+                       HorizontalAlignment="Center" 
+                       VerticalAlignment="Center"/>
+        </Grid>
+    </Grid>
+</Window>
