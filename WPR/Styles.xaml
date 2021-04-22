@@ -16,6 +16,7 @@
         <ResourceDictionary Source="Styles\TextBoxes.xaml"/>
         <ResourceDictionary Source="Styles\ComboBox.xaml"/>
         <ResourceDictionary Source="Styles\TabControls.xaml"/>
+        <ResourceDictionary Source="Styles\Expanders.xaml"/>
     </ResourceDictionary.MergedDictionaries>
 
     <!--Стили по умолчанию-->
@@ -31,6 +32,7 @@
     <Style TargetType="TextBox" BasedOn="{StaticResource WPRTextBox}"/>
     <Style TargetType="ComboBox" BasedOn="{StaticResource WPRComboBox}"/>
     <Style TargetType="TabControl" BasedOn="{StaticResource WPRTabControl}"/>
+    <Style TargetType="Expander" BasedOn="{StaticResource WPRExpander}"/>
 
     <!--
     <Style TargetType="ComboBox" BasedOn="{StaticResource PRComboBox}"/>
