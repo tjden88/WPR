@@ -52,7 +52,6 @@ namespace WPR.Controls
 
         #endregion
 
-
         #region Command MinusButtonCommand - Уменьшить значение
 
         private ICommand _MinusButtonCommand;
@@ -71,6 +70,7 @@ namespace WPR.Controls
         #endregion
 
 
+
         #region PlusMinusButtonsShowing : bool - Показывать кнопки плюс\минус
 
         /// <summary>Показывать кнопки плюс\минус</summary>
@@ -79,7 +79,7 @@ namespace WPR.Controls
                 nameof(PlusMinusButtonsShowing),
                 typeof(bool),
                 typeof(NumericTextBox),
-                new PropertyMetadata(true));
+                new PropertyMetadata(false));
 
         /// <summary>Показывать кнопки плюс\минус</summary>
         [Category("Настройки")]
@@ -100,14 +100,13 @@ namespace WPR.Controls
                 nameof(Value),
                 typeof(double),
                 typeof(NumericTextBox),
-                new PropertyMetadata(default(double), (d, e) =>
+                new FrameworkPropertyMetadata(default(double), FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, null, (d, BaseValue) =>
                 {
-                    var nt= (NumericTextBox)d;
-                    nt.TextExpression = e.NewValue.ToString();
-                    if (nt.TextBox?.IsKeyboardFocusWithin == true)
-                    {
-                        nt.TextBox.SelectionStart = nt.TextExpression?.Length ?? 0;
-                    }
+                    var nt = (NumericTextBox)d;
+                    var val = (double) BaseValue;
+                    var res = Math.Min(nt.MaxValue, Math.Max(nt.MinValue, val));
+                    nt.TextExpression = res.ToString(CultureInfo.InvariantCulture);
+                    return res;
                 }));
 
         /// <summary>Значение</summary>
@@ -129,7 +128,21 @@ namespace WPR.Controls
                 nameof(TextExpression),
                 typeof(string),
                 typeof(NumericTextBox),
-                new PropertyMetadata(string.Empty));
+                new PropertyMetadata(string.Empty, (d, e) =>
+                {
+                    var nt = (NumericTextBox)d;
+                    if (!nt.AllowTextExpressions)
+                    {
+                        if (nt.TextExpression.EndsWith("-") || nt.TextExpression.EndsWith(",") ||
+                            nt.TextExpression.EndsWith(".")) return;
+
+                        if (Work.Calculator(e.NewValue.ToString(), out var result, nt.DecimalPlaces))
+                        {
+                            nt.Value = result;
+                        }
+                    }
+
+                }));
 
         /// <summary>Значение текстбокса</summary>
         [Category("Настройки")]
@@ -276,7 +289,7 @@ namespace WPR.Controls
                 nameof(AllowTextExpressions),
                 typeof(bool),
                 typeof(NumericTextBox),
-                new PropertyMetadata(true));
+                new PropertyMetadata(false));
 
         /// <summary>Разрешать ввод текста и символов для расчёта внутри текстбокса</summary>
         [Category("Настройки")]
@@ -409,6 +422,8 @@ namespace WPR.Controls
             if (e.Key == Key.Enter)
             {
                 Calculate();
+                TextBox.SelectionStart = TextBox.Text.Length;
+
             }
             if (e.Key == Key.Escape)
             {

@@ -60,12 +60,13 @@
                 <ComboBoxItem Content="Item 3"/>
                 <ComboBoxItem Content="Item 4"/>
             </ComboBox>
-            <controls:NumericTextBox Name="N1" Value="1200" Hint="Numeric Field" Margin="10">
+            <controls:NumericTextBox Name="N1" Value="1200" Hint="Numeric Field" Margin="10"
+                                     AllowTextExpressions="True">
 
             </controls:NumericTextBox>
             <TextBlock Text="{Binding ElementName=N1, Path=Value, StringFormat=Value: {0}}"></TextBlock>
             <controls:NumericTextBox Name="N2" Hint="Numeric Field Not Calc" Margin="10"
-                                     AllowTextExpressions="False"
+                                     PlusMinusButtonsShowing="True"
                                      MaxValue="100"
                                      MinValue="-110"
                                      Value="0"
