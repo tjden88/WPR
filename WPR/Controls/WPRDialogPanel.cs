@@ -12,6 +12,8 @@ namespace WPR.Controls
     /// <summary> Контрол для обёртки диалоговых окон </summary>
     public class WPRDialogPanel : HeaderedContentControl
     {
+        private IWPRDialog _WPRDialog;
+
         static WPRDialogPanel()
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(WPRDialogPanel), new FrameworkPropertyMetadata(typeof(WPRDialogPanel)));
@@ -51,6 +53,7 @@ namespace WPR.Controls
             }
             else
             {
+                _WPRDialog?.DialogResult?.Invoke(false);
                 Hide();
             }
         }
@@ -97,7 +100,16 @@ namespace WPR.Controls
         /// <param name="staysOpen">Не позволять закрыть содержимое при клике за его пределы</param>
         public void Show(object content, bool staysOpen)
         {
-            Header = content;
+            if (content is IWPRDialog dlg)
+            {
+                _WPRDialog = dlg;
+                Header = dlg.DialogContent;
+            }
+            else
+            {
+                _WPRDialog = null;
+                Header = content;
+            }
             Show(staysOpen);
         }
 
@@ -107,9 +119,11 @@ namespace WPR.Controls
         /// </summary>
         public void Hide()
         {
+            if (!IsShowing) return;
             Focus();
             IsShowing = false;
             StaysOpen = false;
+            _WPRDialog = null;
         }
         #endregion
 

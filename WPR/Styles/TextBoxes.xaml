@@ -30,29 +30,31 @@
                             <RowDefinition/>
                             <RowDefinition Height="Auto"/>
                         </Grid.RowDefinitions>
-                        <ContentControl IsTabStop="False" x:Name="FloatingHint"
+                        <Grid Margin="0,10,0,0">
+                            <ContentControl IsTabStop="False" x:Name="FloatingHint"
                                             Content="{Binding Path=(helpers:TextHelper.Hint), RelativeSource={RelativeSource TemplatedParent}}"
                                             HorizontalAlignment="Left"
                                             Foreground="{TemplateBinding Background}"
                                             FontSize="{TemplateBinding FontSize}"
                                             Margin="0,3">
-                            <ContentControl.RenderTransform>
-                                <TransformGroup>
-                                    <TranslateTransform x:Name="TranslateTransform" Y="{Binding ActualHeight, ElementName=FloatingHint, Converter={StaticResource SignPlusMinusConverter}}"/>
-                                    <ScaleTransform x:Name="ScaleTransform" ScaleX="0.8" ScaleY="{Binding Path=ScaleX, RelativeSource={RelativeSource Self}}"/>
-                                </TransformGroup>
-                            </ContentControl.RenderTransform>
-                        </ContentControl>
+                                <ContentControl.RenderTransform>
+                                    <TransformGroup>
+                                        <TranslateTransform x:Name="TranslateTransform" Y="{Binding ActualHeight, ElementName=FloatingHint, Converter={StaticResource SignPlusMinusConverter}}"/>
+                                        <ScaleTransform x:Name="ScaleTransform" ScaleX="0.8" ScaleY="{Binding Path=ScaleX, RelativeSource={RelativeSource Self}}"/>
+                                    </TransformGroup>
+                                </ContentControl.RenderTransform>
+                            </ContentControl>
 
-                        <ScrollViewer BorderThickness="0" Grid.Row="0" x:Name="PART_ContentHost" Focusable="false" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Hidden" Margin="-2,3,0,3"/>
+                            <ScrollViewer BorderThickness="0" Grid.Row="0" x:Name="PART_ContentHost" Focusable="false" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Hidden" Margin="-2,3,0,3"/>
+                        </Grid>
 
                         <Rectangle x:Name="BottomRect" Grid.Row="1"
                                    SnapsToDevicePixels="True"
-                                       Fill="{TemplateBinding BorderBrush}" Height="1" VerticalAlignment="Top" Margin="0,-1,0,0"/>
+                                   Fill="{TemplateBinding BorderBrush}" Height="1" VerticalAlignment="Top" Margin="0,-1,0,0"/>
                         <Rectangle Grid.Row="1" Fill="{TemplateBinding BorderBrush}"
-                                        Height="2" VerticalAlignment="Top"
-                                        SnapsToDevicePixels="True"
-                                        RenderTransformOrigin="0.5,0.5">
+                                   Height="2" VerticalAlignment="Top"
+                                   SnapsToDevicePixels="True"
+                                   RenderTransformOrigin="0.5,0.5">
                             <Rectangle.RenderTransform>
                                 <ScaleTransform x:Name="AnimatedTransform" ScaleX="0"/>
                             </Rectangle.RenderTransform>
@@ -61,10 +63,11 @@
                         <ContentControl IsTabStop="False"
                                         Grid.Row="1" 
                                         x:Name="Description"
-                                            Content="{Binding Path=(helpers:TextHelper.Description), RelativeSource={RelativeSource TemplatedParent}}"
-                                            HorizontalAlignment="Left"
-                                            Foreground="{DynamicResource SecondaryTextColorBrush}"
-                                            FontSize="11" Margin="0,3,0,0"/>
+                                        Content="{Binding Path=(helpers:TextHelper.Description), RelativeSource={RelativeSource TemplatedParent}}"
+                                        HorizontalAlignment="Left"
+                                        Foreground="{DynamicResource SecondaryTextColorBrush}"
+                                        FontSize="11" Margin="0,3,0,0"/>
+
                         <TextBlock Grid.Row="1" Foreground="{StaticResource AttentionColorBrush}" 
                                    x:Name="ErrorText"
                                    Text=""

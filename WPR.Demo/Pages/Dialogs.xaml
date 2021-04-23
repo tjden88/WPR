@@ -45,7 +45,10 @@
 
                     <Button Content="Show InputTextBox" HorizontalAlignment="Center" VerticalAlignment="Center" Click="Button3_OnClick"/>
                 </StackPanel>
-                <StackPanel Width="200">
+                <StackPanel Width="200" Margin="10">
+                    <controls:EditDialog Name="EditDialog" Header="Кастом диалог" IconSource="Style">
+                        <Button Content="Ok" Click="CustomDialog_Click"></Button>
+                    </controls:EditDialog>
                 </StackPanel>
             </StackPanel>
         </controls:WPRDialogPanel>

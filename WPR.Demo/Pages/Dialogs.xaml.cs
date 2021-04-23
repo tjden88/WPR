@@ -117,5 +117,26 @@ namespace WPR.Demo.Pages
                 S => S.Length>0,
                 "Поле не может быть пустым");
         }
+
+        class TestCustomDialog : IWPRDialog
+        {
+            public Action<bool> DialogResult { get; set; }
+
+            public object DialogContent { get; set; }
+
+            public TestCustomDialog()
+            {
+                DialogContent = new Button()
+                {
+                    Content = "OK",
+                    Command = new MVVM.Commands.Command(() => DialogResult?.Invoke(true))
+                };
+            }
+        }
+
+        private async void CustomDialog_Click(object Sender, RoutedEventArgs E)
+        {
+            Debug.WriteLine(await WPRMessageBox.ShowCustomDialogAsync(this, new TestCustomDialog(), false));
+        }
     }
 }

@@ -5,6 +5,7 @@
 
     <Style TargetType="{x:Type controls:EditDialog}">
         <Setter Property="Foreground" Value="{DynamicResource SecondaryTextColorBrush}"/>
+        <Setter Property="Background" Value="{DynamicResource BackgroundColorBrush}"/>
         <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
         <Setter Property="Template">
             <Setter.Value>

@@ -283,5 +283,40 @@ namespace WPR
         }
 
         #endregion
+
+        #region CustomDialog
+
+        /// <summary>Показать диалог с кастомным содержимым</summary>
+        public static void ShowCustomDialog(DependencyObject sender, IWPRDialog Content, bool StaysOpen, Action<bool> Callback = null)
+        {
+            // Ищем панель
+            WPRDialogPanel panel = FindDialogPanel(sender);
+
+            Content.DialogResult += (b) =>
+            {
+                panel.Hide();
+                Callback?.Invoke(b);
+            };
+            panel.Show(Content, StaysOpen);
+        }
+
+        /// <summary>Показать диалог с кастомным содержимым</summary>
+        public static async Task<bool> ShowCustomDialogAsync(DependencyObject sender, IWPRDialog Content, bool StaysOpen)
+        {
+            TaskCompletionSource<bool> complete = new();
+            ShowCustomDialog(sender, Content, StaysOpen, (b) => complete.TrySetResult(b));
+            return await complete.Task.ConfigureAwait(false);
+        }
+
+        #endregion
+    }
+
+    public interface IWPRDialog
+    {
+        /// <summary>Результат диалога</summary>
+        Action<bool> DialogResult { get; set; }
+
+        /// <summary>Контент диалога</summary>
+        object DialogContent { get; set; }
     }
 }
