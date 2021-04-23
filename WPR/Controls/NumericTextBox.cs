@@ -1,6 +1,8 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 
 namespace WPR.Controls
 {
@@ -9,9 +11,25 @@ namespace WPR.Controls
     /// </summary>
     public class NumericTextBox : Control
     {
+
+        private TextBox TextBox { get; set; }
+
         static NumericTextBox()
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(NumericTextBox), new FrameworkPropertyMetadata(typeof(NumericTextBox)));
+        }
+
+        public override void OnApplyTemplate()
+        {
+            base.OnApplyTemplate();
+            TextBox = Template.FindName("PART_TextBox", this) as TextBox;
+            if (TextBox == null) throw new ArgumentException(nameof(TextBox));
+
+            TextBox.IsKeyboardFocusedChanged += TextBox_IsKeyboardFocusedChanged;
+            TextBox.PreviewTextInput += TextBox_PreviewTextInput;
+            TextBox.KeyDown += TextBox_KeyDown;
+            TextBox.LostFocus += TextBox_LostFocus;
+
         }
 
 
@@ -53,6 +71,48 @@ namespace WPR.Controls
         {
             get => (double) GetValue(ValueProperty);
             set => SetValue(ValueProperty, value);
+        }
+
+        #endregion
+
+        #region TextExpression : string - Значение текстбокса
+
+        /// <summary>Значение текстбокса</summary>
+        internal static readonly DependencyProperty TextExpressionProperty =
+            DependencyProperty.Register(
+                nameof(TextExpression),
+                typeof(string),
+                typeof(NumericTextBox),
+                new PropertyMetadata(default(string)));
+
+        /// <summary>Значение текстбокса</summary>
+        [Category("Настройки")]
+        [Description("Значение текстбокса")]
+        internal string TextExpression
+        {
+            get => (string) GetValue(TextExpressionProperty);
+            set => SetValue(TextExpressionProperty, value);
+        }
+
+        #endregion
+
+        #region DescriptionText : string - Описание ошибок вычислений
+
+        /// <summary>Описание ошибок вычислений</summary>
+        internal static readonly DependencyProperty DescriptionTextProperty =
+            DependencyProperty.Register(
+                nameof(DescriptionText),
+                typeof(string),
+                typeof(NumericTextBox),
+                new PropertyMetadata(default(string)));
+
+        /// <summary>Описание ошибок вычислений</summary>
+        //[Category("")]
+        [Description("Описание ошибок вычислений")]
+        internal string DescriptionText
+        {
+            get => (string) GetValue(DescriptionTextProperty);
+            set => SetValue(DescriptionTextProperty, value);
         }
 
         #endregion
@@ -204,5 +264,105 @@ namespace WPR.Controls
 
         #endregion
 
+
+
+
+        #region Calculate
+
+        private void Calculate()
+        {
+            var text = TextExpression;
+
+            if (string.IsNullOrEmpty(text))
+            {
+                Value = MinValue > 0 ? MinValue: 0.0;
+                DescriptionText = "";
+                return;
+            }
+
+            if (!Work.Calculator(textBox.Text, out double result, DecimalCount))
+            {
+                DescriptionText.Text = "Неверное выражение";
+                textBox.Text = Value.ToString().Replace(",", ".");
+                textBox.SelectionStart = textBox.Text.Length;
+                return;
+            }
+            DescriptionText.Text = "";
+            if (result < MinValue)
+            {
+                DescriptionText.Text = "Минимальное значение - " + MinValue.ToString();
+                result = MinValue;
+            }
+
+            if (result > MaxValue)
+            {
+                DescriptionText.Text = "Максимальное значение - " + MaxValue.ToString();
+                result = MaxValue;
+            }
+
+            Value = result;
+        }
+
+        #endregion
+
+        #region TextBox Events
+
+        private void TextBox_LostFocus(object sender, RoutedEventArgs e)
+        {
+            Calculate(TextBox);
+        }
+
+        private void TextBox_KeyDown(object sender, KeyEventArgs e)
+        {
+            DescriptionText.Text = "";
+
+            if (e.Key == Key.Enter)
+            {
+                Calculate((TextBox)sender);
+            }
+            if (e.Key == Key.Escape)
+            {
+                Calculate((TextBox)sender);
+                Focus();
+            }
+        }
+
+        private void TextBox_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            TextBox textBox = (TextBox)sender;
+
+
+            if (!AllowCalculate) //Только числа разрешены
+            {
+                //Запрет писать не цифры 
+                if (!char.IsDigit(e.Text, 0)) e.Handled = true;
+
+                //Десятичные
+                if (DecimalCount > 0)
+                {
+                    if ((e.Text == "." || e.Text == ",") && textBox.Text.LastIndexOf(",") < 0 && textBox.Text.LastIndexOf(".") < 0 && textBox.SelectionStart > 0)
+                    {
+                        e.Handled = false;
+                    }
+
+                    // Проверим текущее десятичное после знака
+                    int currdecimal = Math.Max(textBox.Text.LastIndexOf(","), textBox.Text.LastIndexOf("."));
+                    if (currdecimal > -1 && textBox.SelectionStart - currdecimal > DecimalCount) e.Handled = true;
+                }
+                // Разрешение писать минус только в начале строки
+                if (e.Text == "-" && textBox.Text.LastIndexOf("-") < 0 && textBox.SelectionStart == 0 && MinValue < 0)
+                {
+                    e.Handled = false;
+                }
+            }
+
+        }
+
+        private void TextBox_IsKeyboardFocusedChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            TextBoxIsFocused = (bool)e.NewValue;
+        }
+
+        #endregion
     }
 }

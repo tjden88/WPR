@@ -8,16 +8,14 @@
     </ResourceDictionary.MergedDictionaries>
 
     <Style TargetType="{x:Type local:NumericTextBox}">
-        <Setter Property="BorderBrush" Value="{DynamicResource SecondaryTextColorBrush}"/>
-        <Setter Property="Background" Value="{DynamicResource PrimaryColorBrush}"/>
 
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type local:NumericTextBox}">
-                    <TextBox Background="{TemplateBinding Background}"
-                             helpers:TextHelper.Hint ="{TemplateBinding Hint}"
-                             BorderBrush="{TemplateBinding BorderBrush}"
-                             Text="{TemplateBinding Value}"
+                    <TextBox helpers:TextHelper.Hint ="{TemplateBinding Hint}"
+                             helpers:TextHelper.Description ="{TemplateBinding DescriptionText}"
+                             x:Name="PART_TextBox"
+                             Text="{Binding RelativeSource={RelativeSource TemplatedParent},Path= TextExpression, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                              Style="{ Binding RelativeSource={RelativeSource TemplatedParent},Path=TextBoxStyle, TargetNullValue={StaticResource WPRTextBox}}"/>
                 </ControlTemplate>
             </Setter.Value>

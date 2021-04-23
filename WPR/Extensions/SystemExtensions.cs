@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Media;
 
 namespace System
@@ -20,6 +15,26 @@ namespace System
             if (parentObject == null) return null;
             return parentObject is T parent? parent: FindVisualParent<T>(parentObject);
 
+        }
+
+        /// <summary>
+        /// Вычислить значение объекта
+        /// </summary>
+        /// <param name="exp"></param>
+        /// <returns></returns>
+        public static double DoubleValue(this object exp)
+        {
+            return WPR.Work.Va(exp);
+        }
+
+        /// <summary>
+        /// Вычислить целое значение объекта
+        /// </summary>
+        /// <param name="exp"></param>
+        /// <returns></returns>
+        public static int IntValue(this object exp)
+        {
+            return WPR.Work.VaInt(exp);
         }
     }
 }

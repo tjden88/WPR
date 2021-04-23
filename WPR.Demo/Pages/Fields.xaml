@@ -6,6 +6,7 @@
       xmlns:local="clr-namespace:WPR.Demo.Pages"
       xmlns:helpers="clr-namespace:WPR.Helpers;assembly=WPR"
       xmlns:wpr="clr-namespace:WPR;assembly=WPR"
+      xmlns:controls="clr-namespace:WPR.Controls;assembly=WPR"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       DataContext="{Binding TestViewModel, Source={StaticResource Locator}}"
@@ -59,6 +60,9 @@
                 <ComboBoxItem Content="Item 3"/>
                 <ComboBoxItem Content="Item 4"/>
             </ComboBox>
+            <controls:NumericTextBox Value="1200" Hint="Numeric Field">
+
+            </controls:NumericTextBox>
             
         </StackPanel>
     </DockPanel>
