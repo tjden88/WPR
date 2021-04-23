@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Data;
 using System.IO;
-using System.Runtime.Serialization.Formatters.Binary;
+using System.Text.Json;
 
 namespace WPR
 {
@@ -67,49 +67,22 @@ namespace WPR
         /// </summary>
         public static object LoadObject(string FileName)
         {
-            try
-            {
-                return LoadObject(File.ReadAllBytes(FileName));
-            }
-            catch (Exception)
-            {
-
-                throw;
-            }
+            return LoadObject(File.ReadAllBytes(FileName));
         }
         /// <summary>
         /// Десериализация объекта
         /// </summary>
         public static object LoadObject(byte[] ByteArray)
         {
-            try
-            {
-                using MemoryStream ms = new MemoryStream(ByteArray)
-                {
-                    Position = 0
-                };
-                BinaryFormatter formatter = new BinaryFormatter();
-                return formatter.Deserialize(ms);
-            }
-            catch (Exception)
-            {
-                throw;
-            }
+            var readOnlySpan = new ReadOnlySpan<byte>(ByteArray);
+            return JsonSerializer.Deserialize<object>(readOnlySpan);
         }
         /// <summary>
         /// Сериализация объекта и запись в файл
         /// </summary>
         public static void SaveObject(object obj, string FileName)
         {
-            try
-            {
-                File.WriteAllBytes(FileName, SaveObject(obj));
-            }
-            catch (Exception)
-            {
-
-                throw;
-            }
+            File.WriteAllBytes(FileName, SaveObject(obj));
         }
 
         /// <summary>
@@ -117,17 +90,11 @@ namespace WPR
         /// </summary>
         public static byte[] SaveObject(object obj)
         {
-            try
+            var options = new JsonSerializerOptions
             {
-                using MemoryStream ms = new MemoryStream();
-                BinaryFormatter formatter = new BinaryFormatter();
-                formatter.Serialize(ms, obj);
-                return ms.ToArray();
-            }
-            catch (Exception)
-            {
-                throw;
-            }
+                WriteIndented = true
+            };
+           return JsonSerializer.SerializeToUtf8Bytes(obj, options);
         }
     }
 
