@@ -97,14 +97,10 @@
                     </Style>
                 </Border.Style>
                 <Grid>
-
-                    <ContentPresenter/>
-
-                        <DockPanel Height="35" 
-                                   VerticalAlignment="Top"
-                                   HorizontalAlignment="Stretch"
-                                   LastChildFill="False">
-
+                    <DockPanel Height="35" 
+                               VerticalAlignment="Top"
+                               HorizontalAlignment="Stretch"
+                               LastChildFill="False">
                         <FrameworkElement DockPanel.Dock="Left"
                                       Width="{Binding Path=(wh:WindowHelper.TitleLeftMargin) , RelativeSource={RelativeSource TemplatedParent}}" />
                         <TextBlock  DockPanel.Dock="Left"
@@ -143,6 +139,7 @@
                             Click="MinimizeClick"
                             Content="&#xe949;" ToolTip="Свернуть"/>
                     </DockPanel>
+                    <ContentPresenter/>
                 </Grid>
             </Border>
             </controls:WPRDialogPanel>

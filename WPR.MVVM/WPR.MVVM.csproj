@@ -3,6 +3,22 @@
   <PropertyGroup>
     <TargetFramework>net5.0-windows</TargetFramework>
     <UseWPF>true</UseWPF>
+    <Authors>tj_d</Authors>
+    <Product>tj_d</Product>
+    <Description>Пакет абстрактных и базовых классов WPF для шаблона MVVM</Description>
+    <Copyright>tj.den88@gmail.com</Copyright>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageProjectUrl>https://github.com/tjden88/WPR.Styles</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/tjden88/WPR.Styles</RepositoryUrl>
+    <PackageIcon>Style XP.png</PackageIcon>
+    <PackageReleaseNotes>Запуск</PackageReleaseNotes>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="..\..\..\Мусор\Иконки\Style XP.png">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
+  </ItemGroup>
 
 </Project>
