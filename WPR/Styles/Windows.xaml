@@ -99,7 +99,6 @@
                 <Grid>
                     <DockPanel Height="35" 
                                VerticalAlignment="Top"
-                               HorizontalAlignment="Stretch"
                                LastChildFill="False">
                         <FrameworkElement DockPanel.Dock="Left"
                                       Width="{Binding Path=(wh:WindowHelper.TitleLeftMargin) , RelativeSource={RelativeSource TemplatedParent}}" />
@@ -108,38 +107,45 @@
                                 Foreground="{Binding Path=(wh:WindowHelper.WindowHeaderForeground) , RelativeSource={RelativeSource TemplatedParent}}"
                                 FontSize="14"
                                 Text="{TemplateBinding Title}"/>
-                        <Button x:Name="btnClose" Style="{StaticResource  WindowHeaderCloseButton}"
-                            DockPanel.Dock="Right"
-                            Click="Close_Click"
-                            Content="&#xe106;" 
-                            ToolTip="Закрыть"/>
-                        <Button x:Name="btnRestore"
-                            Click="MaximizeRestoreClick"
-                            DockPanel.Dock="Right">
-                            <Button.Style>
-                                <Style TargetType="{x:Type Button }" BasedOn="{StaticResource WindowHeaderMaxNormButton}">
-                                    <Setter Property="Content" Value="&#xe739;"/>
-                                    <Style.Triggers>
-                                        <DataTrigger Binding="{Binding WindowState, RelativeSource={RelativeSource AncestorType=Window}}" 
-                                                 Value="Maximized">
-                                            <Setter Property="Content"  Value="&#xe923;"/>
-                                            <Setter Property="ToolTip" Value="Восстановить"/>
-                                        </DataTrigger>
-                                        <DataTrigger Binding="{Binding WindowState, RelativeSource={RelativeSource AncestorType=Window}}" 
-                                                 Value="Normal">
-                                            <Setter Property="Content"  Value="&#xe739;"/>
-                                            <Setter Property="ToolTip" Value="Развернуть"/>
-                                        </DataTrigger>
-                                    </Style.Triggers>
-                                </Style>
-                            </Button.Style>
-                        </Button>
-                        <Button x:Name="btnMinimize" Style="{StaticResource  WindowHeaderMaxNormButton}"
-                            DockPanel.Dock="Right"
-                            Click="MinimizeClick"
-                            Content="&#xe949;" ToolTip="Свернуть"/>
                     </DockPanel>
+
                     <ContentPresenter/>
+
+                    <DockPanel Height="35" 
+                               VerticalAlignment="Top"
+                               HorizontalAlignment="Right"
+                               LastChildFill="False">
+                            <Button x:Name="btnClose" Style="{StaticResource  WindowHeaderCloseButton}"
+                                    DockPanel.Dock="Right"
+                                    Click="Close_Click"
+                                    Content="&#xe106;" 
+                                    ToolTip="Закрыть"/>
+                            <Button x:Name="btnRestore"
+                                    Click="MaximizeRestoreClick"
+                                    DockPanel.Dock="Right">
+                                <Button.Style>
+                                    <Style TargetType="{x:Type Button }" BasedOn="{StaticResource WindowHeaderMaxNormButton}">
+                                        <Setter Property="Content" Value="&#xe739;"/>
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding WindowState, RelativeSource={RelativeSource AncestorType=Window}}" 
+                                                 Value="Maximized">
+                                                <Setter Property="Content"  Value="&#xe923;"/>
+                                                <Setter Property="ToolTip" Value="Восстановить"/>
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding WindowState, RelativeSource={RelativeSource AncestorType=Window}}" 
+                                                 Value="Normal">
+                                                <Setter Property="Content"  Value="&#xe739;"/>
+                                                <Setter Property="ToolTip" Value="Развернуть"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Button.Style>
+                            </Button>
+                            <Button x:Name="btnMinimize" Style="{StaticResource  WindowHeaderMaxNormButton}"
+                                    DockPanel.Dock="Right"
+                                    Click="MinimizeClick"
+                                    Content="&#xe949;" ToolTip="Свернуть"/>
+                        </DockPanel>
                 </Grid>
             </Border>
             </controls:WPRDialogPanel>
