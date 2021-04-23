@@ -5,6 +5,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media.Converters;
+using WPR.MVVM.Commands;
 
 namespace WPR.Controls
 {
@@ -14,7 +15,7 @@ namespace WPR.Controls
     public class NumericTextBox : Control
     {
 
-        private TextBox TextBox { get; set; }
+        internal TextBox TextBox { get; set; }
 
         static NumericTextBox()
         {
@@ -30,8 +31,44 @@ namespace WPR.Controls
             TextBox.PreviewTextInput += TextBox_PreviewTextInput;
             TextBox.KeyDown += TextBox_KeyDown;
             TextBox.LostFocus += TextBox_LostFocus;
+            TextBox.MouseWheel += TextBox_MouseWheel;
 
         }
+
+        #region Command PlusButtonCommand - Увеличить значение
+
+        private ICommand _PlusButtonCommand;
+
+        /// <summary>Увеличить значение</summary>
+        public ICommand PlusButtonCommand => _PlusButtonCommand
+            ??= new Command(OnPlusButtonCommandExecuted, CanPlusButtonCommandExecute);
+
+        private bool CanPlusButtonCommandExecute() => Value < MaxValue;
+
+        private void OnPlusButtonCommandExecuted()
+        {
+            Value = Math.Min(MaxValue, Value + Increment);
+        }
+
+        #endregion
+
+
+        #region Command MinusButtonCommand - Уменьшить значение
+
+        private ICommand _MinusButtonCommand;
+
+        /// <summary>Уменьшить значение</summary>
+        public ICommand MinusButtonCommand => _MinusButtonCommand
+            ??= new Command(OnMinusButtonCommandExecuted, CanMinusButtonCommandExecute);
+
+        private bool CanMinusButtonCommandExecute() => Value > MinValue;
+
+        private void OnMinusButtonCommandExecuted()
+        {
+            Value = Math.Max(MinValue, Value - Increment);
+        }
+
+        #endregion
 
 
         #region PlusMinusButtonsShowing : bool - Показывать кнопки плюс\минус
@@ -42,7 +79,7 @@ namespace WPR.Controls
                 nameof(PlusMinusButtonsShowing),
                 typeof(bool),
                 typeof(NumericTextBox),
-                new PropertyMetadata(default(bool)));
+                new PropertyMetadata(true));
 
         /// <summary>Показывать кнопки плюс\минус</summary>
         [Category("Настройки")]
@@ -405,6 +442,18 @@ namespace WPR.Controls
                 {
                     e.Handled = false;
                 }
+            }
+        }
+
+        private void TextBox_MouseWheel(object sender, MouseWheelEventArgs e)
+        {
+            if (e.Delta > 0)
+            {
+                OnPlusButtonCommandExecuted();
+            }
+            else
+            {
+                OnMinusButtonCommandExecuted();
             }
 
         }
