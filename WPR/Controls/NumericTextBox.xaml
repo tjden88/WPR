@@ -13,10 +13,14 @@
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type local:NumericTextBox}">
                     <TextBox helpers:TextHelper.Hint ="{TemplateBinding Hint}"
-                             helpers:TextHelper.Description ="{TemplateBinding DescriptionText}"
                              x:Name="PART_TextBox"
                              Text="{Binding RelativeSource={RelativeSource TemplatedParent},Path= TextExpression, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                             Style="{ Binding RelativeSource={RelativeSource TemplatedParent},Path=TextBoxStyle, TargetNullValue={StaticResource WPRTextBox}}"/>
+                             Style="{ Binding RelativeSource={RelativeSource TemplatedParent},Path=TextBoxStyle, TargetNullValue={StaticResource WPRTextBox}}">
+                        <helpers:TextHelper.Description>
+                            <TextBlock Foreground="{DynamicResource AttentionColorBrush}"
+                                       Text="{TemplateBinding DescriptionText}"/>
+                        </helpers:TextHelper.Description>
+                    </TextBox>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>

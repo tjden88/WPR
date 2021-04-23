@@ -1,8 +1,10 @@
 ﻿using System;
 using System.ComponentModel;
+using System.Globalization;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Media.Converters;
 
 namespace WPR.Controls
 {
@@ -25,7 +27,6 @@ namespace WPR.Controls
             TextBox = Template.FindName("PART_TextBox", this) as TextBox;
             if (TextBox == null) throw new ArgumentException(nameof(TextBox));
 
-            TextBox.IsKeyboardFocusedChanged += TextBox_IsKeyboardFocusedChanged;
             TextBox.PreviewTextInput += TextBox_PreviewTextInput;
             TextBox.KeyDown += TextBox_KeyDown;
             TextBox.LostFocus += TextBox_LostFocus;
@@ -62,7 +63,15 @@ namespace WPR.Controls
                 nameof(Value),
                 typeof(double),
                 typeof(NumericTextBox),
-                new PropertyMetadata(default(double)));
+                new PropertyMetadata(default(double), (d, e) =>
+                {
+                    var nt= (NumericTextBox)d;
+                    nt.TextExpression = e.NewValue.ToString();
+                    if (nt.TextBox?.IsKeyboardFocusWithin == true)
+                    {
+                        nt.TextBox.SelectionStart = nt.TextExpression?.Length ?? 0;
+                    }
+                }));
 
         /// <summary>Значение</summary>
         [Category("Настройки")]
@@ -83,7 +92,7 @@ namespace WPR.Controls
                 nameof(TextExpression),
                 typeof(string),
                 typeof(NumericTextBox),
-                new PropertyMetadata(default(string)));
+                new PropertyMetadata(string.Empty));
 
         /// <summary>Значение текстбокса</summary>
         [Category("Настройки")]
@@ -251,7 +260,7 @@ namespace WPR.Controls
                 nameof(DecimalPlaces),
                 typeof(int),
                 typeof(NumericTextBox),
-                new PropertyMetadata(default(int)));
+                new PropertyMetadata(0));
 
         /// <summary>Количество десятичных знаков</summary>
         [Category("Настройки")]
@@ -264,103 +273,140 @@ namespace WPR.Controls
 
         #endregion
 
+        #region IsValid : bool - Валидное ли значение введено
 
+        [Description("Валидное ли значение введено")]
+        public bool IsValid
+        {
+            get
+            {
+                if (!Work.Calculator(TextExpression, out double result, DecimalPlaces))
+                {
+                    return false;
+                }
+                if (result < MinValue || result > MaxValue)
+                {
+                    return false;
+                }
+                return true;
+            }
+        }
+
+        #endregion
 
 
         #region Calculate
 
         private void Calculate()
         {
-            var text = TextExpression;
 
-            if (string.IsNullOrEmpty(text))
+            if (string.IsNullOrEmpty(TextExpression))
             {
                 Value = MinValue > 0 ? MinValue: 0.0;
+                TextExpression = "";
                 DescriptionText = "";
                 return;
             }
 
-            if (!Work.Calculator(textBox.Text, out double result, DecimalCount))
+            if (!Work.Calculator(TextExpression, out double result, DecimalPlaces))
             {
-                DescriptionText.Text = "Неверное выражение";
-                textBox.Text = Value.ToString().Replace(",", ".");
-                textBox.SelectionStart = textBox.Text.Length;
+                DescriptionText = "Неверное выражение";
+                TextExpression = Value.ToString(CultureInfo.InvariantCulture).Replace(",", ".");
+                TextBox.SelectionStart = TextBox.Text.Length;
                 return;
             }
-            DescriptionText.Text = "";
+            DescriptionText = "";
             if (result < MinValue)
             {
-                DescriptionText.Text = "Минимальное значение - " + MinValue.ToString();
+                DescriptionText = "Минимальное значение: " + MinValue.ToString(CultureInfo.InvariantCulture);
                 result = MinValue;
             }
 
             if (result > MaxValue)
             {
-                DescriptionText.Text = "Максимальное значение - " + MaxValue.ToString();
+                DescriptionText = "Максимальное значение: " + MaxValue.ToString(CultureInfo.InvariantCulture);
                 result = MaxValue;
             }
 
             Value = result;
         }
 
+        /// <summary>
+        /// Проверить допустимость значения и вывести предупреждение в описании
+        /// </summary>
+        public bool Validate()
+        {
+            if (!Work.Calculator(TextBox.Text, out double result, DecimalPlaces))
+            {
+                DescriptionText = "Неверное выражение";
+                return false;
+            }
+            DescriptionText = "";
+            if (result < MinValue)
+            {
+                DescriptionText = "Минимальное значение: " + MinValue.ToString(CultureInfo.InvariantCulture);
+                return false;
+            }
+
+            if (result > MaxValue)
+            {
+                DescriptionText = "Максимальное значение: " + MaxValue.ToString(CultureInfo.InvariantCulture);
+                return false;
+            }
+
+            return true;
+        }
         #endregion
 
         #region TextBox Events
 
         private void TextBox_LostFocus(object sender, RoutedEventArgs e)
         {
-            Calculate(TextBox);
+            Calculate();
         }
 
         private void TextBox_KeyDown(object sender, KeyEventArgs e)
         {
-            DescriptionText.Text = "";
+            DescriptionText = "";
 
             if (e.Key == Key.Enter)
             {
-                Calculate((TextBox)sender);
+                Calculate();
             }
             if (e.Key == Key.Escape)
             {
-                Calculate((TextBox)sender);
+                Calculate();
                 Focus();
             }
         }
 
         private void TextBox_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
-            TextBox textBox = (TextBox)sender;
 
-
-            if (!AllowCalculate) //Только числа разрешены
+            if (!AllowTextExpressions) //Только числа разрешены
             {
                 //Запрет писать не цифры 
                 if (!char.IsDigit(e.Text, 0)) e.Handled = true;
 
                 //Десятичные
-                if (DecimalCount > 0)
+                if (DecimalPlaces > 0)
                 {
-                    if ((e.Text == "." || e.Text == ",") && textBox.Text.LastIndexOf(",") < 0 && textBox.Text.LastIndexOf(".") < 0 && textBox.SelectionStart > 0)
+                    if ((e.Text == "." || e.Text == ",") && TextExpression.LastIndexOf(",", StringComparison.Ordinal) < 0 && TextExpression.LastIndexOf(".", StringComparison.Ordinal) < 0 && TextBox.SelectionStart > 0)
                     {
                         e.Handled = false;
                     }
 
                     // Проверим текущее десятичное после знака
-                    int currdecimal = Math.Max(textBox.Text.LastIndexOf(","), textBox.Text.LastIndexOf("."));
-                    if (currdecimal > -1 && textBox.SelectionStart - currdecimal > DecimalCount) e.Handled = true;
+                    int currdecimal = Math.Max(TextExpression.LastIndexOf(",", StringComparison.Ordinal), TextExpression.LastIndexOf(".", StringComparison.Ordinal));
+                    if (currdecimal > -1 && TextBox.SelectionStart - currdecimal > DecimalPlaces) e.Handled = true;
                 }
                 // Разрешение писать минус только в начале строки
-                if (e.Text == "-" && textBox.Text.LastIndexOf("-") < 0 && textBox.SelectionStart == 0 && MinValue < 0)
+                if (e.Text == "-" && TextExpression.LastIndexOf("-", StringComparison.Ordinal) < 0 && TextBox.SelectionStart == 0 && MinValue < 0)
                 {
                     e.Handled = false;
                 }
             }
 
-        }
-
-        private void TextBox_IsKeyboardFocusedChanged(object sender, DependencyPropertyChangedEventArgs e)
-        {
-            TextBoxIsFocused = (bool)e.NewValue;
         }
 
         #endregion
