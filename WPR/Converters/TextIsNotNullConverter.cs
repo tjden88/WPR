@@ -2,6 +2,7 @@
 using System.Globalization;
 using System.Windows.Data;
 using WPR.MVVM;
+using WPR.MVVM.Converters;
 
 namespace WPR.Converters
 {

@@ -22,7 +22,7 @@ namespace WPR
 
             if (uIElement is Window window)
             {
-                return window.Template.FindName("WindowDialogPanel", window) as WPRDialogPanel;
+                return window?.Template?.FindName("WindowDialogPanel", window) as WPRDialogPanel;
             }
 
             return uIElement.FindVisualParent<WPRDialogPanel>();
@@ -246,11 +246,8 @@ namespace WPR
         /// <summary>Показать всплывающее сообщение с кнопкой</summary>
         public static void Bubble(DependencyObject sender, string Text, string ButtonText, Action Callback, int Duration = 4000)
         {
-            if (FindDialogPanel(sender) is WPRDialogPanel p)
-            {
-                
-                p.ShowBubble(Text, Duration, ButtonText, Callback);
-            }
+            var p = FindDialogPanel(sender);
+            p?.ShowBubble(Text, Duration, ButtonText, Callback);
         }
         #endregion
 

@@ -18,7 +18,8 @@
                 <ControlTemplate TargetType="{x:Type ListBox}">
                     <Border x:Name="Bd" BorderBrush="{TemplateBinding BorderBrush}"
                             BorderThickness="{TemplateBinding BorderThickness}"
-                            Background="{TemplateBinding Background}" Padding="{TemplateBinding Padding}"
+                            Background="{TemplateBinding Background}"
+                            Padding="{TemplateBinding Padding}"
                             SnapsToDevicePixels="true">
                         <ScrollViewer Focusable="false">
                             <ItemsPresenter SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
@@ -169,5 +170,27 @@
 
     <Style x:Key="WPRMenuListBox" TargetType="{x:Type ListBox}" BasedOn="{StaticResource WPRListBox}">
         <Setter Property="ItemContainerStyle" Value="{StaticResource WPRListBoxMenuItem}"/>
+    </Style>
+
+    <Style x:Key="WPRTemplateListBox" TargetType="{x:Type ListBox}"  BasedOn="{StaticResource WPRListBox}">
+        <Setter Property="Padding" Value="0"></Setter>
+        <Setter Property="ItemContainerStyle">
+            <Setter.Value>
+                <Style TargetType="{x:Type ListBoxItem}">
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="{x:Type ListBoxItem}">
+                                <StackPanel Orientation="Vertical">
+                                    <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                                      SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" 
+                                                      VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                                    <Rectangle Height="1" Fill="{DynamicResource DividerColorBrush}"/>
+                                </StackPanel>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+            </Setter.Value>
+        </Setter>
     </Style>
 </ResourceDictionary>

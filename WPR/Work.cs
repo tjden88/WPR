@@ -65,17 +65,17 @@ namespace WPR
         /// <summary>
         /// Десериализация объекта из файла
         /// </summary>
-        public static object LoadObject(string FileName)
+        public static T LoadObject<T>(string FileName)
         {
-            return LoadObject(File.ReadAllBytes(FileName));
+            return LoadObject<T>(File.ReadAllBytes(FileName));
         }
         /// <summary>
         /// Десериализация объекта
         /// </summary>
-        public static object LoadObject(byte[] ByteArray)
+        public static T LoadObject<T>(byte[] ByteArray)
         {
             var readOnlySpan = new ReadOnlySpan<byte>(ByteArray);
-            return JsonSerializer.Deserialize<object>(readOnlySpan);
+            return JsonSerializer.Deserialize<T>(readOnlySpan);
         }
         /// <summary>
         /// Сериализация объекта и запись в файл

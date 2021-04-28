@@ -2,7 +2,7 @@
 using System.Globalization;
 using System.Windows.Data;
 
-namespace WPR.MVVM
+namespace WPR.MVVM.Converters
 {
     /// <summary>Конвертер величин</summary>
     public abstract class ConverterBase : IValueConverter
