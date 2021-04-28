@@ -103,14 +103,14 @@
                         <Trigger Property="IsEnabled" Value="False">
                             <Setter TargetName="GridWrapper" Property="Opacity" Value="0.56" />
                         </Trigger>
-                        <MultiTrigger>
+                        <!--<MultiTrigger>
                             <MultiTrigger.Conditions>
                                 <Condition Property="IsSelected" Value="True"/>
                             </MultiTrigger.Conditions>
                             <MultiTrigger.Setters>
                                 <Setter Property="Height" Value="0"/>
                             </MultiTrigger.Setters>
-                        </MultiTrigger>
+                        </MultiTrigger>-->
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
@@ -275,7 +275,7 @@
                               Content="{TemplateBinding SelectionBoxItem}"
                               ContentStringFormat="{TemplateBinding SelectionBoxItemStringFormat}" 
                               HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" 
-                              IsHitTestVisible="false" 
+                              IsHitTestVisible="False" 
                               Margin="{TemplateBinding Padding}"
                               SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
                               VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>

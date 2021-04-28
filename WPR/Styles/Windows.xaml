@@ -137,15 +137,33 @@
                                                 <Setter Property="Content"  Value="&#xe739;"/>
                                                 <Setter Property="ToolTip" Value="Развернуть"/>
                                             </DataTrigger>
+                                            <DataTrigger Binding="{Binding ResizeMode, RelativeSource={RelativeSource AncestorType=Window}}" Value="CanMinimize" >
+                                                <Setter Property="Visibility" Value="Collapsed"/>
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding ResizeMode, RelativeSource={RelativeSource AncestorType=Window}}" Value="NoResize" >
+                                                <Setter Property="Visibility" Value="Collapsed"/>
+                                            </DataTrigger>
                                         </Style.Triggers>
                                     </Style>
                                 </Button.Style>
                             </Button>
-                            <Button x:Name="btnMinimize" Style="{StaticResource  WindowHeaderMaxNormButton}"
+                            <Button x:Name="btnMinimize"
                                     DockPanel.Dock="Right"
                                     Click="MinimizeClick"
-                                    Content="&#xe949;" ToolTip="Свернуть"/>
-                        </DockPanel>
+                                    Content="&#xe949;" ToolTip="Свернуть">
+                                <Button.Style>
+                                    <Style TargetType="{x:Type Button }" BasedOn="{StaticResource WindowHeaderMaxNormButton}">
+
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding ResizeMode, RelativeSource={RelativeSource AncestorType=Window}}" Value="NoResize" >
+                                                <Setter Property="Visibility" Value="Collapsed"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+
+                                </Button.Style>
+                            </Button>
+                    </DockPanel>
                 </Grid>
             </Border>
             </controls:WPRDialogPanel>
