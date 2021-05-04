@@ -97,21 +97,22 @@
                     </Style>
                 </Border.Style>
                 <Grid>
-                    <DockPanel Height="35" 
-                               VerticalAlignment="Top"
-                               LastChildFill="False">
+                    <DockPanel Height="35" LastChildFill="True"
+                               VerticalAlignment="Top">
                         <FrameworkElement DockPanel.Dock="Left"
                                       Width="{Binding Path=(wh:WindowHelper.TitleLeftMargin) , RelativeSource={RelativeSource TemplatedParent}}" />
-                        <TextBlock  DockPanel.Dock="Left"
-                                Margin="5,0,0,0" VerticalAlignment="Center"
-                                Foreground="{Binding Path=(wh:WindowHelper.WindowHeaderForeground) , RelativeSource={RelativeSource TemplatedParent}}"
+                            <FrameworkElement DockPanel.Dock="Right"
+                                              Width="{Binding ElementName=PART_Buttons, Path=ActualWidth}"/>
+                            <Border Margin="5,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Center" ClipToBounds="True">
+                                <TextBlock Foreground="{Binding Path=(wh:WindowHelper.WindowHeaderForeground) , RelativeSource={RelativeSource TemplatedParent}}"
                                 FontSize="14"
                                 Text="{TemplateBinding Title}"/>
+                            </Border>
                     </DockPanel>
 
                     <ContentPresenter/>
 
-                    <DockPanel Height="35" 
+                        <DockPanel x:Name="PART_Buttons" Height="35" 
                                VerticalAlignment="Top"
                                HorizontalAlignment="Right"
                                LastChildFill="False">
