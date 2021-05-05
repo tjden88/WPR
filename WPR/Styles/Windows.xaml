@@ -97,24 +97,26 @@
                     </Style>
                 </Border.Style>
                 <Grid>
-                    <DockPanel x:Name="TitlePanel"
-                               Height="35" LastChildFill="True"
+                    <Grid x:Name="TitlePanel"
+                               Height="35"
                                Background="{TemplateBinding BorderBrush}"
                                VerticalAlignment="Top">
-                        <FrameworkElement DockPanel.Dock="Left"
-                                      Width="{Binding Path=(wh:WindowHelper.TitleLeftMargin) , RelativeSource={RelativeSource TemplatedParent}}" />
-                            <FrameworkElement DockPanel.Dock="Right"
-                                              Width="{Binding ElementName=PART_Buttons, Path=ActualWidth}"/>
-                            <Border Margin="5,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Center" ClipToBounds="True">
-                                <TextBlock Foreground="{Binding Path=(wh:WindowHelper.WindowHeaderForeground) , RelativeSource={RelativeSource TemplatedParent}}"
-                                FontSize="14"
-                                Text="{TemplateBinding Title}"/>
-                            </Border>
-                    </DockPanel>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition MinWidth="{Binding Path=(wh:WindowHelper.TitleLeftMargin) , RelativeSource={RelativeSource TemplatedParent}}"/>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition MinWidth="{Binding ElementName=PART_Buttons, Path=ActualWidth}"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center" 
+                                   Foreground="{Binding Path=(wh:WindowHelper.WindowHeaderForeground) , RelativeSource={RelativeSource TemplatedParent}}"
+                                   FontSize="14"
+                                   Text="{TemplateBinding Title}"/>
+                    </Grid>
+                    <Border VerticalAlignment="Top" HorizontalAlignment="Right" Height="35" Background="{TemplateBinding BorderBrush}"
+                            Width="{Binding ElementName=PART_Buttons, Path=ActualWidth}"/>
 
                     <ContentPresenter/>
 
-                        <DockPanel x:Name="PART_Buttons" Height="35" 
+                    <DockPanel x:Name="PART_Buttons" Height="35" 
                                VerticalAlignment="Top"
                                HorizontalAlignment="Right"
                                LastChildFill="False">
