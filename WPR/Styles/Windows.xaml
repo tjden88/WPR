@@ -86,7 +86,7 @@
             <controls:WPRDialogPanel x:Name="WindowDialogPanel">
             <Border Background="{TemplateBinding Background }"
                     BorderThickness="1"
-                    BorderBrush="{TemplateBinding Background }">
+                    BorderBrush="{TemplateBinding BorderBrush }">
                 <Border.Style>
                     <Style TargetType="{x:Type Border}">
                         <Style.Triggers>
@@ -97,7 +97,9 @@
                     </Style>
                 </Border.Style>
                 <Grid>
-                    <DockPanel Height="35" LastChildFill="True"
+                    <DockPanel x:Name="TitlePanel"
+                               Height="35" LastChildFill="True"
+                               Background="{TemplateBinding BorderBrush}"
                                VerticalAlignment="Top">
                         <FrameworkElement DockPanel.Dock="Left"
                                       Width="{Binding Path=(wh:WindowHelper.TitleLeftMargin) , RelativeSource={RelativeSource TemplatedParent}}" />
@@ -169,6 +171,11 @@
             </Border>
             </controls:WPRDialogPanel>
         </AdornerDecorator>
+        <ControlTemplate.Triggers>
+            <Trigger Property="IsActive" Value="False">
+                <Setter Property="Opacity" TargetName="TitlePanel" Value="0.7"/>
+            </Trigger>
+        </ControlTemplate.Triggers>
     </ControlTemplate>
 
     <!--Окно с заголовком-->
@@ -183,7 +190,8 @@
                               UseAeroCaptionButtons="False" />
             </Setter.Value>
         </Setter>
-        <Setter Property="Background" Value="{DynamicResource PrimaryColorBrush}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource PrimaryColorBrush}" />
+        <Setter Property="Background" Value="{DynamicResource BackgroundColorBrush}" />
         <Setter Property="wh:WindowHelper.WindowHeaderForeground" Value="{DynamicResource TextColorBrush}" />
         <Setter Property="UseLayoutRounding" Value="True"/>
         <Setter Property="FontFamily" Value="{StaticResource RobotoFont}"/>
