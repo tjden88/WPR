@@ -3,8 +3,7 @@ using System.Diagnostics;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using WPR.Demo.Commands.Base;
-using WPR.Dialogs;
+using WPR.MVVM.Commands;
 
 namespace WPR.Demo.Pages
 {

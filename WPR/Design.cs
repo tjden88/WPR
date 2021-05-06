@@ -19,6 +19,7 @@ namespace WPR
             DividerColorBrush,
             MenuBodyBrush,
             BackgroundColorBrush,
+            InactiveWindowColorBrush,
             AnimationEnterColorBrush
         }
 
@@ -43,6 +44,7 @@ namespace WPR
             ColorService.SetNewBrush("PrimaryColorBrush", color);
             ColorService.SetNewBrush("DarkPrimaryColorBrush", ColorService.Darken(color, 1.2));
             ColorService.SetNewBrush("LightPrimaryColorBrush", ColorService.Lighten(color, 1.5));
+            ColorService.SetNewBrush("InactiveWindowColorBrush", ColorService.Lighten(color, 2));
             StyleChanged?.Invoke(null, EventArgs.Empty);
         }
 

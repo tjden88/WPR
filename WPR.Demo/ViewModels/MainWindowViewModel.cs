@@ -2,11 +2,9 @@
 using System.Linq;
 using System.Windows.Controls;
 using System.Windows.Input;
-using WPR.Demo.Commands.Base;
 using WPR.Demo.Services;
-using WPR.Demo.ViewModels.Base;
-using WPR;
 using WPR.MVVM.ViewModels;
+using WPR.MVVM.Commands;
 
 namespace WPR.Demo.ViewModels
 {

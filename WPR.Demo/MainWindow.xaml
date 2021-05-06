@@ -21,7 +21,7 @@
             <Button Content="Тестовое окно" Command="{Binding ShowTestWindowCommand}"  Style="{StaticResource WindowTitleButton}"/>
         </StackPanel>
         <!--Основной контент в 1 строке грида-->
-        <Grid Grid.Row="1" Background="{DynamicResource BackgroundColorBrush}">
+        <Grid Grid.Row="1">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="200"/>
                 <ColumnDefinition/>

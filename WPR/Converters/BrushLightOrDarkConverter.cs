@@ -2,7 +2,6 @@
 using System.Globalization;
 using System.Windows.Data;
 using System.Windows.Media;
-using WPR.MVVM;
 using WPR.MVVM.Converters;
 using WPR.Services;
 
@@ -22,11 +21,8 @@ namespace WPR.Converters
         protected override object Convert(object v, Type t, object p, CultureInfo c)
         {
             if (v is not SolidColorBrush solidColorBrush) return null;
-
             var color = solidColorBrush.Color;
-
             var brightness = 0.3 * color.R + 0.59 * color.G + 0.11 * color.B;
-
             return brightness > 123 ? LowValue : HighValue;
         }
 
