@@ -4,9 +4,9 @@ using WPR.MVVM.Commands;
 
 namespace WPR.Commands
 {
-    internal class ClearTextBoxCommand: BaseCommand
+    public class ClearTextBoxCommand: BaseCommand
     {
-        protected override void Execute(object p)
+        public override void Execute(object p)
         {
             if (p is TextBox tbox)
             {
