@@ -37,8 +37,13 @@ namespace WPR.MVVM.Commands
             Execute(parameter);
         }
 
+        /// <summary> Выполнить команду без параметра </summary>
+        public virtual void Execute() => Execute(null);
+
+        /// <summary>Возможность выполнения команды</summary>
         public virtual bool CanExecute(object p) => true;
 
+        /// <summary>Выполнить команду с параметром</summary>
         public abstract void Execute(object p);
     }
 
