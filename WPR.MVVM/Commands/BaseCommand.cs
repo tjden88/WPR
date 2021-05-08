@@ -6,8 +6,9 @@ namespace WPR.MVVM.Commands
     public abstract class BaseCommand : ICommand
     {
         private bool _Executable = true;
+
         /// <summary>Ручная возможность выполнения команды</summary>
-        protected bool Executable
+        public bool Executable
         {
             get => _Executable;
             set
@@ -36,9 +37,9 @@ namespace WPR.MVVM.Commands
             Execute(parameter);
         }
 
-        protected virtual bool CanExecute(object p) => true;
+        public virtual bool CanExecute(object p) => true;
 
-        protected abstract void Execute(object p);
+        public abstract void Execute(object p);
     }
 
 }

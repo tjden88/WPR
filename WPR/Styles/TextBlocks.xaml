@@ -6,6 +6,7 @@
 
     <Style x:Key="WPRText" TargetType="{x:Type TextBlock}">
         <Setter Property="FontFamily" Value="{StaticResource RobotoFont}"/>
-        <Setter Property="TextOptions.TextFormattingMode" Value="Display"/>
+        <Setter Property="TextOptions.TextFormattingMode" Value="Ideal"/>
+        <Setter Property="TextOptions.TextRenderingMode" Value="ClearType"/>
     </Style>
 </ResourceDictionary>
