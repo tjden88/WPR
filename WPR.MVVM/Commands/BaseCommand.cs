@@ -33,12 +33,12 @@ namespace WPR.MVVM.Commands
 
         void ICommand.Execute(object parameter)
         {
-            if (!CanExecute(parameter)) return;
+            if (!((ICommand)this).CanExecute(parameter)) return;
             Execute(parameter);
         }
 
-        /// <summary> Выполнить команду без параметра </summary>
-        public virtual void Execute() => Execute(null);
+        ///// <summary> Выполнить команду без параметра </summary>
+        //public virtual void Execute() => Execute(null);
 
         /// <summary>Возможность выполнения команды</summary>
         public virtual bool CanExecute(object p) => true;

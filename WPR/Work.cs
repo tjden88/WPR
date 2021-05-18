@@ -94,7 +94,7 @@ namespace WPR
             {
                 WriteIndented = true
             };
-           return JsonSerializer.SerializeToUtf8Bytes(obj, options);
+            return JsonSerializer.SerializeToUtf8Bytes(obj, options);
         }
     }
 
