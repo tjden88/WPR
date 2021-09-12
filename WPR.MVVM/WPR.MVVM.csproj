@@ -14,11 +14,4 @@
     <PackageReleaseNotes>Запуск</PackageReleaseNotes>
   </PropertyGroup>
 
-  <ItemGroup>
-    <None Include="..\..\..\Мусор\Иконки\Style XP.png">
-      <Pack>True</Pack>
-      <PackagePath></PackagePath>
-    </None>
-  </ItemGroup>
-
 </Project>
