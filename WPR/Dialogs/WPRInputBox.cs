@@ -3,7 +3,7 @@ using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
-using WPR.Validation;
+using WPR.MVVM.Validation;
 
 namespace WPR.Dialogs
 {

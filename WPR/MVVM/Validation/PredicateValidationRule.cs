@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Globalization;
-using WPR.MVVM.Validation;
 
-namespace WPR.Validation
+namespace WPR.MVVM.Validation
 {
     /// <summary>Правило валидации на основе проверки предиката</summary>
     public class PredicateValidationRule<T> : ValidationBase
