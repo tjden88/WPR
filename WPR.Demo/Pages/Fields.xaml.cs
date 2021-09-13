@@ -21,34 +21,30 @@ namespace WPR.Demo.Pages
         }
     }
 
-
+    /// <summary> Пример правила валидации </summary>
     public class AgeRangeRule : ValidationRule
     {
-        public int Min { get; set; }
-        public int Max { get; set; }
-
-        public AgeRangeRule()
-        {
-        }
+        public int Min { get; set; } = 0;
+        public int Max { get; set; } = 99;
 
         public override ValidationResult Validate(object value, CultureInfo cultureInfo)
         {
-            int age = 0;
+            if (value is not string val) return new ValidationResult(false, "Неверное значение");
 
+            int age;
             try
             {
-                if (((string)value).Length > 0)
-                    age = int.Parse((string)value);
+                age = int.Parse(val);
             }
-            catch (Exception e)
+            catch (Exception)
             {
-                return new ValidationResult(false, $"Illegal characters or {e.Message}");
+                return new ValidationResult(false, $"Неверные символы в значении");
             }
 
             if ((age < Min) || (age > Max))
             {
                 return new ValidationResult(false,
-                    $"Please enter an age in the range: {Min}-{Max}.");
+                    $"Введите значение в диапазоне: {Min}-{Max}.");
             }
             return ValidationResult.ValidResult;
         }

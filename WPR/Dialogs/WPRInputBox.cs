@@ -79,10 +79,10 @@ namespace WPR.Dialogs
             return _PredicateValidationRule.IsValid;
         }
 
-        protected override void OnSetCommandExecute(bool parameter)
-        {
-            if (_PredicateValidationRule.IsValid)
-                base.OnSetCommandExecute(parameter);
-        }
+        //protected override void OnSetCommandExecute(bool parameter)
+        //{
+        //    if (_PredicateValidationRule.IsValid)
+        //        base.OnSetCommandExecute(parameter);
+        //}
     }
 }

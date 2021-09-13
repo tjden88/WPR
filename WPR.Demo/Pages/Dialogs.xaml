@@ -43,6 +43,7 @@
                     <Button Content="Show Bubble Button" HorizontalAlignment="Center" VerticalAlignment="Center" Click="Button2_OnClick"/>
 
                     <Button Content="Show InputTextBox" HorizontalAlignment="Center" VerticalAlignment="Center" Click="Button3_OnClick"/>
+                    <Button Content="Show InputTextBox2" HorizontalAlignment="Center" VerticalAlignment="Center" Click="Button4_OnClick"/>
                 </StackPanel>
                 <StackPanel Width="200" Margin="10">
                     <controls:WPRTitledCard Name="EditDialog" Header="Кастом диалог" IconSource="Style">

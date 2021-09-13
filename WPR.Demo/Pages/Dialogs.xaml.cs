@@ -105,6 +105,7 @@ namespace WPR.Demo.Pages
         private void ValidateText(object Sender, RoutedEventArgs E)
         {
             InputBox.ValidationPredicate = O => O.Length > 3;
+            InputBox.ErrorMessage = "Нужно больше 3 символов";
         }
 
         private void Button3_OnClick(object Sender, RoutedEventArgs E)
@@ -115,6 +116,15 @@ namespace WPR.Demo.Pages
                 "Стартовое значение",
                 S => S.Length>0,
                 "Поле не может быть пустым");
+        }
+        private void Button4_OnClick(object Sender, RoutedEventArgs E)
+        {
+            WPRMessageBox.InputText(this,
+                "Ввод текста:",
+                (B, S) => { Debug.WriteLine(B + S); },
+                "12",
+                S => S.Length > 3,
+                "Нужно больше 3 символов");
         }
 
         class TestCustomDialog : IWPRDialog
@@ -128,7 +138,7 @@ namespace WPR.Demo.Pages
                 DialogContent = new Button()
                 {
                     Content = "OK",
-                    Command = new MVVM.Commands.Command(() => DialogResult?.Invoke(true))
+                    Command = new Command(() => DialogResult?.Invoke(true))
                 };
             }
         }
@@ -137,5 +147,7 @@ namespace WPR.Demo.Pages
         {
             Debug.WriteLine(await WPRMessageBox.ShowCustomDialogAsync(this, new TestCustomDialog(), false));
         }
+
+
     }
 }
