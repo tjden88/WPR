@@ -24,10 +24,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\WPR.MVVM\WPR.MVVM.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
     <Resource Include="Fonts\Roboto-Black.ttf" />
     <Resource Include="Fonts\Roboto-BlackItalic.ttf" />
     <Resource Include="Fonts\Roboto-Bold.ttf" />
@@ -46,13 +42,6 @@
     <Resource Include="Fonts\RobotoCondensed-Light.ttf" />
     <Resource Include="Fonts\RobotoCondensed-LightItalic.ttf" />
     <Resource Include="Fonts\RobotoCondensed-Regular.ttf" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Include="..\..\..\Мусор\Иконки\Style XP.png">
-      <Pack>True</Pack>
-      <PackagePath></PackagePath>
-    </None>
   </ItemGroup>
 
 </Project>
