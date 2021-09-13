@@ -3,12 +3,11 @@ using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
-using WPR.Controls.Base;
 using WPR.Validation;
 
 namespace WPR.Dialogs
 {
-    public class WPRInputBox : Dialog
+    public class WPRInputBox : DialogBase
     {
         static WPRInputBox()
         {

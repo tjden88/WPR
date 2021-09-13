@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using WPR.Demo.Services.Interfaces;
+﻿using WPR.Demo.Services.Interfaces;
 
 namespace WPR.Demo.Services
 {

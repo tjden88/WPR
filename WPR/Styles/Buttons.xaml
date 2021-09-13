@@ -1,8 +1,7 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:helpers="clr-namespace:WPR.Helpers"
-                    xmlns:controls="clr-namespace:WPR.Controls"
-                    xmlns:wpr="clr-namespace:WPR">
+                    xmlns:controls="clr-namespace:WPR.Controls">
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="Base.xaml"/>
     </ResourceDictionary.MergedDictionaries>
@@ -21,17 +20,16 @@
                                                     CornerRadius="{Binding Path=(helpers:ButtonHelper.BorderRadius), RelativeSource={RelativeSource TemplatedParent}}"
                                                     BorderThickness="0"
                                                     SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
-                                                    Opacity="0.4">
-                        </Border>
+                                                    Opacity="0.4" />
                         <controls:Ripple x:Name="Ripple" 
-                                                SnapsToDevicePixels="False"
-                                                RippleSpeed="0.7"
-                                                RippleMouseDownSpeed="0.7"
-                                                HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                                VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
-                                                Background="{Binding Path=(helpers:RippleHelper.FeedbackBrush), RelativeSource={RelativeSource TemplatedParent}}"
-                                                RippleInCenter="{Binding Path=(helpers:RippleHelper.IsCentered), RelativeSource={RelativeSource TemplatedParent}}"
-                                                IsEnabled="{Binding Path=(helpers:RippleHelper.IsRippleEnabled), RelativeSource={RelativeSource TemplatedParent}}">
+                                         SnapsToDevicePixels="False"
+                                         RippleSpeed="0.7"
+                                         RippleMouseDownSpeed="0.7"
+                                         HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                         VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+                                         Background="{Binding Path=(helpers:RippleHelper.FeedbackBrush), RelativeSource={RelativeSource TemplatedParent}}"
+                                         RippleInCenter="{Binding Path=(helpers:RippleHelper.IsCentered), RelativeSource={RelativeSource TemplatedParent}}"
+                                         IsEnabled="{Binding Path=(helpers:RippleHelper.IsRippleEnabled), RelativeSource={RelativeSource TemplatedParent}}">
                             <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                                                   VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
                                                   Margin="{TemplateBinding Padding}"/>

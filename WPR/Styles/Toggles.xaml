@@ -114,21 +114,19 @@
                                     VerticalAlignment="Center"
                                     Margin="6"
                                     Height="10" Width="24" 
-                                    CornerRadius="5">
-                            </Border>
+                                    CornerRadius="5" />
                             <Grid HorizontalAlignment="Left">
                                 <controls:Ripple x:Name="Ripple"
                                          VerticalAlignment="Center"
                                          Background="{Binding RelativeSource={RelativeSource TemplatedParent},Path=(helpers:RippleHelper.FeedbackBrush)}" 
                                          RippleInCenter="True"
-                                         StartRippleOnClick="False">
-                                </controls:Ripple>
+                                         StartRippleOnClick="False" />
                                 <Ellipse x:Name="Ellipse" Width="18" Height="18" Fill="{DynamicResource BackgroundColorBrush}" 
                                          Stroke="{DynamicResource SecondaryTextColorBrush}"
                                          Effect="{StaticResource SmallShadow}"
                                          Margin="2"/>
                                 <Grid.RenderTransform>
-                                    <TranslateTransform x:Name="Translategrid"></TranslateTransform>
+                                    <TranslateTransform x:Name="Translategrid" />
                                 </Grid.RenderTransform>
                             </Grid>
                         </Grid>
@@ -136,8 +134,8 @@
                     </Grid>
             <ControlTemplate.Triggers>
                 <Trigger Property="IsChecked" Value="True">
-                    <Setter TargetName="Ellipse" Property="Fill" Value="{DynamicResource DarkPrimaryColorBrush}"></Setter>
-                    <Setter TargetName="Border" Property="Background" Value="{DynamicResource LightPrimaryColorBrush}"></Setter>
+                    <Setter TargetName="Ellipse" Property="Fill" Value="{DynamicResource DarkPrimaryColorBrush}" />
+                    <Setter TargetName="Border" Property="Background" Value="{DynamicResource LightPrimaryColorBrush}" />
                     <Trigger.EnterActions>
                         <BeginStoryboard>
                             <Storyboard>

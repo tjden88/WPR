@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using WPR.Demo.ViewModels.Base;
-using WPR.Icons;
+using WPR.Infrastructure.Icons;
 using WPR.MVVM.ViewModels;
 
 namespace WPR.Demo.ViewModels

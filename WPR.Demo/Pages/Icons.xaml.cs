@@ -8,6 +8,7 @@ using System.Windows.Controls.Primitives;
 using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Media;
+using WPR.Infrastructure.Icons;
 
 namespace WPR.Demo.Pages
 {
@@ -16,7 +17,7 @@ namespace WPR.Demo.Pages
     /// </summary>
     public partial class Icons : Page
     {
-        public readonly List<string> KindList = new(Enum.GetNames(typeof(WPR.Icons.PackIconKind)).OrderBy(i => i));
+        public readonly List<string> KindList = new(Enum.GetNames(typeof(PackIconKind)).OrderBy(i => i));
         readonly ICollectionView _View;
 
         public Icons()

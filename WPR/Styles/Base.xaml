@@ -72,8 +72,7 @@
                     <Rectangle StrokeThickness="1"
                                Stroke="{DynamicResource DarkPrimaryColorBrush}"
                                StrokeDashArray="2 4"
-                               RadiusX="3" RadiusY="3">
-                    </Rectangle>
+                               RadiusX="3" RadiusY="3" />
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
@@ -84,7 +83,7 @@
         <Setter Property="Foreground" Value="{DynamicResource PrimaryTextColorBrush}"/>
         <Setter Property="Background" Value="{x:Null}" />
         <Setter Property="FontSize" Value="14"/>
-        <Setter Property="FontFamily" Value="{StaticResource RobotoFont}"></Setter>
+        <Setter Property="FontFamily" Value="{StaticResource RobotoFont}" />
         <Setter Property="BorderThickness" Value="0"/>
         <Setter Property="FocusVisualStyle" Value="{StaticResource BaseFocusVisualStyle}"/>
     </Style>

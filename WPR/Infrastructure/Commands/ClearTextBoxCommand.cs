@@ -2,7 +2,7 @@
 using System.Windows.Input;
 using WPR.MVVM.Commands;
 
-namespace WPR.Commands
+namespace WPR.Infrastructure.Commands
 {
     public class ClearTextBoxCommand: BaseCommand
     {

@@ -15,7 +15,8 @@ namespace WPR.Controls
         }
 
         /// <summary>Контент бейджа</summary>
-        public static readonly DependencyProperty BageContentProperty = DependencyProperty.Register("BageContent", typeof(object), typeof(Bage),
+        public static readonly DependencyProperty BageContentProperty = DependencyProperty.Register(
+            "BageContent", typeof(object), typeof(Bage),
             new PropertyMetadata(string.Empty));
 
         public object BageContent
@@ -38,12 +39,12 @@ namespace WPR.Controls
             set
             {
                 SetValue(BageVisibleProperty, value);
-                if (value== Visibility.Visible) AnimateBage();
+                if (value == Visibility.Visible) AnimateBage();
             }
         }
 
 
-        private void AnimateBage ()
+        private void AnimateBage()
         {
             if (GetTemplateChild("BageBorder") is not Border border) return;
             ScaleTransform scaleTransform = new(1.7, 1.7, border.ActualWidth / 2, border.ActualHeight / 2);

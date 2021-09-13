@@ -1,7 +1,7 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:wh="clr-namespace:WPR.Helpers"
-                    xmlns:controls="clr-namespace:WPR.Controls" xmlns:converters="clr-namespace:WPR.Converters"
+                    xmlns:controls="clr-namespace:WPR.Controls"
                     x:Class="WPR.Styles.Windows">
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="Buttons.xaml"/>
@@ -9,7 +9,7 @@
 
     <Style x:Key="WindowTitleButton" TargetType="{x:Type Button}" BasedOn="{StaticResource WPRFlatButton}">
         <Setter Property="FontSize" Value="11"/>
-        <Setter Property="Margin" Value="0"></Setter>
+        <Setter Property="Margin" Value="0" />
         <Setter Property="WindowChrome.IsHitTestVisibleInChrome" Value="True" />
         <Setter Property="Foreground" Value="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=(wh:WindowHelper.WindowHeaderForeground)}" />
         <Setter Property="Focusable" Value="False"/>

@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
-using WPR.Icons;
 
-namespace WPR.Icons
+namespace WPR.Infrastructure.Icons
 {
     /// ******************************************
     /// This code is auto generated. Do not amend.

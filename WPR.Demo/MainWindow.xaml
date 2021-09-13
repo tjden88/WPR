@@ -3,7 +3,6 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" mc:Ignorable="d"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:l="clr-namespace:WPR.Demo"
         xmlns:helpers="clr-namespace:WPR.Helpers;assembly=WPR"
         DataContext="{Binding Source={StaticResource Locator}, Path=MainWindowViewModel}"
         Style="{StaticResource ChromeWindow}" helpers:WindowHelper.TitleLeftMargin ="{Binding ElementName=TitleButtonsPanel, Path=ActualWidth}"
@@ -33,7 +32,7 @@
          SelectedValue="{Binding SelectedPage}">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
-                        <TextBlock FontFamily="{StaticResource RobotoFont}" Text="{Binding Title}"></TextBlock>
+                        <TextBlock FontFamily="{StaticResource RobotoFont}" Text="{Binding Title}" />
                     </DataTemplate>
                 </ListBox.ItemTemplate>
             </ListBox>

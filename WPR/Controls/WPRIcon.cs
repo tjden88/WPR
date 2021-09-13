@@ -4,10 +4,11 @@ using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
-using WPR.Icons;
+using WPR.Infrastructure.Icons;
 
-namespace WPR
+namespace WPR.Controls
 {
+    /// <summary> Иконка (векторная) </summary>
     public class WPRIcon : Control
     {
         private static readonly Lazy<IDictionary<PackIconKind, string>> DataIndex = new(PackIconDataFactory.Create);

@@ -41,10 +41,10 @@
                             </Trigger.ExitActions>
                         </Trigger>
                         <Trigger Property="HorizontalAlignment" Value="Stretch">
-                            <Setter Property="Height" Value="5"></Setter>
+                            <Setter Property="Height" Value="5" />
                         </Trigger>
                         <Trigger Property="VerticalAlignment" Value="Stretch">
-                            <Setter Property="Width" Value="5"></Setter>
+                            <Setter Property="Width" Value="5" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                     <Border x:Name="Border" Background="{TemplateBinding Background}" Opacity="0"/>

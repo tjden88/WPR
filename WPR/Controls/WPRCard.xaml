@@ -22,12 +22,11 @@
                                 BorderBrush="{TemplateBinding BorderBrush}"
                                 BorderThickness="{TemplateBinding BorderThickness}"
                                 CornerRadius="{Binding Path=(helpers:ButtonHelper.BorderRadius), RelativeSource={RelativeSource Mode=TemplatedParent}}"
-                                Effect="{StaticResource CardShadow}">
-                        </Border>
+                                Effect="{StaticResource CardShadow}" />
                         <controls:ClippingBorder ClipToBounds="True"
-                            BorderBrush="{TemplateBinding BorderBrush}"
-                            BorderThickness="{TemplateBinding BorderThickness}"
-                            CornerRadius="{Binding Path=(helpers:ButtonHelper.BorderRadius), RelativeSource={RelativeSource Mode=TemplatedParent}}">
+                                                 BorderBrush="{TemplateBinding BorderBrush}"
+                                                 BorderThickness="{TemplateBinding BorderThickness}"
+                                                 CornerRadius="{Binding Path=(helpers:ButtonHelper.BorderRadius), RelativeSource={RelativeSource Mode=TemplatedParent}}">
                             <ContentPresenter/>
                         </controls:ClippingBorder>
                     </Grid>

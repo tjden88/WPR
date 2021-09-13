@@ -1,10 +1,9 @@
 ﻿using System.ComponentModel;
 using System.Windows;
-using WPR.Controls.Base;
 
 namespace WPR.Dialogs
 {
-    public class WPRMsgBox: Dialog
+    public class WPRMsgBox : DialogBase
     {
         static WPRMsgBox()
         {

@@ -217,8 +217,7 @@
                         MaxHeight="{TemplateBinding MaxDropDownHeight}"
                         x:Name="dropDownBorder" 
                         Effect="{StaticResource PopupSmallShadow}"
-                             IsHitTestVisible="False">
-                    </Border>
+                             IsHitTestVisible="False" />
                     <StackPanel Orientation="Vertical">
                         <Rectangle x:Name="opaqueRect" Height="{Binding ElementName=templateRoot, Path=ActualHeight}" 
                                    IsHitTestVisible="False"
@@ -310,7 +309,7 @@
                 <Setter Property="Visibility" TargetName="PART_EditableTextBox" Value="Visible"/>
             </Trigger>
             <Trigger Property="IsDropDownOpen" Value="False">
-                <Setter TargetName="PopupContent" Property="Visibility" Value="Collapsed"></Setter>
+                <Setter TargetName="PopupContent" Property="Visibility" Value="Collapsed" />
             </Trigger>
             <Trigger Property="IsMouseOver" Value="True">
                 <Setter Property="BorderBrush" 
@@ -322,7 +321,7 @@
             </Trigger>
             <MultiTrigger>
                 <MultiTrigger.Conditions>
-                    <Condition Property="SelectedIndex" Value="-1"></Condition>
+                    <Condition Property="SelectedIndex" Value="-1" />
                     <Condition SourceName="PART_EditableTextBox" Property="IsKeyboardFocusWithin" Value="False"/>
                     <Condition SourceName="PART_EditableTextBox" Property="Text" Value=""/>
                 </MultiTrigger.Conditions>

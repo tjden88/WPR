@@ -3,8 +3,9 @@
         <ResourceDictionary Source="Ripple.xaml"/>
         <ResourceDictionary Source="NumericTextBox.xaml"/>
         <ResourceDictionary Source="Bage.xaml"/>
-        <ResourceDictionary Source="EditDialog.xaml"/>
+        <ResourceDictionary Source="WPRTitledCard.xaml"/>
         <ResourceDictionary Source="WPRCard.xaml"/>
         <ResourceDictionary Source="WPRDialogPanel.xaml"/>
+        <ResourceDictionary Source="WPRIcon.xaml"/>
 </ResourceDictionary.MergedDictionaries>
 </ResourceDictionary>

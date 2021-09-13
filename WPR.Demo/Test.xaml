@@ -3,10 +3,8 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:WPR.Demo"
         xmlns:viewModels="clr-namespace:WPR.Demo.ViewModels"
-        xmlns:wpr="clr-namespace:WPR;assembly=WPR"
-        xmlns:icons="clr-namespace:WPR.Icons;assembly=WPR"
+        xmlns:controls="clr-namespace:WPR.Controls;assembly=WPR"
         DataContext="{Binding Source={StaticResource Locator}, Path=TestViewModel }"
         mc:Ignorable="d"
         Title="Test" Height="450" Width="800" Loaded="Window_Loaded">
@@ -15,11 +13,11 @@
             <ColumnDefinition/>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
-        <ListView x:Name="list"></ListView>
+        <ListView x:Name="list" />
         <TreeView Grid.Column="1" x:Name="Tree" ItemsSource="{Binding RootDirectories}">
             <TreeView.Resources>
-                <Style TargetType="{x:Type wpr:WPRIcon}" BasedOn="{StaticResource {x:Type wpr:WPRIcon}}">
-                    <Setter Property="Margin" Value="0,0,5,0"></Setter>
+                <Style TargetType="{x:Type controls:WPRIcon}" BasedOn="{StaticResource {x:Type controls:WPRIcon}}">
+                    <Setter Property="Margin" Value="0,0,5,0" />
                     <Setter Property="Foreground" Value="Gold"/>
                     <Setter  Property="Source" Value="Folder"/>
                     <Style.Triggers>
@@ -33,13 +31,13 @@
                 <HierarchicalDataTemplate DataType="viewModels:DirectoryViewModel"
                                           ItemsSource="{Binding SubDidectories}">
                     <StackPanel Orientation="Horizontal">
-                        <wpr:WPRIcon x:Name="Icon"/>
+                        <controls:WPRIcon x:Name="Icon"/>
                         <TextBlock Text="{Binding Name}"/>
                     </StackPanel>
                     <HierarchicalDataTemplate.Triggers>
                         <DataTrigger Binding="{Binding IsRootPath}" Value="True">
-                            <Setter TargetName="Icon" Property="Source" Value="FolderHome"></Setter>
-                            <Setter TargetName="Icon" Property="Foreground" Value="{DynamicResource DarkPrimaryColorBrush}"></Setter>
+                            <Setter TargetName="Icon" Property="Source" Value="FolderHome" />
+                            <Setter TargetName="Icon" Property="Foreground" Value="{DynamicResource DarkPrimaryColorBrush}" />
                         </DataTrigger>
                     </HierarchicalDataTemplate.Triggers>
                 </HierarchicalDataTemplate>

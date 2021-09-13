@@ -1,8 +1,8 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:helpers="clr-namespace:WPR.Helpers"
-                    xmlns:wpr="clr-namespace:WPR"
-                    xmlns:commands="clr-namespace:WPR.Commands">
+                    xmlns:commands="clr-namespace:WPR.Infrastructure.Commands"
+                    xmlns:controls="clr-namespace:WPR.Controls">
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="Base.xaml"/>
         <ResourceDictionary Source="Buttons.xaml"/>
@@ -200,7 +200,7 @@
                                     Visibility="{Binding Path=(helpers:TextHelper.ShowClearButton), 
                                 RelativeSource={RelativeSource TemplatedParent},
                                 Converter={StaticResource Bool2VisibilityConverter}}">
-                                <wpr:WPRIcon Source="CloseCircle"/>
+                                <controls:WPRIcon Source="CloseCircle"/>
                             </Button>
                             </Grid>
                         </Grid>
@@ -209,7 +209,7 @@
                             <Setter TargetName="ClearButton" Property="IsEnabled" Value="False"/>
                         </Trigger>
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Setter Property="Foreground" TargetName="Hint" Value="{Binding Background, RelativeSource={RelativeSource TemplatedParent}}"></Setter>
+                            <Setter Property="Foreground" TargetName="Hint" Value="{Binding Background, RelativeSource={RelativeSource TemplatedParent}}" />
                         </Trigger>
                         <Trigger Property="IsEnabled" Value="false">
                             <Setter Property="Opacity" Value="0.5"/>
@@ -230,8 +230,7 @@
                                                          To="0"
                                                          Storyboard.TargetProperty="Y"
                                                          Storyboard.TargetName="Trans"
-                                                         EasingFunction="{StaticResource CircleEaseOut}">
-                                        </DoubleAnimation>
+                                                         EasingFunction="{StaticResource CircleEaseOut}" />
                                     </Storyboard>
                                 </BeginStoryboard>
                             </MultiTrigger.EnterActions>

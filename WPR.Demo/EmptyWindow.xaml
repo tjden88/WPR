@@ -3,9 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:l="clr-namespace:WPR.Demo" mc:Ignorable="d"
-        xmlns:wpr="clr-namespace:WPR;assembly=WPR"
-        xmlns:cnt="clr-namespace:WPR.Controls;assembly=WPR"
+        mc:Ignorable="d"
         xmlns:helpers="clr-namespace:WPR.Helpers;assembly=WPR"
         DataContext="{Binding Source={StaticResource Locator}, Path=MainWindowViewModel}"
         Style="{StaticResource ChromeWindow}" helpers:WindowHelper.TitleLeftMargin ="{Binding ElementName=TitleButtonsPanel, Path=ActualWidth}"
@@ -16,8 +14,7 @@
             <RowDefinition/>
         </Grid.RowDefinitions>
         <!-- Панель в заголовке для кнопок-->
-        <StackPanel Margin="3" x:Name="TitleButtonsPanel" Orientation="Horizontal" HorizontalAlignment="Left" Width="Auto">
-        </StackPanel>
+        <StackPanel Margin="3" x:Name="TitleButtonsPanel" Orientation="Horizontal" HorizontalAlignment="Left" Width="Auto" />
         <!--Основной контент в 1 строке грида-->
         <Grid Grid.Row="1"
               Background="{DynamicResource BackgroundColorBrush}">

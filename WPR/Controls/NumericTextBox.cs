@@ -4,14 +4,11 @@ using System.Globalization;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using System.Windows.Media.Converters;
 using WPR.MVVM.Commands;
 
 namespace WPR.Controls
 {
-    /// <summary>
-    /// Контрол с текстбоксом для ввода числовых данных
-    /// </summary>
+    /// <summary> Контрол с текстбоксом для ввода числовых данных </summary>
     public class NumericTextBox : Control
     {
 

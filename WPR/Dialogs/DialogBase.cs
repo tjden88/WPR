@@ -4,14 +4,14 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 
-namespace WPR.Controls.Base
+namespace WPR.Dialogs
 {
-    public abstract class Dialog : Control
+    public abstract class DialogBase : Control
     {
         /// <summary>Происходит при завершении ввода пользователя</summary>
         public Action<bool?> DialogResult;
 
-        protected Dialog()
+        protected DialogBase()
         {
             SetDialogResultCommand = new ResultCommand(this);
             CancelCommand = new CancCommand(this);
@@ -24,7 +24,7 @@ namespace WPR.Controls.Base
             DependencyProperty.Register(
                 nameof(Title),
                 typeof(string),
-                typeof(Dialog),
+                typeof(DialogBase),
                 new PropertyMetadata(default(string)));
 
         /// <summary>Заголовок</summary>
@@ -44,7 +44,7 @@ namespace WPR.Controls.Base
             DependencyProperty.Register(
                 nameof(SetDialogResultCommand),
                 typeof(ICommand),
-                typeof(Dialog),
+                typeof(DialogBase),
                 new PropertyMetadata(null));
 
         /// <summary>Команда нажатия контрольных кнопок</summary>
@@ -64,7 +64,7 @@ namespace WPR.Controls.Base
             DependencyProperty.Register(
                 nameof(CancelCommand),
                 typeof(ICommand),
-                typeof(Dialog),
+                typeof(DialogBase),
                 new PropertyMetadata(null));
 
         /// <summary>Команда отмены</summary>
@@ -91,9 +91,9 @@ namespace WPR.Controls.Base
 
         class ResultCommand : ICommand
         {
-            private readonly Dialog _Dialog;
+            private readonly DialogBase _Dialog;
 
-            public ResultCommand(Dialog dialog)
+            public ResultCommand(DialogBase dialog)
             {
                _Dialog = dialog;
             }
@@ -112,9 +112,9 @@ namespace WPR.Controls.Base
         }
         class CancCommand : ICommand
         {
-            private readonly Dialog _Dialog;
+            private readonly DialogBase _Dialog;
 
-            public CancCommand(Dialog dialog)
+            public CancCommand(DialogBase dialog)
             {
                 _Dialog = dialog;
             }

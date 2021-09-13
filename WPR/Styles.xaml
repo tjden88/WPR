@@ -4,7 +4,6 @@
         <ResourceDictionary Source="Styles\Base.xaml"/>
         <ResourceDictionary Source="Controls\Main.xaml"/>
         <ResourceDictionary Source="Dialogs\Main.xaml"/>
-        <ResourceDictionary Source="Icons\Icon.xaml"/>
         <ResourceDictionary Source="Styles\Windows.xaml"/>
         <ResourceDictionary Source="Styles\ToolTips.xaml"/>
         <ResourceDictionary Source="Styles\Buttons.xaml"/>

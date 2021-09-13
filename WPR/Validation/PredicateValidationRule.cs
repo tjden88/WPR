@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Globalization;
-using WPR.MVVM;
+using WPR.MVVM.Validation;
 
 namespace WPR.Validation
 {
@@ -16,11 +16,7 @@ namespace WPR.Validation
 
         protected override bool Validated(object value, CultureInfo cultureInfo)
         {
-            if (value is T t)
-            {
-                if (Predicate?.Invoke(t) == true) return true;
-            }
-            return false;
+            return value is T t && Predicate?.Invoke(t) == true;
         }
 
     }

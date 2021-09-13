@@ -7,9 +7,7 @@ using System.Windows.Shapes;
 
 namespace WPR.Controls
 {
-    /// <summary>
-    /// Анимация кнопок и прочих контролов
-    /// </summary>
+    /// <summary> Анимация кнопок и прочих контролов </summary>
     public class Ripple : ContentControl
     {
         private readonly Storyboard _RippleAnimation = new() { DecelerationRatio = 0.5 };

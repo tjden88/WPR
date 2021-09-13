@@ -99,8 +99,7 @@
                                              To="1"
                                              EasingFunction="{StaticResource CircleEaseIn}"
                                              Storyboard.TargetProperty="ScaleX"
-                                             Storyboard.TargetName="ScaleSelected">
-                            </DoubleAnimation>
+                                             Storyboard.TargetName="ScaleSelected" />
                         </Storyboard>
                     </BeginStoryboard>
                 </Trigger.EnterActions>
@@ -110,8 +109,7 @@
                             <DoubleAnimation Duration="0:0:0.3"
                                              EasingFunction="{StaticResource CircleEaseOut}"
                                              Storyboard.TargetProperty="ScaleX"
-                                             Storyboard.TargetName="ScaleSelected">
-                            </DoubleAnimation>
+                                             Storyboard.TargetName="ScaleSelected" />
                         </Storyboard>
                     </BeginStoryboard>
                 </Trigger.ExitActions>
@@ -173,7 +171,7 @@
     </Style>
 
     <Style x:Key="WPRTemplateListBox" TargetType="{x:Type ListBox}"  BasedOn="{StaticResource WPRListBox}">
-        <Setter Property="Padding" Value="0"></Setter>
+        <Setter Property="Padding" Value="0" />
         <Setter Property="ItemContainerStyle">
             <Setter.Value>
                 <Style TargetType="{x:Type ListBoxItem}">

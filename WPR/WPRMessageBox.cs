@@ -308,6 +308,7 @@ namespace WPR
         #endregion
     }
 
+    /// <summary> Интерфейс для реализации объекта в качестве диалогового окна </summary>
     public interface IWPRDialog
     {
         /// <summary>Результат диалога</summary>

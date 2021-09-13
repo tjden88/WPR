@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace WPR.Demo.ViewModels.Base
+﻿namespace WPR.Demo.ViewModels.Base
 {
     internal class VMLocator
     {
