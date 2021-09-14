@@ -194,6 +194,8 @@
                             </ContentControl.RenderTransform>
                         </ContentControl>
                         <Button Style="{StaticResource PrimaryWPRButton}"
+                                Command="{TemplateBinding Command}"
+                                CommandParameter="{TemplateBinding CommandParameter}"
                                      x:Name="But"
                                      Margin="0"
                                      helpers:ButtonHelper.BorderRadius="20"

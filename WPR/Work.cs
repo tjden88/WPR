@@ -2,6 +2,7 @@
 using System.Data;
 using System.IO;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace WPR
 {
@@ -95,6 +96,12 @@ namespace WPR
                 WriteIndented = true
             };
             return JsonSerializer.SerializeToUtf8Bytes(obj, options);
+        }
+
+        /// <summary> Создать копию объекта через сериализацию </summary>
+        public static T CloneObject<T>(this T obj)
+        {
+            return LoadObject<T>(SaveObject(obj));
         }
     }
 
