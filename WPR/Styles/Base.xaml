@@ -7,7 +7,6 @@
     <!--Шрифты-->
     <FontFamily x:Key="RobotoFont">pack://application:,,,/WPR;component/Fonts/#Roboto</FontFamily>
     <FontFamily x:Key="RobotoFontLight">pack://application:,,,/WPR;component/Fonts/#Roboto Thin</FontFamily>
-    <FontFamily x:Key="RobotoFontCondensed">pack://application:,,,/WPR;component/Fonts/#Roboto Condensed</FontFamily>
 
     <!--Кисти и цвета-->
 
