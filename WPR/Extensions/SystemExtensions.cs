@@ -1,5 +1,6 @@
 ﻿using System.Windows;
 using System.Windows.Media;
+using System.Windows.Threading;
 
 namespace System
 {
@@ -64,13 +65,20 @@ namespace System
         }
 
         /// <summary>
-        /// Обмен значений 2 переменных
+        /// Потокобезопасное действие через Dispatcher
         /// </summary>
-        public static void Swap<T>(this ref T first, ref T second) where T: struct
+        /// <param name="obj"></param>
+        /// <param name="Action">Делегат действия</param>
+        public static void DoDispatherAction(this DispatcherObject obj, Action Action)
         {
-            T tmp = second;
-            second = first;
-            first = tmp;
+            if (obj.Dispatcher.CheckAccess())
+            {
+                Action?.Invoke();
+            }
+            else
+            {
+                obj.Dispatcher.BeginInvoke(Action);
+            }
         }
     }
 }
