@@ -16,5 +16,17 @@ namespace WPR.MVVM.ViewModels
             OnPropertyChanged(PropertyName);
             return true;
         }
+
+        /// <summary>
+        /// Обновить свойства ViewModel
+        /// </summary>
+        public virtual void RefreshProperties()
+        {
+            foreach (var propertyInfo in GetType().GetProperties())
+            {
+                OnPropertyChanged(propertyInfo.Name);
+            }
+
+        }
     }
 }

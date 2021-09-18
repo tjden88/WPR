@@ -77,7 +77,7 @@ namespace System
             }
             else
             {
-                obj.Dispatcher.BeginInvoke(Action);
+                obj.Dispatcher.Invoke(Action);
             }
         }
     }
