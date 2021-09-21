@@ -129,7 +129,7 @@
                                         <DoubleAnimation Storyboard.TargetName="ExpandSite"
                                                          Storyboard.TargetProperty="Opacity"
                                                          Duration="0:0:0.25"
-                                                         To="0"/>
+                                                         To="0.1"/>
                                         <DoubleAnimation Storyboard.TargetName="ExpandSite"
                                                          Storyboard.TargetProperty="(LayoutTransform).ScaleX"
                                                          Duration="0:0:0.25"/>

@@ -9,7 +9,7 @@ using System.Windows.Media.Animation;
 
 namespace WPR.Controls
 {
-    public partial class WPRPopup : Popup
+    public class WPRPopup : Popup
     {
         private readonly Storyboard _ShowAnimation, _HideAnimation;
         private bool _StaysOpenIsChangeg; //Определить, изменили ли временно свойство для закрытия с анимацией
@@ -121,6 +121,7 @@ namespace WPR.Controls
             {
                 HorizontalOffset = 0;
                 VerticalOffset = 0;
+                _RootCard.IsEnabled = true;
                 _ShowAnimation.Begin(_RootCard);
             }
         }
@@ -132,6 +133,7 @@ namespace WPR.Controls
         {
             if (Content != null)
             {
+                _RootCard.IsEnabled = false;
                 _HideAnimation.Begin(_RootCard);
             }
             else
