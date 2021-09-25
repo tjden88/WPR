@@ -1,11 +1,11 @@
-﻿using System;
-using System.ComponentModel;
+﻿using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
 namespace WPR.MVVM.ViewModels
 {
-    public abstract class ViewModel : INotifyPropertyChanged
+    public abstract partial class ViewModel : INotifyPropertyChanged
     {
+
         public event PropertyChangedEventHandler PropertyChanged;
 
         protected virtual void OnPropertyChanged([CallerMemberName] string PropertyName = null)
@@ -21,14 +21,18 @@ namespace WPR.MVVM.ViewModels
             return true;
         }
 
-        protected virtual void IfSet<T>(ref T field, T value, Action<T> ActionIfPropertyChanged, [CallerMemberName] string PropertyName = null)
+        //protected virtual void IfSet<T>(ref T field, T value, Action<T> ActionIfPropertyChanged, [CallerMemberName] string PropertyName = null)
+        //{
+        //    if (Set(ref field, value, PropertyName))
+        //    {
+        //        ActionIfPropertyChanged(value);
+        //    }
+        //}
+
+        protected ValueResult<T> IfSet<T>(ref T field, T value, [CallerMemberName] string PropertyName = null)
         {
-            if (!Equals(field, value))
-            {
-                field = value;
-                OnPropertyChanged(PropertyName);
-                ActionIfPropertyChanged(value);
-            }
+            var res = Set(ref field, value, PropertyName);
+            return new ValueResult<T>(res, value, this);
         }
 
         /// <summary> Обновить все свойства ViewModel </summary>
