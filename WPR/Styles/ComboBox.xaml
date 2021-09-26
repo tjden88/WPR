@@ -208,30 +208,36 @@
         <Grid x:Name="templateRoot" Margin="-8,-15,-8,0" SnapsToDevicePixels="true">
             <Popup x:Name="PART_Popup" AllowsTransparency="true"
                    Grid.ColumnSpan="2" 
+                   MaxHeight="{TemplateBinding MaxDropDownHeight}"
                    IsOpen="{Binding IsDropDownOpen, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
                    PlacementTarget="{Binding ElementName=templateRoot}"
                    PopupAnimation="Fade" Placement="Relative">
                 <Grid Margin="10" x:Name="PopupContent" >
                     <Border  MinWidth="{Binding ActualWidth, ElementName=templateRoot}"
                              Background="{DynamicResource BackgroundColorBrush}"
-                        MaxHeight="{TemplateBinding MaxDropDownHeight}"
+                        
                         x:Name="dropDownBorder" 
                         Effect="{StaticResource PopupSmallShadow}"
                              IsHitTestVisible="False" />
-                    <StackPanel Orientation="Vertical">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
                         <Rectangle x:Name="opaqueRect" Height="{Binding ElementName=templateRoot, Path=ActualHeight}" 
                                    IsHitTestVisible="False"
-                                       Margin="0,0,0,5">
+                                   Margin="0,0,0,5">
                             <Rectangle.Fill>
                                 <VisualBrush Visual="{Binding ElementName=templateRoot}" 
                                              AlignmentY="Bottom"
+                                             AlignmentX="Left"
                                              Stretch="None"/>
                             </Rectangle.Fill>
                         </Rectangle>
-                        <ScrollViewer x:Name="DropDownScrollViewer">
+                        <ScrollViewer Grid.Row="1" x:Name="DropDownScrollViewer">
                             <ItemsPresenter x:Name="ItemsPresenter" KeyboardNavigation.DirectionalNavigation="Contained" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
                         </ScrollViewer>
-                    </StackPanel>
+                    </Grid>
 
                 </Grid>
 
