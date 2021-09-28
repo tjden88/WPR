@@ -21,9 +21,7 @@
                                 BorderBrush="{TemplateBinding BorderBrush}" 
                                 CornerRadius="2"
                                 BorderThickness="{TemplateBinding BorderThickness}"
-                                Background="{TemplateBinding Background}" 
-                                HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                VerticalAlignment="{TemplateBinding VerticalContentAlignment}">
+                                Background="{TemplateBinding Background}">
 
                     <Grid x:Name="markGrid">
                         <Rectangle x:Name="indeterminateMark" Fill="{DynamicResource PrimaryColorBrush}" Margin="3,4" Opacity="0"/>
@@ -33,7 +31,10 @@
                     </Grid>
                 </Border>
             </controls:Ripple>
-            <ContentPresenter Grid.Column="1" Margin="3,0,0,0" RecognizesAccessKey="True" />
+            <ContentPresenter Grid.Column="1" Margin="3,0,3,0"
+                              HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" 
+                              VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                              RecognizesAccessKey="True" />
         </Grid>
         <ControlTemplate.Triggers>
             <Trigger Property="IsChecked" Value="True">
