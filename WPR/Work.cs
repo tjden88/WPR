@@ -63,46 +63,48 @@ namespace WPR
             }
         }
 
-        /// <summary>
-        /// Десериализация объекта из файла
-        /// </summary>
-        public static T LoadObject<T>(string FileName)
-        {
-            return LoadObject<T>(File.ReadAllBytes(FileName));
-        }
-        /// <summary>
-        /// Десериализация объекта
-        /// </summary>
-        public static T LoadObject<T>(byte[] ByteArray)
-        {
-            var readOnlySpan = new ReadOnlySpan<byte>(ByteArray);
-            return JsonSerializer.Deserialize<T>(readOnlySpan);
-        }
-        /// <summary>
-        /// Сериализация объекта и запись в файл
-        /// </summary>
-        public static void SaveObject(object obj, string FileName)
-        {
-            File.WriteAllBytes(FileName, SaveObject(obj));
-        }
+        #region Serialize
+        ///// <summary>
+        ///// Десериализация объекта из файла
+        ///// </summary>
+        //public static T LoadObject<T>(string FileName)
+        //{
+        //    return LoadObject<T>(File.ReadAllBytes(FileName));
+        //}
+        ///// <summary>
+        ///// Десериализация объекта
+        ///// </summary>
+        //public static T LoadObject<T>(byte[] ByteArray)
+        //{
+        //    var readOnlySpan = new ReadOnlySpan<byte>(ByteArray);
+        //    return JsonSerializer.Deserialize<T>(readOnlySpan);
+        //}
+        ///// <summary>
+        ///// Сериализация объекта и запись в файл
+        ///// </summary>
+        //public static void SaveObject(object obj, string FileName)
+        //{
+        //    File.WriteAllBytes(FileName, SaveObject(obj));
+        //}
 
-        /// <summary>
-        /// Сериализация объекта
-        /// </summary>
-        public static byte[] SaveObject(object obj)
-        {
-            var options = new JsonSerializerOptions
-            {
-                WriteIndented = true
-            };
-            return JsonSerializer.SerializeToUtf8Bytes(obj, options);
-        }
+        ///// <summary>
+        ///// Сериализация объекта
+        ///// </summary>
+        //public static byte[] SaveObject(object obj)
+        //{
+        //    var options = new JsonSerializerOptions
+        //    {
+        //        WriteIndented = true
+        //    };
+        //    return JsonSerializer.SerializeToUtf8Bytes(obj, options);
+        //}
 
-        /// <summary> Создать копию объекта через сериализацию </summary>
-        public static T CloneObject<T>(this T obj)
-        {
-            return LoadObject<T>(SaveObject(obj));
-        }
+        ///// <summary> Создать копию объекта через сериализацию </summary>
+        //public static T CloneObject<T>(this T obj)
+        //{
+        //    return LoadObject<T>(SaveObject(obj));
+        //} 
+        #endregion
     }
 
 }
