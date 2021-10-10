@@ -258,7 +258,7 @@ namespace WPR
             InputText(sender, Title, Callback, DefaultValue, S => true);
         }
 
-        public static void InputText(DependencyObject sender, string Title, Action<bool,string> Callback, string DefaultValue , Predicate<string> ValidationRule , string ValidationErrorMessage = "Неверное значение")
+        public static void InputText(DependencyObject sender, string Title, Action<bool, string> Callback, string DefaultValue , Predicate<string> ValidationRule , string ValidationErrorMessage = "Неверное значение")
         {
             // Ищем панель
             WPRDialogPanel panel = FindDialogPanel(sender);
@@ -277,6 +277,14 @@ namespace WPR
                 Callback?.Invoke(b == true, inputBox.TextValue);
             };
             panel.Show(inputBox, true);
+        }
+
+        /// <summary> Поле ввода текста </summary>
+        public static async Task<string> InputTextAsync(DependencyObject sender, string Title, string DefaultValue = "")
+        {
+            TaskCompletionSource<string> complete = new();
+            InputText(sender, Title, (B, S) => { complete.TrySetResult(B ? S : null); }, DefaultValue);
+            return await complete.Task.ConfigureAwait(false);
         }
 
         #endregion
