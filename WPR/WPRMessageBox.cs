@@ -280,10 +280,16 @@ namespace WPR
         }
 
         /// <summary> Поле ввода текста </summary>
-        public static async Task<string> InputTextAsync(DependencyObject sender, string Title, string DefaultValue = "")
+        public static Task<string> InputTextAsync(DependencyObject sender, string Title, string DefaultValue = "")
+        {
+            return InputTextAsync(sender, Title, DefaultValue, S => true);
+        }
+
+        /// <summary> Поле ввода текста с валидацией </summary>
+        public static async Task<string> InputTextAsync(DependencyObject sender, string Title, string DefaultValue, Predicate<string> ValidationRule, string ValidationErrorMessage = "Неверное значение")
         {
             TaskCompletionSource<string> complete = new();
-            InputText(sender, Title, (B, S) => { complete.TrySetResult(B ? S : null); }, DefaultValue);
+            InputText(sender, Title, (B, S) => { complete.TrySetResult(B ? S : null); }, DefaultValue, ValidationRule, ValidationErrorMessage);
             return await complete.Task.ConfigureAwait(false);
         }
 
