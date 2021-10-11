@@ -30,7 +30,6 @@ namespace WPR.Controls
             TextBox.LostFocus += TextBox_LostFocus;
             TextBox.MouseWheel += TextBox_MouseWheel;
             TextBox.GotKeyboardFocus += TextBoxOnGotKeyboardFocus;
-
         }
 
         #region Command PlusButtonCommand - Увеличить значение

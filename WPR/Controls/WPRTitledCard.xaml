@@ -5,6 +5,7 @@
     <Style TargetType="{x:Type controls:WPRTitledCard}">
         <Setter Property="Foreground" Value="{DynamicResource SecondaryTextColorBrush}"/>
         <Setter Property="Background" Value="{DynamicResource BackgroundColorBrush}"/>
+        <Setter Property="Focusable" Value="False"/>
         <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
         <Setter Property="Template">
             <Setter.Value>

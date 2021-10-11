@@ -78,18 +78,12 @@ namespace WPR.Dialogs
         #endregion
 
         /// <summary>Вызывается при срабатывании команды SetDialogResultCommand</summary>
-        protected virtual void OnSetCommandExecute(bool parameter)
-        {
-            DialogResult?.Invoke(parameter);
-        }
+        protected virtual void OnSetCommandExecute(bool parameter) => DialogResult?.Invoke(parameter);
 
         /// <summary>Может ли выполниться команда SetDialogResultCommand</summary>
-        protected virtual bool CanSetCommandExecuted()
-        {
-            return true;
-        }
+        protected virtual bool CanSetCommandExecuted() => true;
 
-        class ResultCommand : ICommand
+        private class ResultCommand : ICommand
         {
             private readonly DialogBase _Dialog;
 
@@ -110,7 +104,8 @@ namespace WPR.Dialogs
                 remove => CommandManager.RequerySuggested -= value;
             }
         }
-        class CancCommand : ICommand
+
+        private class CancCommand : ICommand
         {
             private readonly DialogBase _Dialog;
 

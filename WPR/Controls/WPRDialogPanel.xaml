@@ -34,9 +34,13 @@
                                               RenderTransformOrigin="0.5,0.5"
                                               HorizontalAlignment="Center"
                                               VerticalAlignment="Center"
-                                              Content="{TemplateBinding Header}" KeyboardNavigation.TabNavigation="Cycle"
                                               BorderBrush="{TemplateBinding BorderBrush}"
                                               BorderThickness="{TemplateBinding BorderThickness}">
+                                <controls:WPRCard.Content>
+                                    <ContentPresenter Focusable="True" x:Name="PART_HeaderContent"
+                                                      Content="{TemplateBinding Header}"
+                                                      KeyboardNavigation.TabNavigation="Cycle"/>
+                                </controls:WPRCard.Content>
                                 <controls:WPRCard.LayoutTransform>
                                     <ScaleTransform x:Name="ContentDialogTrans" ScaleX="0" ScaleY="{Binding ElementName=ContentDialogTrans, Path=ScaleX}"/>
                                 </controls:WPRCard.LayoutTransform>

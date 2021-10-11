@@ -41,7 +41,6 @@ namespace WPR.Controls
         /// <summary> Оставаться ли открытым при клике на заблокированную область </summary>
         private bool StaysOpen { get; set; }
 
-
         private void Rect_MouseDown(object sender, MouseEventArgs e)
         {
             if (StaysOpen)
@@ -91,6 +90,7 @@ namespace WPR.Controls
         {
             StaysOpen = staysOpen;
             IsShowing = true;
+            if (GetTemplateChild("PART_HeaderContent") is ContentPresenter presenter) presenter.Focus();
         }
 
         /// <summary>
