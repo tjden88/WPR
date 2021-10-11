@@ -9,6 +9,7 @@
 
     <Style TargetType="{x:Type local:NumericTextBox}">
         <Setter Property="Background" Value="{DynamicResource PrimaryColorBrush}"/>
+        <Setter Property="Focusable" Value="False"/>
         <Setter Property="BorderBrush" Value="{DynamicResource SecondaryTextColorBrush}"/>
         <Setter Property="Template">
             <Setter.Value>

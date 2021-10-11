@@ -29,15 +29,16 @@ namespace WPR.Controls
             TextBox.KeyDown += TextBox_KeyDown;
             TextBox.LostFocus += TextBox_LostFocus;
             TextBox.MouseWheel += TextBox_MouseWheel;
+            TextBox.GotKeyboardFocus += TextBoxOnGotKeyboardFocus;
 
         }
 
         #region Command PlusButtonCommand - Увеличить значение
 
-        private ICommand _PlusButtonCommand;
+        private Command _PlusButtonCommand;
 
         /// <summary>Увеличить значение</summary>
-        public ICommand PlusButtonCommand => _PlusButtonCommand
+        public Command PlusButtonCommand => _PlusButtonCommand
             ??= new Command(OnPlusButtonCommandExecuted, CanPlusButtonCommandExecute);
 
         private bool CanPlusButtonCommandExecute() => Value < MaxValue;
@@ -51,10 +52,10 @@ namespace WPR.Controls
 
         #region Command MinusButtonCommand - Уменьшить значение
 
-        private ICommand _MinusButtonCommand;
+        private Command _MinusButtonCommand;
 
         /// <summary>Уменьшить значение</summary>
-        public ICommand MinusButtonCommand => _MinusButtonCommand
+        public Command MinusButtonCommand => _MinusButtonCommand
             ??= new Command(OnMinusButtonCommandExecuted, CanMinusButtonCommandExecute);
 
         private bool CanMinusButtonCommandExecute() => Value > MinValue;
@@ -65,8 +66,6 @@ namespace WPR.Controls
         }
 
         #endregion
-
-
 
         #region PlusMinusButtonsShowing : bool - Показывать кнопки плюс\минус
 
@@ -83,7 +82,7 @@ namespace WPR.Controls
         [Description("Показывать кнопки плюс, минус")]
         public bool PlusMinusButtonsShowing
         {
-            get => (bool) GetValue(PlusMinusButtonsShowingProperty);
+            get => (bool)GetValue(PlusMinusButtonsShowingProperty);
             set => SetValue(PlusMinusButtonsShowingProperty, value);
         }
 
@@ -100,7 +99,7 @@ namespace WPR.Controls
                 new FrameworkPropertyMetadata(default(double), FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, null, (d, BaseValue) =>
                 {
                     var nt = (NumericTextBox)d;
-                    var val = (double) BaseValue;
+                    var val = (double)BaseValue;
                     var res = Math.Min(nt.MaxValue, Math.Max(nt.MinValue, val));
                     nt.TextExpression = res.ToString(CultureInfo.InvariantCulture);
                     return res;
@@ -111,7 +110,7 @@ namespace WPR.Controls
         [Description("Значение")]
         public double Value
         {
-            get => (double) GetValue(ValueProperty);
+            get => (double)GetValue(ValueProperty);
             set => SetValue(ValueProperty, value);
         }
 
@@ -146,7 +145,7 @@ namespace WPR.Controls
         [Description("Значение текстбокса")]
         internal string TextExpression
         {
-            get => (string) GetValue(TextExpressionProperty);
+            get => (string)GetValue(TextExpressionProperty);
             set => SetValue(TextExpressionProperty, value);
         }
 
@@ -167,7 +166,7 @@ namespace WPR.Controls
         [Description("Описание ошибок вычислений")]
         internal string DescriptionText
         {
-            get => (string) GetValue(DescriptionTextProperty);
+            get => (string)GetValue(DescriptionTextProperty);
             set => SetValue(DescriptionTextProperty, value);
         }
 
@@ -188,7 +187,7 @@ namespace WPR.Controls
         [Description("Стиль для текстбокса")]
         public Style TextBoxStyle
         {
-            get => (Style) GetValue(TextBoxStyleProperty);
+            get => (Style)GetValue(TextBoxStyleProperty);
             set => SetValue(TextBoxStyleProperty, value);
         }
 
@@ -209,7 +208,7 @@ namespace WPR.Controls
         [Description("Подсказка текстбокса")]
         public string Hint
         {
-            get => (string) GetValue(HintProperty);
+            get => (string)GetValue(HintProperty);
             set => SetValue(HintProperty, value);
         }
 
@@ -230,7 +229,7 @@ namespace WPR.Controls
         [Description("Шаг изменения значения при использовании кнопок управления или колеса мыши")]
         public double Increment
         {
-            get => (double) GetValue(IncrementProperty);
+            get => (double)GetValue(IncrementProperty);
             set => SetValue(IncrementProperty, value);
         }
 
@@ -251,7 +250,7 @@ namespace WPR.Controls
         [Description("Минимальное значение")]
         public double MinValue
         {
-            get => (double) GetValue(MinValueProperty);
+            get => (double)GetValue(MinValueProperty);
             set => SetValue(MinValueProperty, value);
         }
 
@@ -272,7 +271,7 @@ namespace WPR.Controls
         [Description("Максимальное значение")]
         public double MaxValue
         {
-            get => (double) GetValue(MaxValueProperty);
+            get => (double)GetValue(MaxValueProperty);
             set => SetValue(MaxValueProperty, value);
         }
 
@@ -293,7 +292,7 @@ namespace WPR.Controls
         [Description("Разрешать ввод текста и символов для расчёта внутри текстбокса")]
         public bool AllowTextExpressions
         {
-            get => (bool) GetValue(AllowTextExpressionsProperty);
+            get => (bool)GetValue(AllowTextExpressionsProperty);
             set => SetValue(AllowTextExpressionsProperty, value);
         }
 
@@ -314,7 +313,7 @@ namespace WPR.Controls
         [Description("Количество десятичных знаков")]
         public int DecimalPlaces
         {
-            get => (int) GetValue(DecimalPlacesProperty);
+            get => (int)GetValue(DecimalPlacesProperty);
             set => SetValue(DecimalPlacesProperty, value);
         }
 
@@ -327,41 +326,36 @@ namespace WPR.Controls
         {
             get
             {
-                if (!Work.Calculator(TextExpression, out double result, DecimalPlaces))
-                {
+                if (!Work.Calculator(TextExpression, out var result, DecimalPlaces))
                     return false;
-                }
                 if (result < MinValue || result > MaxValue)
-                {
                     return false;
-                }
                 return true;
             }
         }
 
         #endregion
 
-
         #region Calculate
 
         private void Calculate()
         {
-
-            if (string.IsNullOrEmpty(TextExpression))
+            if (string.IsNullOrWhiteSpace(TextExpression))
             {
-                Value = MinValue > 0 ? MinValue: 0.0;
+                Value = MinValue > 0 ? MinValue : 0.0;
                 TextExpression = "";
                 DescriptionText = "";
                 return;
             }
 
-            if (!Work.Calculator(TextExpression, out double result, DecimalPlaces))
+            if (!Work.Calculator(TextExpression, out var result, DecimalPlaces))
             {
                 DescriptionText = "Неверное выражение";
                 TextExpression = Value.ToString(CultureInfo.InvariantCulture).Replace(",", ".");
                 TextBox.SelectionStart = TextBox.Text.Length;
                 return;
             }
+
             DescriptionText = "";
             if (result < MinValue)
             {
@@ -407,68 +401,73 @@ namespace WPR.Controls
 
         #region TextBox Events
 
-        private void TextBox_LostFocus(object sender, RoutedEventArgs e)
-        {
-            Calculate();
-        }
+        private void TextBox_LostFocus(object sender, RoutedEventArgs e) => Calculate();
+
 
         private void TextBox_KeyDown(object sender, KeyEventArgs e)
         {
             DescriptionText = "";
 
-            if (e.Key == Key.Enter)
+            switch (e.Key)
             {
-                Calculate();
-                TextBox.SelectionStart = TextBox.Text.Length;
-
-            }
-            if (e.Key == Key.Escape)
-            {
-                Calculate();
-                Focus();
+                case Key.Enter:
+                    Calculate();
+                    TextBox.SelectionStart = TextBox.Text.Length;
+                    break;
+                case Key.Escape:
+                    Calculate();
+                    Focus();
+                    break;
             }
         }
+
 
         private void TextBox_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
+            if (AllowTextExpressions) return;
 
-            if (!AllowTextExpressions) //Только числа разрешены
+            //Запрет писать не цифры 
+            if (!char.IsDigit(e.Text, 0)) e.Handled = true;
+
+            //Десятичные
+            if (DecimalPlaces > 0)
             {
-                //Запрет писать не цифры 
-                if (!char.IsDigit(e.Text, 0)) e.Handled = true;
-
-                //Десятичные
-                if (DecimalPlaces > 0)
-                {
-                    if ((e.Text == "." || e.Text == ",") && TextExpression.LastIndexOf(",", StringComparison.Ordinal) < 0 && TextExpression.LastIndexOf(".", StringComparison.Ordinal) < 0 && TextBox.SelectionStart > 0)
-                    {
-                        e.Handled = false;
-                    }
-
-                    // Проверим текущее десятичное после знака
-                    int currdecimal = Math.Max(TextExpression.LastIndexOf(",", StringComparison.Ordinal), TextExpression.LastIndexOf(".", StringComparison.Ordinal));
-                    if (currdecimal > -1 && TextBox.SelectionStart - currdecimal > DecimalPlaces) e.Handled = true;
-                }
-                // Разрешение писать минус только в начале строки
-                if (e.Text == "-" && TextExpression.LastIndexOf("-", StringComparison.Ordinal) < 0 && TextBox.SelectionStart == 0 && MinValue < 0)
+                if (e.Text is "." or "," && TextExpression.LastIndexOf(",", StringComparison.Ordinal) < 0
+                                         && TextExpression.LastIndexOf(".", StringComparison.Ordinal) < 0
+                                         && TextBox.SelectionStart > 0)
                 {
                     e.Handled = false;
                 }
+
+                // Проверим текущее десятичное после знака
+                var currdecimal = Math.Max(TextExpression.LastIndexOf(",", StringComparison.Ordinal),
+                    TextExpression.LastIndexOf(".", StringComparison.Ordinal));
+                if (currdecimal > -1 && TextBox.SelectionStart - currdecimal > DecimalPlaces)
+                {
+                    e.Handled = true;
+                }
+            }
+            // Разрешение писать минус только в начале строки
+            if (e.Text == "-" && TextExpression.LastIndexOf("-", StringComparison.Ordinal) < 0
+                              && TextBox.SelectionStart == 0
+                              && MinValue < 0)
+            {
+                e.Handled = false;
             }
         }
+
 
         private void TextBox_MouseWheel(object sender, MouseWheelEventArgs e)
         {
             if (e.Delta > 0)
-            {
-                OnPlusButtonCommandExecuted();
-            }
+                PlusButtonCommand.Execute();
             else
-            {
-                OnMinusButtonCommandExecuted();
-            }
-
+                MinusButtonCommand.Execute();
         }
+
+
+        private void TextBoxOnGotKeyboardFocus(object Sender, KeyboardFocusChangedEventArgs E) =>
+            TextBox.Dispatcher.BeginInvoke(new Action(() => TextBox.SelectAll()));
 
         #endregion
     }
