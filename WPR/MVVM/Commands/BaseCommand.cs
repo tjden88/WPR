@@ -1,10 +1,12 @@
 ﻿using System;
+using System.Globalization;
 using System.Windows.Input;
 
 namespace WPR.MVVM.Commands
 {
     public abstract class BaseCommand : ICommand
     {
+        #region Executable: bool
         private bool _Executable = true;
 
         /// <summary>Ручная возможность выполнения команды</summary>
@@ -15,13 +17,32 @@ namespace WPR.MVVM.Commands
             {
                 if (_Executable == value) return;
                 _Executable = value;
-                ExecutableChanged?.Invoke(this, EventArgs.Empty);
+                ExecutableChanged?.Invoke(this, value);
                 CommandManager.InvalidateRequerySuggested();
             }
         }
+        #endregion
+
+        #region Текст команды
+        private string _CommandText;
+        /// <summary> Текст - описание команды </summary>
+        public string Text
+        {
+            get
+            {
+                var gString = ExecuteGesture?.GetDisplayStringForCulture(CultureInfo.CurrentCulture);
+                return gString== null ? _CommandText : $"{_CommandText} ({gString})";
+            }
+            set => _CommandText = value;
+        }
+
+        #endregion
+
+        /// <summary> Комбинация клавиш быстрого доступа </summary>
+        public KeyGesture ExecuteGesture { get; set; }
 
         /// <summary>Происходит при изменении ручной возможности исполнения команды</summary>
-        public event EventHandler ExecutableChanged;
+        public event EventHandler<bool> ExecutableChanged;
 
         event EventHandler ICommand.CanExecuteChanged
         {
