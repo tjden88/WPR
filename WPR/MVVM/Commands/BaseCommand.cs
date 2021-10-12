@@ -66,6 +66,8 @@ namespace WPR.MVVM.Commands
 
         /// <summary>Выполнить команду с параметром</summary>
         public abstract void Execute(object p);
+
+        public override string ToString() => Text;
     }
 
 }
