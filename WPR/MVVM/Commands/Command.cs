@@ -10,15 +10,17 @@ namespace WPR.MVVM.Commands
         private readonly Predicate<object> _CanExecute;
 
 
-        public Command(Action Execute, Func<bool> CanExecute = null) : this(P => Execute(),
-            CanExecute is null ? null : P => CanExecute())
-        {
-        }
 
-        public Command(Action<object> Execute, Predicate<object> CanExecute = null)
+        public Command(Action<object> Execute, Predicate<object> CanExecute = null, string CommandText = null)
         {
             _Execute = Execute ?? throw new ArgumentNullException(nameof(Execute));
             _CanExecute = CanExecute;
+            Text = CommandText;
+        }
+
+        public Command(Action Execute, Func<bool> CanExecute = null, string CommandText = null)
+            : this(P => Execute(), CanExecute is null ? null : P => CanExecute(), CommandText)
+        {
         }
 
         public Command(Action Execute, string CommandText, KeyGesture ExecuteGesture, UIElement GestureTarget) 
@@ -31,10 +33,9 @@ namespace WPR.MVVM.Commands
         }
 
         public Command(Action<object> Execute, Predicate<object> CanExecute, string CommandText, KeyGesture ExecuteGesture, UIElement GestureTarget)
-            : this(Execute, CanExecute)
+            : this(Execute, CanExecute, CommandText)
         {
             if (GestureTarget == null) throw new ArgumentNullException(nameof(GestureTarget));
-            Text = CommandText;
             this.ExecuteGesture = ExecuteGesture;
             GestureTarget.InputBindings.Add(new InputBinding(this, ExecuteGesture));
         }

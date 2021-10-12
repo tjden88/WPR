@@ -31,7 +31,7 @@ namespace WPR.MVVM.Commands
             get
             {
                 var gString = ExecuteGesture?.GetDisplayStringForCulture(CultureInfo.CurrentCulture);
-                return gString== null ? _CommandText : $"{_CommandText} ({gString})";
+                return gString == null ? _CommandText : $"{_CommandText} ({gString})";
             }
             set => _CommandText = value;
         }
@@ -39,7 +39,7 @@ namespace WPR.MVVM.Commands
         #endregion
 
         /// <summary> Комбинация клавиш быстрого доступа </summary>
-        protected  KeyGesture ExecuteGesture { get; init; }
+        protected KeyGesture ExecuteGesture { get; init; }
 
         /// <summary>Происходит при изменении ручной возможности исполнения команды</summary>
         public event EventHandler<bool> ExecutableChanged;
