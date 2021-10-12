@@ -39,7 +39,7 @@ namespace WPR.MVVM.Commands
         #endregion
 
         /// <summary> Комбинация клавиш быстрого доступа </summary>
-        public KeyGesture ExecuteGesture { get; set; }
+        protected  KeyGesture ExecuteGesture { get; init; }
 
         /// <summary>Происходит при изменении ручной возможности исполнения команды</summary>
         public event EventHandler<bool> ExecutableChanged;
