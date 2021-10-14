@@ -83,14 +83,21 @@ namespace System
         public static bool CalculateStringExpression(this string Text, out double result, int DecimalPlases = -1)
         {
             result = default;
-            if (string.IsNullOrWhiteSpace(Text)) return false;
-            var parse = Text.Replace(",", ".").Trim();
-            result = ConvertToDouble(_TableForCalculationExpression.Compute(Text.Replace(",", ".").Trim(), null));
-            if (DecimalPlases > -1)
+            try
             {
-                result = Math.Round(result, DecimalPlases);
+                if (string.IsNullOrWhiteSpace(Text)) return false;
+                var parse = Text.Replace(",", ".").Trim();
+                result = ConvertToDouble(_TableForCalculationExpression.Compute(Text.Replace(",", ".").Trim(), null));
+                if (DecimalPlases > -1)
+                {
+                    result = Math.Round(result, DecimalPlases);
+                }
+                return true;
             }
-            return true;
+            catch (Exception)
+            {
+                return false;
+            }
         }
 
         /// <summary>

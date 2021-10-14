@@ -26,7 +26,7 @@ namespace WPR.Controls
             if (TextBox == null) throw new ArgumentException(nameof(TextBox));
 
             TextBox.PreviewTextInput += TextBox_PreviewTextInput;
-            TextBox.KeyDown += TextBox_KeyDown;
+            TextBox.KeyUp += TextBox_KeyUp;
             TextBox.LostFocus += TextBox_LostFocus;
             TextBox.MouseWheel += TextBox_MouseWheel;
             TextBox.GotKeyboardFocus += TextBoxOnGotKeyboardFocus;
@@ -95,7 +95,8 @@ namespace WPR.Controls
                 nameof(Value),
                 typeof(double),
                 typeof(NumericTextBox),
-                new FrameworkPropertyMetadata(default(double), FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, null, (d, BaseValue) =>
+                new FrameworkPropertyMetadata(default(double), FrameworkPropertyMetadataOptions.BindsTwoWayByDefault,
+                    null, (d, BaseValue) =>
                 {
                     var nt = (NumericTextBox)d;
                     var val = (double)BaseValue;
@@ -402,10 +403,8 @@ namespace WPR.Controls
         private void TextBox_LostFocus(object sender, RoutedEventArgs e) => Calculate();
 
 
-        private void TextBox_KeyDown(object sender, KeyEventArgs e)
+        private void TextBox_KeyUp(object sender, KeyEventArgs e)
         {
-            DescriptionText = "";
-
             switch (e.Key)
             {
                 case Key.Enter:
@@ -416,6 +415,9 @@ namespace WPR.Controls
                     Calculate();
                     Focus();
                     break;
+                case Key.Back:
+                    DescriptionText = "";
+                    break;
             }
         }
 
@@ -425,8 +427,11 @@ namespace WPR.Controls
             if (AllowTextExpressions) return;
 
             //Запрет писать не цифры 
-            if (!char.IsDigit(e.Text, 0)) e.Handled = true;
-
+            if (!char.IsDigit(e.Text, 0))
+            {
+                e.Handled = true;
+                return;
+            }
             //Десятичные
             if (DecimalPlaces > 0)
             {
@@ -451,6 +456,22 @@ namespace WPR.Controls
                               && MinValue < 0)
             {
                 e.Handled = false;
+            }
+            // Проверим максимум и минимум
+            var newval = (TextExpression + e.Text).ConvertToDouble();
+            if (newval < MinValue)
+            {
+                DescriptionText = "Минимальное значение: " + MinValue.ToString(CultureInfo.InvariantCulture);
+                e.Handled = true;
+            }
+            else if (newval > MaxValue)
+            {
+                DescriptionText = "Максимальное значение: " + MaxValue.ToString(CultureInfo.InvariantCulture);
+                e.Handled = true;
+            }
+            else
+            {
+                DescriptionText = "";
             }
         }
 
