@@ -1,4 +1,6 @@
-﻿using System.Windows;
+﻿using System.Data;
+using System.Globalization;
+using System.Windows;
 using System.Windows.Media;
 using System.Windows.Threading;
 
@@ -13,7 +15,7 @@ namespace System
         {
             DependencyObject parentObject = VisualTreeHelper.GetParent(child);
             if (parentObject == null) return null;
-            return parentObject is T parent? parent: FindVisualParent<T>(parentObject);
+            return parentObject is T parent ? parent : FindVisualParent<T>(parentObject);
 
         }
 
@@ -44,30 +46,57 @@ namespace System
             return null;
         }
 
+        private static readonly IFormatProvider _Formatter = new NumberFormatInfo { NumberDecimalSeparator = "." };
+        private static readonly DataTable _TableForCalculationExpression = new() { Locale = CultureInfo.InvariantCulture }; // Калькулятор
+
         /// <summary>
-        /// Вычислить значение объекта
+        /// Конвертировать объект в double
         /// </summary>
-        /// <param name="exp"></param>
+        /// <param name="obj">Объект конвертации</param>
         /// <returns></returns>
-        public static double DoubleValue(this object exp)
+        public static double ConvertToDouble(this object obj)
         {
-            return WPR.Work.Va(exp);
+            var parse = obj.ToString()?.Replace(",", ".").Trim();
+            double.TryParse(parse, NumberStyles.Any, _Formatter, out var result);
+            return result;
         }
 
         /// <summary>
-        /// Вычислить целое значение объекта
+        /// Конвертировать объект в int
         /// </summary>
-        /// <param name="exp"></param>
+        /// <param name="obj">Объект конвертации</param>
         /// <returns></returns>
-        public static int IntValue(this object exp)
+        public static int ConvertToInt(this object obj)
         {
-            return WPR.Work.VaInt(exp);
+            var parse = obj.ToString()?.Replace(",", ".").Trim();
+            int.TryParse(parse, NumberStyles.Any, _Formatter, out var result);
+            return result;
+        }
+
+        /// <summary>
+        /// Вычислить значение строки
+        /// </summary>
+        /// <param name="Text">Строка для вычисления</param>
+        /// <param name="result">Результат вычисления (при ошибке - 0)</param>
+        /// <param name="DecimalPlases">Количество десятичных знаков</param>
+        /// <returns>True, если строка имела верный формат и успешно вычислилась</returns>
+        public static bool CalculateStringExpression(this string Text, out double result, int DecimalPlases = -1)
+        {
+            result = default;
+            if (string.IsNullOrWhiteSpace(Text)) return false;
+            var parse = Text.Replace(",", ".").Trim();
+            result = ConvertToDouble(_TableForCalculationExpression.Compute(Text.Replace(",", ".").Trim(), null));
+            if (DecimalPlases > -1)
+            {
+                result = Math.Round(result, DecimalPlases);
+            }
+            return true;
         }
 
         /// <summary>
         /// Потокобезопасное действие через Dispatcher
         /// </summary>
-        /// <param name="obj"></param>
+        /// <param name="obj">Диспетчеризуемый объект</param>
         /// <param name="Action">Делегат действия</param>
         public static void DoDispatherAction(this DispatcherObject obj, Action Action)
         {
@@ -80,5 +109,11 @@ namespace System
                 obj.Dispatcher.Invoke(Action);
             }
         }
+
+        /// <summary>
+        /// Потокобезопасное действие через Dispatcher текущего приложения
+        /// </summary>
+        /// <param name="Action">Делегат действия</param>
+        public static void AppDispatherAction(Action Action) => DoDispatherAction(Application.Current, Action);
     }
 }

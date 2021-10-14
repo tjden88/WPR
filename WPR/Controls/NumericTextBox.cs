@@ -131,7 +131,7 @@ namespace WPR.Controls
                         if (nt.TextExpression.EndsWith("-") || nt.TextExpression.EndsWith(",") ||
                             nt.TextExpression.EndsWith(".")) return;
 
-                        if (Work.Calculator(e.NewValue.ToString(), out var result, nt.DecimalPlaces))
+                        if (e.NewValue.ToString().CalculateStringExpression(out var result, nt.DecimalPlaces))
                         {
                             nt.Value = result;
                         }
@@ -325,11 +325,10 @@ namespace WPR.Controls
         {
             get
             {
-                if (!Work.Calculator(TextExpression, out var result, DecimalPlaces))
+                if (!TextExpression.CalculateStringExpression( out var result, DecimalPlaces))
                     return false;
-                if (result < MinValue || result > MaxValue)
-                    return false;
-                return true;
+
+                return !(result < MinValue) && !(result > MaxValue);
             }
         }
 
@@ -347,10 +346,10 @@ namespace WPR.Controls
                 return;
             }
 
-            if (!Work.Calculator(TextExpression, out var result, DecimalPlaces))
+            if (!TextExpression.CalculateStringExpression(out var result, DecimalPlaces))
             {
                 DescriptionText = "Неверное выражение";
-                TextExpression = Value.ToString(CultureInfo.InvariantCulture).Replace(",", ".");
+                TextExpression = Value.ToString(CultureInfo.InvariantCulture);
                 TextBox.SelectionStart = TextBox.Text.Length;
                 return;
             }
@@ -376,7 +375,7 @@ namespace WPR.Controls
         /// </summary>
         public bool Validate()
         {
-            if (!Work.Calculator(TextBox.Text, out double result, DecimalPlaces))
+            if (!TextBox.Text.CalculateStringExpression(out double result, DecimalPlaces))
             {
                 DescriptionText = "Неверное выражение";
                 return false;
