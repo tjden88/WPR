@@ -11,8 +11,9 @@ namespace WPR.Controls
     /// <summary> Контрол с текстбоксом для ввода числовых данных </summary>
     public class NumericTextBox : Control
     {
+        private bool _IsValidNow; // При обновлении Value не обновлять Text, если True
 
-        internal TextBox TextBox { get; set; }
+        protected TextBox TextBox { get; set; }
 
         static NumericTextBox()
         {
@@ -99,10 +100,15 @@ namespace WPR.Controls
                     null, (d, BaseValue) =>
                 {
                     var nt = (NumericTextBox)d;
-                    var val = (double)BaseValue;
-                    var res = Math.Min(nt.MaxValue, Math.Max(nt.MinValue, val));
-                    nt.TextExpression = res.ToString(CultureInfo.InvariantCulture);
-                    return res;
+
+                    if (nt._IsValidNow) return BaseValue;
+
+                    if (nt.Validate(out var validationResult))
+                    {
+                        var res = Math.Min(nt.MaxValue, Math.Max(nt.MinValue, validationResult));
+                        nt.TextExpression = res.ToString(CultureInfo.InvariantCulture);
+                    }
+                    return default;
                 }));
 
         /// <summary>Значение</summary>
@@ -127,17 +133,12 @@ namespace WPR.Controls
                 new PropertyMetadata(string.Empty, (d, e) =>
                 {
                     var nt = (NumericTextBox)d;
-                    if (!nt.AllowTextExpressions)
-                    {
-                        if (nt.TextExpression.EndsWith("-") || nt.TextExpression.EndsWith(",") ||
-                            nt.TextExpression.EndsWith(".")) return;
+                    if (nt.AllowTextExpressions || nt.TextExpression.EndsWith("-") || nt.TextExpression.EndsWith(",") ||
+                        nt.TextExpression.EndsWith(".") || !nt.Validate(out var result)) return;
 
-                        if (e.NewValue.ToString().CalculateStringExpression(out var result, nt.DecimalPlaces))
-                        {
-                            nt.Value = result;
-                        }
-                    }
-
+                    nt._IsValidNow = true;
+                    nt.Value = result;
+                    nt._IsValidNow = false;
                 }));
 
         /// <summary>Значение текстбокса</summary>
@@ -319,21 +320,21 @@ namespace WPR.Controls
 
         #endregion
 
-        #region IsValid : bool - Валидное ли значение введено
+        //#region IsValid : bool - Валидное ли значение введено
 
-        [Description("Валидное ли значение введено")]
-        public bool IsValid
-        {
-            get
-            {
-                if (!TextExpression.CalculateStringExpression( out var result, DecimalPlaces))
-                    return false;
+        //[Description("Валидное ли значение введено")]
+        //public bool IsValid
+        //{
+        //    get
+        //    {
+        //        if (!TextExpression.CalculateStringExpression( out var result, DecimalPlaces))
+        //            return false;
 
-                return !(result < MinValue) && !(result > MaxValue);
-            }
-        }
+        //        return !(result < MinValue) && !(result > MaxValue);
+        //    }
+        //}
 
-        #endregion
+        //#endregion
 
         #region Calculate
 
@@ -374,9 +375,12 @@ namespace WPR.Controls
         /// <summary>
         /// Проверить допустимость значения и вывести предупреждение в описании
         /// </summary>
-        public bool Validate()
+        public bool Validate(out double resultValue)
         {
-            if (!TextBox.Text.CalculateStringExpression(out double result, DecimalPlaces))
+            var expressionIsValid = !TextBox.Text.CalculateStringExpression(out var result, DecimalPlaces);
+            resultValue = result;
+
+            if (expressionIsValid)
             {
                 DescriptionText = "Неверное выражение";
                 return false;
@@ -393,7 +397,6 @@ namespace WPR.Controls
                 DescriptionText = "Максимальное значение: " + MaxValue.ToString(CultureInfo.InvariantCulture);
                 return false;
             }
-
             return true;
         }
         #endregion
