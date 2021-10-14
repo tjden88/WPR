@@ -103,10 +103,12 @@ namespace WPR.Controls
 
                     if (nt._IsValidNow) return BaseValue;
 
+                    var res = Math.Min(nt.MaxValue, Math.Max(nt.MinValue, (double)BaseValue));
+                    nt.TextExpression = res.ToString(CultureInfo.InvariantCulture);
+
                     if (nt.Validate(out var validationResult))
                     {
-                        var res = Math.Min(nt.MaxValue, Math.Max(nt.MinValue, validationResult));
-                        nt.TextExpression = res.ToString(CultureInfo.InvariantCulture);
+                        return validationResult;
                     }
                     return default;
                 }));
@@ -377,10 +379,13 @@ namespace WPR.Controls
         /// </summary>
         public bool Validate(out double resultValue)
         {
-            var expressionIsValid = !TextBox.Text.CalculateStringExpression(out var result, DecimalPlaces);
+            //resultValue = default;
+            //if (TextBox == null) return false;
+
+            var expressionIsValid = TextExpression.CalculateStringExpression(out var result, DecimalPlaces);
             resultValue = result;
 
-            if (expressionIsValid)
+            if (!expressionIsValid)
             {
                 DescriptionText = "Неверное выражение";
                 return false;
