@@ -46,6 +46,7 @@ namespace WPR.Controls
         private void OnPlusButtonCommandExecuted()
         {
             Value = Math.Min(MaxValue, Value + Increment);
+            TextBox.SelectionStart = TextBox.Text.Length;
         }
 
         #endregion
@@ -63,6 +64,7 @@ namespace WPR.Controls
         private void OnMinusButtonCommandExecuted()
         {
             Value = Math.Max(MinValue, Value - Increment);
+            TextBox.SelectionStart = TextBox.Text.Length;
         }
 
         #endregion
@@ -103,7 +105,7 @@ namespace WPR.Controls
 
                     if (nt._IsValidNow) return BaseValue;
 
-                    var res = Math.Min(nt.MaxValue, Math.Max(nt.MinValue, (double)BaseValue));
+                    var res = Math.Round(Math.Min(nt.MaxValue, Math.Max(nt.MinValue, (double)BaseValue)), nt.DecimalPlaces);
                     nt.TextExpression = res.ToString(CultureInfo.InvariantCulture);
 
                     if (nt.Validate(out var validationResult))
@@ -399,6 +401,11 @@ namespace WPR.Controls
         {
             if (AllowTextExpressions) return;
 
+            // берём не выделенный фрагмент текста, т.к выделенный будет удалён
+            var checkedText = TextBox.SelectionLength > 0 
+                ? TextExpression.Replace(TextBox.SelectedText, "")
+                : TextExpression;
+
             //Запрет писать не цифры 
             if (!char.IsDigit(e.Text, 0))
             {
@@ -407,23 +414,23 @@ namespace WPR.Controls
             //Десятичные
             if (DecimalPlaces > 0)
             {
-                if (e.Text is "." or "," && TextExpression.LastIndexOf(",", StringComparison.Ordinal) < 0
-                                         && TextExpression.LastIndexOf(".", StringComparison.Ordinal) < 0
+                if (e.Text is "." or "," && checkedText.LastIndexOf(",", StringComparison.Ordinal) < 0
+                                         && checkedText.LastIndexOf(".", StringComparison.Ordinal) < 0
                                          && TextBox.SelectionStart > 0)
                 {
                     e.Handled = false;
                 }
 
                 // Проверим текущее десятичное после знака
-                var currdecimal = Math.Max(TextExpression.LastIndexOf(",", StringComparison.Ordinal),
-                    TextExpression.LastIndexOf(".", StringComparison.Ordinal));
+                var currdecimal = Math.Max(checkedText.LastIndexOf(",", StringComparison.Ordinal),
+                    checkedText.LastIndexOf(".", StringComparison.Ordinal));
                 if (currdecimal > -1 && TextBox.SelectionStart - currdecimal > DecimalPlaces)
                 {
                     e.Handled = true;
                 }
             }
             // Разрешение писать минус только в начале строки
-            if (e.Text == "-" && TextExpression.LastIndexOf("-", StringComparison.Ordinal) < 0
+            if (e.Text == "-" && checkedText.LastIndexOf("-", StringComparison.Ordinal) < 0
                               && TextBox.SelectionStart == 0
                               && MinValue < 0)
             {

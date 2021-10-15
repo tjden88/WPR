@@ -14,7 +14,7 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type local:NumericTextBox}">
-                    <Grid>
+                    <Grid Background="Transparent">
                         <TextBox helpers:TextHelper.Hint ="{TemplateBinding Hint}"
                              Background="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Background, Mode=TwoWay}"
                              x:Name="PART_TextBox"
@@ -31,12 +31,12 @@
                                      Visibility="{TemplateBinding PlusMinusButtonsShowing, Converter={StaticResource Bool2VisibilityConverter}}">
                             <Button Command="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=PlusButtonCommand}"
                                     Style="{StaticResource WPRToolButtonNoRipple}" 
-                                    Margin="2"
+                                    Margin="0"
                                     Focusable="False" 
                                     Height="{Binding RelativeSource={RelativeSource Self}, Path=ActualWidth}"
                                     Foreground="{DynamicResource AccentColorBrush}"
                                     Padding="0">
-                                <local:WPRIcon Source="PlusCircle" IconSize="18"/>
+                                <local:WPRIcon Source="PlusCircle" IconSize="18" Margin="1"/>
                                 <Button.RenderTransform>
                                     <TranslateTransform x:Name="AnimatedTranslateTransformPlus" Y="{Binding Path=ActualHeight, RelativeSource={RelativeSource TemplatedParent}}" />
                                 </Button.RenderTransform>
@@ -48,7 +48,7 @@
                                     Margin="0"
                                     Foreground="{DynamicResource AccentColorBrush}"
                                     Padding="0">
-                                <local:WPRIcon Source="MinusCircle" IconSize="18"/>
+                                <local:WPRIcon Source="MinusCircle" IconSize="18" Margin="1"/>
                                 <Button.RenderTransform>
                                     <TranslateTransform x:Name="AnimatedTranslateTransformMinus" Y="{Binding Path=ActualHeight, RelativeSource={RelativeSource TemplatedParent}}" />
                                 </Button.RenderTransform>
@@ -57,18 +57,19 @@
                     </Grid>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Setter Property="BorderBrush" 
-                                    Value="{Binding Background, RelativeSource={RelativeSource Self}}"/>
+                            <Setter Property="BorderBrush" Value="{Binding Background, RelativeSource={RelativeSource Self}}"/>
                             <Trigger.EnterActions>
                                 <BeginStoryboard>
                                     <Storyboard>
                                         <DoubleAnimation Storyboard.TargetName="AnimatedTranslateTransformPlus"
                                                          Storyboard.TargetProperty="Y"
                                                          To="0"
+                                                         EasingFunction="{StaticResource CircleEaseOut}"
                                                          Duration="0:0:0.2"/>
                                         <DoubleAnimation Storyboard.TargetName="AnimatedTranslateTransformMinus"
                                                          Storyboard.TargetProperty="Y"
                                                          To="0"
+                                                         EasingFunction="{StaticResource CircleEaseOut}"
                                                          BeginTime="0:0:0.1"
                                                          Duration="0:0:0.2"/>
                                     </Storyboard>
@@ -79,10 +80,12 @@
                                     <Storyboard>
                                         <DoubleAnimation Storyboard.TargetName="AnimatedTranslateTransformPlus"
                                                          Storyboard.TargetProperty="Y"
+                                                         EasingFunction="{StaticResource CircleEaseIn}"
                                                          Duration="0:0:0.2"/>
                                         <DoubleAnimation Storyboard.TargetName="AnimatedTranslateTransformMinus"
                                                          Storyboard.TargetProperty="Y"
                                                          Duration="0:0:0.2" 
+                                                         EasingFunction="{StaticResource CircleEaseIn}"
                                                          BeginTime="0:0:0.1"/>
                                     </Storyboard>
                                 </BeginStoryboard>
