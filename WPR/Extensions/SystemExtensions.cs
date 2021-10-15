@@ -75,6 +75,7 @@ namespace System
 
         /// <summary>
         /// Вычислить значение строки
+        /// Пустая строка возвращает true
         /// </summary>
         /// <param name="Text">Строка для вычисления</param>
         /// <param name="result">Результат вычисления (при ошибке - 0)</param>
@@ -85,7 +86,7 @@ namespace System
             result = default;
             try
             {
-                if (string.IsNullOrWhiteSpace(Text)) return false;
+                if (string.IsNullOrWhiteSpace(Text)) return true;
                 var parse = Text.Replace(",", ".").Trim();
                 result = ConvertToDouble(_TableForCalculationExpression.Compute(Text.Replace(",", ".").Trim(), null));
                 if (DecimalPlases > -1)

@@ -322,56 +322,27 @@ namespace WPR.Controls
 
         #endregion
 
-        //#region IsValid : bool - Валидное ли значение введено
-
-        //[Description("Валидное ли значение введено")]
-        //public bool IsValid
-        //{
-        //    get
-        //    {
-        //        if (!TextExpression.CalculateStringExpression( out var result, DecimalPlaces))
-        //            return false;
-
-        //        return !(result < MinValue) && !(result > MaxValue);
-        //    }
-        //}
-
-        //#endregion
-
         #region Calculate
 
-        private void Calculate()
+        private void UpdateValueFromTextExpression()
         {
             if (string.IsNullOrWhiteSpace(TextExpression))
             {
-                Value = MinValue > 0 ? MinValue : 0.0;
+                Value = MinValue > 0 ? MinValue : 0d;
                 TextExpression = "";
                 DescriptionText = "";
                 return;
             }
 
-            if (!TextExpression.CalculateStringExpression(out var result, DecimalPlaces))
+            if (Validate(out var resultValue))
             {
-                DescriptionText = "Неверное выражение";
+                Value = resultValue;
+            }
+            else
+            {
                 TextExpression = Value.ToString(CultureInfo.InvariantCulture);
                 TextBox.SelectionStart = TextBox.Text.Length;
-                return;
             }
-
-            DescriptionText = "";
-            if (result < MinValue)
-            {
-                DescriptionText = "Минимальное значение: " + MinValue.ToString(CultureInfo.InvariantCulture);
-                result = MinValue;
-            }
-
-            if (result > MaxValue)
-            {
-                DescriptionText = "Максимальное значение: " + MaxValue.ToString(CultureInfo.InvariantCulture);
-                result = MaxValue;
-            }
-
-            Value = result;
         }
 
         /// <summary>
@@ -379,9 +350,6 @@ namespace WPR.Controls
         /// </summary>
         public bool Validate(out double resultValue)
         {
-            //resultValue = default;
-            //if (TextBox == null) return false;
-
             var expressionIsValid = TextExpression.CalculateStringExpression(out var result, DecimalPlaces);
             resultValue = result;
 
@@ -390,25 +358,24 @@ namespace WPR.Controls
                 DescriptionText = "Неверное выражение";
                 return false;
             }
-            DescriptionText = "";
             if (result < MinValue)
             {
                 DescriptionText = "Минимальное значение: " + MinValue.ToString(CultureInfo.InvariantCulture);
                 return false;
             }
-
             if (result > MaxValue)
             {
                 DescriptionText = "Максимальное значение: " + MaxValue.ToString(CultureInfo.InvariantCulture);
                 return false;
             }
+            DescriptionText = "";
             return true;
         }
         #endregion
 
         #region TextBox Events
 
-        private void TextBox_LostFocus(object sender, RoutedEventArgs e) => Calculate();
+        private void TextBox_LostFocus(object sender, RoutedEventArgs e) => UpdateValueFromTextExpression();
 
 
         private void TextBox_KeyUp(object sender, KeyEventArgs e)
@@ -416,15 +383,13 @@ namespace WPR.Controls
             switch (e.Key)
             {
                 case Key.Enter:
-                    Calculate();
+                    UpdateValueFromTextExpression();
                     TextBox.SelectionStart = TextBox.Text.Length;
                     break;
                 case Key.Escape:
-                    Calculate();
+                    TextExpression = Value.ToString(CultureInfo.InvariantCulture);
                     Focus();
-                    break;
-                case Key.Back:
-                    DescriptionText = "";
+                    TextBox.SelectionStart = TextBox.Text.Length;
                     break;
             }
         }
@@ -438,7 +403,6 @@ namespace WPR.Controls
             if (!char.IsDigit(e.Text, 0))
             {
                 e.Handled = true;
-                return;
             }
             //Десятичные
             if (DecimalPlaces > 0)
@@ -464,22 +428,6 @@ namespace WPR.Controls
                               && MinValue < 0)
             {
                 e.Handled = false;
-            }
-            // Проверим максимум и минимум
-            var newval = (TextExpression + e.Text).ConvertToDouble();
-            if (newval < MinValue)
-            {
-                DescriptionText = "Минимальное значение: " + MinValue.ToString(CultureInfo.InvariantCulture);
-                e.Handled = true;
-            }
-            else if (newval > MaxValue)
-            {
-                DescriptionText = "Максимальное значение: " + MaxValue.ToString(CultureInfo.InvariantCulture);
-                e.Handled = true;
-            }
-            else
-            {
-                DescriptionText = "";
             }
         }
 
