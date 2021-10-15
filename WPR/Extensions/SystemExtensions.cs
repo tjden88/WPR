@@ -88,14 +88,14 @@ namespace System
             {
                 if (string.IsNullOrWhiteSpace(Text)) return true;
                 var parse = Text.Replace(",", ".").Trim();
-                result = ConvertToDouble(_TableForCalculationExpression.Compute(Text.Replace(",", ".").Trim(), null));
+                result = ConvertToDouble(_TableForCalculationExpression.Compute(parse, null));
                 if (DecimalPlases > -1)
                 {
                     result = Math.Round(result, DecimalPlases);
                 }
                 return true;
             }
-            catch (Exception)
+            catch (DataException)
             {
                 return false;
             }
