@@ -29,12 +29,32 @@ namespace WPR.Demo.ViewModels
             ??= new Command<string>(OnTestTypedCommandExecuted, CanTestTypedCommandExecute);
 
         /// <summary>Проверка возможности выполнения - Тестовая типизированная команда</summary>
-        private bool CanTestTypedCommandExecute(string s) => !string.IsNullOrEmpty(s);
+        private bool CanTestTypedCommandExecute(string s) => true;
 
         /// <summary>Логика выполнения - Тестовая типизированная команда</summary>
         private void OnTestTypedCommandExecuted(string s)
         {
             WPRMessageBox.ShowModal(null, s);
+        }
+
+        #endregion
+
+        #region Command TestCommand - Тест
+
+        /// <summary>Тест</summary>
+        private Command _TestCommand;
+
+        /// <summary>Тест</summary>
+        public Command TestCommand => _TestCommand
+            ??= new Command(OnTestCommandExecuted, CanTestCommandExecute);
+
+        /// <summary>Проверка возможности выполнения - Тест</summary>
+        private bool CanTestCommandExecute() => true;
+
+        /// <summary>Логика выполнения - Тест</summary>
+        private void OnTestCommandExecuted()
+        {
+            TestTypedCommand.Execute();
         }
 
         #endregion

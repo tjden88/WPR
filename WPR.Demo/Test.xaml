@@ -11,5 +11,6 @@
     <StackPanel>
         <TextBox Text="{Binding Text, UpdateSourceTrigger=PropertyChanged}"></TextBox>
         <Button Command="{Binding TestTypedCommand}" CommandParameter="{Binding Text}">Тест типизированной команды</Button>
+        <Button Command="{Binding TestCommand}">Тест типизированной команды</Button>
     </StackPanel>
 </Window>

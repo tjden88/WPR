@@ -67,22 +67,24 @@ namespace WPR.MVVM.Commands
             remove => CommandManager.RequerySuggested -= value;
         }
 
-        bool ICommand.CanExecute(object parameter) => _Executable && CanExecute(parameter);
+        /// <summary>Возможность выполнения команды</summary>
+        public bool CanExecute(object parameter) => _Executable && CanExecuteCommand(parameter);
 
-        void ICommand.Execute(object parameter)
+        /// <summary>Выполнить команду с параметром</summary>
+        public void Execute(object parameter)
         {
             if (!((ICommand)this).CanExecute(parameter)) return;
-            Execute(parameter);
+            ExecuteCommand(parameter);
         }
 
         ///// <summary> Выполнить команду без параметра </summary>
-        public virtual void Execute() => ((ICommand)this).Execute(null);
+        public virtual void Execute() => Execute(null);
 
         /// <summary>Возможность выполнения команды</summary>
-        public virtual bool CanExecute(object p) => true;
+        protected virtual bool CanExecuteCommand(object p) => true;
 
-        /// <summary>Выполнить команду с параметром</summary>
-        protected abstract void Execute(object p);
+        /// <summary>Действие выполнения команды</summary>
+        protected abstract void ExecuteCommand(object p);
 
         public override string ToString() => Text;
     }

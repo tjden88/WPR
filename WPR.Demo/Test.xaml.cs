@@ -1,5 +1,4 @@
-﻿
-namespace WPR.Demo
+﻿namespace WPR.Demo
 {
     /// <summary>
     /// Логика взаимодействия для Test.xaml

@@ -52,6 +52,17 @@ namespace WPR
         #endregion
 
         #region ShowDialog
+
+        /// <summary>
+        /// Показать как модальное окно
+        /// </summary>
+        /// <param name="sender">Объект, окно которого будет розительским по отношению к диалогу.
+        /// Если null, диалог будет поверх всех окон</param>
+        /// <param name="Caption">Сообщение</param>
+        /// <param name="Title">Заголовок</param>
+        /// <param name="CancelButton">Показать кнопку отмены</param>
+        /// <param name="YesNoButtons">Показать кнопки Да/Нет вместо ОК</param>
+        /// <returns></returns>
         public static bool? ShowModal(DependencyObject sender, string Caption, string Title = "", bool CancelButton = false, bool YesNoButtons = false)
         {
             bool? result = null;
@@ -64,14 +75,15 @@ namespace WPR
                 YesNoButtonsVisible = YesNoButtons
             };
 
-            Window owner = sender is Window w ? w : sender?.FindVisualParent<Window>();
+            var owner = sender is Window w ? w : sender?.FindVisualParent<Window>();
 
-            WPRDialogPanel panel = FindDialogPanel(owner);
+            var panel = FindDialogPanel(owner);
 
             Window dlg = new()
             {
                 WindowStartupLocation = WindowStartupLocation.CenterOwner,
                 Owner = owner,
+                Topmost = owner == null,
                 Content = messageBox,
                 Style = (Style)Application.Current.Resources["WPRModalWindow"]
             };

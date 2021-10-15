@@ -22,12 +22,12 @@ namespace WPR.MVVM.Commands
         }
 
         /// <summary>Возможность выполнения команды</summary>
-        public override bool CanExecute(object P) => _CanExecute?.Invoke(P) ?? true;
+        protected override bool CanExecuteCommand(object P) => _CanExecute?.Invoke(P) ?? true;
 
         /// <summary>Выполнить команду</summary>
-        protected override async void Execute(object Parameter)
+        protected override async void ExecuteCommand(object Parameter)
         {
-            if (!CanExecute(Parameter)) return;
+            if (!CanExecuteCommand(Parameter)) return;
             try
             {
                 Executable = false;

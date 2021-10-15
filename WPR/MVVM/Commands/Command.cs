@@ -43,10 +43,10 @@ namespace WPR.MVVM.Commands
         }
 
         /// <summary>Возможность выполнения команды</summary>
-        public override bool CanExecute(object P) => _CanExecute?.Invoke(P) ?? true;
+        protected override bool CanExecuteCommand(object P) => _CanExecute?.Invoke(P) ?? true;
 
         /// <summary>Выполнить команду</summary>
-        protected override void Execute(object P) => _Execute(P);
+        protected override void ExecuteCommand(object P) => _Execute(P);
     }
 
     /// <summary>
@@ -58,8 +58,24 @@ namespace WPR.MVVM.Commands
         private readonly Action<T> _Execute;
         private readonly Predicate<T> _CanExecute;
 
+        #region CanExecuteWithNullParameter
+
+        private bool _CanExecuteWithNullParameter;
+
         /// <summary>Разрешить выполнение команды с параметром = null</summary>
-        public bool CanExecuteWithNullParameter { get; set; }
+        public bool CanExecuteWithNullParameter
+        {
+            get => _CanExecuteWithNullParameter;
+            set
+            {
+                if (_CanExecuteWithNullParameter == value) return;
+                _CanExecuteWithNullParameter = value;
+                CommandManager.InvalidateRequerySuggested();
+                OnPropertyChanged();
+            }
+        } 
+
+        #endregion
 
         public Command(Action<T> Execute, Predicate<T> CanExecute = null, string CommandText = null)
         {
@@ -77,9 +93,13 @@ namespace WPR.MVVM.Commands
         }
 
         /// <summary>Возможность выполнения команды</summary>
-        public override bool CanExecute(object P) => CanExecuteWithNullParameter || (_CanExecute?.Invoke(P as T) ?? true);
+        protected override bool CanExecuteCommand(object P)
+        {
+            if (!CanExecuteWithNullParameter && P == null) return false;
+            return P is T param && (_CanExecute?.Invoke(param) ?? true);
+        }
 
         /// <summary>Выполнить команду</summary>
-        protected override void Execute(object P) => _Execute(P as T);
+        protected override void ExecuteCommand(object P) => _Execute(P as T);
     }
 }

@@ -10,7 +10,7 @@ namespace WPR.Infrastructure.Commands
     /// </summary>
     public class ClearTextBoxCommand: BaseCommand
     {
-        protected override void Execute(object p)
+        protected override void ExecuteCommand(object p)
         {
             if (p is TextBox tbox)
             {
@@ -19,6 +19,6 @@ namespace WPR.Infrastructure.Commands
             }
         }
 
-        public override bool CanExecute(object p) => p is TextBox t && !string.IsNullOrEmpty(t.Text);
+        protected override bool CanExecuteCommand(object p) => p is TextBox t && !string.IsNullOrEmpty(t.Text);
     }
 }
