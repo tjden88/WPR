@@ -11,39 +11,66 @@ namespace WPR.MVVM.Commands
         private readonly Action<object, CancellationToken> _Execute;
         private readonly Predicate<object> _CanExecute;
 
-        /// <summary> Выполняется ли команда в текущий момент </summary>
-        public bool IsNowExecuting { get; private set; }
+        private bool _IsNowExecuting;
+        private CancellationTokenSource _CancelSource;
 
-        public CancellationTokenSource CancelSource { get; set; }
+        /// <summary> Выполняется ли команда в текущий момент </summary>
+        public bool IsNowExecuting
+        {
+            get => _IsNowExecuting;
+            private set
+            {
+                _IsNowExecuting = value;
+                CommandManager.InvalidateRequerySuggested();
+                OnPropertyChanged();
+            }
+        }
+
+        /// <summary> Токен отмены операции </summary>
+        public CancellationTokenSource CancelSource
+        {
+            get => _CancelSource;
+            set
+            {
+                _CancelSource = value;
+                OnPropertyChanged();
+            }
+        }
+
+        /// <summary> Отмена выполнения команды </summary>
+        public void CancelExecute() => CancelSource?.Cancel(true);
 
         public AsyncCommand(Action<object, CancellationToken> Execute, Predicate<object> CanExecute = null, string CommandText = null)
+        : this(Execute, CanExecute, CommandText, null, null)
         {
-            _Execute = Execute ?? throw new ArgumentNullException(nameof(Execute));
-            _CanExecute = CanExecute;
-            Text = CommandText;
         }
 
         public AsyncCommand(Action<CancellationToken> Execute, Func<bool> CanExecute = null, string CommandText = null)
-            : this((O, Source) => Execute.Invoke(Source), CanExecute is null ? null : P => CanExecute(), CommandText)
+            : this( Execute, CanExecute , CommandText, null, null)
         {
         }
 
         public AsyncCommand(Action<CancellationToken> Execute, string CommandText, KeyGesture ExecuteGesture, UIElement GestureTarget) :
-            this(Execute, CommandText, ExecuteGesture, GestureTarget)
+            this(Execute, null,  CommandText, ExecuteGesture, GestureTarget)
         {
         }
 
         public AsyncCommand(Action<CancellationToken> Execute, Func<bool> CanExecute, string CommandText, KeyGesture ExecuteGesture,
-            UIElement GestureTarget) : this(Execute, CanExecute, CommandText, ExecuteGesture, GestureTarget)
+            UIElement GestureTarget) : this((_, Source) => Execute.Invoke(Source), CanExecute is null ? null : P => CanExecute(), CommandText, ExecuteGesture, GestureTarget)
         {
         }
 
-        public AsyncCommand(Action<object, CancellationToken> Execute, Predicate<object> CanExecute, string CommandText,
-            KeyGesture ExecuteGesture, UIElement GestureTarget) : this(Execute, CanExecute, CommandText)
+        public AsyncCommand(Action<object, CancellationToken> Execute, Predicate<object> CanExecute, string CommandText, KeyGesture ExecuteGesture, UIElement GestureTarget)
         {
+            _Execute = Execute ?? throw new ArgumentNullException(nameof(Execute));
+            _CanExecute = CanExecute;
+            Text = CommandText;
+
+            this.ExecuteGesture = ExecuteGesture;
+            GestureTarget?.InputBindings.Add(new InputBinding(this, ExecuteGesture));
         }
 
-        protected override bool CanExecuteCommand(object P) => !IsNowExecuting && base.CanExecuteCommand(P);
+        protected override bool CanExecuteCommand(object P) => !IsNowExecuting && (_CanExecute?.Invoke(P) ?? true);
 
         protected override async void ExecuteCommand(object P)
         {
@@ -51,7 +78,7 @@ namespace WPR.MVVM.Commands
             {
                 CancelSource ??= new CancellationTokenSource();
                 IsNowExecuting = true;
-                await Task.Run(() => _Execute(P, CancelSource.Token));
+                await Task.Run(() => _Execute(P, CancelSource.Token)).ConfigureAwait(true);
                 IsNowExecuting = false;
                 CancelSource = null;
             }
@@ -62,37 +89,4 @@ namespace WPR.MVVM.Commands
             }
         }
     }
-
-
-    public class Command2 : BaseCommand
-    {
-        private readonly Action<object, CancellationToken> _Execute;
-        private readonly Predicate<object> _CanExecute;
-
-        public CancellationTokenSource Cancel;
-
-        public Command2(Action<object, CancellationToken> Execute, Predicate<object> CanExecute = null, string CommandText = null)
-        {
-            _Execute = Execute ?? throw new ArgumentNullException(nameof(Execute));
-            _CanExecute = CanExecute;
-            Text = CommandText;
-        }
-
-        public Command2(Action<CancellationToken> Execute, Func<bool> CanExecute = null, string CommandText = null)
-            : this( (O, Source) => Execute.Invoke(Source), CanExecute is null ? null : P => CanExecute(), CommandText)
-        {
-        }
-
-        /// <summary>Возможность выполнения команды</summary>
-        protected override bool CanExecuteCommand(object P) => _CanExecute?.Invoke(P) ?? true;
-
-        /// <summary>Выполнить команду</summary>
-        protected override async void ExecuteCommand(object P)
-        {
-            Cancel = new();
-
-            await Task.Run(() => _Execute(P, Cancel.Token));
-        }
-    }
-
 }

@@ -106,14 +106,14 @@ namespace WPR.Demo.Pages
 
         #endregion
 
-        #region Command2 SimpleAsyncCommand - Асинхронная команда
+        #region AsyncCommand SimpleAsyncCommand - Асинхронная команда
 
         /// <summary>Асинхронная команда</summary>
-        private Command2 _SimpleAsyncCommand;
+        private AsyncCommand _SimpleAsyncCommand;
 
         /// <summary>Асинхронная команда</summary>
-        public Command2 SimpleAsyncCommand => _SimpleAsyncCommand
-            ??= new Command2(OnSimpleAsyncCommandExecuted, CanSimpleAsyncCommandExecute, "Асинхронная команда");
+        public AsyncCommand SimpleAsyncCommand => _SimpleAsyncCommand
+            ??= new AsyncCommand(OnSimpleAsyncCommandExecuted, CanSimpleAsyncCommandExecute, "Асинхронная команда");
 
         /// <summary>Проверка возможности выполнения - Асинхронная команда</summary>
         private bool CanSimpleAsyncCommandExecute() => true;
@@ -137,13 +137,10 @@ namespace WPR.Demo.Pages
             ??= new Command(OnCancelAsyncCommandExecuted, CanCancelAsyncCommandExecute, "Отменить асинхронную команду");
 
         /// <summary>Проверка возможности выполнения - Отменить асинхронную команду</summary>
-        private bool CanCancelAsyncCommandExecute() => true;
+        private bool CanCancelAsyncCommandExecute() => SimpleAsyncCommand.IsNowExecuting;
 
         /// <summary>Логика выполнения - Отменить асинхронную команду</summary>
-        private void OnCancelAsyncCommandExecuted()
-        {
-            SimpleAsyncCommand.Cancel.Cancel(true);
-        }
+        private void OnCancelAsyncCommandExecuted() => SimpleAsyncCommand.CancelExecute();
 
         #endregion
 

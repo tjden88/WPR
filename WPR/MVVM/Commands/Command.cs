@@ -13,33 +13,33 @@ namespace WPR.MVVM.Commands
         private readonly Predicate<object> _CanExecute;
 
         public Command(Action<object> Execute, Predicate<object> CanExecute = null, string CommandText = null)
+            : this(Execute, CanExecute, CommandText, null, null)
         {
-            _Execute = Execute ?? throw new ArgumentNullException(nameof(Execute));
-            _CanExecute = CanExecute;
-            Text = CommandText;
         }
 
         public Command(Action Execute, Func<bool> CanExecute = null, string CommandText = null)
-            : this(P => Execute(), CanExecute is null ? null : P => CanExecute(), CommandText)
+            : this(Execute, CanExecute , CommandText, null, null)
         {
         }
 
         public Command(Action Execute, string CommandText, KeyGesture ExecuteGesture, UIElement GestureTarget) 
-            : this(P => Execute(), null, CommandText, ExecuteGesture, GestureTarget)
+            : this(Execute, null, CommandText, ExecuteGesture, GestureTarget)
         {
         }
 
         public Command(Action Execute, Func<bool> CanExecute, string CommandText, KeyGesture ExecuteGesture, UIElement GestureTarget)
-            : this(P => Execute(), P => CanExecute(), CommandText, ExecuteGesture, GestureTarget)
+            : this(P => Execute(), CanExecute is null ? null : P => CanExecute(), CommandText, ExecuteGesture, GestureTarget)
         {
         }
 
         public Command(Action<object> Execute, Predicate<object> CanExecute, string CommandText, KeyGesture ExecuteGesture, UIElement GestureTarget)
-            : this(Execute, CanExecute, CommandText)
         {
-            if (GestureTarget == null) throw new ArgumentNullException(nameof(GestureTarget));
+            _Execute = Execute ?? throw new ArgumentNullException(nameof(Execute));
+            _CanExecute = CanExecute;
+            Text = CommandText;
+
             this.ExecuteGesture = ExecuteGesture;
-            GestureTarget.InputBindings.Add(new InputBinding(this, ExecuteGesture));
+            GestureTarget?.InputBindings.Add(new InputBinding(this, ExecuteGesture));
         }
 
         /// <summary>Возможность выполнения команды</summary>
