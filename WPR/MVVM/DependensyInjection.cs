@@ -6,7 +6,7 @@ namespace WPR.MVVM
 {
     public static class DependensyInjection
     {
-        private static Dictionary<Type, Service> _Services = new(); // Словарь зарегистрированных типов
+        private static readonly Dictionary<Type, Service> _Services = new(); // Словарь зарегистрированных типов
 
         private record Service
         {
@@ -58,7 +58,9 @@ namespace WPR.MVVM
             }
         }
 
-
+        /// <summary>
+        /// Экземпляр класса регистратора для добавления сервисов в контейнер
+        /// </summary>
         public static ServiceRegistrator Registrator { get; } = new();
 
         /// <summary> Получить экземпляр сервиса </summary>

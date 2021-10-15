@@ -2,7 +2,7 @@
 using System.Linq;
 using System.Windows.Controls;
 using System.Windows.Input;
-using WPR.Demo.Services;
+using WPR.Demo.Services.Interfaces;
 using WPR.MVVM.ViewModels;
 using WPR.MVVM.Commands;
 
@@ -10,7 +10,6 @@ namespace WPR.Demo.ViewModels
 {
     internal class MainWindowViewModel : WindowViewModel
     {
-
         #region Command SetNewStyleCommand - Установить рандомный стиль
 
         private ICommand _SetNewStyleCommand;
@@ -85,10 +84,10 @@ namespace WPR.Demo.ViewModels
 
         #endregion
 
-        public MainWindowViewModel()
+        public MainWindowViewModel(IGetPages GetPages)
         {
             Title = "WPR.Demo";
-            Pages = ServiceLocator.PageService.GetAllPages();
+            Pages = GetPages.GetAllPages();
             SelectedPage = Pages.First();
         }
     }

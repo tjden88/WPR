@@ -9,7 +9,7 @@
                 <ResourceDictionary Source = "pack://application:,,,/WPR;component/Styles.xaml" />
             </ResourceDictionary.MergedDictionaries>
 
-            <base:VMLocator x:Key="Locator"/>
+            <base:VmLocator x:Key="Locator"/>
         </ResourceDictionary>
     </Application.Resources>
 </Application>
