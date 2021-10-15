@@ -5,6 +5,7 @@ namespace WPR.MVVM.Commands
 {
     public class CommandAsync : BaseCommand
     {
+        private readonly Func<Task> _command;
         private readonly Action<object> _Execute;
         private readonly Predicate<object> _CanExecute;
 
@@ -24,7 +25,7 @@ namespace WPR.MVVM.Commands
         public override bool CanExecute(object P) => _CanExecute?.Invoke(P) ?? true;
 
         /// <summary>Выполнить команду</summary>
-        public override async void Execute(object Parameter)
+        protected override async void Execute(object Parameter)
         {
             if (!CanExecute(Parameter)) return;
             try

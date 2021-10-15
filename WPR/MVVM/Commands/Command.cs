@@ -46,7 +46,7 @@ namespace WPR.MVVM.Commands
         public override bool CanExecute(object P) => _CanExecute?.Invoke(P) ?? true;
 
         /// <summary>Выполнить команду</summary>
-        public override void Execute(object P) => _Execute(P);
+        protected override void Execute(object P) => _Execute(P);
     }
 
     /// <summary>
@@ -80,6 +80,6 @@ namespace WPR.MVVM.Commands
         public override bool CanExecute(object P) => CanExecuteWithNullParameter || (_CanExecute?.Invoke(P as T) ?? true);
 
         /// <summary>Выполнить команду</summary>
-        public override void Execute(object P) => _Execute(P as T);
+        protected override void Execute(object P) => _Execute(P as T);
     }
 }

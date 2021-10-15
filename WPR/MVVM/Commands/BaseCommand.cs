@@ -1,12 +1,18 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Globalization;
+using System.Runtime.CompilerServices;
 using System.Windows.Input;
 
 namespace WPR.MVVM.Commands
 {
-    public abstract class BaseCommand : ICommand
+    public abstract class BaseCommand : ICommand, INotifyPropertyChanged
     {
         #region Executable: bool
+
+        /// <summary>Происходит при изменении ручной возможности исполнения команды</summary>
+        public event EventHandler<bool> ExecutableChanged;
+
         private bool _Executable = true;
 
         /// <summary>Ручная возможность выполнения команды</summary>
@@ -17,8 +23,9 @@ namespace WPR.MVVM.Commands
             {
                 if (_Executable == value) return;
                 _Executable = value;
-                ExecutableChanged?.Invoke(this, value);
                 CommandManager.InvalidateRequerySuggested();
+                ExecutableChanged?.Invoke(this, value);
+                OnPropertyChanged();
             }
         }
         #endregion
@@ -33,16 +40,26 @@ namespace WPR.MVVM.Commands
                 var gString = ExecuteGesture?.GetDisplayStringForCulture(CultureInfo.CurrentCulture);
                 return gString == null ? _CommandText : $"{_CommandText} ({gString})";
             }
-            set => _CommandText = value;
+            set
+            {
+                if (value == _CommandText) return;
+                _CommandText = value;
+                OnPropertyChanged();
+            }
         }
+
+        #endregion
+
+        #region INotifyPropertyChanged
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        protected virtual void OnPropertyChanged([CallerMemberName] string PropertyName = null) => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(PropertyName));
 
         #endregion
 
         /// <summary> Комбинация клавиш быстрого доступа </summary>
         protected KeyGesture ExecuteGesture { get; init; }
-
-        /// <summary>Происходит при изменении ручной возможности исполнения команды</summary>
-        public event EventHandler<bool> ExecutableChanged;
 
         event EventHandler ICommand.CanExecuteChanged
         {
@@ -59,13 +76,13 @@ namespace WPR.MVVM.Commands
         }
 
         ///// <summary> Выполнить команду без параметра </summary>
-        public virtual void Execute() => Execute(null);
+        public virtual void Execute() => ((ICommand)this).Execute(null);
 
         /// <summary>Возможность выполнения команды</summary>
         public virtual bool CanExecute(object p) => true;
 
         /// <summary>Выполнить команду с параметром</summary>
-        public abstract void Execute(object p);
+        protected abstract void Execute(object p);
 
         public override string ToString() => Text;
     }
