@@ -26,10 +26,10 @@ namespace WPR.Demo.ViewModels
 
         /// <summary>Тестовая типизированная команда</summary>
         public Command<string> TestTypedCommand => _TestTypedCommand
-            ??= new Command<string>(OnTestTypedCommandExecuted, CanTestTypedCommandExecute);
+            ??= new Command<string>(OnTestTypedCommandExecuted, CanTestTypedCommandExecute){CanExecuteWithNullParameter = true};
 
         /// <summary>Проверка возможности выполнения - Тестовая типизированная команда</summary>
-        private bool CanTestTypedCommandExecute(string s) => true;
+        private bool CanTestTypedCommandExecute(string s) => s != "";
 
         /// <summary>Логика выполнения - Тестовая типизированная команда</summary>
         private void OnTestTypedCommandExecuted(string s)

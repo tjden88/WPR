@@ -61,7 +61,7 @@ namespace WPR.MVVM.Commands
         /// <summary> Комбинация клавиш быстрого доступа </summary>
         protected KeyGesture ExecuteGesture { get; init; }
 
-        event EventHandler ICommand.CanExecuteChanged
+        public event EventHandler CanExecuteChanged
         {
             add => CommandManager.RequerySuggested += value;
             remove => CommandManager.RequerySuggested -= value;
@@ -73,7 +73,7 @@ namespace WPR.MVVM.Commands
         /// <summary>Выполнить команду с параметром</summary>
         public void Execute(object parameter)
         {
-            if (!((ICommand)this).CanExecute(parameter)) return;
+            if (!CanExecute(parameter)) return;
             ExecuteCommand(parameter);
         }
 

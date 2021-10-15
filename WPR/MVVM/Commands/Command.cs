@@ -96,7 +96,7 @@ namespace WPR.MVVM.Commands
         protected override bool CanExecuteCommand(object P)
         {
             if (!CanExecuteWithNullParameter && P == null) return false;
-            return P is T param && (_CanExecute?.Invoke(param) ?? true);
+            return _CanExecute?.Invoke(P as T) ?? true;
         }
 
         /// <summary>Выполнить команду</summary>
