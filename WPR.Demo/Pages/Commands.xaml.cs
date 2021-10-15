@@ -113,7 +113,8 @@ namespace WPR.Demo.Pages
 
         /// <summary>Асинхронная команда</summary>
         public AsyncCommand SimpleAsyncCommand => _SimpleAsyncCommand
-            ??= new AsyncCommand(OnSimpleAsyncCommandExecuted, CanSimpleAsyncCommandExecute, "Асинхронная команда");
+            ??= new AsyncCommand(OnSimpleAsyncCommandExecuted, CanSimpleAsyncCommandExecute, "Асинхронная команда", 
+                new KeyGesture(Key.S, ModifierKeys.Control), this);
 
         /// <summary>Проверка возможности выполнения - Асинхронная команда</summary>
         private bool CanSimpleAsyncCommandExecute() => true;
@@ -125,7 +126,6 @@ namespace WPR.Demo.Pages
         }
 
         #endregion
-
 
         #region Command CancelAsyncCommand - Отменить асинхронную команду
 
@@ -140,7 +140,35 @@ namespace WPR.Demo.Pages
         private bool CanCancelAsyncCommandExecute() => SimpleAsyncCommand.IsNowExecuting;
 
         /// <summary>Логика выполнения - Отменить асинхронную команду</summary>
-        private void OnCancelAsyncCommandExecuted() => SimpleAsyncCommand.CancelExecute();
+        private void OnCancelAsyncCommandExecuted()
+        {
+            SimpleAsyncCommand.CancelExecute();
+            _Cancellation.Cancel();
+        }
+
+        #endregion
+
+        private readonly CancellationTokenSource _Cancellation = new();
+
+        #region AsyncCommand FullAsyncCommand - Асинхронная команда
+
+        /// <summary>Асинхронная команда</summary>
+        private AsyncCommand _FullAsyncCommand;
+
+        /// <summary>Асинхронная команда</summary>
+        public AsyncCommand FullAsyncCommand => _FullAsyncCommand
+            ??= new AsyncCommand(OnFullAsyncCommandExecuted, CanFullAsyncCommandExecute, "Асинхронная команда")
+            { CancelSource = _Cancellation };
+
+        /// <summary>Проверка возможности выполнения - Асинхронная команда</summary>
+        private bool CanFullAsyncCommandExecute(object p) => p is string;
+
+        /// <summary>Логика выполнения - Асинхронная команда</summary>
+        private void OnFullAsyncCommandExecuted(object p, CancellationToken cancel)
+        {
+            this.DoDispatherAction(() => ShowBubble(p as string));
+            VeryLongTask(cancel);
+        }
 
         #endregion
 

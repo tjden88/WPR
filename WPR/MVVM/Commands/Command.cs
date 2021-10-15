@@ -87,9 +87,8 @@ namespace WPR.MVVM.Commands
         public Command(Action<T> Execute, Predicate<T> CanExecute, string CommandText, KeyGesture ExecuteGesture, UIElement GestureTarget) 
             : this(Execute, CanExecute, CommandText)
         {
-            if (GestureTarget == null) throw new ArgumentNullException(nameof(GestureTarget));
             this.ExecuteGesture = ExecuteGesture;
-            GestureTarget.InputBindings.Add(new InputBinding(this, ExecuteGesture));
+            GestureTarget?.InputBindings.Add(new InputBinding(this, ExecuteGesture));
         }
 
         /// <summary>Возможность выполнения команды</summary>

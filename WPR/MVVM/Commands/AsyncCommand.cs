@@ -6,9 +6,13 @@ using System.Windows.Input;
 
 namespace WPR.MVVM.Commands
 {
+    /// <summary>
+    /// Базовая асинхронная реализация команды.
+    /// Формирует задачу и запускает её
+    /// </summary>
     public class AsyncCommand : BaseCommand
     {
-        private readonly Action<object, CancellationToken> _Execute;
+        private readonly Action<object, CancellationToken> _ExecuteAsync;
         private readonly Predicate<object> _CanExecute;
 
         #region IsNowExecuting
@@ -25,7 +29,7 @@ namespace WPR.MVVM.Commands
                 CommandManager.InvalidateRequerySuggested();
                 OnPropertyChanged();
             }
-        } 
+        }
 
         #endregion
 
@@ -55,29 +59,29 @@ namespace WPR.MVVM.Commands
         #endregion
 
 
-        public AsyncCommand(Action<object, CancellationToken> Execute, Predicate<object> CanExecute = null, string CommandText = null)
-        : this(Execute, CanExecute, CommandText, null, null)
+        public AsyncCommand(Action<object, CancellationToken> ExecuteAsync, Predicate<object> CanExecute = null, string CommandText = null)
+        : this(ExecuteAsync, CanExecute, CommandText, null, null)
         {
         }
 
-        public AsyncCommand(Action<CancellationToken> Execute, Func<bool> CanExecute = null, string CommandText = null)
-            : this( Execute, CanExecute , CommandText, null, null)
+        public AsyncCommand(Action<CancellationToken> ExecuteAsync, Func<bool> CanExecute = null, string CommandText = null)
+            : this(ExecuteAsync, CanExecute, CommandText, null, null)
         {
         }
 
-        public AsyncCommand(Action<CancellationToken> Execute, string CommandText, KeyGesture ExecuteGesture, UIElement GestureTarget) :
-            this(Execute, null,  CommandText, ExecuteGesture, GestureTarget)
+        public AsyncCommand(Action<CancellationToken> ExecuteAsync, string CommandText, KeyGesture ExecuteGesture, UIElement GestureTarget) :
+            this(ExecuteAsync, null, CommandText, ExecuteGesture, GestureTarget)
         {
         }
 
-        public AsyncCommand(Action<CancellationToken> Execute, Func<bool> CanExecute, string CommandText, KeyGesture ExecuteGesture,
-            UIElement GestureTarget) : this((_, Source) => Execute.Invoke(Source), CanExecute is null ? null : P => CanExecute(), CommandText, ExecuteGesture, GestureTarget)
+        public AsyncCommand(Action<CancellationToken> ExecuteAsync, Func<bool> CanExecute, string CommandText, KeyGesture ExecuteGesture,
+            UIElement GestureTarget) : this((_, Source) => ExecuteAsync.Invoke(Source), CanExecute is null ? null : P => CanExecute(), CommandText, ExecuteGesture, GestureTarget)
         {
         }
 
-        public AsyncCommand(Action<object, CancellationToken> Execute, Predicate<object> CanExecute, string CommandText, KeyGesture ExecuteGesture, UIElement GestureTarget)
+        public AsyncCommand(Action<object, CancellationToken> ExecuteAsync, Predicate<object> CanExecute, string CommandText, KeyGesture ExecuteGesture, UIElement GestureTarget)
         {
-            _Execute = Execute ?? throw new ArgumentNullException(nameof(Execute));
+            _ExecuteAsync = ExecuteAsync ?? throw new ArgumentNullException(nameof(ExecuteAsync));
             _CanExecute = CanExecute;
             Text = CommandText;
 
@@ -91,13 +95,13 @@ namespace WPR.MVVM.Commands
         {
             try
             {
-                if(CancelSource == null)
+                if (CancelSource == null)
                 {
                     _TempCancellationTokenSource = new();
                     CancelSource = _TempCancellationTokenSource;
-                } 
+                }
                 IsNowExecuting = true;
-                await Task.Run(() => _Execute(P, CancelSource.Token)).ConfigureAwait(true);
+                await Task.Run(() => _ExecuteAsync(P, CancelSource.Token)).ConfigureAwait(true);
             }
             catch (OperationCanceledException)
             {

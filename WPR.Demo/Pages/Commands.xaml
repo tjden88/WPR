@@ -22,8 +22,17 @@
         <TextBox Margin="5" x:Name="Tbox" helpers:TextHelper.Hint="Введите текст"/>
         <Button Command="{Binding GenericCommand}" CommandParameter="{Binding Text, ElementName=Tbox}">Шаблонная команда</Button>
         <Button Command="{Binding GenericCommand}">Шаблонная команда (null параметр)</Button>
-        <Button Command="{Binding SimpleAsyncCommand}">Асинхронная простая команда</Button>
+        <Button Command="{Binding SimpleAsyncCommand}"
+                Content="{Binding SimpleAsyncCommand}"/>
+
         <Button Command="{Binding CancelAsyncCommand}">Отмена асинхронной команды</Button>
 
+        <Button Command="{Binding FullAsyncCommand}" 
+                CommandParameter="{Binding Text, ElementName=Tbox}"
+                Content="{Binding FullAsyncCommand.Text}"
+                ToolTip="{Binding FullAsyncCommand}"/>
+        <Button Command="{Binding FullAsyncCommand}" 
+                Content="{Binding FullAsyncCommand.Text}"
+                ToolTip="{Binding FullAsyncCommand}"/>
     </StackPanel>
 </Page>
