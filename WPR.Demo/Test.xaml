@@ -7,41 +7,8 @@
         xmlns:controls="clr-namespace:WPR.Controls;assembly=WPR"
         DataContext="{Binding Source={StaticResource Locator}, Path=TestViewModel }"
         mc:Ignorable="d"
-        Title="Test" Height="450" Width="800" Loaded="Window_Loaded">
+        Title="Test" Height="450" Width="800">
     <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition/>
-            <ColumnDefinition/>
-        </Grid.ColumnDefinitions>
-        <ListView x:Name="list" />
-        <TreeView Grid.Column="1" x:Name="Tree" ItemsSource="{Binding RootDirectories}">
-            <TreeView.Resources>
-                <Style TargetType="{x:Type controls:WPRIcon}" BasedOn="{StaticResource {x:Type controls:WPRIcon}}">
-                    <Setter Property="Margin" Value="0,0,5,0" />
-                    <Setter Property="Foreground" Value="Gold"/>
-                    <Setter  Property="Source" Value="Folder"/>
-                    <Style.Triggers>
-                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType=TreeViewItem}, Path=IsExpanded}" Value="True">
-                            <Setter Property="Source" Value="FolderOpen"/>
-                        </DataTrigger>
-                    </Style.Triggers>
-                </Style>
-            </TreeView.Resources>
-            <TreeView.ItemTemplate>
-                <HierarchicalDataTemplate DataType="viewModels:DirectoryViewModel"
-                                          ItemsSource="{Binding SubDidectories}">
-                    <StackPanel Orientation="Horizontal">
-                        <controls:WPRIcon x:Name="Icon"/>
-                        <TextBlock Text="{Binding Name}"/>
-                    </StackPanel>
-                    <HierarchicalDataTemplate.Triggers>
-                        <DataTrigger Binding="{Binding IsRootPath}" Value="True">
-                            <Setter TargetName="Icon" Property="Source" Value="FolderHome" />
-                            <Setter TargetName="Icon" Property="Foreground" Value="{DynamicResource DarkPrimaryColorBrush}" />
-                        </DataTrigger>
-                    </HierarchicalDataTemplate.Triggers>
-                </HierarchicalDataTemplate>
-            </TreeView.ItemTemplate>
-        </TreeView>
+        <TextBox></TextBox>
     </Grid>
 </Window>
