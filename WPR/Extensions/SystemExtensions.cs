@@ -121,7 +121,8 @@ namespace System
         /// <summary>
         /// Потокобезопасное действие через Dispatcher текущего приложения
         /// </summary>
+        /// <param name="obj">Объект действия</param>
         /// <param name="Action">Делегат действия</param>
-        public static void AppDispatherAction(Action Action) => DoDispatherAction(Application.Current, Action);
+        public static void DoDispatherAction<T>(this T obj, Action<T> Action) => DoDispatherAction(Application.Current, () => Action?.Invoke(obj));
     }
 }

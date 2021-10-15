@@ -1,4 +1,6 @@
-﻿using System.Windows.Controls;
+﻿using System;
+using System.Threading;
+using System.Windows.Controls;
 using System.Windows.Input;
 using WPR.MVVM.Commands;
 
@@ -102,5 +104,54 @@ namespace WPR.Demo.Pages
         }
 
         #endregion
+
+        #region Command SimpleAsyncCommand - Асинхронная команда
+
+        /// <summary>Асинхронная команда</summary>
+        private Command2 _SimpleAsyncCommand;
+
+        /// <summary>Асинхронная команда</summary>
+        public Command2 SimpleAsyncCommand => _SimpleAsyncCommand
+            ??= new Command2(OnSimpleAsyncCommandExecuted, CanSimpleAsyncCommandExecute, "Асинхронная команда");
+
+        /// <summary>Проверка возможности выполнения - Асинхронная команда</summary>
+        private bool CanSimpleAsyncCommandExecute() => true;
+
+        /// <summary>Логика выполнения - Асинхронная команда</summary>
+        private void OnSimpleAsyncCommandExecuted()
+        {
+            VeryLongTask();
+        }
+
+        #endregion
+
+        #region Command CancelAsyncCommand - Отменить асинхронную команду
+
+        /// <summary>Отменить асинхронную команду</summary>
+        private Command _CancelAsyncCommand;
+
+        /// <summary>Отменить асинхронную команду</summary>
+        public Command CancelAsyncCommand => _CancelAsyncCommand
+            ??= new Command(OnCancelAsyncCommandExecuted, CanCancelAsyncCommandExecute, "Отменить асинхронную команду");
+
+        /// <summary>Проверка возможности выполнения - Отменить асинхронную команду</summary>
+        private bool CanCancelAsyncCommandExecute() => true;
+
+        /// <summary>Логика выполнения - Отменить асинхронную команду</summary>
+        private void OnCancelAsyncCommandExecuted()
+        {
+            SimpleAsyncCommand.Cancel.Cancel(true);
+        }
+
+        #endregion
+
+
+
+        private void VeryLongTask()
+        {
+            this.DoDispatherAction(() => ShowBubble("Very Long Task Was Started"));
+            Thread.Sleep(5000);
+            this.DoDispatherAction(() => ShowBubble("Very Long Task Completed!"));
+        }
     }
 }
