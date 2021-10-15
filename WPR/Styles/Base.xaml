@@ -38,6 +38,8 @@
 
     <SolidColorBrush x:Key="AnimationEnterColorBrush" Color="#99858585" p:Freeze="True"/>
 
+    <SolidColorBrush x:Key="TransparentBrush" Color="Transparent" p:Freeze="True"/>
+
     <!--Тени-->
     <Color x:Key="ShadowColor">DimGray</Color>
     <DropShadowEffect x:Key="PopupSmallShadow" Color="{StaticResource ShadowColor}" Direction="270" BlurRadius="10" ShadowDepth="2" Opacity="0.5" p:Freeze="True"/>

@@ -28,7 +28,7 @@
     <Style TargetType="{x:Type Control}" BasedOn="{StaticResource BaseControl}"/>
     <Style TargetType="ToolTip" BasedOn="{StaticResource WPRToolTip}"/>
     <Style TargetType="Button" BasedOn="{StaticResource PrimaryWPRButton}"/>
-    <Style TargetType="TextBlock" BasedOn="{StaticResource WPRText}"/>
+    <Style TargetType="TextBlock" BasedOn="{StaticResource WPRTextBlock}"/>
     <Style TargetType="ToggleButton"  BasedOn="{StaticResource WPRToggleButton}"/>
     <Style TargetType="CheckBox" BasedOn="{StaticResource WPRCheckBox}"/>
     <Style TargetType="RadioButton" BasedOn="{StaticResource WPRRadioButton}"/>
