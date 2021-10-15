@@ -11,8 +11,9 @@ namespace WPR.MVVM.Commands
         private readonly Action<object, CancellationToken> _Execute;
         private readonly Predicate<object> _CanExecute;
 
+        #region IsNowExecuting
+
         private bool _IsNowExecuting;
-        private CancellationTokenSource _CancelSource;
 
         /// <summary> Выполняется ли команда в текущий момент </summary>
         public bool IsNowExecuting
@@ -24,9 +25,20 @@ namespace WPR.MVVM.Commands
                 CommandManager.InvalidateRequerySuggested();
                 OnPropertyChanged();
             }
-        }
+        } 
 
-        /// <summary> Токен отмены операции </summary>
+        #endregion
+
+        #region Cancel
+
+        private CancellationTokenSource _TempCancellationTokenSource; // Для одноразовых токенов
+        private CancellationTokenSource _CancelSource;
+
+        /// <summary>
+        /// Токен отмены операции.
+        /// При завершении команды свойство очищается.
+        /// Если не передан извне, создаётся новый для каждой операции выполнения команды.
+        /// </summary>
         public CancellationTokenSource CancelSource
         {
             get => _CancelSource;
@@ -38,7 +50,10 @@ namespace WPR.MVVM.Commands
         }
 
         /// <summary> Отмена выполнения команды </summary>
-        public void CancelExecute() => CancelSource?.Cancel(true);
+        public void CancelExecute() => CancelSource?.Cancel();
+
+        #endregion
+
 
         public AsyncCommand(Action<object, CancellationToken> Execute, Predicate<object> CanExecute = null, string CommandText = null)
         : this(Execute, CanExecute, CommandText, null, null)
@@ -76,16 +91,23 @@ namespace WPR.MVVM.Commands
         {
             try
             {
-                CancelSource ??= new CancellationTokenSource();
+                if(CancelSource == null)
+                {
+                    _TempCancellationTokenSource = new();
+                    CancelSource = _TempCancellationTokenSource;
+                } 
                 IsNowExecuting = true;
                 await Task.Run(() => _Execute(P, CancelSource.Token)).ConfigureAwait(true);
-                IsNowExecuting = false;
-                CancelSource = null;
             }
             catch (OperationCanceledException)
             {
+            }
+            finally
+            {
                 IsNowExecuting = false;
                 CancelSource = null;
+                _TempCancellationTokenSource?.Dispose();
+                _TempCancellationTokenSource = null;
             }
         }
     }

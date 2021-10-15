@@ -152,7 +152,11 @@ namespace WPR.Demo.Pages
             for (var i = 0; i < 70; i++)
             {
                 Thread.Sleep(50);
-                cancel.ThrowIfCancellationRequested();
+                if (cancel.IsCancellationRequested)
+                {
+                    this.DoDispatherAction(() => ShowBubble("Very Long Task Was Cancelled..."));
+                    cancel.ThrowIfCancellationRequested();
+                }
             }
             this.DoDispatherAction(() => ShowBubble("Very Long Task Completed!"));
         }
