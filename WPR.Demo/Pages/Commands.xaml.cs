@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading;
+using System.Threading.Tasks;
 using System.Windows.Controls;
 using System.Windows.Input;
 using WPR.MVVM.Commands;
@@ -105,7 +106,7 @@ namespace WPR.Demo.Pages
 
         #endregion
 
-        #region Command SimpleAsyncCommand - Асинхронная команда
+        #region Command2 SimpleAsyncCommand - Асинхронная команда
 
         /// <summary>Асинхронная команда</summary>
         private Command2 _SimpleAsyncCommand;
@@ -118,12 +119,13 @@ namespace WPR.Demo.Pages
         private bool CanSimpleAsyncCommandExecute() => true;
 
         /// <summary>Логика выполнения - Асинхронная команда</summary>
-        private void OnSimpleAsyncCommandExecuted()
+        private void OnSimpleAsyncCommandExecuted(CancellationToken cancel)
         {
-            VeryLongTask();
+            VeryLongTask(cancel);
         }
 
         #endregion
+
 
         #region Command CancelAsyncCommand - Отменить асинхронную команду
 
@@ -147,10 +149,14 @@ namespace WPR.Demo.Pages
 
 
 
-        private void VeryLongTask()
+        private void VeryLongTask(CancellationToken cancel)
         {
             this.DoDispatherAction(() => ShowBubble("Very Long Task Was Started"));
-            Thread.Sleep(5000);
+            for (var i = 0; i < 70; i++)
+            {
+                Thread.Sleep(50);
+                cancel.ThrowIfCancellationRequested();
+            }
             this.DoDispatherAction(() => ShowBubble("Very Long Task Completed!"));
         }
     }
