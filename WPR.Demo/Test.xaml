@@ -8,7 +8,8 @@
         DataContext="{Binding Source={StaticResource Locator}, Path=TestViewModel }"
         mc:Ignorable="d"
         Title="Test" Height="450" Width="800">
-    <Grid>
-        <TextBox></TextBox>
-    </Grid>
+    <StackPanel>
+        <TextBox Text="{Binding Text, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+        <Button Command="{Binding TestTypedCommand}" CommandParameter="{Binding Text}">Тест типизированной команды</Button>
+    </StackPanel>
 </Window>

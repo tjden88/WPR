@@ -64,7 +64,7 @@ namespace WPR
                 YesNoButtonsVisible = YesNoButtons
             };
 
-            Window owner = sender is Window w ? w : sender.FindVisualParent<Window>();
+            Window owner = sender is Window w ? w : sender?.FindVisualParent<Window>();
 
             WPRDialogPanel panel = FindDialogPanel(owner);
 
