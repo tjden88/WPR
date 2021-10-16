@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Threading;
-using System.Threading.Tasks;
 using System.Windows.Controls;
 using System.Windows.Input;
 using WPR.MVVM.Commands;
@@ -113,7 +112,7 @@ namespace WPR.Demo.Pages
 
         /// <summary>Асинхронная команда</summary>
         public AsyncCommand SimpleAsyncCommand => _SimpleAsyncCommand
-            ??= new AsyncCommand(OnSimpleAsyncCommandExecuted, CanSimpleAsyncCommandExecute, "Асинхронная команда", 
+            ??= new AsyncCommand(OnSimpleAsyncCommandExecuted, CanSimpleAsyncCommandExecute, "Асинхронная команда",
                 new KeyGesture(Key.S, ModifierKeys.Control), this);
 
         /// <summary>Проверка возможности выполнения - Асинхронная команда</summary>
@@ -171,7 +170,6 @@ namespace WPR.Demo.Pages
         }
 
         #endregion
-
 
 
         private void VeryLongTask(CancellationToken cancel)
