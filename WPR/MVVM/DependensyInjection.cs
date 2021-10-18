@@ -67,7 +67,7 @@ namespace WPR.MVVM
         /// <typeparam name="TService">Класс сервиса</typeparam>
         /// <param name="parameters">Произвольные параметры конструктора объекта</param>
         /// <returns>Экземпляр класса сервиса или его наследника</returns>
-        public static TService Get<TService>(object[] parameters = null) where TService : class =>
+        public static TService Get<TService>(params object[] parameters) where TService : class =>
             (TService)GetByType(typeof(TService), parameters);
 
 
@@ -90,7 +90,7 @@ namespace WPR.MVVM
         {
             var ctor = t.GetConstructors().First();
 
-            if (parameters != null) return ctor.Invoke(parameters);
+            if (parameters is {Length: > 0}) return ctor.Invoke(parameters);
 
             var ctorParameters = ctor
                 .GetParameters()
