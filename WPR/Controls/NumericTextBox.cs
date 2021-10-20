@@ -399,7 +399,7 @@ namespace WPR.Controls
 
         private void TextBox_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
-            if (AllowTextExpressions) return;
+            if (AllowTextExpressions || e.Text.Length < 1) return;
 
             // берём не выделенный фрагмент текста, т.к выделенный будет удалён
             var checkedText = TextBox.SelectionLength > 0 
