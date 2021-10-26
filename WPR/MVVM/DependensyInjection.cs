@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace WPR.MVVM
 {
@@ -70,6 +73,19 @@ namespace WPR.MVVM
         public static TService Get<TService>(params object[] parameters) where TService : class =>
             (TService)GetByType(typeof(TService), parameters);
 
+
+        public static Task InitializeAsync(CancellationToken cancel = default) => new(() => InitializeSingletonServices(cancel));
+
+        private static void InitializeSingletonServices(CancellationToken cancel)
+        {
+            foreach (var (type, service) in _Services.Where(service =>
+                service.Value.IsSingleton && service.Value.Instance == null))
+            {
+                if (cancel.IsCancellationRequested)
+                    throw new OperationCanceledException("Инициализация сервисов отменена");
+                service.Instance = CreateInstance(type, null);
+            }
+        }
 
         #region Private Methods
 

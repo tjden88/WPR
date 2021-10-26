@@ -85,7 +85,9 @@ namespace WPR
         /// <param name="Name">Имя кисти</param>
         public static SolidColorBrush GetBrushFromResource(StyleBrush Name)
         {
-            return Application.Current.Resources[Name.ToString()] as SolidColorBrush;
+            var br = (SolidColorBrush) Application.Current.Resources[Name.ToString()];
+            br.Freeze();
+            return br;
         }
     }
 }
