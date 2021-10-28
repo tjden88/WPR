@@ -18,11 +18,7 @@ namespace WPR.MVVM.Validation
         public override ValidationResult Validate(object value, CultureInfo cultureInfo)
         {
             IsValid = Validated(value, cultureInfo);
-            if (IsValid)
-            {
-                return ValidationResult.ValidResult;
-            }
-            return new ValidationResult(false, Message);
+            return IsValid ? ValidationResult.ValidResult : new ValidationResult(false, Message);
         }
     }
 }

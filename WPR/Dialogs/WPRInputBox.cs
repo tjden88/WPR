@@ -1,5 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -9,10 +12,16 @@ namespace WPR.Dialogs
 {
     public class WPRInputBox : DialogBase
     {
+        private readonly IEnumerable<PredicateValidationRule<string>> _TextValidationRules;
+
         static WPRInputBox()
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(WPRInputBox), new FrameworkPropertyMetadata(typeof(WPRInputBox)));
         }
+
+        public WPRInputBox() => _TextValidationRules = Array.Empty<PredicateValidationRule<string>>();
+
+        public WPRInputBox(IEnumerable<PredicateValidationRule<string>> TextValidationRules) => _TextValidationRules = TextValidationRules;
 
         public override void OnApplyTemplate()
         {
@@ -23,29 +32,16 @@ namespace WPR.Dialogs
                 if (binding != null)
                 {
                     binding.ValidationRules.Clear();
-                    binding.ValidationRules.Add(_PredicateValidationRule);
+                    foreach (var rule in _TextValidationRules)
+                        binding.ValidationRules.Add(rule);
                     t.GetBindingExpression(TextBox.TextProperty)?.UpdateSource();
                     t.Focus();
                     t.SelectAll();
                 }
             }
         }
-        private readonly PredicateValidationRule<string> _PredicateValidationRule = new( S => true);
+        protected override bool CanSetCommandExecuted() => _TextValidationRules.All(Rule => Rule.IsValid);
 
-        /// <summary>Предикат валидации значения. Если возвращает false - в текстовом поле возникает ошибка</summary>
-        public Predicate<string> ValidationPredicate
-        {
-            get => _PredicateValidationRule.Predicate;
-            set
-            {
-                _PredicateValidationRule.Predicate = value;
-                if (Template?.FindName("TextBox", this) is TextBox t)
-                    t.GetBindingExpression(TextBox.TextProperty)?.UpdateSource();
-            }
-        }
-
-        /// <summary>Сообщение при ошибке валидации</summary>
-        public string ErrorMessage { get => _PredicateValidationRule.Message ; set => _PredicateValidationRule.Message = value; }
 
         #region TextValue : string - Текстовое значение
 
@@ -74,15 +70,5 @@ namespace WPR.Dialogs
 
         #endregion
 
-        protected override bool CanSetCommandExecuted()
-        {
-            return _PredicateValidationRule.IsValid;
-        }
-
-        //protected override void OnSetCommandExecute(bool parameter)
-        //{
-        //    if (_PredicateValidationRule.IsValid)
-        //        base.OnSetCommandExecute(parameter);
-        //}
     }
 }

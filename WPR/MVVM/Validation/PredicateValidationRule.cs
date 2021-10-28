@@ -12,11 +12,11 @@ namespace WPR.MVVM.Validation
         {
             this.Predicate = Predicate;
         }
-
-        protected override bool Validated(object value, CultureInfo cultureInfo)
+        public PredicateValidationRule(Predicate<T> Predicate, string ErrorMessage) : this(Predicate)
         {
-            return value is T t && Predicate?.Invoke(t) == true;
+            Message = ErrorMessage;
         }
 
+        protected override bool Validated(object value, CultureInfo cultureInfo) => value is T t && Predicate?.Invoke(t) == true;
     }
 }

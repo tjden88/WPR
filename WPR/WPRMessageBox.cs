@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Windows;
 using WPR.Controls;
 using WPR.Dialogs;
+using WPR.MVVM.Validation;
 
 namespace WPR
 {
@@ -272,15 +274,20 @@ namespace WPR
 
         public static void InputText(DependencyObject sender, string Title, Action<bool, string> Callback, string DefaultValue , Predicate<string> ValidationRule , string ValidationErrorMessage = "Неверное значение")
         {
+            var rule = new PredicateValidationRule<string>(ValidationRule, ValidationErrorMessage);
+
+            InputText(sender, Title, Callback, DefaultValue, new[] {rule});
+        }
+
+        public static void InputText(DependencyObject sender, string Title, Action<bool, string> Callback, string DefaultValue, IEnumerable<PredicateValidationRule<string>> ValidationRules)
+        {
             // Ищем панель
             WPRDialogPanel panel = FindDialogPanel(sender);
 
-            WPRInputBox inputBox = new()
+            WPRInputBox inputBox = new(ValidationRules)
             {
                 Title = Title,
-                TextValue = DefaultValue,
-                ValidationPredicate = ValidationRule,
-                ErrorMessage = ValidationErrorMessage
+                TextValue = DefaultValue
             };
             // При клике по кнопке мессаджа закрыть окно и вернуть прозрачность как была
             inputBox.DialogResult += (b) =>
@@ -291,17 +298,22 @@ namespace WPR
             panel.Show(inputBox, true);
         }
 
+
         /// <summary> Поле ввода текста </summary>
-        public static Task<string> InputTextAsync(DependencyObject sender, string Title, string DefaultValue = "")
-        {
-            return InputTextAsync(sender, Title, DefaultValue, S => true);
-        }
+        public static Task<string> InputTextAsync(DependencyObject sender, string Title, string DefaultValue = "") => 
+            InputTextAsync(sender, Title, DefaultValue, S => true);
+
 
         /// <summary> Поле ввода текста с валидацией </summary>
-        public static async Task<string> InputTextAsync(DependencyObject sender, string Title, string DefaultValue, Predicate<string> ValidationRule, string ValidationErrorMessage = "Неверное значение")
+        public static Task<string> InputTextAsync(DependencyObject sender, string Title, string DefaultValue, Predicate<string> ValidationRule, string ValidationErrorMessage = "Неверное значение") => 
+            InputTextAsync(sender, Title, DefaultValue, new []{new PredicateValidationRule<string>(ValidationRule, ValidationErrorMessage) });
+
+
+        /// <summary> Поле ввода текста с коллекцией валидаций </summary>
+        public static async Task<string> InputTextAsync(DependencyObject sender, string Title, string DefaultValue, IEnumerable<PredicateValidationRule<string>> ValidationRules)
         {
             TaskCompletionSource<string> complete = new();
-            InputText(sender, Title, (B, S) => { complete.TrySetResult(B ? S : null); }, DefaultValue, ValidationRule, ValidationErrorMessage);
+            InputText(sender, Title, (B, S) => { complete.TrySetResult(B ? S : null); }, DefaultValue, ValidationRules);
             return await complete.Task.ConfigureAwait(false);
         }
 
