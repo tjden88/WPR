@@ -102,23 +102,23 @@
                                Background="{TemplateBinding BorderBrush}"
                                VerticalAlignment="Top">
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition MinWidth="{Binding Path=(wh:WindowHelper.TitleLeftMargin) , RelativeSource={RelativeSource TemplatedParent}}"/>
+                                <ColumnDefinition MinWidth="{Binding ActualWidth, ElementName=HeaderControl}"/>
                                 <ColumnDefinition Width="Auto"/>
-                                <ColumnDefinition MinWidth="{Binding ElementName=PART_Buttons, Path=ActualWidth}"/>
+                                <ColumnDefinition MinWidth="{Binding ActualWidth, ElementName=PART_Buttons}"/>
                             </Grid.ColumnDefinitions>
-                            <TextBlock Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center" 
-                                   Foreground="{Binding Path=(wh:WindowHelper.WindowHeaderForeground) , RelativeSource={RelativeSource TemplatedParent}}"
-                                   FontSize="14"
-                                   Text="{TemplateBinding Title}"/>
-                        </Grid>
-                        <Border VerticalAlignment="Top" HorizontalAlignment="Right" Height="35" Background="{TemplateBinding BorderBrush}"
-                            Width="{Binding ElementName=PART_Buttons, Path=ActualWidth}"/>
 
-                        <ContentPresenter/>
+                            <ContentControl HorizontalAlignment="Left" Name="HeaderControl" Content="{Binding Path=(wh:WindowHelper.WindowHeaderContent), RelativeSource={RelativeSource TemplatedParent}}"/>
+
+                            <TextBlock Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center" 
+                                       Foreground="{Binding Path=(wh:WindowHelper.WindowHeaderForeground) , RelativeSource={RelativeSource TemplatedParent}}"
+                                       FontSize="14"
+                                       Text="{TemplateBinding Title}"/>
+                        </Grid>
 
                         <DockPanel x:Name="PART_Buttons" Height="35" 
                                VerticalAlignment="Top"
                                HorizontalAlignment="Right"
+                               Background="{TemplateBinding BorderBrush}"
                                LastChildFill="False">
                             <Button x:Name="btnClose" Style="{StaticResource  WindowHeaderCloseButton}"
                                     DockPanel.Dock="Right"
@@ -169,6 +169,9 @@
                                 </Button.Style>
                             </Button>
                         </DockPanel>
+
+                        <ContentPresenter Margin="0,35,0,0"/>
+
                     </Grid>
                 </Border>
             </controls:WPRDialogPanel>

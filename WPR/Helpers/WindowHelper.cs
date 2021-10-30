@@ -5,23 +5,6 @@ namespace WPR.Helpers
 {
     public static class WindowHelper
     {
-        #region  Отступ строки заголовка от левого края 
-        /// <summary> Отступ строки заголовка от левого края </summary>
-        public static readonly DependencyProperty TitleLeftMarginProperty =
-            DependencyProperty.RegisterAttached("TitleLeftMargin", typeof(double), typeof(WindowHelper), new PropertyMetadata(2.0));
-
-        public static void SetTitleLeftMargin(DependencyObject obj, double value)
-        {
-            obj?.SetValue(TitleLeftMarginProperty, value);
-        }
-
-        public static double GetTitleLeftMargin(DependencyObject obj)
-        {
-            return (double?)obj?.GetValue(TitleLeftMarginProperty) ?? 0.0;
-        }
-
-        #endregion
-
         #region Цвет текста строки заголовка окна
         public static SolidColorBrush GetWindowHeaderForeground(DependencyObject obj)
         {
@@ -35,7 +18,23 @@ namespace WPR.Helpers
 
         /// <summary> Цвет текста строки заголовка окна </summary>
         public static readonly DependencyProperty WindowHeaderForegroundProperty =
-            DependencyProperty.RegisterAttached("WindowHeaderForeground", typeof(SolidColorBrush), typeof(WindowHelper), new PropertyMetadata(null)); 
+            DependencyProperty.RegisterAttached("WindowHeaderForeground", typeof(SolidColorBrush), typeof(WindowHelper), new PropertyMetadata(null));
+        #endregion
+
+        #region Контент заголовка
+        public static object GetWindowHeaderContent(DependencyObject obj)
+        {
+            return obj.GetValue(WindowHeaderContentProperty);
+        }
+
+        public static void SetWindowHeaderContent(DependencyObject obj, object value)
+        {
+            obj.SetValue(WindowHeaderContentProperty, value);
+        }
+
+        /// <summary> Контент заголовка </summary>
+        public static readonly DependencyProperty WindowHeaderContentProperty =
+            DependencyProperty.RegisterAttached("WindowHeaderContent", typeof(object), typeof(WindowHelper), new PropertyMetadata(null));
         #endregion
 
     }

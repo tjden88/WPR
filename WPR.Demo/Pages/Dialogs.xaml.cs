@@ -102,12 +102,6 @@ namespace WPR.Demo.Pages
             WPRMessageBox.Bubble(this, "Всплывающее сообщение с кнопкой", "YEP!", () => Debug.WriteLine("Clicked!"));
         }
 
-        private void ValidateText(object Sender, RoutedEventArgs E)
-        {
-            InputBox.ValidationPredicate = O => O.Length > 3;
-            InputBox.ErrorMessage = "Нужно больше 3 символов";
-        }
-
         private void Button3_OnClick(object Sender, RoutedEventArgs E)
         {
             WPRMessageBox.InputText(this,

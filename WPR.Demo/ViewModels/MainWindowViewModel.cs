@@ -53,6 +53,9 @@ namespace WPR.Demo.ViewModels
 
         private void OnShowTestWindowCommandExecuted()
         {
+            EmptyWindow w = new EmptyWindow();
+            w.Show();
+
             Test test = new();
             test.Show();
         }

@@ -6,23 +6,19 @@
         mc:Ignorable="d"
         xmlns:helpers="clr-namespace:WPR.Helpers;assembly=WPR"
         DataContext="{Binding Source={StaticResource Locator}, Path=MainWindowViewModel}"
-        Style="{StaticResource ChromeWindow}" helpers:WindowHelper.TitleLeftMargin ="{Binding ElementName=TitleButtonsPanel, Path=ActualWidth}"
+        Style="{StaticResource ChromeWindow}"
         Title="{Binding Title}" Height="650" Width="1000">
+    <helpers:WindowHelper.WindowHeaderContent>
+        <StackPanel Margin="3" Orientation="Horizontal" HorizontalAlignment="Left" Width="Auto" >
+            <Button Content="?" Style="{StaticResource WindowTitleButton}"/>
+        </StackPanel>
+    </helpers:WindowHelper.WindowHeaderContent>
+
     <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="35"/>
-            <RowDefinition/>
-        </Grid.RowDefinitions>
-        <!-- Панель в заголовке для кнопок-->
-        <StackPanel Margin="3" x:Name="TitleButtonsPanel" Orientation="Horizontal" HorizontalAlignment="Left" Width="Auto" />
-        <!--Основной контент в 1 строке грида-->
-        <Grid Grid.Row="1"
-              Background="{DynamicResource BackgroundColorBrush}">
-            <TextBlock Text="Привет!" 
-                       Foreground="{DynamicResource PrimaryColorBrush}"
-                       FontSize="60"
-                       HorizontalAlignment="Center" 
-                       VerticalAlignment="Center"/>
-        </Grid>
+        <TextBlock Text="Привет!" 
+                   Foreground="{DynamicResource PrimaryColorBrush}"
+                   FontSize="60"
+                   HorizontalAlignment="Center" 
+                   VerticalAlignment="Center"/>
     </Grid>
 </Window>

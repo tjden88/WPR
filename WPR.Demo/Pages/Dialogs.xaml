@@ -32,7 +32,6 @@
                                               x:Name="InputBox"
                                               TextValue="По умолчанию"/>
                     </controls:WPRCard>
-                    <Button Content="ValidationInputBox" HorizontalAlignment="Center" VerticalAlignment="Center" Click="ValidateText"/>
                 </StackPanel>
                 <StackPanel Width="200">
                     <Button Content="Show Window Dialog" HorizontalAlignment="Center" VerticalAlignment="Center" Command="{Binding ShowWindowDialogCommand}"/>
