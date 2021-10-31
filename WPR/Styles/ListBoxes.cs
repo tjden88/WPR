@@ -25,6 +25,7 @@ namespace WPR.Styles
             {
                 Duration = TimeSpan.FromSeconds(0.2),
             };
+            animation.Completed += (_, _) => item.BeginAnimation(Control.ForegroundProperty, null);
             item.BeginAnimation(Control.ForegroundProperty, animation);
         }
     }

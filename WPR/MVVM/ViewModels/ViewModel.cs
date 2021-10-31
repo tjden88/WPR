@@ -20,15 +20,7 @@ namespace WPR.MVVM.ViewModels
             OnPropertyChanged(PropertyName);
             return true;
         }
-
-        //protected virtual void IfSet<T>(ref T field, T value, Action<T> ActionIfPropertyChanged, [CallerMemberName] string PropertyName = null)
-        //{
-        //    if (Set(ref field, value, PropertyName))
-        //    {
-        //        ActionIfPropertyChanged(value);
-        //    }
-        //}
-
+        
         protected ValueResult<T> IfSet<T>(ref T field, T value, [CallerMemberName] string PropertyName = null)
         {
             var res = Set(ref field, value, PropertyName);
