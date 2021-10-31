@@ -1,7 +1,7 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:controls="clr-namespace:WPR.Controls"
-                    x:Class="WPR.Styles.ListBoxes">
+                    xmlns:extensions="clr-namespace:WPR.Extensions">
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="Base.xaml"/>
     </ResourceDictionary.MergedDictionaries>
@@ -100,6 +100,10 @@
                                              EasingFunction="{StaticResource CircleEaseIn}"
                                              Storyboard.TargetProperty="ScaleX"
                                              Storyboard.TargetName="ScaleSelected" />
+                            <extensions:BrushStyleDynamicAnimation Storyboard.TargetProperty="Foreground" 
+                                                                   ToStyleBrush="TextColorBrush"
+                                                                   Duration="0:0:0.3"/>
+
                         </Storyboard>
                     </BeginStoryboard>
                 </Trigger.EnterActions>
@@ -110,6 +114,8 @@
                                              EasingFunction="{StaticResource CircleEaseOut}"
                                              Storyboard.TargetProperty="ScaleX"
                                              Storyboard.TargetName="ScaleSelected" />
+                            <extensions:BrushStyleDynamicAnimation Storyboard.TargetProperty="Foreground" 
+                                                                   Duration="0:0:0.3"/>
                         </Storyboard>
                     </BeginStoryboard>
                 </Trigger.ExitActions>
@@ -155,8 +161,6 @@
     </Style>
 
     <Style x:Key="WPRListBoxMenuItem" TargetType="{x:Type ListBoxItem}" BasedOn="{StaticResource BaseControl}">
-        <EventSetter Event="Selected" Handler="ListBoxItem_Selected"/>
-        <EventSetter Event="Unselected" Handler="ListBoxItem_UnSelected"/>
         <Setter Property="SnapsToDevicePixels" Value="True"/>
         <Setter Property="Padding" Value="4,1"/>
         <Setter Property="Foreground" Value="{Binding Foreground, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}"/>

@@ -27,10 +27,11 @@ namespace WPR
         /// <summary>Установлена ли тёмная тема</summary>
         public static bool IsDarkThemeCurrent => GetBrushFromResource(StyleBrush.BackgroundColorBrush).Color == ColorService.DarkColor;
 
-        /// <summary> Происходит перед изменении цветовой схемы</summary>
-        public static event EventHandler BeforeStyleChanged;
+        /// <summary> Происходит перед изменении кисти</summary>
+        public static Action<StyleBrush, Color> BeforeBrushChanged;
         /// <summary> Происходит при любом изменении цветовой схемы</summary>
         public static event EventHandler StyleChanged;
+
 
         /// <summary>Задать новый рандомный стиль (цветовую палитру) элементам управления</summary>
         public static void SetNewRandomStyle()
@@ -44,19 +45,29 @@ namespace WPR
         /// <summary>Установить главный цвет (включая тёмный и светлый)</summary>
         public static void SetPrimaryColor(Color color)
         {
-            BeforeStyleChanged?.Invoke(null, EventArgs.Empty);
-            ColorService.SetNewBrush("PrimaryColorBrush", color);
-            ColorService.SetNewBrush("DarkPrimaryColorBrush", ColorService.Darken(color, 1.2));
-            ColorService.SetNewBrush("LightPrimaryColorBrush", ColorService.Lighten(color, 1.5));
-            ColorService.SetNewBrush("InactiveWindowColorBrush", ColorService.Lighten(color, 2));
+            BeforeBrushChanged?.Invoke(StyleBrush.PrimaryColorBrush, color);
+            ColorService.SetNewBrush(StyleBrush.PrimaryColorBrush, color);
+
+            var darken = ColorService.Darken(color, 1.2);
+            BeforeBrushChanged?.Invoke(StyleBrush.DarkPrimaryColorBrush, darken);
+            ColorService.SetNewBrush(StyleBrush.DarkPrimaryColorBrush, darken);
+
+            var lighten = ColorService.Lighten(color, 1.5);
+            BeforeBrushChanged?.Invoke(StyleBrush.LightPrimaryColorBrush, lighten);
+            ColorService.SetNewBrush(StyleBrush.LightPrimaryColorBrush, lighten);
+
+            var inactiveWindowColor = ColorService.Lighten(color, 1.5);
+            BeforeBrushChanged?.Invoke(StyleBrush.InactiveWindowColorBrush, inactiveWindowColor);
+            ColorService.SetNewBrush(StyleBrush.InactiveWindowColorBrush, inactiveWindowColor);
+
             StyleChanged?.Invoke(null, EventArgs.Empty);
         }
 
         /// <summary>Установить цвет акцента</summary>
         public static void SetAccentColor(Color color)
         {
-            BeforeStyleChanged?.Invoke(null, EventArgs.Empty);
-            ColorService.SetNewBrush("AccentColorBrush", color);
+            BeforeBrushChanged?.Invoke(StyleBrush.AccentColorBrush, color);
+            ColorService.SetNewBrush(StyleBrush.AccentColorBrush, color);
             StyleChanged?.Invoke(null, EventArgs.Empty);
         }
 
@@ -66,11 +77,14 @@ namespace WPR
         /// <summary>
         /// Установить тёмную тему. НЕ ДОРАБОТАНО
         /// </summary>
+        [Obsolete("Не доработано")]
         public static void SetDarkColorTheme()
         {
-            BeforeStyleChanged?.Invoke(null, EventArgs.Empty);
-            ColorService.SetNewBrush("BackgroundColorBrush", ColorService.DarkColor);
-            ColorService.SetNewBrush("PrimaryTextColorBrush", ColorService.WhiteColor);
+            BeforeBrushChanged?.Invoke(StyleBrush.BackgroundColorBrush, ColorService.DarkColor);
+            ColorService.SetNewBrush(StyleBrush.BackgroundColorBrush, ColorService.DarkColor);
+
+            BeforeBrushChanged?.Invoke(StyleBrush.PrimaryTextColorBrush, ColorService.WhiteColor);
+            ColorService.SetNewBrush(StyleBrush.PrimaryTextColorBrush, ColorService.WhiteColor);
             //ColorService.SetNewBrush("TextColorBrush", ColorService.DarkColor);
             StyleChanged?.Invoke(null, EventArgs.Empty);
         }
@@ -79,11 +93,14 @@ namespace WPR
         /// <summary>
         /// Установить светлую тему. НЕ ДОРАБОТАНО
         /// </summary>
+        [Obsolete("Не доработано")]
         public static void SetLightColorTheme()
         {
-            BeforeStyleChanged?.Invoke(null, EventArgs.Empty);
-            ColorService.SetNewBrush("BackgroundColorBrush", ColorService.WhiteColor);
-            ColorService.SetNewBrush("PrimaryTextColorBrush", ColorService.DarkColor);
+            BeforeBrushChanged?.Invoke(StyleBrush.BackgroundColorBrush, ColorService.WhiteColor);
+            ColorService.SetNewBrush(StyleBrush.BackgroundColorBrush, ColorService.WhiteColor);
+
+            BeforeBrushChanged?.Invoke(StyleBrush.PrimaryTextColorBrush, ColorService.DarkColor);
+            ColorService.SetNewBrush(StyleBrush.PrimaryTextColorBrush, ColorService.DarkColor);
             //ColorService.SetNewBrush("TextColorBrush", ColorService.WhiteColor);
             StyleChanged?.Invoke(null, EventArgs.Empty);
         }

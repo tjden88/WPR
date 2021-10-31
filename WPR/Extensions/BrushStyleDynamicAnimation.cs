@@ -15,10 +15,20 @@ namespace WPR.Extensions
 
         public BrushStyleDynamicAnimation()
         {
-            Design.BeforeStyleChanged += (_, _) =>
+            Design.BeforeBrushChanged += (Brush, Color) =>
             {
-                _From = Design.GetBrushFromResource(FromStyleBrush);
-                _To = Design.GetBrushFromResource(ToStyleBrush);
+                if (Brush == FromStyleBrush)
+                {
+                    var br = new SolidColorBrush(Color);
+                    br.Freeze();
+                    _From = br;
+                }
+                if (Brush == ToStyleBrush)
+                {
+                    var br = new SolidColorBrush(Color);
+                    br.Freeze();
+                    _To = br;
+                }
             };
         }
 

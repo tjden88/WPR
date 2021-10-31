@@ -26,12 +26,13 @@ namespace WPR.Services
             return darken;
         }
 
-        internal static void SetNewBrush(string BrushName, Color color)
+        internal static void SetNewBrush(Design.StyleBrush Brush, Color color)
         {
+            var brushName = Brush.ToString();
             var b = new SolidColorBrush(color);
             b.Freeze();
-            Application.Current.Resources[BrushName] = b;
-            Application.Current.Resources[BrushName.Replace("Brush","")] = color;
+            Application.Current.Resources[brushName] = b;
+            Application.Current.Resources[brushName.Replace("Brush","")] = color;
         }
     }
 }
