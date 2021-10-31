@@ -56,6 +56,15 @@
     <ElasticEase EasingMode="EaseIn" x:Key="ElasticEaseIn" Oscillations="1" p:Freeze="True"/>
     <ElasticEase EasingMode="EaseOut" x:Key="ElasticEaseOut" Oscillations="1" p:Freeze="True"/>
     <ElasticEase EasingMode="EaseInOut" x:Key="ElasticEaseInOut" Oscillations="1" p:Freeze="True"/>
+    <SineEase EasingMode="EaseIn" x:Key="SineEaseIn" p:Freeze="True"/>
+    <SineEase EasingMode="EaseOut" x:Key="SineEaseOut" p:Freeze="True"/>
+    <SineEase EasingMode="EaseInOut" x:Key="SineEaseInOut" p:Freeze="True"/>
+    <BackEase EasingMode="EaseIn" x:Key="BackEaseIn" p:Freeze="True"/>
+    <BackEase EasingMode="EaseOut" x:Key="BackEaseOut" p:Freeze="True"/>
+    <BackEase EasingMode="EaseInOut" x:Key="BackEaseInOut" p:Freeze="True"/>
+    <ExponentialEase EasingMode="EaseIn" x:Key="ExponentialEaseIn" p:Freeze="True"/>
+    <ExponentialEase EasingMode="EaseOut" x:Key="ExponentialEaseOut" p:Freeze="True"/>
+    <ExponentialEase EasingMode="EaseInOut" x:Key="ExponentialEaseInOut" p:Freeze="True"/>
 
     <!--Конвертеры-->
     <converters:BoolToVisibilityConverter x:Key="Bool2VisibilityConverter"/>
