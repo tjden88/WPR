@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -16,6 +17,9 @@ namespace WPR.MVVM
             public Type Implementation { get; init; }
             public object Instance { get; set; }
         }
+
+        /// <summary> Включить логгирование </summary>
+        public static bool DebugLogging { get; set; }
 
         /// <summary> Методы добавления сервисов </summary>
         public class ServiceRegistrator
@@ -95,8 +99,18 @@ namespace WPR.MVVM
             var instanceType = requiredService.Implementation ?? t;
 
             if (requiredService.IsSingleton)
-                return requiredService.Instance ??= CreateInstance(instanceType, parameters);
+            {
+                if (requiredService.Instance == null)
+                {
+                    Log($"Инициализация Singleton сервиса - {instanceType.Name}");
+                    requiredService.Instance = CreateInstance(instanceType, parameters);
+                }
 
+                Log($"Выдача Singleton сервиса - {instanceType.Name}");
+                return requiredService.Instance;
+            }
+
+            Log($"Выдача Transient сервиса - {instanceType.Name}");
             return CreateInstance(instanceType, parameters);
         }
 
@@ -113,6 +127,12 @@ namespace WPR.MVVM
                 .ToArray();
 
             return ctor.Invoke(ctorParameters);
+        }
+
+        private static void Log(string Message)
+        {
+            if (!DebugLogging) return;
+            Debug.WriteLine($"--->>> DependencyInjection Log: {Message}");
         }
 
         #endregion

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
@@ -16,7 +17,7 @@ namespace WPR.Controls
         private readonly WPRCard _RootCard;
 
         #region Properties
-        /// <summary> Контент Попапа
+        /// <summary> Контент Попапа. 
         /// Использовать это свойство зависимостей, НЕ ПЕРЕОПРЕДЕЛЯТЬ свойство CHild!
         /// </summary>
         public object Content
@@ -24,9 +25,13 @@ namespace WPR.Controls
             get => GetValue(ContentProperty);
             set => SetValue(ContentProperty, value);
         }
+        [Category("WPRPopup")]
+        [Description("Контент Попапа")]
 
         public static readonly DependencyProperty ContentProperty =
             DependencyProperty.Register("Content", typeof(object), typeof(WPRPopup), new PropertyMetadata(null));
+
+
 
         /// <summary> Разрешить перетаскивание мышкой </summary>
         public bool AllowMouseMove
@@ -35,8 +40,31 @@ namespace WPR.Controls
             set => SetValue(AllowMouseMoveProperty, value);
         }
 
+        [Category("WPRPopup")]
+        [Description("Разрешить перетаскивание мышкой")]
         public static readonly DependencyProperty AllowMouseMoveProperty =
             DependencyProperty.Register("AllowMouseMove", typeof(bool), typeof(WPRPopup), new PropertyMetadata(false));
+
+        #region CloseOnMouseButtonUp : bool - Закрывать при клике внутри области попапа
+
+        /// <summary>Закрывать при клике внутри области попапа</summary>
+        public static readonly DependencyProperty CloseOnMouseButtonUpProperty =
+            DependencyProperty.Register(
+                nameof(CloseOnMouseButtonUp),
+                typeof(bool),
+                typeof(WPRPopup),
+                new PropertyMetadata(default(bool)));
+
+        /// <summary>Закрывать при клике внутри области попапа</summary>
+        [Category("WPRPopup")]
+        [Description("Закрывать при клике внутри области попапа")]
+        public bool CloseOnMouseButtonUp
+        {
+            get => (bool) GetValue(CloseOnMouseButtonUpProperty);
+            set => SetValue(CloseOnMouseButtonUpProperty, value);
+        }
+
+        #endregion
 
         #endregion
 
@@ -69,6 +97,8 @@ namespace WPR.Controls
 
             grid.Children.Add(thumb);
             grid.Children.Add(_RootCard);
+
+            PreviewMouseUp += OnMouseUp;
 
 
             // Реализация перетаскивания контента
@@ -113,6 +143,11 @@ namespace WPR.Controls
 
             Opened += PRExPopup_Opened;
 
+        }
+
+        private void OnMouseUp(object Sender, MouseButtonEventArgs E)
+        {
+            if(CloseOnMouseButtonUp) Hide();
         }
 
         private void PRExPopup_Opened(object sender, EventArgs e)

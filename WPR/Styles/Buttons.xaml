@@ -7,7 +7,7 @@
     </ResourceDictionary.MergedDictionaries>
 
 
-    <ControlTemplate TargetType="{x:Type Button}" x:Key="WPRButtonTemplate">
+    <ControlTemplate TargetType="{x:Type ButtonBase}" x:Key="WPRButtonTemplate">
         <Grid>
             <Border x:Name="ShadowBorder"
                     CornerRadius="{Binding Path=(helpers:ButtonHelper.BorderRadius), RelativeSource={RelativeSource TemplatedParent}}"
@@ -101,7 +101,7 @@
     </ControlTemplate>
 
     <!--Кнопки-->
-    <Style x:Key="WPRFlatButton" TargetType="{x:Type Button}" BasedOn="{StaticResource BaseControl}">
+    <Style x:Key="WPRFlatButton" TargetType="{x:Type ButtonBase}" BasedOn="{StaticResource BaseControl}">
         <Setter Property="Foreground" Value="{DynamicResource PrimaryColorBrush }"/>
         <Setter Property="Padding" Value="12,6"/>
         <Setter Property="Margin" Value="5"/>
@@ -114,17 +114,17 @@
         <Setter Property="Template" Value="{StaticResource WPRButtonTemplate}"/>
     </Style>
 
-    <Style x:Key="PrimaryWPRButton" TargetType="{x:Type Button}" BasedOn="{StaticResource WPRFlatButton}">
+    <Style x:Key="PrimaryWPRButton" TargetType="{x:Type ButtonBase}" BasedOn="{StaticResource WPRFlatButton}">
         <Setter Property="Background" Value="{DynamicResource PrimaryColorBrush}"/>
         <Setter Property="Foreground" Value="{DynamicResource TextColorBrush}" />
         <Setter Property="helpers:ButtonHelper.ButtonShadow" Value="{StaticResource ButtonShadow}"/>
     </Style>
 
-    <Style x:Key="AccentWPRButton" TargetType="{x:Type Button}" BasedOn="{StaticResource PrimaryWPRButton }">
+    <Style x:Key="AccentWPRButton" TargetType="{x:Type ButtonBase}" BasedOn="{StaticResource PrimaryWPRButton }">
         <Setter Property="Background" Value="{DynamicResource AccentColorBrush}"/>
     </Style>
 
-    <Style x:Key="WPRToolButton" TargetType="{x:Type Button}" BasedOn="{StaticResource WPRFlatButton}">
+    <Style x:Key="WPRToolButton" TargetType="{x:Type ButtonBase}" BasedOn="{StaticResource WPRFlatButton}">
         <Setter Property="Padding" Value="2"/>
         <Setter Property="Foreground" Value="{DynamicResource SecondaryTextColorBrush}"/>
         <Setter Property="helpers:RippleHelper.FeedbackBrush" Value="{DynamicResource AnimationEnterColorBrush}"/>
@@ -135,16 +135,16 @@
         <Setter Property="Cursor" Value="Hand"/>
     </Style>
 
-    <Style x:Key="WPRToolButtonNoRipple" TargetType="{x:Type Button}" BasedOn="{StaticResource WPRToolButton}">
+    <Style x:Key="WPRToolButtonNoRipple" TargetType="{x:Type ButtonBase}" BasedOn="{StaticResource WPRToolButton}">
         <Setter Property="helpers:RippleHelper.IsRippleEnabled" Value="False"/>
     </Style>
 
-    <Style x:Key="MenuButton" TargetType="{x:Type Button}" BasedOn="{StaticResource WPRFlatButton}">
+    <Style x:Key="MenuButton" TargetType="{x:Type ButtonBase}" BasedOn="{StaticResource WPRFlatButton}">
         <Setter Property="Padding" Value="3,0,3,0"/>
         <Setter Property="helpers:ButtonHelper.BorderRadius" Value="0"/>
         <Setter Property="Foreground" Value="{DynamicResource SecondaryTextColorBrush}"/>
-        <Setter Property="MinWidth" Value="44"/>
-        <Setter Property="MinHeight" Value="44"/>
+        <Setter Property="MinWidth" Value="32"/>
+        <Setter Property="MinHeight" Value="32"/>
     </Style>
 
     <!--Текст в овальной рамке с тенью-->
@@ -266,7 +266,7 @@
     </Style>
 
     <!--Служебная кнопка действий, изчезает если неактивна-->
-    <Style x:Key="WPRToolHiddenButton" TargetType="{x:Type Button}" BasedOn="{StaticResource WPRToolButtonNoRipple}">
+    <Style x:Key="WPRToolHiddenButton" TargetType="{x:Type ButtonBase}" BasedOn="{StaticResource WPRToolButtonNoRipple}">
         <Setter Property="Margin" Value="0"/>
         <Setter Property="RenderTransformOrigin" Value="0.5,0.5"/>
         <Setter Property="RenderTransform">

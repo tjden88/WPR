@@ -114,11 +114,13 @@
                                        FontSize="14"
                                        Text="{TemplateBinding Title}"/>
                         </Grid>
+                        
+
+                        <ContentPresenter Margin="0,35,0,0"/>
 
                         <DockPanel x:Name="PART_Buttons" Height="35" 
                                VerticalAlignment="Top"
                                HorizontalAlignment="Right"
-                               Background="{TemplateBinding BorderBrush}"
                                LastChildFill="False">
                             <Button x:Name="btnClose" Style="{StaticResource  WindowHeaderCloseButton}"
                                     DockPanel.Dock="Right"
@@ -169,8 +171,6 @@
                                 </Button.Style>
                             </Button>
                         </DockPanel>
-
-                        <ContentPresenter Margin="0,35,0,0"/>
 
                     </Grid>
                 </Border>
