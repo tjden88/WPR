@@ -60,27 +60,31 @@
                             </Rectangle.RenderTransform>
                         </Rectangle>
 
-                        <ContentControl IsTabStop="False"
-                                        Grid.Row="1" 
-                                        x:Name="Description"
-                                        Content="{Binding Path=(helpers:TextHelper.Description), RelativeSource={RelativeSource TemplatedParent}}"
-                                        HorizontalAlignment="Left"
-                                        Foreground="{DynamicResource SecondaryTextColorBrush}"
-                                        FontSize="11" Margin="0,3,0,0"/>
+                        <ContentControl Grid.Row="1" 
+                                   x:Name="Description"
+                                   Focusable="False"
+                                   Content="{Binding Path=(helpers:TextHelper.Description), RelativeSource={RelativeSource TemplatedParent}}"
+                                   HorizontalAlignment="Left"
+                                   Foreground="{DynamicResource SecondaryTextColorBrush}"
+                                   FontSize="11" Margin="0,3,0,0"/>
 
-                        <TextBlock Grid.Row="1" Foreground="{StaticResource AttentionColorBrush}" 
-                                   x:Name="ErrorText"
-                                   Text=""
-                                   TextWrapping ="Wrap"
-                                   Visibility="Hidden"
-                                   Margin="0,3,0,0"
-                                   FontSize="11"/>
+                        <ItemsControl Name="ErrorText" Visibility="Hidden" Grid.Row="1" Margin="0,3,0,0"
+                                      ItemsSource="{Binding (Validation.Errors) , RelativeSource={RelativeSource TemplatedParent}}">
+
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate >
+                                    <TextBlock Foreground="{StaticResource AttentionColorBrush}" 
+                                               Text="{Binding ErrorContent}"
+                                               TextWrapping ="Wrap"
+                                               FontSize="11"/>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
                     </Grid>
                     <ControlTemplate.Triggers>
 
                         <Trigger Property="Validation.HasError" Value="True">
                             <Setter Property="Background" Value="{StaticResource AttentionColorBrush}"/>
-                            <Setter TargetName="ErrorText" Property="Text" Value="{Binding Path=(Validation.Errors)[0].ErrorContent, RelativeSource={RelativeSource TemplatedParent}}"/>
                             <Setter TargetName="ErrorText" Property="Visibility" Value="Visible"/>
                             <Setter TargetName="Description" Property="Visibility" Value="Hidden"/>
                         </Trigger>

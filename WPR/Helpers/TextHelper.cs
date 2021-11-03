@@ -22,11 +22,13 @@ namespace WPR.Helpers
         /// Описание под элементом (текстбокс)
         /// </summary>
         public static readonly DependencyProperty DescriptionProperty =
-            DependencyProperty.RegisterAttached("Description", typeof(object), typeof(TextHelper), new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.AffectsRender | FrameworkPropertyMetadataOptions.AffectsMeasure));
+            DependencyProperty.RegisterAttached("Description", typeof(object), typeof(TextHelper), 
+                new FrameworkPropertyMetadata(null,
+                    FrameworkPropertyMetadataOptions.AffectsRender | FrameworkPropertyMetadataOptions.AffectsMeasure));
 
-        public static void SetDescription(UIElement element, object value) => element?.SetValue(DescriptionProperty, value);
+        public static void SetDescription(UIElement element, object value) => element.SetValue(DescriptionProperty, value);
 
-        public static object GetDescription(UIElement element) => element?.GetValue(DescriptionProperty);
+        public static object GetDescription(UIElement element) => (object)element.GetValue(DescriptionProperty);
 
         #endregion
 

@@ -41,7 +41,6 @@ namespace WPR.Controls
             DependencyProperty.Register("IconSource", typeof(PackIconKind), typeof(WPRTitledCard),
                 new PropertyMetadata(PackIconKind.InfoCircle));
 
-
         #region PopupMenu : Menu - Меню в правой части заголовка
 
         /// <summary>Меню в правой части заголовка</summary>
