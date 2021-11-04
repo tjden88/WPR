@@ -7,5 +7,6 @@
         <ResourceDictionary Source="WPRCard.xaml"/>
         <ResourceDictionary Source="WPRDialogPanel.xaml"/>
         <ResourceDictionary Source="WPRIcon.xaml"/>
+        <ResourceDictionary Source="WPRIconText.xaml"/>
 </ResourceDictionary.MergedDictionaries>
 </ResourceDictionary>

@@ -34,6 +34,7 @@
                             <ContentControl IsTabStop="False" x:Name="FloatingHint"
                                             Content="{Binding Path=(helpers:TextHelper.Hint), RelativeSource={RelativeSource TemplatedParent}}"
                                             HorizontalAlignment="Left"
+                                            VerticalAlignment="Top"
                                             Foreground="{TemplateBinding Background}"
                                             FontSize="{TemplateBinding FontSize}"
                                             Margin="0,3">

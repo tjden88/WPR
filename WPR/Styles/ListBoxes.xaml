@@ -8,6 +8,7 @@
 
     <Style x:Key="WPRListBox" TargetType="{x:Type ListBox}" BasedOn="{StaticResource BaseControl}">
         <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Auto"/>
+        <Setter Property="BorderBrush" Value="{DynamicResource DividerColorBrush}"/>
         <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto"/>
         <Setter Property="ScrollViewer.CanContentScroll" Value="true"/>
         <Setter Property="ScrollViewer.PanningMode" Value="Both"/>
@@ -45,14 +46,14 @@
 
     <ControlTemplate x:Key="WPRListBoxItemTemplate" TargetType="{x:Type ListBoxItem}">
         <controls:ClippingBorder x:Name="Bd" ClipToBounds="True"
-                                                CornerRadius="0,17,17,0"
+                                                CornerRadius="0,16,16,0"
                                                 Margin="0,0,20,0"
                                                 MinHeight="34"
                                                 BorderBrush="{TemplateBinding BorderBrush}"
                                                 BorderThickness="{TemplateBinding BorderThickness}" 
                                                 Background="{TemplateBinding Background}">
             <Grid>
-                <Border CornerRadius="0,17,17,0"
+                <Border CornerRadius="0,16,16,0"
                                     Background="{DynamicResource PrimaryColorBrush}">
                     <Border.RenderTransform>
                         <ScaleTransform ScaleX="0" x:Name="ScaleSelected"/>
@@ -130,6 +131,7 @@
         <Setter Property="SnapsToDevicePixels" Value="True"/>
         <Setter Property="Padding" Value="4,1"/>
         <Setter Property="Foreground" Value="{Binding Foreground, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}"/>
+        <Setter Property="BorderBrush" Value="{Binding BorderBrush, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}"/>
         <Setter Property="HorizontalContentAlignment" Value="{Binding HorizontalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}"/>
         <Setter Property="VerticalContentAlignment" Value="{Binding VerticalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}"/>
         <Setter Property="Template">
@@ -148,7 +150,7 @@
                                               VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
                             </ToggleButton.Content>
                         </ToggleButton>
-                        <Rectangle Height="1" Fill="{DynamicResource DividerColorBrush}"/>
+                        <Rectangle Height="1" Fill="{TemplateBinding BorderBrush}"/>
                     </StackPanel>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsSelected" Value="True">
@@ -186,7 +188,6 @@
                                     <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                                                       SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" 
                                                       VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
-                                    <Rectangle Height="1" Fill="{DynamicResource DividerColorBrush}"/>
                                 </StackPanel>
                             </ControlTemplate>
                         </Setter.Value>
