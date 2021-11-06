@@ -1,4 +1,7 @@
-﻿using System.Windows;
+﻿using System;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Data;
 
 namespace WPR.Helpers
 {
@@ -50,5 +53,47 @@ namespace WPR.Helpers
 
         #endregion
 
+        #region Attached property AddValidationRule : ValidationRule - Добавить правило валидации к текстбоксу
+
+        /// <summary>Добавить правило валидации к текстбоксу</summary>
+        public static readonly DependencyProperty AddValidationRuleProperty =
+            DependencyProperty.RegisterAttached(
+                "AddValidationRule",
+                typeof(ValidationRule),
+                typeof(TextHelper),
+                new PropertyMetadata(default(ValidationRule), AddValidationRuleOnPropertyChanged));
+
+        private static void AddValidationRuleOnPropertyChanged(DependencyObject D, DependencyPropertyChangedEventArgs E)
+        {
+            if (D is not TextBox textBox)
+                throw new NotSupportedException("Свойство предназначено для TextBox");
+
+            if (E.OldValue is ValidationRule oldValue)
+            {
+                var binding = BindingOperations.GetBinding(textBox, TextBox.TextProperty);
+                binding?.ValidationRules.Remove(oldValue);
+            }
+
+            if (E.NewValue is ValidationRule newValue)
+            {
+                var binding = BindingOperations.GetBinding(textBox, TextBox.TextProperty);
+                if (binding != null)
+                {
+                    binding.ValidationRules.Add(newValue);
+                    textBox.GetBindingExpression(TextBox.TextProperty)?.UpdateSource();
+                    //textBox.GotFocus += (_, _) =>  textBox.GetBindingExpression(TextBox.TextProperty)?.UpdateSource();
+                }
+            }
+
+        }
+
+        /// <summary>Добавить правило валидации к текстбоксу</summary>
+        [AttachedPropertyBrowsableForType(typeof(TextBox))]
+        public static void SetAddValidationRule(DependencyObject d, ValidationRule value) => d.SetValue(AddValidationRuleProperty, value);
+
+        /// <summary>Добавить правило валидации к текстбоксу</summary>
+        public static ValidationRule GetAddValidationRule(DependencyObject d) => (ValidationRule) d.GetValue(AddValidationRuleProperty);
+
+        #endregion
     }
 }

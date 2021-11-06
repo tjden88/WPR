@@ -21,4 +21,22 @@ namespace WPR.MVVM.Validation
             return IsValid ? ValidationResult.ValidResult : new ValidationResult(false, Message);
         }
     }
+
+    public abstract class ValidationBase<T> : ValidationRule
+    {
+        /// <summary>Описание ошибки</summary>
+        public string Message { get; set; } = "Неверное значение";
+
+        /// <summary>Прошла ли проверка валидности</summary>
+        public bool IsValid { get; private set; }
+
+        /// <summary>Провести валидацию</summary>
+        protected abstract bool Validated(T value, CultureInfo cultureInfo);
+
+        public override ValidationResult Validate(object value, CultureInfo cultureInfo)
+        {
+            IsValid = Validated((T)value, cultureInfo);
+            return IsValid ? ValidationResult.ValidResult : new ValidationResult(false, Message);
+        }
+    }
 }
