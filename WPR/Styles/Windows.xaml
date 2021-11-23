@@ -107,7 +107,22 @@
                                 <ColumnDefinition MinWidth="{Binding ActualWidth, ElementName=PART_Buttons}"/>
                             </Grid.ColumnDefinitions>
 
-                            <ContentControl HorizontalAlignment="Left" Name="HeaderControl" Content="{Binding Path=(wh:WindowHelper.WindowHeaderContent), RelativeSource={RelativeSource TemplatedParent}}"/>
+                            <StackPanel Orientation="Horizontal"  HorizontalAlignment="Left">
+                                <Image Stretch="Fill" Source="{TemplateBinding Icon}" RenderOptions.BitmapScalingMode="HighQuality">
+                                    <Image.Style>
+                                        <Style TargetType="Image">
+                                            <Style.Triggers>
+                                                <Trigger Property="Source" Value="{x:Null}">
+                                                    <Setter Property="Margin" Value="0"/>
+                                                </Trigger>
+                                            </Style.Triggers>
+                                            <Setter Property="Margin" Value="5"/>
+                                        </Style>
+                                    </Image.Style>
+                                </Image>
+                                <ContentControl Name="HeaderControl"
+                                                Content="{Binding Path=(wh:WindowHelper.WindowHeaderContent), RelativeSource={RelativeSource TemplatedParent}}"/>
+                            </StackPanel>
 
                             <TextBlock Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center" 
                                        Foreground="{Binding Path=(wh:WindowHelper.WindowHeaderForeground) , RelativeSource={RelativeSource TemplatedParent}}"

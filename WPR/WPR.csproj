@@ -8,8 +8,9 @@
   </PropertyGroup>
 
   <PropertyGroup>
-    <TargetFramework>net5.0-windows</TargetFramework>
+    <TargetFramework>net6.0-windows</TargetFramework>
     <UseWPF>true</UseWPF>
+    <PublishReadyToRun>True</PublishReadyToRun>
     <PackageId>WPR.Styles</PackageId>
     <Authors>tj_d</Authors>
     <Product>tj_d</Product>

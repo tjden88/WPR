@@ -13,10 +13,8 @@ namespace WPR.Converters
     }
 
     [ValueConversion(typeof(object), typeof(bool))]
-    public class ParameterIsNotNullConverter : ConverterBase
+    public class ValueIsNotNullConverter : ConverterBase
     {
-        protected override object Convert(object v, Type t, object p, CultureInfo c) => p != null;
-
-        protected override object ConvertBack(object v, Type t, object p, CultureInfo c) => v is true ? null : p;
+        protected override object Convert(object v, Type t, object p, CultureInfo c) => v != null;
     }
 }
