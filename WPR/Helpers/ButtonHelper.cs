@@ -1,4 +1,5 @@
 ﻿using System.Windows;
+using System.Windows.Media;
 using System.Windows.Media.Effects;
 
 namespace WPR.Helpers
@@ -47,6 +48,24 @@ namespace WPR.Helpers
         /// <summary>Тень кнопки</summary>
         public static DropShadowEffect GetButtonShadow(DependencyObject d) => (DropShadowEffect) d.GetValue(ButtonShadowProperty);
 
-        #endregion  
+        #endregion
+
+        #region Attached property MouseOverButtonBrush : Brush - Цвет затемнения кнопки при наведении мыши
+
+        /// <summary>Цвет затемнения кнопки при наведении мыши</summary>
+        public static readonly DependencyProperty MouseOverButtonBrushProperty =
+            DependencyProperty.RegisterAttached(
+                "MouseOverButtonBrush",
+                typeof(Brush),
+                typeof(ButtonHelper),
+                new PropertyMetadata(default(Brush)));
+
+        /// <summary>Цвет затемнения кнопки при наведении мыши</summary>
+        public static void SetMouseOverButtonBrush(DependencyObject d, Brush value) => d.SetValue(MouseOverButtonBrushProperty, value);
+
+        /// <summary>Цвет затемнения кнопки при наведении мыши</summary>
+        public static Brush GetMouseOverButtonBrush(DependencyObject d) => (Brush) d.GetValue(MouseOverButtonBrushProperty);
+
+        #endregion
     }
 }

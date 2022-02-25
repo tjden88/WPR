@@ -22,7 +22,7 @@
                                      SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
                 <Grid>
                     <Border x:Name="BackGrid"
-                                Background="{DynamicResource AnimationEnterColorBrush}" 
+                                Background="{Binding Path=(helpers:ButtonHelper.MouseOverButtonBrush), RelativeSource={RelativeSource TemplatedParent}}" 
                                 CornerRadius="{Binding Path=(helpers:ButtonHelper.BorderRadius), RelativeSource={RelativeSource TemplatedParent}}"
                                 BorderThickness="0"
                                 SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
@@ -109,6 +109,7 @@
         <Setter Property="VerticalContentAlignment" Value="Center"/>
         <Setter Property="HorizontalContentAlignment" Value="Center"/>
         <Setter Property="helpers:ButtonHelper.BorderRadius" Value="3"/>
+        <Setter Property="helpers:ButtonHelper.MouseOverButtonBrush" Value="{DynamicResource AnimationEnterColorBrush}"/>
         <Setter Property="helpers:RippleHelper.FeedbackBrush" Value="{DynamicResource LightPrimaryColorBrush}"/>
         <!--<Setter Property="helpers:ButtonHelper.AnimationColor" Value="{StaticResource AnimationEnterColorBrush}"/>-->
         <Setter Property="Template" Value="{StaticResource WPRButtonTemplate}"/>
