@@ -8,7 +8,9 @@ namespace WPR.MVVM.ViewModels
     {
         /// <summary>Признак того, что мы находимся в режиме разработки под Visual Studio</summary>
         public static bool IsDesignMode => DesignerProperties.GetIsInDesignMode(new DependencyObject());
-        //public static bool IsDesignMode => LicenseManager.UsageMode == LicenseUsageMode.Designtime;
+
+
+        #region INotifyPropertyChanged
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -17,6 +19,9 @@ namespace WPR.MVVM.ViewModels
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(PropertyName));
         }
 
+        #endregion
+
+
         protected virtual bool Set<T>(ref T field, T value, [CallerMemberName] string PropertyName = null)
         {
             if (Equals(field, value)) return false;
@@ -24,20 +29,19 @@ namespace WPR.MVVM.ViewModels
             OnPropertyChanged(PropertyName);
             return true;
         }
-        
+
         protected ValueResult<T> IfSet<T>(ref T field, T value, [CallerMemberName] string PropertyName = null)
         {
             var res = Set(ref field, value, PropertyName);
             return new ValueResult<T>(res, value, this);
         }
 
+
         /// <summary> Обновить все свойства ViewModel </summary>
         public virtual void OnAllPropertiesChanged()
         {
-            foreach (var propertyInfo in GetType().GetProperties())
-            {
+            foreach (var propertyInfo in GetType().GetProperties()) 
                 OnPropertyChanged(propertyInfo.Name);
-            }
         }
     }
 }
