@@ -28,7 +28,7 @@ namespace WPR.MVVM.Commands
         }
 
         public Command(Action Execute, Func<bool> CanExecute, string CommandText, KeyGesture ExecuteGesture, UIElement GestureTarget)
-            : this(P => Execute(), CanExecute is null ? null : P => CanExecute(), CommandText, ExecuteGesture, GestureTarget)
+            : this(P => Execute(), CanExecute is null ? null : _ => CanExecute(), CommandText, ExecuteGesture, GestureTarget)
         {
         }
 
@@ -49,11 +49,15 @@ namespace WPR.MVVM.Commands
         protected override void ExecuteCommand(object P) => _Execute(P);
     }
 
+
+
+
+
     /// <summary>
     /// Типизированная базовая реализация команды
     /// </summary>
     /// <typeparam name="T">Тип параметра</typeparam>
-    public class Command<T> : BaseCommand where T : class
+    public class Command<T> : BaseCommand
     {
         private readonly Action<T> _Execute;
         private readonly Predicate<T> _CanExecute;
@@ -94,11 +98,13 @@ namespace WPR.MVVM.Commands
         /// <summary>Возможность выполнения команды</summary>
         protected override bool CanExecuteCommand(object P)
         {
-            if (!CanExecuteWithNullParameter && P == null) return false;
-            return _CanExecute?.Invoke(P as T) ?? true;
+
+            if (!CanExecuteWithNullParameter && P is not T) return false;
+
+            return _CanExecute?.Invoke((T)P) ?? true;
         }
 
         /// <summary>Выполнить команду</summary>
-        protected override void ExecuteCommand(object P) => _Execute(P as T);
+        protected override void ExecuteCommand(object P) => _Execute((T)P);
     }
 }
