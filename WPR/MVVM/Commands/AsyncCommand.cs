@@ -62,23 +62,18 @@ namespace WPR.MVVM.Commands
         {
         }
 
-        public AsyncCommand(Func<Task> ExecuteAsync, Func<bool> CanExecute = null, string CommandText = null) :
+        public AsyncCommand(Func<CancellationToken, Task> ExecuteAsync, Func<bool> CanExecute = null, string CommandText = null) :
             this(ExecuteAsync, CanExecute, CommandText, null, null)
         {
         }
 
-        public AsyncCommand(Func<object, Task> ExecuteAsync, Predicate<object> CanExecute = null, string CommandText = null) :
+        public AsyncCommand(Func<object, CancellationToken, Task> ExecuteAsync, Predicate<object> CanExecute = null, string CommandText = null) :
             this(ExecuteAsync, CanExecute, CommandText, null, null)
         {
         }
 
-        public AsyncCommand(Func<Task> ExecuteAsync, Func<bool> CanExecute, string CommandText, KeyGesture ExecuteGesture, UIElement GestureTarget) :
-            this((_, _) => ExecuteAsync(), CanExecute is null ? null : _ => CanExecute(), CommandText, ExecuteGesture, GestureTarget)
-        {
-        }
-
-        public AsyncCommand(Func<object, Task> ExecuteAsync, Predicate<object> CanExecute, string CommandText, KeyGesture ExecuteGesture, UIElement GestureTarget) :
-            this((o, _) => ExecuteAsync(o), CanExecute, CommandText, ExecuteGesture, GestureTarget)
+        public AsyncCommand(Func<CancellationToken, Task> ExecuteAsync, Func<bool> CanExecute, string CommandText, KeyGesture ExecuteGesture, UIElement GestureTarget) :
+            this((_, t) => ExecuteAsync(t), CanExecute is null ? null : _ => CanExecute(), CommandText, ExecuteGesture, GestureTarget)
         {
         }
 
@@ -91,6 +86,7 @@ namespace WPR.MVVM.Commands
             this.ExecuteGesture = ExecuteGesture;
             GestureTarget?.InputBindings.Add(new InputBinding(this, ExecuteGesture));
         }
+
         #endregion
 
         protected override bool CanExecuteCommand(object P) => !IsNowExecuting && (_CanExecute?.Invoke(P) ?? true);
