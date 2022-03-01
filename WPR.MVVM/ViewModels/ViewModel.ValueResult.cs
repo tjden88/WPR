@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace WPR.MVVM.ViewModels
+﻿namespace WPR.MVVM.ViewModels
 {
     partial class ViewModel
     {

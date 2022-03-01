@@ -1,17 +1,9 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net5.0-windows</TargetFramework>
-    <UseWPF>true</UseWPF>
-    <Authors>tj_d</Authors>
-    <Product>tj_d</Product>
-    <Description>Пакет абстрактных и базовых классов WPF для шаблона MVVM</Description>
-    <Copyright>tj.den88@gmail.com</Copyright>
-    <PackageLicenseExpression>MIT</PackageLicenseExpression>
-    <PackageProjectUrl>https://github.com/tjden88/WPR.Styles</PackageProjectUrl>
-    <RepositoryUrl>https://github.com/tjden88/WPR.Styles</RepositoryUrl>
-    <PackageIcon>Style XP.png</PackageIcon>
-    <PackageReleaseNotes>Запуск</PackageReleaseNotes>
+    <TargetFramework>net6.0-windows</TargetFramework>
+	  <UseWPF>true</UseWPF>
+    <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
 
 </Project>

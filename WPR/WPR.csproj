@@ -41,6 +41,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\WPR.MVVM\WPR.MVVM.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Resource Include="Fonts\Roboto-Bold.ttf" />
     <Resource Include="Fonts\Roboto-Italic.ttf" />
     <Resource Include="Fonts\Roboto-Regular.ttf" />

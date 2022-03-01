@@ -1,13 +1,26 @@
 ﻿using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using System.Windows;
 
 namespace WPR.MVVM.ViewModels
 {
-    public abstract class ViewModel : INotifyPropertyChanged
+    public abstract partial class ViewModel : INotifyPropertyChanged
     {
+        /// <summary>Признак того, что мы находимся в режиме разработки под Visual Studio</summary>
+        public static bool IsDesignMode => DesignerProperties.GetIsInDesignMode(new DependencyObject());
+
+
+        #region INotifyPropertyChanged
+
         public event PropertyChangedEventHandler PropertyChanged;
 
-        protected virtual void OnPropertyChanged([CallerMemberName] string PropertyName = null) => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(PropertyName));
+        protected virtual void OnPropertyChanged([CallerMemberName] string PropertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(PropertyName));
+        }
+
+        #endregion
+
 
         protected virtual bool Set<T>(ref T field, T value, [CallerMemberName] string PropertyName = null)
         {
@@ -15,6 +28,20 @@ namespace WPR.MVVM.ViewModels
             field = value;
             OnPropertyChanged(PropertyName);
             return true;
+        }
+
+        protected ValueResult<T> IfSet<T>(ref T field, T value, [CallerMemberName] string PropertyName = null)
+        {
+            var res = Set(ref field, value, PropertyName);
+            return new ValueResult<T>(res, value, this);
+        }
+
+
+        /// <summary> Обновить все свойства ViewModel </summary>
+        public virtual void OnAllPropertiesChanged()
+        {
+            foreach (var propertyInfo in GetType().GetProperties()) 
+                OnPropertyChanged(propertyInfo.Name);
         }
     }
 }
