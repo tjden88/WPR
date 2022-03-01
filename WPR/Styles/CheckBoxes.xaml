@@ -13,11 +13,12 @@
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            <controls:Ripple x:Name="Ripple"
+            <controls:Ripple x:Name="Ripple" VerticalAlignment="Center"
                              Background="{Binding RelativeSource={RelativeSource TemplatedParent},Path=(helpers:RippleHelper.FeedbackBrush)}" 
                              RippleInCenter="True"
                              StartRippleOnClick="False">
                 <Border x:Name="checkBoxBorder" 
+                        VerticalAlignment="Center"
                         RenderTransformOrigin="0.5,0.5"
                                 BorderBrush="{TemplateBinding BorderBrush}" 
                                 CornerRadius="2"
