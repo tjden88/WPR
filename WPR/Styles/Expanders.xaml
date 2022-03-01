@@ -30,6 +30,8 @@
                         <ContentPresenter Margin="5" 
                                           Content="{TemplateBinding Content}"
                                           ContentTemplate="{TemplateBinding ContentTemplate}"
+                                          HorizontalAlignment="Left"
+                                          VerticalAlignment="Center"
                                           Grid.Column="1"/>
                     </Grid>
                     <ControlTemplate.Triggers>
@@ -61,13 +63,6 @@
         <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
         <Setter Property="VerticalContentAlignment" Value="Stretch"/>
         <Setter Property="BorderBrush" Value="{DynamicResource AccentColorBrush}"/>
-        <Setter Property="ContentTemplate">
-            <Setter.Value>
-                <DataTemplate>
-                    <Grid VerticalAlignment="Center"></Grid>
-                </DataTemplate>
-            </Setter.Value>
-        </Setter>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Expander}">
