@@ -31,10 +31,7 @@ namespace WPR.Controls
             Storyboard.SetTargetProperty(_RippleAnimation.Children[2], new PropertyPath(OpacityProperty));
             Storyboard.SetTargetProperty(_RippleAnimation.Children[3], new PropertyPath(WidthProperty));
 
-            _RippleAnimation.Completed += (o,e) => IsAnimationActive = false;
-            MouseDown += (o, e) => _RippleAnimation.SetSpeedRatio(_Ellipse, RippleMouseDownSpeed);
-            MouseUp += (o, e) => _RippleAnimation.SetSpeedRatio(_Ellipse, RippleSpeed);
-            MouseLeave += (o, e) => _RippleAnimation.SetSpeedRatio(_Ellipse, RippleSpeed);
+            _RippleAnimation.Completed += (_,_) => IsAnimationActive = false;
         }
         
 
@@ -117,6 +114,8 @@ namespace WPR.Controls
             base.OnApplyTemplate();
             _Ellipse = Template.FindName("PART_ellipse", this) as Ellipse;
             if (_Ellipse == null) throw new NullReferenceException("Эллипс в шаблоне не найден!");
+            MouseDown += (_, _) => _RippleAnimation.SetSpeedRatio(_Ellipse, RippleMouseDownSpeed);
+            MouseUp += (_, _) => _RippleAnimation.SetSpeedRatio(_Ellipse, RippleSpeed);
         }
 
         protected override void OnPreviewMouseLeftButtonDown(MouseButtonEventArgs e)
@@ -127,12 +126,14 @@ namespace WPR.Controls
         }
 
 
-        public void StartRipple(Point e = new Point())
+        public void StartRipple(Point e = new())
         {
             if (_RippleAnimation.Children.Count < 2) return;
 
 
-            _RippleAnimation.Stop(_Ellipse);
+            if(IsAnimationActive)
+                _RippleAnimation.Stop(_Ellipse);
+
             var targetWidth = Math.Max(ActualWidth, ActualHeight) * OverSize;
             ((DoubleAnimation) _RippleAnimation.Children[0]).To = targetWidth;
 
