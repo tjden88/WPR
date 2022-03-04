@@ -322,7 +322,7 @@ namespace WPR
         #region CustomDialog
 
         /// <summary>Показать диалог с кастомным содержимым</summary>
-        public static void ShowCustomDialog(DependencyObject sender, IWPRDialog Content, bool StaysOpen, Action<bool> Callback = null)
+        public static void ShowCustomDialog(DependencyObject sender, IWPRDialog Content, Action<bool> Callback = null)
         {
             // Ищем панель
             WPRDialogPanel panel = FindDialogPanel(sender);
@@ -332,27 +332,17 @@ namespace WPR
                 panel.Hide();
                 Callback?.Invoke(b);
             };
-            panel.Show(Content, StaysOpen);
+            panel.Show(Content, Content?.StaysOpen ?? false);
         }
 
         /// <summary>Показать диалог с кастомным содержимым</summary>
-        public static async Task<bool> ShowCustomDialogAsync(DependencyObject sender, IWPRDialog Content, bool StaysOpen)
+        public static async Task<bool> ShowCustomDialogAsync(DependencyObject sender, IWPRDialog Content)
         {
             TaskCompletionSource<bool> complete = new();
-            ShowCustomDialog(sender, Content, StaysOpen, (b) => complete.TrySetResult(b));
+            ShowCustomDialog(sender, Content, (b) => complete.TrySetResult(b));
             return await complete.Task.ConfigureAwait(false);
         }
 
         #endregion
-    }
-
-    /// <summary> Интерфейс для реализации объекта в качестве диалогового окна </summary>
-    public interface IWPRDialog
-    {
-        /// <summary>Результат диалога</summary>
-        Action<bool> DialogResult { get; set; }
-
-        /// <summary>Контент диалога</summary>
-        object DialogContent { get; set; }
     }
 }
