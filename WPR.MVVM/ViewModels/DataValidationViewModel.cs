@@ -9,31 +9,32 @@ namespace WPR.MVVM.ViewModels
     public class DataValidationViewModel : ViewModel, INotifyDataErrorInfo
     {
 
-        protected DataValidationViewModel(bool OnlyForDesignTime = false) : base(OnlyForDesignTime)
+        /// <summary> Структура ошибки валидации </summary>
+        protected readonly struct ValidationError
         {
-        }
-
-
-        private readonly List<string> _ActualErrors = new();
-
-        /// <summary> Проверка ошибки и описание </summary>
-        protected readonly struct Error
-        {
-            public Error(string propertyName, Func<bool> errorChecker, string Message = "Ошибка")
+            public ValidationError(string propertyName, Func<bool> rule, string Message = "Ошибка")
             {
                 PropertyName = propertyName;
-                ErrorChecker = errorChecker;
+                Rule = rule;
                 ErrorMessage = Message;
             }
 
             public readonly string PropertyName;
-            public readonly Func<bool> ErrorChecker;
+            public readonly Func<bool> Rule;
             public readonly string ErrorMessage;
         }
 
 
-        /// <summary> Словарь свойств и правил валидации </summary>
-        protected List<Error> ErrorInfo { get; } = new();
+        protected DataValidationViewModel(bool OnlyForDesignTime = false) : base(OnlyForDesignTime) { }
+
+
+        private readonly List<string> _ActualErrors = new(); // Текущие ошибки
+
+
+        /// <summary> Список правил валидации </summary>
+        protected List<ValidationError> ValidationRules { get; } = new();
+
+
 
         protected override void OnPropertyChanged(string PropertyName = null)
         {
@@ -42,20 +43,21 @@ namespace WPR.MVVM.ViewModels
             _ActualErrors.Clear();
             if (PropertyName == null) return;
 
-            var errors = ErrorInfo
-                .Where(info => info.PropertyName == PropertyName)
-                .Where(err => err.ErrorChecker.Invoke())
-                .Select(err => err.ErrorMessage);
+            var errors = ValidationRules
+                .Where(info => info.PropertyName == PropertyName && info.Rule.Invoke())
+                .Select(info => info.ErrorMessage);
             _ActualErrors.AddRange(errors);
 
             ErrorsChanged?.Invoke(this, new DataErrorsChangedEventArgs(PropertyName));
         }
 
-        protected bool CheckAllErrors => ErrorInfo.Any(err => err.ErrorChecker.Invoke());
+        /// <summary> Проверить все правила валидации </summary>
+        protected bool CheckHasErrors() => ValidationRules.Any(err => err.Rule.Invoke());
         
         public IEnumerable GetErrors(string PropertyName) => _ActualErrors;
 
-        public bool HasErrors => _ActualErrors.Count > 0;
+        public bool HasErrors => _ActualErrors.Any();
+
         public event EventHandler<DataErrorsChangedEventArgs> ErrorsChanged;
     }
 }
