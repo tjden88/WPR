@@ -70,6 +70,7 @@
                                    FontSize="11" Margin="0,3,0,0"/>
 
                         <ItemsControl Name="ErrorText" Visibility="Hidden" Grid.Row="1" Margin="0,3,0,0"
+                                      Focusable="False"
                                       ItemsSource="{Binding (Validation.Errors) , RelativeSource={RelativeSource TemplatedParent}}">
 
                             <ItemsControl.ItemTemplate>

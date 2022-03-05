@@ -12,11 +12,12 @@
         <Setter Property="Background" Value="{DynamicResource BackgroundColorBrush}"/>
         <Setter Property="Focusable" Value="False"/>
         <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+        <Setter Property="VerticalContentAlignment" Value="Stretch"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type controls:WPRTitledCard}">
-                    <StackPanel Background="{TemplateBinding Background}">
-                        <Grid>
+                    <DockPanel Background="{TemplateBinding Background}">
+                        <Grid DockPanel.Dock="Top">
                             <DockPanel Margin="5,5" LastChildFill="False">
                                 <controls:WPRIcon Source="{TemplateBinding IconSource}" Margin="5"
                                                   IconSize="24"
@@ -37,9 +38,9 @@
 
                             <controls:WPRPopup x:Name="MenuPopup" CloseOnMouseButtonUp="True" Content="{TemplateBinding PopupMenu}"/>
                         </Grid>
-                        <Rectangle Height="1" Fill="{DynamicResource DividerColorBrush}" Margin="0"/>
+                        <Rectangle DockPanel.Dock="Top" Height="1" Fill="{DynamicResource DividerColorBrush}" Margin="0"/>
                         <ContentPresenter Content="{TemplateBinding Content}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"/>
-                    </StackPanel>
+                    </DockPanel>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>

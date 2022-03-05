@@ -332,7 +332,7 @@ namespace WPR
                 panel.Hide();
                 Callback?.Invoke(b);
             };
-            panel.Show(Content, Content?.StaysOpen ?? false);
+            panel.Show(Content, Content.StaysOpen);
         }
 
         /// <summary>Показать диалог с кастомным содержимым</summary>

@@ -6,7 +6,7 @@ namespace WPR.MVVM.ViewModels
     /// <summary>
     /// Вьюмодель с возможностью валидации данных при изменении свойств
     /// </summary>
-    public class DataValidationViewModel : ViewModel, INotifyDataErrorInfo
+    public abstract class DataValidationViewModel : ViewModel, INotifyDataErrorInfo
     {
 
         /// <summary> Структура ошибки валидации </summary>
@@ -32,8 +32,7 @@ namespace WPR.MVVM.ViewModels
 
 
         /// <summary> Список правил валидации </summary>
-        protected List<ValidationError> ValidationRules { get; } = new();
-
+        protected abstract List<ValidationError> ValidationRules { get; }
 
 
         protected override void OnPropertyChanged(string PropertyName = null)
@@ -52,7 +51,7 @@ namespace WPR.MVVM.ViewModels
         }
 
         /// <summary> Проверить все правила валидации </summary>
-        protected bool CheckHasErrors() => ValidationRules.Any(err => err.Rule.Invoke());
+        protected virtual bool CheckHasErrors() => ValidationRules.Any(err => err.Rule.Invoke());
         
         public IEnumerable GetErrors(string PropertyName) => _ActualErrors;
 
