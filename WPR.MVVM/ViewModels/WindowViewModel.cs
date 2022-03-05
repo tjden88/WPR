@@ -2,6 +2,11 @@
 {
     public abstract class WindowViewModel : ViewModel
     {
+
+        protected WindowViewModel(bool OnlyForDesignTime = false) : base(OnlyForDesignTime)
+        {
+        }
+
         #region Title : string - Заголовок окна
 
         /// <summary>Заголовок окна</summary>

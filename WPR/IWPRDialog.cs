@@ -9,8 +9,8 @@ public interface IWPRDialog
     Action<bool> DialogResult { get; set; }
 
     /// <summary>Контент диалога</summary>
-    object DialogContent { get; set; }
+    object DialogContent { get; }
 
     /// <summary> Оставлять диалог открытым при клике вне его области </summary>
-    bool StaysOpen { get; set; }
+    bool StaysOpen { get; }
 }

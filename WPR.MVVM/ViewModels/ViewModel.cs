@@ -9,6 +9,16 @@ namespace WPR.MVVM.ViewModels
         /// <summary>Признак того, что мы находимся в режиме разработки под Visual Studio</summary>
         public static bool IsDesignMode => DesignerProperties.GetIsInDesignMode(new DependencyObject());
 
+        /// <summary>
+        /// Создать класс базовой модели-представления
+        /// </summary>
+        /// <param name="OnlyForDesignTime">При попытке вызова не в режиме работы дизайнера VS выбросит исключение</param>
+        protected ViewModel(bool OnlyForDesignTime = false)
+        {
+            if (OnlyForDesignTime && !IsDesignMode)
+                throw new InvalidOperationException(
+                    "Этот конструктор предназначен для использования только в режиме разработки Visual Studio");
+        }
 
         #region INotifyPropertyChanged
 

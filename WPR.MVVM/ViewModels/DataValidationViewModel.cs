@@ -8,6 +8,12 @@ namespace WPR.MVVM.ViewModels
     /// </summary>
     public class DataValidationViewModel : ViewModel, INotifyDataErrorInfo
     {
+
+        protected DataValidationViewModel(bool OnlyForDesignTime = false) : base(OnlyForDesignTime)
+        {
+        }
+
+
         private readonly List<string> _ActualErrors = new();
 
         /// <summary> Проверка ошибки и описание </summary>

@@ -126,6 +126,7 @@ namespace WPR.Demo.Pages
             public Action<bool> DialogResult { get; set; }
 
             public object DialogContent { get; set; }
+            public bool StaysOpen => false;
 
             public TestCustomDialog()
             {
@@ -139,7 +140,7 @@ namespace WPR.Demo.Pages
 
         private async void CustomDialog_Click(object Sender, RoutedEventArgs E)
         {
-            Debug.WriteLine(await WPRMessageBox.ShowCustomDialogAsync(this, new TestCustomDialog(), false));
+            Debug.WriteLine(await WPRMessageBox.ShowCustomDialogAsync(this, new TestCustomDialog()));
         }
 
 
