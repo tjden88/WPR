@@ -1,5 +1,6 @@
 ﻿using System.Windows;
 using System.Windows.Input;
+using WPR.MVVM.Commands.Base;
 
 namespace WPR.MVVM.Commands
 {

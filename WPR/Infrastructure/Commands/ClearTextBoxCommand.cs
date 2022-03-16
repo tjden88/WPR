@@ -1,6 +1,6 @@
 ﻿using System.Windows.Controls;
 using System.Windows.Input;
-using WPR.MVVM.Commands;
+using WPR.MVVM.Commands.Base;
 
 namespace WPR.Infrastructure.Commands
 {
@@ -12,11 +12,9 @@ namespace WPR.Infrastructure.Commands
     {
         protected override void ExecuteCommand(object p)
         {
-            if (p is TextBox tbox)
-            {
-                tbox.Text = string.Empty;
-                Keyboard.ClearFocus();
-            }
+            if (p is not TextBox tbox) return;
+            tbox.Text = string.Empty;
+            Keyboard.ClearFocus();
         }
 
         protected override bool CanExecuteCommand(object p) => p is TextBox t && !string.IsNullOrEmpty(t.Text);
