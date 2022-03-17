@@ -4,7 +4,7 @@
     <ResourceDictionary Source="Base.xaml"/>
 </ResourceDictionary.MergedDictionaries>
 
-    <Style x:Key="WPRTextBlock" TargetType="{x:Type TextBlock}">
+    <Style x:Key="WPRTextBlock" TargetType="{x:Type TextBlock}" BasedOn="{StaticResource FrameworkElementStyle}">
         <Setter Property="FontFamily" Value="{StaticResource RobotoFont}"/>
         <Setter Property="FontSize" Value="13"/>
         <Setter Property="TextOptions.TextFormattingMode" Value="Ideal"/>

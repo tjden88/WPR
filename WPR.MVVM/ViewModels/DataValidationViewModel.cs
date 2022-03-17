@@ -48,6 +48,7 @@ namespace WPR.MVVM.ViewModels
             _ActualErrors.AddRange(errors);
 
             ErrorsChanged?.Invoke(this, new DataErrorsChangedEventArgs(PropertyName));
+            base.OnPropertyChanged(nameof(HasErrors));
         }
 
         /// <summary> Проверить все правила валидации </summary>

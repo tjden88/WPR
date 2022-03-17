@@ -25,6 +25,7 @@
     </ResourceDictionary.MergedDictionaries>
 
     <!--Стили по умолчанию-->
+    <Style TargetType="{x:Type FrameworkElement}" BasedOn="{StaticResource FrameworkElementStyle}"/>
     <Style TargetType="{x:Type Control}" BasedOn="{StaticResource BaseControl}"/>
     <Style TargetType="ToolTip" BasedOn="{StaticResource WPRToolTip}"/>
     <Style TargetType="Button" BasedOn="{StaticResource PrimaryWPRButton}"/>
@@ -47,4 +48,5 @@
     <Style TargetType="ScrollViewer" BasedOn="{StaticResource WPRScrollViewer}"/>
     <Style TargetType="GridSplitter" BasedOn="{StaticResource WPRGridSplitter}"/>
     <Style TargetType="DataGrid" BasedOn="{StaticResource WPRDataGrid}"/>
+    <Style TargetType="{x:Type Border}" BasedOn="{StaticResource FrameworkElementStyle}"/>
 </ResourceDictionary>
