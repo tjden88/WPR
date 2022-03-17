@@ -6,6 +6,7 @@
         <ResourceDictionary Source="Base.xaml"/>
     </ResourceDictionary.MergedDictionaries>
 
+
     <Style x:Key="WPRListBox" TargetType="{x:Type ListBox}" BasedOn="{StaticResource BaseControl}">
         <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Auto"/>
         <Setter Property="BorderBrush" Value="{DynamicResource DividerColorBrush}"/>
@@ -44,7 +45,8 @@
         </Setter>
     </Style>
 
-    <ControlTemplate x:Key="WPRListBoxItemTemplate" TargetType="{x:Type ListBoxItem}">
+
+    <ControlTemplate x:Key="WPRListBoxMenuItemTemplate" TargetType="{x:Type ListBoxItem}">
         <controls:ClippingBorder x:Name="Bd" ClipToBounds="True"
                                                 CornerRadius="0,16,16,0"
                                                 Margin="0,0,20,0"
@@ -126,7 +128,8 @@
             </Trigger>
         </ControlTemplate.Triggers>
     </ControlTemplate>
-    
+
+
     <Style x:Key="WPRListBoxItem" TargetType="{x:Type ListBoxItem}" BasedOn="{StaticResource BaseControl}">
         <Setter Property="SnapsToDevicePixels" Value="True"/>
         <Setter Property="Padding" Value="4,1"/>
@@ -137,24 +140,50 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type ListBoxItem}">
-                    <StackPanel Orientation="Vertical">
-                        <ToggleButton IsChecked="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=IsSelected , Mode=TwoWay}"
-                                      x:Name="ToggleContent"
-                                  HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                  VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
-                                      FontWeight="Regular">
-                            <ToggleButton.Content>
-                                <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                              Margin="{TemplateBinding Padding}"
-                                              SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" 
-                                              VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
-                            </ToggleButton.Content>
-                        </ToggleButton>
-                        <Rectangle Height="1" Fill="{TemplateBinding BorderBrush}"/>
-                    </StackPanel>
+                    <Grid>
+                        <Border Name="BgBorder" Background="{DynamicResource AnimationEnterColorBrush}" Opacity="0"/>
+                        <Border Name="SelectedBorder" Background="{DynamicResource AnimationEnterColorBrush}" Opacity="0"/>
+
+                        <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                          Margin="{TemplateBinding Padding}"
+                                          SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" 
+                                          VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+
+                        <Rectangle Height="1" VerticalAlignment="Bottom" Fill="{TemplateBinding BorderBrush}"/>
+                    </Grid>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsSelected" Value="True">
-                            <Setter Property="IsHitTestVisible" Value="False" TargetName="ToggleContent"/>
+                            <Trigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard TargetName="SelectedBorder" TargetProperty="Opacity">
+                                        <DoubleAnimation Duration="0:0:0.2" To="0.8"/>
+                                        <DoubleAnimation Duration="0:0:0.2" BeginTime="0:0:0.2" To="0.5"/>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.EnterActions>
+                            <Trigger.ExitActions>
+                                <BeginStoryboard>
+                                    <Storyboard TargetName="SelectedBorder" TargetProperty="Opacity">
+                                        <DoubleAnimation Duration="0:0:0.3"/>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.ExitActions>
+                        </Trigger>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Trigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard TargetName="BgBorder" TargetProperty="Opacity">
+                                        <DoubleAnimation Duration="0:0:0.2" To="0.2"/>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.EnterActions>
+                            <Trigger.ExitActions>
+                                <BeginStoryboard>
+                                    <Storyboard TargetName="BgBorder" TargetProperty="Opacity">
+                                        <DoubleAnimation Duration="0:0:0.2"/>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.ExitActions>
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
@@ -162,19 +191,21 @@
         </Setter>
     </Style>
 
-    <Style x:Key="WPRListBoxMenuItem" TargetType="{x:Type ListBoxItem}" BasedOn="{StaticResource BaseControl}">
+
+    <Style x:Key="WPRListBoxMenuItem" TargetType="{x:Type ListBoxItem}">
         <Setter Property="SnapsToDevicePixels" Value="True"/>
         <Setter Property="Padding" Value="4,1"/>
         <Setter Property="Foreground" Value="{Binding Foreground, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}"/>
         <Setter Property="HorizontalContentAlignment" Value="{Binding HorizontalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}"/>
         <Setter Property="VerticalContentAlignment" Value="{Binding VerticalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}"/>
-        <Setter Property="Template" Value="{StaticResource WPRListBoxItemTemplate}"/>
+        <Setter Property="Template" Value="{StaticResource WPRListBoxMenuItemTemplate}"/>
     </Style>
 
 
     <Style x:Key="WPRMenuListBox" TargetType="{x:Type ListBox}" BasedOn="{StaticResource WPRListBox}">
         <Setter Property="ItemContainerStyle" Value="{StaticResource WPRListBoxMenuItem}"/>
     </Style>
+
 
     <Style x:Key="WPRTemplateListBox" TargetType="{x:Type ListBox}"  BasedOn="{StaticResource WPRListBox}">
         <Setter Property="Padding" Value="0" />
@@ -184,11 +215,9 @@
                     <Setter Property="Template">
                         <Setter.Value>
                             <ControlTemplate TargetType="{x:Type ListBoxItem}">
-                                <StackPanel Orientation="Vertical">
-                                    <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                                                       SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" 
                                                       VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
-                                </StackPanel>
                             </ControlTemplate>
                         </Setter.Value>
                     </Setter>
