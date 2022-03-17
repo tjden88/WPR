@@ -31,7 +31,7 @@ namespace WPR.MVVM.ViewModels
 
         #endregion
 
-
+        /// <summary> Установить значение свойства </summary>
         protected virtual bool Set<T>(ref T field, T value, [CallerMemberName] string PropertyName = null)
         {
             if (Equals(field, value)) return false;
@@ -40,9 +40,24 @@ namespace WPR.MVVM.ViewModels
             return true;
         }
 
+        /// <summary> Установить значение свойства (проверка по ссылке)</summary>
+        protected virtual bool SetRef<T>(ref T field, ref T value, [CallerMemberName] string PropertyName = null)
+        {
+            if (ReferenceEquals(field, value)) return false;
+            field = value;
+            OnPropertyChanged(PropertyName);
+            return true;
+        }
+
         protected ValueResult<T> IfSet<T>(ref T field, T value, [CallerMemberName] string PropertyName = null)
         {
             var res = Set(ref field, value, PropertyName);
+            return new ValueResult<T>(res, value, this);
+        }
+
+        protected ValueResult<T> IfSetRef<T>(ref T field, ref T value, [CallerMemberName] string PropertyName = null)
+        {
+            var res = SetRef(ref field, ref value, PropertyName);
             return new ValueResult<T>(res, value, this);
         }
 
