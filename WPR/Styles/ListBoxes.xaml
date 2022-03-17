@@ -141,8 +141,8 @@
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type ListBoxItem}">
                     <Grid>
-                        <Border Name="BgBorder" Background="{DynamicResource AnimationEnterColorBrush}" Opacity="0"/>
-                        <Border Name="SelectedBorder" Background="{DynamicResource AnimationEnterColorBrush}" Opacity="0"/>
+                        <Border Name="BgBorder" Background="{DynamicResource AnimationEnterColorBrush}" Opacity="0" Margin="0,0,0,1"/>
+                        <Border Name="SelectedBorder" Background="{DynamicResource AnimationEnterColorBrush}" Opacity="0" Margin="0,0,0,1"/>
 
                         <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                                           Margin="{TemplateBinding Padding}"
@@ -157,7 +157,7 @@
                                 <BeginStoryboard>
                                     <Storyboard TargetName="SelectedBorder" TargetProperty="Opacity">
                                         <DoubleAnimation Duration="0:0:0.2" To="0.8"/>
-                                        <DoubleAnimation Duration="0:0:0.2" BeginTime="0:0:0.2" To="0.5"/>
+                                        <DoubleAnimation Duration="0:0:0.2" BeginTime="0:0:0.2" To="0.3"/>
                                     </Storyboard>
                                 </BeginStoryboard>
                             </Trigger.EnterActions>
@@ -173,7 +173,7 @@
                             <Trigger.EnterActions>
                                 <BeginStoryboard>
                                     <Storyboard TargetName="BgBorder" TargetProperty="Opacity">
-                                        <DoubleAnimation Duration="0:0:0.2" To="0.2"/>
+                                        <DoubleAnimation Duration="0:0:0.2" To="0.15"/>
                                     </Storyboard>
                                 </BeginStoryboard>
                             </Trigger.EnterActions>
