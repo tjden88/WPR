@@ -25,10 +25,12 @@ namespace WPR.MVVM.ViewModels
         }
 
 
-        protected DataValidationViewModel(bool OnlyForDesignTime = false) : base(OnlyForDesignTime) { }
+        protected DataValidationViewModel(bool OnlyForDesignTime = false) : base(OnlyForDesignTime)
+        {
+        }
 
 
-        private readonly List<string> _ActualErrors = new(); // Текущие ошибки
+        private readonly Dictionary<string, string[]> _ActualErrors = new(); // Текущие ошибки
 
 
         /// <summary> Список правил валидации </summary>
@@ -39,25 +41,56 @@ namespace WPR.MVVM.ViewModels
         {
             base.OnPropertyChanged(PropertyName);
 
-            _ActualErrors.Clear();
             if (PropertyName == null) return;
+            _ActualErrors.Remove(PropertyName);
 
             var errors = ValidationRules
                 .Where(info => info.PropertyName == PropertyName && info.Rule.Invoke())
-                .Select(info => info.ErrorMessage);
-            _ActualErrors.AddRange(errors);
+                .Select(info => info.ErrorMessage)
+                .ToArray();
+
+            if(errors.Any())
+                _ActualErrors[PropertyName] = errors.ToArray();
 
             ErrorsChanged?.Invoke(this, new DataErrorsChangedEventArgs(PropertyName));
+
             base.OnPropertyChanged(nameof(HasErrors));
         }
 
         /// <summary> Проверить все правила валидации </summary>
         protected virtual bool CheckHasErrors() => ValidationRules.Any(err => err.Rule.Invoke());
-        
-        public IEnumerable GetErrors(string PropertyName) => _ActualErrors;
+
+        public IEnumerable GetErrors(string PropertyName)
+        {
+            if (PropertyName == null) return null;
+            var hasErrors = _ActualErrors.TryGetValue(PropertyName, out var errors);
+            return hasErrors ? errors : null;
+        }
 
         public bool HasErrors => _ActualErrors.Any();
 
         public event EventHandler<DataErrorsChangedEventArgs> ErrorsChanged;
+
+        public void UpdateErrors()
+        {
+            var errors = ValidationRules
+                .Where(info => info.Rule.Invoke())
+                .ToArray();
+
+            _ActualErrors.Clear();
+
+            foreach (var error in errors)
+            {
+                _ActualErrors[error.PropertyName] = errors
+                    .Where(e => e.PropertyName == error.PropertyName)
+                    .Select(e => e.ErrorMessage)
+                    .ToArray();
+            }
+
+            foreach (var prop in errors.Select(e => e.PropertyName).Distinct())
+                ErrorsChanged?.Invoke(this, new DataErrorsChangedEventArgs(prop));
+
+            base.OnPropertyChanged(nameof(HasErrors));
+        }
     }
 }
