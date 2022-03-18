@@ -5,7 +5,7 @@
         <ResourceDictionary Source="../Styles/Base.xaml"/>
     </ResourceDictionary.MergedDictionaries>
 
-    <Style TargetType="{x:Type local:Bage}">
+    <Style TargetType="{x:Type local:WPRBage}">
         <Setter Property="Margin" Value="0"/>
         <Setter Property="Background" Value="{DynamicResource AccentColorBrush}"/>
         <Setter Property="Foreground" Value="{DynamicResource TextColorBrush }"/>
@@ -13,7 +13,7 @@
         <Setter Property="Focusable" Value="False"/>
         <Setter Property="Template">
             <Setter.Value>
-                <ControlTemplate TargetType="{x:Type local:Bage}">
+                <ControlTemplate TargetType="{x:Type local:WPRBage}">
                     <Grid>
                         <ContentPresenter/>
                         <Border x:Name="BageBorder" Background="{TemplateBinding Background}"
@@ -24,7 +24,7 @@
                                 Margin="{TemplateBinding Padding}"
                                 CornerRadius="9"
                                 MinHeight="18" MinWidth="18"
-                                Visibility="{TemplateBinding BageVisible}"
+                                Visibility="{TemplateBinding BageVisible, Converter={StaticResource Bool2VisibilityConverter}}"
                                 Effect="{StaticResource ButtonShadow}">
                             <ContentPresenter Content="{TemplateBinding BageContent}"
                                               Margin="3,0,3,0"

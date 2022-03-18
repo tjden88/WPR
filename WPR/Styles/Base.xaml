@@ -70,6 +70,7 @@
     <converters:BoolToVisibilityConverter x:Key="Bool2VisibilityConverter"/>
     <converters:TextIsNotNullConverter x:Key="TextIsNotNullConverter"/>
     <converters:ValueIsNotNullConverter x:Key="ValueIsNotNullConverter"/>
+    <converters:ValueIsNullConverter x:Key="ValueIsNullConverter"/>
     <converters:BoolNotConverter x:Key="BoolNotConverter"/>
     <converters:BrushLightOrDarkConverter x:Key="BrushLightOrDarkConverter"/>
     <converters:SignPlusMinusConverter x:Key="SignPlusMinusConverter"/>

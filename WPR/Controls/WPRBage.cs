@@ -7,16 +7,16 @@ using System.Windows.Media.Animation;
 namespace WPR.Controls
 {
     /// <summary>Наклейка с контентом на элемент</summary>
-    public class Bage : ContentControl
+    public class WPRBage : ContentControl
     {
-        static Bage()
+        static WPRBage()
         {
-            DefaultStyleKeyProperty.OverrideMetadata(typeof(Bage), new FrameworkPropertyMetadata(typeof(Bage)));
+            DefaultStyleKeyProperty.OverrideMetadata(typeof(WPRBage), new FrameworkPropertyMetadata(typeof(WPRBage)));
         }
 
         /// <summary>Контент бейджа</summary>
         public static readonly DependencyProperty BageContentProperty = DependencyProperty.Register(
-            "BageContent", typeof(object), typeof(Bage),
+            "BageContent", typeof(object), typeof(WPRBage),
             new PropertyMetadata(string.Empty));
 
         public object BageContent
@@ -30,16 +30,16 @@ namespace WPR.Controls
         }
 
         /// <summary> Видимость бейджа </summary>
-        public static readonly DependencyProperty BageVisibleProperty = DependencyProperty.Register("BageVisible", typeof(Visibility), typeof(Bage), 
-            new PropertyMetadata(Visibility.Hidden));
+        public static readonly DependencyProperty BageVisibleProperty = DependencyProperty.Register("BageVisible", typeof(bool), typeof(WPRBage), 
+            new PropertyMetadata(false));
 
-        public Visibility BageVisible
+        public bool BageVisible
         {
-            get => (Visibility)GetValue(BageVisibleProperty);
+            get => (bool)GetValue(BageVisibleProperty);
             set
             {
                 SetValue(BageVisibleProperty, value);
-                if (value == Visibility.Visible) AnimateBage();
+                if (value) AnimateBage();
             }
         }
 
