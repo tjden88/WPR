@@ -302,11 +302,26 @@
                     </Rectangle.RenderTransform>
                 </Rectangle>
                 <ContentControl IsTabStop="False"
+                                Name="Description"
                                             Grid.Row="1" 
                                             Content="{Binding Path=(helpers:TextHelper.Description), RelativeSource={RelativeSource TemplatedParent}}"
                                             HorizontalAlignment="Left"
                                             Foreground="{DynamicResource SecondaryTextColorBrush}"
                                             FontSize="10"/>
+
+                <ItemsControl Name="ErrorText" Visibility="Hidden" Grid.Row="1" Margin="0"
+                              Focusable="False"
+                              ItemsSource="{Binding (Validation.Errors) , RelativeSource={RelativeSource TemplatedParent}}">
+
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate >
+                            <TextBlock Foreground="{StaticResource AttentionColorBrush}" 
+                                       Text="{Binding ErrorContent}"
+                                       TextWrapping ="Wrap"
+                                       FontSize="11"/>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
             </Grid>
         </Grid>
         <ControlTemplate.Triggers>
@@ -407,6 +422,9 @@
             </Trigger>
             <Trigger Property="Validation.HasError" Value="True">
                 <Setter Property="BorderBrush" Value="{StaticResource AttentionColorBrush}"/>
+                <Setter Property="Foreground" TargetName="FloatingHint" Value="{StaticResource AttentionColorBrush}"/>
+                <Setter TargetName="ErrorText" Property="Visibility" Value="Visible"/>
+                <Setter TargetName="Description" Property="Visibility" Value="Hidden"/>
             </Trigger>
         </ControlTemplate.Triggers>
     </ControlTemplate>
