@@ -135,15 +135,16 @@ namespace WPR.Controls
         /// <param name="Text">Текст сообщения</param>
         /// <param name="Duration">Длительность</param>
         /// <param name="ButtonCommandText">Текст кнопки команды</param>
-        public void ShowBubble(string Text, int Duration = 2000, string ButtonCommandText = "", Action Callback = null)
+        /// <param name="Callback">True, если кнопка была нажата</param>
+        public void ShowBubble(string Text, int Duration = 2000, string ButtonCommandText = "", Action<bool> Callback = null)
         {
-            _StackBubblesQueue.Enqueue(new StackBubbles() { Text = Text, Duration = Duration, Buttontext = ButtonCommandText, Action=Callback });
+            _StackBubblesQueue.Enqueue(new StackBubbles { Text = Text, Duration = Duration, Buttontext = ButtonCommandText, Action=Callback });
             if (_StackBubblesQueue.Count == 1) ShowBubbleinStack();
         }
 
         private void HideBubble()
         {
-            Border clip = GetTemplateChild("PART_Bubble") as Border;
+            var clip = GetTemplateChild("PART_Bubble") as Border;
             _Animout.Completed -= Animout_Completed;
             _Animout = new DoubleAnimation(1, 0, TimeSpan.FromSeconds(0.1));
             _Animout.Completed += Animout_Completed;
@@ -189,13 +190,13 @@ namespace WPR.Controls
 
         private void BubbleButton_Click(object sender, RoutedEventArgs e)
         {
-            _StackBubblesQueue.Peek().Action?.Invoke();
+            _StackBubblesQueue.Peek().Action?.Invoke(true);
             HideBubble();
         }
 
         private void Animout_Completed(object sender, EventArgs e)
         {
-            _StackBubblesQueue.Dequeue();
+            _StackBubblesQueue.Dequeue().Action?.Invoke(false);
             ShowBubbleinStack();
         }
 
@@ -207,7 +208,7 @@ namespace WPR.Controls
             public string Text;
             public int Duration;
             public string Buttontext;
-            public Action Action;
+            public Action<bool> Action;
         }
         #endregion
     }

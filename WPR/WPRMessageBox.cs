@@ -258,7 +258,7 @@ namespace WPR
         }
 
         /// <summary>Показать всплывающее сообщение с кнопкой</summary>
-        public static void Bubble(DependencyObject sender, string Text, string ButtonText, Action Callback, int Duration = 4000)
+        public static void Bubble(DependencyObject sender, string Text, string ButtonText, Action<bool> Callback, int Duration = 4000)
         {
             var p = FindDialogPanel(sender);
             p?.ShowBubble(Text, Duration, ButtonText, Callback);
