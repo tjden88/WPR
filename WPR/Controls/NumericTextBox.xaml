@@ -22,7 +22,8 @@
                              Style="{ Binding RelativeSource={RelativeSource TemplatedParent},Path=TextBoxStyle, TargetNullValue={StaticResource WPRTextBox}}">
                             <helpers:TextHelper.Description>
                                 <TextBlock Foreground="{DynamicResource AttentionColorBrush}"
-                                       Text="{TemplateBinding DescriptionText}"/>
+                                           TextWrapping="WrapWithOverflow"
+                                           Text="{TemplateBinding DescriptionText}"/>
                             </helpers:TextHelper.Description>
                         </TextBox>
                         <StackPanel  Orientation="Horizontal"
