@@ -405,6 +405,9 @@
             <Trigger Property="IsEnabled" Value="False">
                 <Setter Property="Opacity" Value="0.5"/>
             </Trigger>
+            <Trigger Property="Validation.HasError" Value="True">
+                <Setter Property="BorderBrush" Value="{StaticResource AttentionColorBrush}"/>
+            </Trigger>
         </ControlTemplate.Triggers>
     </ControlTemplate>
 
