@@ -51,14 +51,16 @@ namespace WPR.MVVM.ViewModels
 
         protected ValueResult<T> IfSet<T>(ref T field, T value, [CallerMemberName] string PropertyName = null)
         {
+            var oldValue = field;
             var res = Set(ref field, value, PropertyName);
-            return new ValueResult<T>(res, value, this);
+            return new ValueResult<T>(res, value, oldValue, this);
         }
 
         protected ValueResult<T> IfSetRef<T>(ref T field, ref T value, [CallerMemberName] string PropertyName = null)
         {
+            var oldValue = field;
             var res = SetRef(ref field, ref value, PropertyName);
-            return new ValueResult<T>(res, value, this);
+            return new ValueResult<T>(res, value, oldValue, this);
         }
 
 

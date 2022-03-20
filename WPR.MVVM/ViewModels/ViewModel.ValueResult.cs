@@ -6,12 +6,14 @@
         {
             private readonly bool _Result;
             private readonly T _NewValue;
+            private readonly T _OldValue;
             private readonly ViewModel _Model;
 
-            public ValueResult(bool Result, in T NewValue, ViewModel Model)
+            public ValueResult(bool Result, in T NewValue, in T OldValue, ViewModel Model)
             {
                 _Result = Result;
                 _NewValue = NewValue;
+                _OldValue = OldValue;
                 _Model = Model;
             }
 
@@ -27,6 +29,12 @@
                 return this;
             }
 
+            public ValueResult<T> ThenOld(Action<T> Action)
+            {
+                if (_Result) Action(_OldValue);
+                return this;
+            }
+
             public ValueResult<T> ThenIf(Predicate<T> ConditionPredicate, Action Action)
             {
                 if (_Result && ConditionPredicate(_NewValue))
@@ -38,6 +46,13 @@
             {
                 if (_Result && ConditionPredicate(_NewValue))
                     Action(_NewValue);
+                return this;
+            }
+
+            public ValueResult<T> ThenIfOld(Predicate<T> ConditionPredicate, Action<T> Action)
+            {
+                if (_Result && ConditionPredicate(_OldValue))
+                    Action(_OldValue);
                 return this;
             }
 
