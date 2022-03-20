@@ -35,7 +35,7 @@ namespace WPR.MVVM.Commands.Base
         #region Visibility : Visibility - Видимость, если команда доступна
 
         /// <summary>Видимость, если команда доступна</summary>
-        private Visibility _Visibility = Visibility.Hidden;
+        private Visibility _Visibility = Visibility.Collapsed;
 
         /// <summary>Видимость, если команда доступна</summary>
         public Visibility Visibility
@@ -95,7 +95,7 @@ namespace WPR.MVVM.Commands.Base
         public bool CanExecute(object parameter)
         {
             var canExecute = _Executable && CanExecuteCommand(parameter);
-            Visibility = canExecute ? Visibility.Visible : Visibility.Hidden;
+            Visibility = canExecute ? Visibility.Visible : Visibility.Collapsed;
             return canExecute;
         }
 
