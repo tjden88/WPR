@@ -16,62 +16,54 @@ namespace WPR.Controls
             base.OnRender(dc);
         }
 
+
+        public override UIElement Child
+        {
+            get => base.Child;
+            set
+            {
+                if (value is FrameworkElement frameworkElement)
+                {
+                    frameworkElement.SizeChanged += ChildOnSizeChanged;
+                    if(base.Child is FrameworkElement oldChild)
+                        oldChild.SizeChanged -= ChildOnSizeChanged;
+                }
+                base.Child = value;
+            }
+        }
+
+        private void ChildOnSizeChanged(object Sender, SizeChangedEventArgs E) => OnApplyChildClip();
+
         protected virtual void OnApplyChildClip()
         {
             if (Child != null && ClipToBounds)
-            {
                 Child.Clip = GetRoundRectangle(new Rect(Child.RenderSize), BorderThickness, CornerRadius);
-            }
         }
 
         // https://wpfspark.wordpress.com/2011/06/08/clipborder-a-wpf-border-that-clips/
         private static Geometry GetRoundRectangle(Rect baseRect, Thickness borderThickness, CornerRadius cornerRadius)
         {
             // Normalizing the corner radius
-            if (cornerRadius.TopLeft < double.Epsilon)
-            {
-                cornerRadius.TopLeft = 0.0;
-            }
+            if (cornerRadius.TopLeft < double.Epsilon) cornerRadius.TopLeft = 0.0;
 
-            if (cornerRadius.TopRight < double.Epsilon)
-            {
-                cornerRadius.TopRight = 0.0;
-            }
+            if (cornerRadius.TopRight < double.Epsilon) cornerRadius.TopRight = 0.0;
 
-            if (cornerRadius.BottomLeft < double.Epsilon)
-            {
-                cornerRadius.BottomLeft = 0.0;
-            }
+            if (cornerRadius.BottomLeft < double.Epsilon) cornerRadius.BottomLeft = 0.0;
 
-            if (cornerRadius.BottomRight < double.Epsilon)
-            {
-                cornerRadius.BottomRight = 0.0;
-            }
+            if (cornerRadius.BottomRight < double.Epsilon) cornerRadius.BottomRight = 0.0;
 
             // Taking the border thickness into account
             var leftHalf = borderThickness.Left * 0.5;
-            if (leftHalf < double.Epsilon)
-            {
-                leftHalf = 0.0;
-            }
+            if (leftHalf < double.Epsilon) leftHalf = 0.0;
 
             var topHalf = borderThickness.Top * 0.5;
-            if (topHalf < double.Epsilon)
-            {
-                topHalf = 0.0;
-            }
+            if (topHalf < double.Epsilon) topHalf = 0.0;
 
             var rightHalf = borderThickness.Right * 0.5;
-            if (rightHalf < double.Epsilon)
-            {
-                rightHalf = 0.0;
-            }
+            if (rightHalf < double.Epsilon) rightHalf = 0.0;
 
             var bottomHalf = borderThickness.Bottom * 0.5;
-            if (bottomHalf < double.Epsilon)
-            {
-                bottomHalf = 0.0;
-            }
+            if (bottomHalf < double.Epsilon) bottomHalf = 0.0;
 
             // Create the rectangles for the corners that needs to be curved in the base rectangle 
             // TopLeft Rectangle 
