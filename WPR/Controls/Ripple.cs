@@ -22,14 +22,12 @@ namespace WPR.Controls
         {
             // Подготовка анимации
             _RippleAnimation.Children.Add(new DoubleAnimation(0, 0, TimeSpan.FromSeconds(0.3)));
-            _RippleAnimation.Children.Add(new ThicknessAnimation() { Duration = TimeSpan.FromSeconds(0.3) });
             _RippleAnimation.Children.Add(new DoubleAnimation(1, 0.0, TimeSpan.FromSeconds(0.3)));
             _RippleAnimation.Children.Add(new DoubleAnimation(0, TimeSpan.Zero) { BeginTime = TimeSpan.FromSeconds(0.3) });
 
-            Storyboard.SetTargetProperty(_RippleAnimation.Children[0], new PropertyPath(WidthProperty));
-            Storyboard.SetTargetProperty(_RippleAnimation.Children[1], new PropertyPath(MarginProperty));
-            Storyboard.SetTargetProperty(_RippleAnimation.Children[2], new PropertyPath(OpacityProperty));
-            Storyboard.SetTargetProperty(_RippleAnimation.Children[3], new PropertyPath(WidthProperty));
+            Storyboard.SetTargetProperty(_RippleAnimation.Children[0], new PropertyPath("RenderTransform.ScaleX"));
+            Storyboard.SetTargetProperty(_RippleAnimation.Children[1], new PropertyPath(OpacityProperty));
+            Storyboard.SetTargetProperty(_RippleAnimation.Children[2], new PropertyPath("RenderTransform.ScaleX"));
 
             _RippleAnimation.Completed += (_,_) => IsAnimationActive = false;
         }
@@ -142,16 +140,12 @@ namespace WPR.Controls
                 var position = new Point(ActualWidth / 2, ActualHeight / 2);
                 var startMargin = new Thickness(position.X, position.Y, 0, 0);
                 _Ellipse.Margin = startMargin;
-                ((ThicknessAnimation) _RippleAnimation.Children[1]).From = startMargin;
-                ((ThicknessAnimation) _RippleAnimation.Children[1]).To = new Thickness(position.X - targetWidth / 2, position.Y - targetWidth / 2, 0, 0);
             }
             else
             {
                 var mousePosition = (e);
                 var startMargin = new Thickness(mousePosition.X, mousePosition.Y, 0, 0);
                 _Ellipse.Margin = startMargin;
-                ((ThicknessAnimation) _RippleAnimation.Children[1]).From = startMargin;
-                ((ThicknessAnimation) _RippleAnimation.Children[1]).To = new Thickness(mousePosition.X - targetWidth / 2, mousePosition.Y - targetWidth / 2, 0, 0);
             }
             _RippleAnimation.Begin(_Ellipse, true);
             IsAnimationActive = true;
