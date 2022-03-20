@@ -15,10 +15,10 @@ namespace WPR.Demo.Pages
 
         private void Button_Click(object Sender, RoutedEventArgs E)
         {
-            if (BageButton.BageVisible == Visibility.Hidden)
+            if (!BageButton.BageVisible)
             {
                 BageButton.BageContent = "1";
-                BageButton.BageVisible = Visibility.Visible;
+                BageButton.BageVisible = true;
             }
             else
             {

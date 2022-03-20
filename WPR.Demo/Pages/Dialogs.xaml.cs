@@ -99,7 +99,7 @@ namespace WPR.Demo.Pages
 
         private void Button2_OnClick(object Sender, RoutedEventArgs E)
         {
-            WPRMessageBox.Bubble(this, "Всплывающее сообщение с кнопкой", "YEP!", () => Debug.WriteLine("Clicked!"));
+            WPRMessageBox.Bubble(this, "Всплывающее сообщение с кнопкой", "YEP!", _ => Debug.WriteLine("Clicked!"));
         }
 
         private void Button3_OnClick(object Sender, RoutedEventArgs E)

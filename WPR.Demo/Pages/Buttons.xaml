@@ -51,9 +51,9 @@
                     <controls:WPRIcon Source="Dislike"/>
                 </Button>
             </StackPanel>
-            <controls:Bage x:Name="BageButton" BageContent ="1">
+            <controls:WPRBage x:Name="BageButton" BageContent ="1">
                 <Button BorderThickness="1" Click="Button_Click" Content="КНОПКА С БЕЙДЖЕМ"/>
-            </controls:Bage>
+            </controls:WPRBage>
         </StackPanel>
     </StackPanel>
 </Page>
