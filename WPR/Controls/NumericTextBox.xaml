@@ -9,6 +9,7 @@
 
     <Style TargetType="{x:Type local:NumericTextBox}">
         <Setter Property="Background" Value="{DynamicResource PrimaryColorBrush}"/>
+        <Setter Property="Foreground" Value="{DynamicResource PrimaryTextColorBrush}"/>
         <Setter Property="Focusable" Value="False"/>
         <Setter Property="BorderBrush" Value="{DynamicResource SecondaryTextColorBrush}"/>
         <Setter Property="Template">
@@ -16,6 +17,7 @@
                 <ControlTemplate TargetType="{x:Type local:NumericTextBox}">
                     <Grid Background="Transparent" FocusManager.FocusedElement="{Binding ElementName=PART_TextBox}">
                         <TextBox helpers:TextHelper.Hint ="{TemplateBinding Hint}"
+                                 Foreground="{TemplateBinding Foreground}"
                              Background="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Background, Mode=TwoWay}"
                              x:Name="PART_TextBox"
                              Text="{Binding RelativeSource={RelativeSource TemplatedParent},Path= TextExpression, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
