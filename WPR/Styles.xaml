@@ -22,6 +22,7 @@
         <ResourceDictionary Source="Styles\ScrollBars.xaml"/>
         <ResourceDictionary Source="Styles\GridSplitters.xaml"/>
         <ResourceDictionary Source="Styles\DataGrids.xaml"/>
+        <ResourceDictionary Source="Styles\RichTextBoxes.xaml"/>
     </ResourceDictionary.MergedDictionaries>
 
     <!--Стили по умолчанию-->
@@ -48,5 +49,5 @@
     <Style TargetType="ScrollViewer" BasedOn="{StaticResource WPRScrollViewer}"/>
     <Style TargetType="GridSplitter" BasedOn="{StaticResource WPRGridSplitter}"/>
     <Style TargetType="DataGrid" BasedOn="{StaticResource WPRDataGrid}"/>
-    <Style TargetType="{x:Type Border}" BasedOn="{StaticResource FrameworkElementStyle}"/>
+    <Style TargetType="RichTextBox" BasedOn="{StaticResource WPRRichTextBox}"/>
 </ResourceDictionary>
