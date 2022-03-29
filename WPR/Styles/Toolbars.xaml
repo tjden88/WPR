@@ -16,8 +16,9 @@
     </Style>
     
     <Style x:Key="WPRToolBar" TargetType="{x:Type ToolBar}" BasedOn="{StaticResource BaseControl}">
-        <Setter Property="Background" Value="{DynamicResource MenuBodyBrush}"/>
+        <Setter Property="Background" Value="{DynamicResource BackgroundColorBrush}"/>
         <Setter Property="ClipToBounds" Value="True"/>
+        <Setter Property="ToolBarTray.IsLocked" Value="True"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type ToolBar}">
@@ -58,8 +59,14 @@
                             <Setter Property="MinHeight" Value="44" />
                             <Setter Property="MinWidth" Value="44" />
                         </Style>
-                        <Style x:Key="{x:Static ToolBar.ButtonStyleKey}" TargetType="Button" BasedOn="{StaticResource MenuButton}">
+                        <Style x:Key="{x:Static ToolBar.ButtonStyleKey}" TargetType="Button" BasedOn="{StaticResource WPRFlatButton}">
                             <Setter Property="Foreground" Value="{DynamicResource PrimaryTextColorBrush}"/>
+                            <Setter Property="BorderThickness" Value="1"/>
+                            <Setter Property="BorderBrush" Value="{DynamicResource DividerColorBrush}"/>
+                            <Setter Property="Padding" Value="5,0"/>
+                            <Setter Property="Margin" Value="3,0"/>
+                            <Setter Property="MinWidth" Value="32"/>
+                            <Setter Property="MinHeight" Value="32"/>
                         </Style>
                     </ControlTemplate.Resources>
                     
