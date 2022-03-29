@@ -5,7 +5,7 @@
         <ResourceDictionary Source="../Styles/Base.xaml"/>
     </ResourceDictionary.MergedDictionaries>
 
-    <Style TargetType="{x:Type local:WPRBage}">
+    <Style TargetType="{x:Type local:WPRBage}" BasedOn="{StaticResource BaseControl}">
         <Setter Property="Margin" Value="0"/>
         <Setter Property="Background" Value="{DynamicResource AccentColorBrush}"/>
         <Setter Property="Foreground" Value="{DynamicResource TextColorBrush }"/>

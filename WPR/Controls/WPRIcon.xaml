@@ -1,8 +1,13 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:controls="clr-namespace:WPR.Controls">
-   
-    <Style TargetType="{x:Type controls:WPRIcon}">
+
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="../Styles/Base.xaml"/>
+    </ResourceDictionary.MergedDictionaries>
+
+
+    <Style TargetType="{x:Type controls:WPRIcon}" BasedOn="{StaticResource BaseControl}">
         <Setter Property="HorizontalAlignment" Value="Center" />
         <Setter Property="VerticalAlignment" Value="Center" />
         <Setter Property="Margin" Value="0"/>

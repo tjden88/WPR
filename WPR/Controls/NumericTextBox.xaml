@@ -7,7 +7,7 @@
         <ResourceDictionary Source="../Styles/TextBoxes.xaml"/>
     </ResourceDictionary.MergedDictionaries>
 
-    <Style TargetType="{x:Type local:NumericTextBox}">
+    <Style TargetType="{x:Type local:NumericTextBox}" BasedOn="{StaticResource BaseControl}">
         <Setter Property="Background" Value="{DynamicResource PrimaryColorBrush}"/>
         <Setter Property="Foreground" Value="{DynamicResource PrimaryTextColorBrush}"/>
         <Setter Property="Focusable" Value="False"/>

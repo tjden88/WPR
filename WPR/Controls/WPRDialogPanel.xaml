@@ -6,7 +6,7 @@
         <ResourceDictionary Source="../Styles/Base.xaml"/>
     </ResourceDictionary.MergedDictionaries>
 
-    <Style TargetType="{x:Type controls:WPRDialogPanel}">
+    <Style TargetType="{x:Type controls:WPRDialogPanel}" BasedOn="{StaticResource BaseControl}">
         <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
         <Setter Property="Template">
             <Setter.Value>

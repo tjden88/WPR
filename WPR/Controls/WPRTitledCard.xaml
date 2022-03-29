@@ -7,7 +7,7 @@
     </ResourceDictionary.MergedDictionaries>
 
 
-    <Style TargetType="{x:Type controls:WPRTitledCard}">
+    <Style TargetType="{x:Type controls:WPRTitledCard}" BasedOn="{StaticResource BaseControl}">
         <Setter Property="Foreground" Value="{DynamicResource SecondaryTextColorBrush}"/>
         <Setter Property="Background" Value="{DynamicResource BackgroundColorBrush}"/>
         <Setter Property="Focusable" Value="False"/>
