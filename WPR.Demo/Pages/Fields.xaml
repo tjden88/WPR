@@ -41,17 +41,19 @@
                          x:Name="NameText"
                          Background="{DynamicResource AccentColorBrush}" />
             </DockPanel>
+            <TextBlock Text="RichTextBox" Margin="0,10"/>
+            <RichTextBox Height="100"></RichTextBox>
         </StackPanel>
         <StackPanel Width="200">
             <ComboBox helpers:TextHelper.Description="Описание"  SelectedIndex="-1"
           helpers:TextHelper.Hint="Not Editable"
           Margin="10"
           Name="Box">
-    <ComboBoxItem Content="Item 1"/>
-    <ComboBoxItem Content="Item 2"/>
-    <ComboBoxItem Content="Item 3"/>
-    <ComboBoxItem Content="Item 4"/>
-</ComboBox>
+                <ComboBoxItem Content="Item 1"/>
+                <ComboBoxItem Content="Item 2"/>
+                <ComboBoxItem Content="Item 3"/>
+                <ComboBoxItem Content="Item 4"/>
+            </ComboBox>
             <Button Content="Clear" Click="ClearCB_Click" />
             <ComboBox helpers:TextHelper.Description="Описание 2" helpers:TextHelper.Hint="Editable" IsEditable="True" Margin="10">
                 <ComboBoxItem Content="Item 1"/>

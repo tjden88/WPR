@@ -205,7 +205,7 @@
             </Storyboard>
         </ControlTemplate.Resources>
 
-        <Grid x:Name="templateRoot" Margin="-8,-15,-8,0" SnapsToDevicePixels="true">
+        <Grid x:Name="templateRoot" Margin="-8,-10,-8,0" SnapsToDevicePixels="true">
             <Popup x:Name="PART_Popup" AllowsTransparency="true"
                    Grid.ColumnSpan="2" 
                    MaxHeight="{TemplateBinding MaxDropDownHeight}"
@@ -269,7 +269,7 @@
                     <ContentControl.RenderTransform>
                         <TransformGroup>
                             <TranslateTransform x:Name="TranslateTransform" Y="{Binding ActualHeight, ElementName=FloatingHint, Converter={StaticResource SignPlusMinusConverter}}"/>
-                            <ScaleTransform x:Name="ScaleTransform" ScaleX="0.8" ScaleY="{Binding Path=ScaleX, RelativeSource={RelativeSource Self}}"/>
+                            <ScaleTransform x:Name="ScaleTransform" ScaleX="0.9" ScaleY="{Binding Path=ScaleX, RelativeSource={RelativeSource Self}}"/>
                         </TransformGroup>
                     </ContentControl.RenderTransform>
                 </ContentControl>
@@ -432,7 +432,7 @@
     <Style x:Key="WPRComboBox" TargetType="{x:Type ComboBox}" BasedOn="{StaticResource BaseControl}">
         <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Auto"/>
         <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto"/>
-        <Setter Property="BorderBrush" Value="{DynamicResource SecondaryTextColorBrush}"/>
+        <Setter Property="BorderBrush" Value="{DynamicResource DividerColorBrush}"/>
         <Setter Property="Background" Value="{DynamicResource PrimaryColorBrush}"/>
         <Setter Property="Padding" Value="0,3,0,0"/>
         <Setter Property="ScrollViewer.CanContentScroll" Value="true"/>

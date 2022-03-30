@@ -30,12 +30,16 @@
                         </TextBox>
                         <StackPanel  Orientation="Horizontal"
                                      HorizontalAlignment="Right"
+                                     VerticalAlignment="Top"
+                                     Margin="0,10,0,0"
                                      ClipToBounds="True"
                                      Visibility="{TemplateBinding PlusMinusButtonsShowing, Converter={StaticResource Bool2VisibilityConverter}}">
+
                             <Button Command="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=PlusButtonCommand}"
                                     Style="{StaticResource WPRToolButtonNoRipple}" 
                                     Margin="0"
-                                    Focusable="False" 
+                                    Focusable="False"
+                                    ToolTip="Увеличить значение"
                                     Height="{Binding RelativeSource={RelativeSource Self}, Path=ActualWidth}"
                                     Foreground="{DynamicResource AccentColorBrush}"
                                     Padding="0">
@@ -49,6 +53,7 @@
                                     Focusable="False" 
                                     Height="{Binding RelativeSource={RelativeSource Self}, Path=ActualWidth}"
                                     Margin="0"
+                                    ToolTip="Уменьшить значение"
                                     Foreground="{DynamicResource AccentColorBrush}"
                                     Padding="0">
                                 <local:WPRIcon Source="MinusCircle" IconSize="18" Margin="1"/>
