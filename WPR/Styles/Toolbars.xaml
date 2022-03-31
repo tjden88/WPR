@@ -83,7 +83,8 @@
                     <DockPanel x:Name="Grid" SnapsToDevicePixels="true" Background="{TemplateBinding Background}">
                         <Grid DockPanel.Dock="Right" x:Name="OverflowGrid" HorizontalAlignment="Right">
                             <ToggleButton x:Name="OverflowButton" ClickMode="Press" FocusVisualStyle="{x:Null}" 
-                                          Width="44"
+                                          helpers:ButtonHelper.BorderRadius="3"
+                                          Width="32"
                                           IsChecked="{Binding IsOverflowOpen, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}" 
                                           Visibility="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=HasOverflowItems, Converter={StaticResource Bool2VisibilityConverter}}" 
                                           Foreground="{TemplateBinding Foreground}">
