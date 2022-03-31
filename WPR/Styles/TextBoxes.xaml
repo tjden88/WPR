@@ -189,7 +189,7 @@
                     <Border BorderBrush="{TemplateBinding BorderBrush}"
                             BorderThickness="{TemplateBinding BorderThickness}">
                         <Grid>
-                            <TextBlock Text="{Binding Path=(helpers:TextHelper.Hint), RelativeSource={RelativeSource TemplatedParent}}"
+                            <ContentControl Content="{Binding Path=(helpers:TextHelper.Hint), RelativeSource={RelativeSource TemplatedParent}}"
                                        x:Name="Hint"
                                        Opacity="0"
                                        Margin="{TemplateBinding Padding}"
@@ -197,10 +197,10 @@
                                        VerticalAlignment="Center"
                                        FontSize="{TemplateBinding FontSize}"
                                        Foreground="{DynamicResource SecondaryTextColorBrush}">
-                                <TextBlock.RenderTransform>
+                                <ContentControl.RenderTransform>
                                     <TranslateTransform x:Name="Trans" Y="{Binding Path=ActualHeight, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource SignPlusMinusConverter}}"/>
-                                </TextBlock.RenderTransform>
-                            </TextBlock>
+                                </ContentControl.RenderTransform>
+                            </ContentControl>
                             <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition/>
