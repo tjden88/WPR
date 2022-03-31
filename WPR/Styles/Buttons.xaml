@@ -8,7 +8,7 @@
 
 
     <ControlTemplate TargetType="{x:Type ButtonBase}" x:Key="WPRButtonTemplate">
-        <Grid>
+        <Grid >
             <Border x:Name="ShadowBorder"
                     CornerRadius="{Binding Path=(helpers:ButtonHelper.BorderRadius), RelativeSource={RelativeSource TemplatedParent}}"
                     BorderThickness="{TemplateBinding BorderThickness }" 
@@ -37,7 +37,7 @@
                                          RippleInCenter="{Binding Path=(helpers:RippleHelper.IsCentered), RelativeSource={RelativeSource TemplatedParent}}"
                                          IsEnabled="{Binding Path=(helpers:RippleHelper.IsRippleEnabled), RelativeSource={RelativeSource TemplatedParent}}">
                         <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                                  VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                          VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
                                                   Margin="{TemplateBinding Padding}"/>
                     </controls:Ripple>
                 </Grid>

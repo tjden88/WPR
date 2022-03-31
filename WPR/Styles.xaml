@@ -28,6 +28,7 @@
     <!--Стили по умолчанию-->
     <Style TargetType="{x:Type FrameworkElement}" BasedOn="{StaticResource FrameworkElementStyle}"/>
     <Style TargetType="{x:Type Control}" BasedOn="{StaticResource BaseControl}"/>
+    <Style TargetType="{x:Type UserControl}" BasedOn="{StaticResource BaseControl}"/>
     <Style TargetType="ToolTip" BasedOn="{StaticResource WPRToolTip}"/>
     <Style TargetType="Button" BasedOn="{StaticResource PrimaryWPRButton}"/>
     <Style TargetType="TextBlock" BasedOn="{StaticResource WPRTextBlock}"/>

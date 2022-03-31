@@ -7,7 +7,7 @@
         <ResourceDictionary Source="../Styles/Base.xaml"/>
     </ResourceDictionary.MergedDictionaries>
 
-    <Style TargetType="{x:Type local:WPRIconText}" BasedOn="{StaticResource BaseControl}">
+    <Style TargetType="{x:Type local:WPRIconText}" BasedOn="{StaticResource FrameworkElementStyle}">
         <Setter Property="Focusable" Value="False"/>
         <Setter Property="Template">
             <Setter.Value>

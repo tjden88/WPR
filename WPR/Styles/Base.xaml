@@ -105,6 +105,7 @@
     <!--Базовый стиль для всех контролов-->
     <Style x:Key="BaseControl" TargetType="{x:Type Control}" BasedOn="{StaticResource FrameworkElementStyle}">
         <Setter Property="Background" Value="{x:Null}" />
+        <Setter Property="Foreground" Value="{DynamicResource PrimaryTextColorBrush}"/>
         <Setter Property="FontSize" Value="14"/>
         <Setter Property="FontFamily" Value="{StaticResource RobotoFont}" />
         <Setter Property="BorderThickness" Value="0"/>

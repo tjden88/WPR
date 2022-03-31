@@ -199,7 +199,7 @@
     </ControlTemplate>
 
     <!--Окно с заголовком-->
-    <Style x:Key="ChromeWindow" TargetType="{x:Type Window}">
+    <Style x:Key="ChromeWindow" TargetType="{x:Type Window}" BasedOn="{StaticResource BaseControl}">
         <Setter Property="WindowChrome.WindowChrome">
             <Setter.Value>
                 <WindowChrome CaptionHeight="35"
@@ -214,12 +214,11 @@
         <Setter Property="Background" Value="{DynamicResource BackgroundColorBrush}" />
         <Setter Property="wh:WindowHelper.WindowHeaderForeground" Value="{DynamicResource TextColorBrush}" />
         <Setter Property="UseLayoutRounding" Value="True"/>
-        <Setter Property="FontFamily" Value="{StaticResource RobotoFont}"/>
         <Setter Property="Template" Value="{StaticResource ChromeWindowTemplate}"/>
     </Style>
 
     <!--Модальное окно с сообщением-->
-    <Style TargetType="{x:Type Window}" x:Key="WPRModalWindow">
+    <Style TargetType="{x:Type Window}" x:Key="WPRModalWindow" BasedOn="{StaticResource BaseControl}">
         <Setter Property="SizeToContent" Value="WidthAndHeight"/>
         <Setter Property="WindowStyle" Value="None"/>
         <Setter Property="AllowsTransparency" Value="True"/>
