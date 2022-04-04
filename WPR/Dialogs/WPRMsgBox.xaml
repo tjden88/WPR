@@ -15,37 +15,43 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type dialogs:WPRMsgBox}">
-                    <Grid>
-                        <StackPanel Orientation="Vertical">
-                            <TextBlock x:Name="TitleText" Text="{TemplateBinding Title}" 
-                                       Foreground="{DynamicResource PrimaryColorBrush}" 
-                                       FontSize="20" FontWeight="Medium" 
-                                       Margin="10,10,10,0" 
-                                       HorizontalAlignment="Left"/>
-                            <TextBlock TextWrapping="Wrap"
+                    <DockPanel>
+                        <TextBlock x:Name="TitleText"
+                                   DockPanel.Dock="Top"
+                                   Text="{TemplateBinding Title}" 
+                                   Foreground="{DynamicResource PrimaryColorBrush}" 
+                                   FontSize="20" FontWeight="Medium" 
+                                   TextWrapping="WrapWithOverflow"
+                                   Margin="10,10,10,0" 
+                                   HorizontalAlignment="Left"/>
+                        <StackPanel Orientation="Horizontal"
+                                    DockPanel.Dock="Bottom"
+                                    HorizontalAlignment="Right" Margin="6">
+                            <Button x:Name="Cancel" Content="ОТМЕНА" Width="85" Margin="3"  IsCancel="True" Style="{StaticResource WPRFlatButton}"
+                                    Command="{TemplateBinding CancelCommand}"
+                                    Visibility="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=CancelButtonVisible , Converter={StaticResource Bool2VisibilityConverter}}"/>
+                            <Button x:Name="Ok" Content="OK" Width="85" Margin="3" IsDefault="True"
+                                    Command="{TemplateBinding SetDialogResultCommand}"
+                                    CommandParameter="{StaticResource True}"
+                                    Visibility="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=YesNoButtonsVisible , Converter={StaticResource Bool2VisibilityConverter}, ConverterParameter=!}"/>
+                            <Button x:Name="No" Content="НЕТ" Width="85" Margin="3"  Style="{StaticResource WPRFlatButton}"
+                                    Command="{TemplateBinding SetDialogResultCommand}"
+                                    CommandParameter="{StaticResource False}"
+                                    Visibility="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=YesNoButtonsVisible , Converter={StaticResource Bool2VisibilityConverter}}"/>
+                            <Button x:Name="Yes" Content="ДА" Width="85" Margin="3" IsDefault="True"
+                                    Command="{TemplateBinding SetDialogResultCommand}"
+                                    CommandParameter="{StaticResource True}"
+                                    Visibility="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=YesNoButtonsVisible , Converter={StaticResource Bool2VisibilityConverter}}"/>
+                        </StackPanel>
+                        <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
+                            <TextBlock TextWrapping="WrapWithOverflow"
                                        Text="{TemplateBinding Caption}" 
                                        Foreground="{DynamicResource PrimaryTextColorBrush}" 
                                        FontSize="14"
                                        Margin="10"/>
-                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="6">
-                                <Button x:Name="Cancel" Content="ОТМЕНА" Width="85" Margin="3"  IsCancel="True" Style="{StaticResource WPRFlatButton}"
-                                        Command="{TemplateBinding CancelCommand}"
-                                        Visibility="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=CancelButtonVisible , Converter={StaticResource Bool2VisibilityConverter}}"/>
-                                <Button x:Name="Ok" Content="OK" Width="85" Margin="3" IsDefault="True"
-                                        Command="{TemplateBinding SetDialogResultCommand}"
-                                        CommandParameter="{StaticResource True}"
-                                Visibility="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=YesNoButtonsVisible , Converter={StaticResource Bool2VisibilityConverter}, ConverterParameter=!}"/>
-                                <Button x:Name="No" Content="НЕТ" Width="85" Margin="3"  Style="{StaticResource WPRFlatButton}"
-                                        Command="{TemplateBinding SetDialogResultCommand}"
-                                        CommandParameter="{StaticResource False}"
-                                Visibility="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=YesNoButtonsVisible , Converter={StaticResource Bool2VisibilityConverter}}"/>
-                                <Button x:Name="Yes" Content="ДА" Width="85" Margin="3" IsDefault="True"
-                                        Command="{TemplateBinding SetDialogResultCommand}"
-                                        CommandParameter="{StaticResource True}"
-                                Visibility="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=YesNoButtonsVisible , Converter={StaticResource Bool2VisibilityConverter}}"/>
-                            </StackPanel>
-                        </StackPanel>
-                    </Grid>
+                        </ScrollViewer>
+                    </DockPanel>
+
                     <ControlTemplate.Triggers>
                         <Trigger Property="Title" Value="">
                             <Setter TargetName="TitleText" Property="Visibility" Value="Collapsed"/>

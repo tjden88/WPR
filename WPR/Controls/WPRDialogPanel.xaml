@@ -40,6 +40,7 @@
                                     <ContentPresenter Focusable="True" x:Name="PART_HeaderContent"
                                                       Content="{TemplateBinding Header}"
                                                       KeyboardNavigation.TabNavigation="Cycle"/>
+
                                 </controls:WPRCard.Content>
                                 <controls:WPRCard.LayoutTransform>
                                     <ScaleTransform x:Name="ContentDialogTrans" ScaleX="0" ScaleY="{Binding ElementName=ContentDialogTrans, Path=ScaleX}"/>
