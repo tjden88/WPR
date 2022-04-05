@@ -5,11 +5,6 @@
 
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="Base.xaml"/>
-        <ResourceDictionary Source="Buttons.xaml"/>
-        <ResourceDictionary Source="Toggles.xaml"/>
-        <ResourceDictionary Source="TextBoxes.xaml"/>
-        <ResourceDictionary Source="ComboBox.xaml"/>
-        <ResourceDictionary Source="RadioButtons.xaml"/>
     </ResourceDictionary.MergedDictionaries>
 
 
@@ -92,7 +87,7 @@
                                 <BeginStoryboard>
                                     <Storyboard TargetName="ExpandPath" TargetProperty="(RenderTransform).(RotateTransform.Angle)">
                                         <DoubleAnimation Duration="0:0:0.2"
-                                                         EasingFunction="{StaticResource CircleEaseOut}"/>
+                                                         EasingFunction="{StaticResource CircleEaseIn}"/>
                                     </Storyboard>
                                 </BeginStoryboard>
                             </Trigger.ExitActions>
@@ -136,11 +131,28 @@
                                                   SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
                             </controls:Ripple>
                         </controls:ClippingBorder>
-                        <ItemsPresenter x:Name="ItemsHost" Grid.Column="1" Grid.Row="1"/>
+                        <ItemsPresenter x:Name="ItemsHost" Grid.Column="1" Grid.Row="1">
+                            <ItemsPresenter.LayoutTransform>
+                                <ScaleTransform ScaleY="0"/>
+                            </ItemsPresenter.LayoutTransform>
+                        </ItemsPresenter>
                     </Grid>
                     <ControlTemplate.Triggers>
-                        <Trigger Property="IsExpanded" Value="false">
-                            <Setter Property="Visibility" TargetName="ItemsHost" Value="Collapsed"/>
+                        <Trigger Property="IsExpanded" Value="True">
+                            <Trigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard TargetName="ItemsHost" TargetProperty="(LayoutTransform).(ScaleTransform.ScaleY)">
+                                        <DoubleAnimation Duration="0:0:0.25" To="1" EasingFunction="{StaticResource CircleEaseIn}"/>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.EnterActions> 
+                            <Trigger.ExitActions>
+                                <BeginStoryboard>
+                                    <Storyboard TargetName="ItemsHost" TargetProperty="(LayoutTransform).(ScaleTransform.ScaleY)">
+                                        <DoubleAnimation Duration="0:0:0.25" EasingFunction="{StaticResource CircleEaseIn}"/>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.ExitActions>
                         </Trigger>
                         <Trigger Property="HasItems" Value="false">
                             <Setter Property="Visibility" TargetName="Expander" Value="Hidden"/>
