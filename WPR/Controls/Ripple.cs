@@ -114,6 +114,7 @@ namespace WPR.Controls
             if (_Ellipse == null) throw new NullReferenceException("Эллипс в шаблоне не найден!");
             MouseDown += (_, _) => _RippleAnimation.SetSpeedRatio(_Ellipse, RippleMouseDownSpeed);
             MouseUp += (_, _) => _RippleAnimation.SetSpeedRatio(_Ellipse, RippleSpeed);
+            MouseLeave += (_, _) => _RippleAnimation.SetSpeedRatio(_Ellipse, RippleSpeed);
         }
 
         protected override void OnPreviewMouseLeftButtonDown(MouseButtonEventArgs e)
