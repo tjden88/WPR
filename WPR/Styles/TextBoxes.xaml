@@ -169,6 +169,9 @@
                                 </BeginStoryboard>
                             </Trigger.ExitActions>
                         </Trigger>
+                        <Trigger Property="AcceptsReturn" Value="True">
+                            <Setter Property="TextWrapping" Value="WrapWithOverflow"/>
+                        </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
