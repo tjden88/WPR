@@ -23,6 +23,7 @@
         <ResourceDictionary Source="Styles\GridSplitters.xaml"/>
         <ResourceDictionary Source="Styles\DataGrids.xaml"/>
         <ResourceDictionary Source="Styles\RichTextBoxes.xaml"/>
+        <ResourceDictionary Source="Styles\TreeViews.xaml"/>
     </ResourceDictionary.MergedDictionaries>
 
     <!--Стили по умолчанию-->
@@ -51,4 +52,6 @@
     <Style TargetType="GridSplitter" BasedOn="{StaticResource WPRGridSplitter}"/>
     <Style TargetType="DataGrid" BasedOn="{StaticResource WPRDataGrid}"/>
     <Style TargetType="RichTextBox" BasedOn="{StaticResource WPRRichTextBox}"/>
+    <Style TargetType="TreeView" BasedOn="{StaticResource WPRTreeView}"/>
+    <Style TargetType="TreeViewItem" BasedOn="{StaticResource WPRTreeViewItem}"/>
 </ResourceDictionary>

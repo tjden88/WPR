@@ -1,0 +1,206 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:controls="clr-namespace:WPR.Controls"
+                    xmlns:helpers="clr-namespace:WPR.Helpers">
+
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="Base.xaml"/>
+        <ResourceDictionary Source="Buttons.xaml"/>
+        <ResourceDictionary Source="Toggles.xaml"/>
+        <ResourceDictionary Source="TextBoxes.xaml"/>
+        <ResourceDictionary Source="ComboBox.xaml"/>
+        <ResourceDictionary Source="RadioButtons.xaml"/>
+    </ResourceDictionary.MergedDictionaries>
+
+
+    <Style x:Key="WPRTreeView" TargetType="{x:Type TreeView}" BasedOn="{StaticResource BaseControl}">
+        <Setter Property="Padding" Value="1"/>
+        <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Auto"/>
+        <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto"/>
+        <Setter Property="ScrollViewer.PanningMode" Value="Both"/>
+        <Setter Property="Stylus.IsFlicksEnabled" Value="False"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="helpers:RippleHelper.FeedbackBrush" Value="{DynamicResource AnimationEnterColorBrush}"></Setter>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type TreeView}">
+                    <Border x:Name="Bd" BorderBrush="{TemplateBinding BorderBrush}" 
+                            BorderThickness="{TemplateBinding BorderThickness}">
+                        <ScrollViewer x:Name="_tv_scrollviewer_" Background="{TemplateBinding Background}"
+                                      CanContentScroll="false" Focusable="false" 
+                                      HorizontalScrollBarVisibility="{TemplateBinding ScrollViewer.HorizontalScrollBarVisibility}" 
+                                      Padding="{TemplateBinding Padding}"
+                                      SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" 
+                                      VerticalScrollBarVisibility="{TemplateBinding ScrollViewer.VerticalScrollBarVisibility}">
+                            <ItemsPresenter/>
+                        </ScrollViewer>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsEnabled" Value="false">
+                            <Setter Property="Opacity" Value="0.5"/>
+                        </Trigger>
+                        <Trigger Property="VirtualizingPanel.IsVirtualizing" Value="true">
+                            <Setter Property="CanContentScroll" TargetName="_tv_scrollviewer_" Value="true"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Style.Triggers>
+            <Trigger Property="VirtualizingPanel.IsVirtualizing" Value="true">
+                <Setter Property="ItemsPanel">
+                    <Setter.Value>
+                        <ItemsPanelTemplate>
+                            <VirtualizingStackPanel/>
+                        </ItemsPanelTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+    <Style x:Key="WPRTreeViewToggleButton" TargetType="{x:Type ToggleButton}">
+        <Setter Property="Focusable" Value="False"/>
+        <Setter Property="Width" Value="20"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ToggleButton}">
+                    <Border RenderTransformOrigin="0.5,0.5" x:Name="ExpandPath"
+                            Background="{StaticResource TransparentBrush}">
+                        <Border.RenderTransform>
+                            <RotateTransform/>
+                        </Border.RenderTransform>
+
+                        <controls:WPRIcon Foreground="{DynamicResource AccentColorBrush}"
+                                          HorizontalAlignment="Center" VerticalAlignment="Center"
+                                          IconSize="18"
+                                          Source="ChevronRight"/>
+                    </Border>
+                    
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsChecked" Value="True">
+                            <Trigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard TargetName="ExpandPath" TargetProperty="(RenderTransform).(RotateTransform.Angle)">
+                                        <DoubleAnimation Duration="0:0:0.2" 
+                                                         To="45"
+                                                         EasingFunction="{StaticResource CircleEaseIn}"/>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.EnterActions>
+                            <Trigger.ExitActions>
+                                <BeginStoryboard>
+                                    <Storyboard TargetName="ExpandPath" TargetProperty="(RenderTransform).(RotateTransform.Angle)">
+                                        <DoubleAnimation Duration="0:0:0.2"
+                                                         EasingFunction="{StaticResource CircleEaseOut}"/>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.ExitActions>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+
+    <Style x:Key="WPRTreeViewItem" TargetType="{x:Type TreeViewItem}" BasedOn="{StaticResource BaseControl}">
+        <Setter Property="HorizontalContentAlignment" Value="{Binding HorizontalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type TreeView}}}"/>
+        <Setter Property="VerticalContentAlignment" Value="{Binding VerticalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type TreeView}}}"/>
+        <Setter Property="Padding" Value="5"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type TreeViewItem}">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition MinWidth="16" Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" MinHeight="32"/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+                        <ToggleButton x:Name="Expander" ClickMode="Press"
+                                      IsChecked="{Binding IsExpanded, RelativeSource={RelativeSource TemplatedParent}}"
+                                      Style="{StaticResource WPRTreeViewToggleButton}"/>
+                        <Border Grid.Row="0" Grid.Column="1" Name="SelectedBorder" Opacity="0" Background="{DynamicResource AnimationEnterColorBrush}"/>
+                        <controls:ClippingBorder x:Name="ClippingBorder" ClipToBounds="True" Grid.Row="0" Grid.Column="1">
+                            <controls:Ripple Background="{Binding Path=(helpers:RippleHelper.FeedbackBrush), RelativeSource={RelativeSource  AncestorType={x:Type TreeView}}}"
+                                             VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+                                             HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                             BorderThickness="{TemplateBinding BorderThickness}">
+                                <ContentPresenter x:Name="PART_Header" ContentSource="Header"
+                                                  Margin="{TemplateBinding Padding}"
+                                                  VerticalAlignment="{TemplateBinding VerticalAlignment}"
+                                                  HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                                  SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
+                            </controls:Ripple>
+                        </controls:ClippingBorder>
+                        <ItemsPresenter x:Name="ItemsHost" Grid.Column="1" Grid.Row="1"/>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsExpanded" Value="false">
+                            <Setter Property="Visibility" TargetName="ItemsHost" Value="Collapsed"/>
+                        </Trigger>
+                        <Trigger Property="HasItems" Value="false">
+                            <Setter Property="Visibility" TargetName="Expander" Value="Hidden"/>
+                        </Trigger>
+                        <Trigger Property="IsSelected" Value="true">
+                            <Trigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard TargetName="SelectedBorder" TargetProperty="Opacity">
+                                        <DoubleAnimation Duration="0:0:0.25" To="0.7"/>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.EnterActions>
+                            <Trigger.ExitActions>
+                                <BeginStoryboard>
+                                    <Storyboard TargetName="SelectedBorder" TargetProperty="Opacity">
+                                        <DoubleAnimation Duration="0:0:0.25"/>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.ExitActions>
+                        </Trigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsSelected" Value="False"/>
+                                <Condition Property="IsMouseOver" SourceName="ClippingBorder" Value="True"/>
+                            </MultiTrigger.Conditions>
+                            <MultiTrigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard TargetName="SelectedBorder" TargetProperty="Opacity">
+                                        <DoubleAnimation Duration="0:0:0.15" To="0.25"/>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </MultiTrigger.EnterActions>
+                            <MultiTrigger.ExitActions>
+                                <BeginStoryboard>
+                                    <Storyboard TargetName="SelectedBorder" TargetProperty="Opacity">
+                                        <DoubleAnimation Duration="0:0:0.25"/>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </MultiTrigger.ExitActions>
+                        </MultiTrigger>
+
+
+                        <Trigger Property="IsEnabled" Value="false">
+                            <Setter Property="Opacity" Value="0.5"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Style.Triggers>
+            <Trigger Property="VirtualizingPanel.IsVirtualizing" Value="true">
+                <Setter Property="ItemsPanel">
+                    <Setter.Value>
+                        <ItemsPanelTemplate>
+                            <VirtualizingStackPanel/>
+                        </ItemsPanelTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+</ResourceDictionary>

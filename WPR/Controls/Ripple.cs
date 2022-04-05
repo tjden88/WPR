@@ -86,7 +86,7 @@ namespace WPR.Controls
 
         private static void OnRippleSpeedPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            if (d is Ripple ripple && ripple._Ellipse != null) ripple._RippleAnimation.SetSpeedRatio(ripple._Ellipse, (double)e.NewValue);
+            if (d is Ripple {_Ellipse: { }} ripple) ripple._RippleAnimation.SetSpeedRatio(ripple._Ellipse, (double)e.NewValue);
         }
 
 
@@ -101,7 +101,7 @@ namespace WPR.Controls
 
         // Using a DependencyProperty as the backing store for RippleMouseDownSpeed.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty RippleMouseDownSpeedProperty =
-            DependencyProperty.Register("RippleMouseDownSpeed", typeof(double), typeof(Ripple), new PropertyMetadata(1.0));
+            DependencyProperty.Register("RippleMouseDownSpeed", typeof(double), typeof(Ripple), new PropertyMetadata(0.1));
 
 
 
