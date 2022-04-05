@@ -54,6 +54,7 @@
         </Style.Triggers>
     </Style>
 
+
     <Style x:Key="WPRTreeViewToggleButton" TargetType="{x:Type ToggleButton}">
         <Setter Property="Focusable" Value="False"/>
         <Setter Property="Width" Value="20"/>
@@ -122,8 +123,7 @@
                         <controls:ClippingBorder x:Name="ClippingBorder" ClipToBounds="True" Grid.Row="0" Grid.Column="1">
                             <controls:Ripple Background="{Binding Path=(helpers:RippleHelper.FeedbackBrush), RelativeSource={RelativeSource  AncestorType={x:Type TreeView}}}"
                                              VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
-                                             HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                             BorderThickness="{TemplateBinding BorderThickness}">
+                                             HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}">
                                 <ContentPresenter x:Name="PART_Header" ContentSource="Header"
                                                   Margin="{TemplateBinding Padding}"
                                                   VerticalAlignment="{TemplateBinding VerticalAlignment}"

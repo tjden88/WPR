@@ -9,7 +9,8 @@
       d:DesignHeight="450" d:DesignWidth="800"
       Title="TreeView">
 
-    <controls:WPRCard Width="200" VerticalAlignment="Center" Margin="20">
+<StackPanel Orientation="Horizontal">
+    <controls:WPRCard Width="200"  Margin="20">
         <TreeView>
             <TreeViewItem Header="Item1">
                 <TreeViewItem Header="Child1"></TreeViewItem>
@@ -24,4 +25,13 @@
             <TreeViewItem Header="Item3"></TreeViewItem>
         </TreeView>
     </controls:WPRCard>
+    <controls:WPRCard Width="200"  Margin="20">
+        <ListBox>
+            <ListBoxItem Content="Item1"></ListBoxItem>
+            <ListBoxItem Content="Item2"></ListBoxItem>
+            <ListBoxItem Content="Item3"></ListBoxItem>
+            <ListBoxItem Content="Item4"></ListBoxItem>
+        </ListBox>
+    </controls:WPRCard>
+    </StackPanel>
 </Page>
