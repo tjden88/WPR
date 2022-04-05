@@ -145,7 +145,7 @@
                 <ControlTemplate TargetType="{x:Type ListBoxItem}">
                     <Grid>
                         <Border Name="SelectedBorder" Opacity="0" Margin="0,0,0,1" Background="{DynamicResource AnimationEnterColorBrush}"/>
-                        <controls:ClippingBorder x:Name="ClippingBorder" ClipToBounds="True">
+                        <controls:ClippingBorder ClipToBounds="True">
                             <controls:Ripple Background="{Binding Path=(helpers:RippleHelper.FeedbackBrush), RelativeSource={RelativeSource  AncestorType={x:Type ListBox}}}"
                                              VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
                                              HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}">
@@ -177,7 +177,7 @@
                         <MultiTrigger>
                             <MultiTrigger.Conditions>
                                 <Condition Property="IsSelected" Value="False"/>
-                                <Condition Property="IsMouseOver" SourceName="ClippingBorder" Value="True"/>
+                                <Condition Property="IsMouseOver" Value="True"/>
                             </MultiTrigger.Conditions>
                             <MultiTrigger.EnterActions>
                                 <BeginStoryboard>
