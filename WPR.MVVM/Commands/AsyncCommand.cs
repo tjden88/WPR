@@ -146,10 +146,16 @@ namespace WPR.MVVM.Commands
         {
         }
 
-        public AsyncCommand(Func<T, Task> ExecuteAsync, Predicate<T> CanExecute, string CommandText, KeyGesture ExecuteGesture, UIElement GestureTarget) :
+         public AsyncCommand(Func<T, CancellationToken, Task> ExecuteAsync, Predicate<T> CanExecute, string CommandText) :
+            this(ExecuteAsync, CanExecute, CommandText, null, null)
+        {
+        }  
+         
+         public AsyncCommand(Func<T, Task> ExecuteAsync, Predicate<T> CanExecute, string CommandText, KeyGesture ExecuteGesture, UIElement GestureTarget) :
             this((o, _) => ExecuteAsync(o), CanExecute, CommandText, ExecuteGesture, GestureTarget)
         {
-        }
+        }   
+
 
         public AsyncCommand(Func<T, CancellationToken, Task> ExecuteAsync, Predicate<T> CanExecute, string CommandText, KeyGesture ExecuteGesture, UIElement GestureTarget)
         {
