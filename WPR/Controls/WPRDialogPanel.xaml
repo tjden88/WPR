@@ -21,36 +21,31 @@
                                    Fill="#7F000000"
                                    Opacity="0"/>
                         <Popup x:Name="PART_Popup" AllowsTransparency="True" PopupAnimation="None" StaysOpen="True" Placement="Center" PlacementTarget="{Binding ElementName=RootGrid}" HorizontalAlignment="Center" VerticalAlignment="Center">
-                            <Grid HorizontalAlignment="Center"  x:Name="Grid"
-                                  Margin="20"
-                                  VerticalAlignment="Center" 
-                                  RenderTransformOrigin="0.5,0.5">
-                                <Grid.RenderTransform>
-                                    <TransformGroup>
-                                        <ScaleTransform x:Name="GridScale"/>
-                                        <RotateTransform x:Name="GridRotate"/>
-                                    </TransformGroup>
-                                </Grid.RenderTransform>
 
-                                <controls:WPRCard x:Name="PART_Dialog"
-                                                  IsDialogShadowStyle="True"
-                                                  RenderTransformOrigin="0.5,0.5"
-                                                  HorizontalAlignment="Center"
-                                                  VerticalAlignment="Center"
-                                                  BorderBrush="{TemplateBinding BorderBrush}"
-                                                  BorderThickness="{TemplateBinding BorderThickness}">
-                                    <controls:WPRCard.Content>
-                                        <ContentPresenter Focusable="True" x:Name="PART_HeaderContent"
+                            <controls:WPRCard x:Name="PART_Dialog"
+                                              Margin="40"
+                                              IsDialogShadowStyle="True"
+                                              RenderTransformOrigin="0.5,0.5"
+                                              HorizontalAlignment="Center"
+                                              VerticalAlignment="Center"
+                                              BorderBrush="{TemplateBinding BorderBrush}"
+                                              BorderThickness="{TemplateBinding BorderThickness}">
+                                <controls:WPRCard.Content>
+                                    <ContentPresenter Focusable="True" x:Name="PART_HeaderContent"
                                                       Content="{TemplateBinding Header}"
                                                       KeyboardNavigation.TabNavigation="Cycle"/>
 
-                                    </controls:WPRCard.Content>
-                                    <controls:WPRCard.RenderTransform>
+                                </controls:WPRCard.Content>
+                                <controls:WPRCard.RenderTransform>
+                                    <TransformGroup>
+                                        <ScaleTransform x:Name="GridScale"/>
+                                        <RotateTransform x:Name="GridRotate"/>
                                         <ScaleTransform x:Name="ContentDialogTrans" ScaleX="0" ScaleY="{Binding ElementName=ContentDialogTrans, Path=ScaleX}"/>
-                                    </controls:WPRCard.RenderTransform>
-                                    <!--<ContentPresenter  />-->
-                                </controls:WPRCard>
-                            </Grid>
+                                    </TransformGroup>
+                                </controls:WPRCard.RenderTransform>
+                                <!--<ContentPresenter  />-->
+                            </controls:WPRCard>
+
                         </Popup>
                         <Border x:Name="PART_Bubble" Margin="20"
                                 RenderTransformOrigin="0.5,1"

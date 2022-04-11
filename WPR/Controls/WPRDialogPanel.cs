@@ -45,9 +45,9 @@ namespace WPR.Controls
         {
             if (StaysOpen)
             {
-                if (Template.Resources["ShakeAnim"] is Storyboard s && GetTemplateChild("Grid") is Grid g)
+                if (Template.Resources["ShakeAnim"] is Storyboard s && GetTemplateChild("PART_Dialog") is WPRCard card)
                 {
-                    s.Begin(g);
+                    s.Begin(card);
                 }
             }
             else
