@@ -14,7 +14,8 @@ namespace WPR.Controls
     {
         private readonly Storyboard _ShowAnimation, _HideAnimation;
         private bool _StaysOpenIsChangeg; //Определить, изменили ли временно свойство для закрытия с анимацией
-        private readonly WPRCard _RootCard;
+        //private readonly WPRCard _RootCard;
+        private readonly Grid _RootGrid = new();
 
         #region Properties
         /// <summary> Контент Попапа. 
@@ -74,8 +75,7 @@ namespace WPR.Controls
             AllowsTransparency = true;
 
             // Определение разметки
-            Grid grid = new();
-            Child = grid;
+            Child = _RootGrid;
 
             var thumb = new Thumb
             {
@@ -85,22 +85,26 @@ namespace WPR.Controls
 
             ScaleTransform scale = new(0, 0);
 
-            _RootCard = new()
+            _RootGrid.RenderTransform = scale;
+            _RootGrid.SetBinding(RenderTransformOriginProperty, new Binding("RenderTransformOrigin") { Source = this });
+
+            WPRCard rootCard = new()
             {
-                RenderTransform = scale,
                 IsPopupShadowStyle = true
             };
-            _RootCard.SetBinding(ContentControl.ContentProperty, new Binding("Content") { Source = this });
-            _RootCard.SetBinding(RenderTransformOriginProperty, new Binding("RenderTransformOrigin") { Source = this });
 
-            grid.Children.Add(thumb);
-            grid.Children.Add(_RootCard);
+            rootCard.SetBinding(ContentControl.ContentProperty, new Binding("Content") { Source = this });
+            rootCard.SetBinding(RenderTransformOriginProperty, new Binding("RenderTransformOrigin") { Source = this });
+            rootCard.SetBinding(RenderTransformProperty, new Binding("RenderTransform") { Source = this });
+
+            _RootGrid.Children.Add(thumb);
+            _RootGrid.Children.Add(rootCard);
 
             PreviewMouseUp += OnMouseUp;
 
 
             // Реализация перетаскивания контента
-            MouseDown += (sender, e) =>
+            MouseDown += (_, e) =>
             {
                 if (AllowMouseMove) thumb.RaiseEvent(e);
             };
@@ -154,8 +158,8 @@ namespace WPR.Controls
             {
                 HorizontalOffset = 0;
                 VerticalOffset = 0;
-                _RootCard.IsEnabled = true;
-                _ShowAnimation.Begin(_RootCard);
+                _RootGrid.IsEnabled = true;
+                _ShowAnimation.Begin(_RootGrid);
             }
         }
 
@@ -166,8 +170,8 @@ namespace WPR.Controls
         {
             if (Content != null)
             {
-                _RootCard.IsEnabled = false;
-                _HideAnimation.Begin(_RootCard);
+                _RootGrid.IsEnabled = false;
+                _HideAnimation.Begin(_RootGrid);
             }
             else
             {
@@ -190,8 +194,8 @@ namespace WPR.Controls
             {
                 if (Content != null)
                 {
-                    Point target = e.GetPosition(_RootCard);
-                    if (target.X < 0 || target.Y < 0 || target.X > _RootCard.ActualWidth || target.Y > _RootCard.ActualHeight)
+                    Point target = e.GetPosition(_RootGrid);
+                    if (target.X < 0 || target.Y < 0 || target.X > _RootGrid.ActualWidth || target.Y > _RootGrid.ActualHeight)
                     {
                         _StaysOpenIsChangeg = true;
                         StaysOpen = true;

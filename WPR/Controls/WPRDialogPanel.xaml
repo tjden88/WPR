@@ -20,7 +20,7 @@
                                    WindowChrome.IsHitTestVisibleInChrome="True"
                                    Fill="#7F000000"
                                    Opacity="0"/>
-                        <controls:WPRPopup RenderTransformOrigin="0.5,0.5" 
+                        <controls:WPRPopup RenderTransformOrigin="0.5,0.5"
                                            x:Name="PART_Popup" 
                                            StaysOpen="True" 
                                            AllowMouseMove="True"
@@ -30,30 +30,17 @@
                                            VerticalAlignment="Center">
 
 
+                            <controls:WPRPopup.RenderTransform>
+                                <TransformGroup>
+                                    <ScaleTransform x:Name="GridScale"/>
+                                    <RotateTransform x:Name="GridRotate"/>
+                                </TransformGroup>
+                            </controls:WPRPopup.RenderTransform>
                             <controls:WPRPopup.Content>
-                                <controls:WPRCard x:Name="PART_Dialog"
-                                                  Margin="40"
-                                                  IsDialogShadowStyle="True"
-                                                  RenderTransformOrigin="0.5,0.5"
-                                                  HorizontalAlignment="Center"
-                                                  VerticalAlignment="Center"
-                                                  BorderBrush="{TemplateBinding BorderBrush}"
-                                                  BorderThickness="{TemplateBinding BorderThickness}">
-                                    <controls:WPRCard.Content>
-                                        <ContentPresenter Focusable="True" x:Name="PART_HeaderContent"
-                                                          Content="{TemplateBinding Header}"
-                                                          KeyboardNavigation.TabNavigation="Cycle"/>
+                                <ContentPresenter Focusable="True" x:Name="PART_HeaderContent"
+                                                      Content="{TemplateBinding Header}"
+                                                      KeyboardNavigation.TabNavigation="Cycle"/>
 
-                                    </controls:WPRCard.Content>
-                                    <controls:WPRCard.RenderTransform>
-                                        <TransformGroup>
-                                            <ScaleTransform x:Name="GridScale"/>
-                                            <RotateTransform x:Name="GridRotate"/>
-                                            <ScaleTransform x:Name="ContentDialogTrans" ScaleX="0" ScaleY="{Binding ElementName=ContentDialogTrans, Path=ScaleX}"/>
-                                        </TransformGroup>
-                                    </controls:WPRCard.RenderTransform>
-                                    <!--<ContentPresenter  />-->
-                                </controls:WPRCard>
 
                             </controls:WPRPopup.Content>
                         </controls:WPRPopup>
@@ -124,30 +111,21 @@
                             <Trigger.EnterActions>
                                 <BeginStoryboard>
                                     <Storyboard>
-                                        <DoubleAnimation Duration="0:0:0.3"
+                                        <DoubleAnimation Duration="0:0:0.2"
                                                          To="1"
                                                          Storyboard.TargetProperty="Opacity"
                                                          Storyboard.TargetName="PART_Rect"/>
-                                        <DoubleAnimation Duration="0:0:0.3"
-                                                         To="1"
-                                                         Storyboard.TargetProperty="ScaleX"
-                                                         Storyboard.TargetName="ContentDialogTrans"/>
                                     </Storyboard>
                                 </BeginStoryboard>
                             </Trigger.EnterActions>
                             <Trigger.ExitActions>
                                 <BeginStoryboard>
                                     <Storyboard>
-                                        <DoubleAnimation Duration="0:0:0.3"
+                                        <DoubleAnimation Duration="0:0:0.25"
                                                          To="0"
                                                          Storyboard.TargetProperty="Opacity"
                                                          BeginTime="0:0:0.2"
                                                          Storyboard.TargetName="PART_Rect"/>
-                                        <DoubleAnimation Duration="0:0:0.3"
-                                                         To="0"
-                                                         EasingFunction="{StaticResource ElasticEaseIn}"
-                                                         Storyboard.TargetProperty="ScaleX"
-                                                         Storyboard.TargetName="ContentDialogTrans"/>
                                     </Storyboard>
                                 </BeginStoryboard>
                             </Trigger.ExitActions>
