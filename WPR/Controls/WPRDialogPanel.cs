@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
@@ -14,6 +15,8 @@ namespace WPR.Controls
     {
         private IWPRDialog _WPRDialog;
 
+        private Popup _HeaderPopup;
+
         static WPRDialogPanel()
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(WPRDialogPanel), new FrameworkPropertyMetadata(typeof(WPRDialogPanel)));
@@ -25,6 +28,10 @@ namespace WPR.Controls
             if (GetTemplateChild("BubbleButton") is Button b) b.Click += BubbleButton_Click;
             if (GetTemplateChild("PART_Bubble") is Border br) br.MouseUp += (_,_) => HideBubble();
             if (GetTemplateChild("PART_Rect") is Rectangle r) r.MouseDown += Rect_MouseDown;
+
+            _HeaderPopup = GetTemplateChild("PART_Popup") as Popup;
+            if (_HeaderPopup == null)
+                throw new ArgumentNullException(nameof(_HeaderPopup), "Попап не найден в шаблоне!");
         }
 
         /// <summary> Текст всплывающей подсказки </summary>

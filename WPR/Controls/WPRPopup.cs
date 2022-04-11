@@ -72,8 +72,6 @@ namespace WPR.Controls
         {
             PopupAnimation = PopupAnimation.None;
             AllowsTransparency = true;
-            Placement = PlacementMode.MousePoint;
-            StaysOpen = false;
 
             // Определение разметки
             Grid grid = new();
