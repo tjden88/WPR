@@ -15,7 +15,7 @@ namespace WPR.Controls
     {
         private IWPRDialog _WPRDialog;
 
-        private Popup _HeaderPopup;
+        private WPRPopup _HeaderPopup;
 
         static WPRDialogPanel()
         {
@@ -29,7 +29,7 @@ namespace WPR.Controls
             if (GetTemplateChild("PART_Bubble") is Border br) br.MouseUp += (_,_) => HideBubble();
             if (GetTemplateChild("PART_Rect") is Rectangle r) r.MouseDown += Rect_MouseDown;
 
-            _HeaderPopup = GetTemplateChild("PART_Popup") as Popup;
+            _HeaderPopup = GetTemplateChild("PART_Popup") as WPRPopup;
             if (_HeaderPopup == null)
                 throw new ArgumentNullException(nameof(_HeaderPopup), "Попап не найден в шаблоне!");
         }
@@ -95,6 +95,7 @@ namespace WPR.Controls
         /// <param name="staysOpen">Не позволять закрыть содержимое при клике за его пределы</param>
         public void Show(bool staysOpen)
         {
+            _HeaderPopup.Show();
             StaysOpen = staysOpen;
             IsShowing = true;
             if (GetTemplateChild("PART_HeaderContent") is ContentPresenter presenter) presenter.Focus();
@@ -128,6 +129,7 @@ namespace WPR.Controls
         {
             if (!IsShowing) return;
             Focus();
+            _HeaderPopup.Hide();
             IsShowing = false;
             StaysOpen = false;
             _WPRDialog = null;

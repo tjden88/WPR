@@ -119,7 +119,6 @@
                             <Setter Property="Visibility" TargetName="PART_Rect" Value="Collapsed"/>
                         </Trigger>
                         <Trigger Property="IsShowing" Value="True">
-                            <Setter Property="IsOpen" TargetName="PART_Popup" Value="True"/>
                             <Setter Property="CacheMode" TargetName="content" Value="BitmapCache"/>
                             <Setter Property="KeyboardNavigation.TabNavigation" Value="None"/>
                             <Trigger.EnterActions>
