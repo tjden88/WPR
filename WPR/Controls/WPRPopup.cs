@@ -96,6 +96,7 @@ namespace WPR.Controls
             rootCard.SetBinding(ContentControl.ContentProperty, new Binding("Content") { Source = this });
             rootCard.SetBinding(RenderTransformOriginProperty, new Binding("RenderTransformOrigin") { Source = this });
             rootCard.SetBinding(RenderTransformProperty, new Binding("RenderTransform") { Source = this });
+            rootCard.SetBinding(LayoutTransformProperty, new Binding("LayoutTransform") { Source = this });
 
             _RootGrid.Children.Add(thumb);
             _RootGrid.Children.Add(rootCard);

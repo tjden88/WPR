@@ -30,12 +30,12 @@
                                            VerticalAlignment="Center">
 
 
-                            <controls:WPRPopup.RenderTransform>
+                            <controls:WPRPopup.LayoutTransform>
                                 <TransformGroup>
                                     <ScaleTransform x:Name="GridScale"/>
                                     <RotateTransform x:Name="GridRotate"/>
                                 </TransformGroup>
-                            </controls:WPRPopup.RenderTransform>
+                            </controls:WPRPopup.LayoutTransform>
                             <controls:WPRPopup.Content>
                                 <ContentPresenter Focusable="True" x:Name="PART_HeaderContent"
                                                       Content="{TemplateBinding Header}"
