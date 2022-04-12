@@ -124,7 +124,6 @@
                                         <DoubleAnimation Duration="0:0:0.25"
                                                          To="0"
                                                          Storyboard.TargetProperty="Opacity"
-                                                         BeginTime="0:0:0.2"
                                                          Storyboard.TargetName="PART_Rect"/>
                                     </Storyboard>
                                 </BeginStoryboard>

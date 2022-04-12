@@ -1,6 +1,5 @@
 ﻿using System;
 using System.ComponentModel;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
@@ -20,7 +19,20 @@ namespace WPR.Controls
         private readonly WPRCard _RootCard = new() { IsPopupShadowStyle = true };
         private readonly Thumb _Thumb = new() { Width = 0, Height = 0 };
 
+
         #region Properties
+
+        /// <summary>
+        /// Происходит после завершения анимации закрытия
+        /// </summary>
+        public Action PopupClosed { get; set; }
+
+        /// <summary>
+        /// Происходит после завершения анимации открытия
+        /// </summary>
+        public Action PopupShowed { get; set; }
+
+
         /// <summary> Контент Попапа. 
         /// Использовать это свойство зависимостей, НЕ ПЕРЕОПРЕДЕЛЯТЬ свойство CHild!
         /// </summary>
@@ -130,6 +142,12 @@ namespace WPR.Controls
                     StaysOpen = false;
                 }
                 IsOpen = false;
+                PopupClosed?.Invoke();
+            };
+
+            _ShowAnimation.Completed += delegate
+            {
+                PopupShowed?.Invoke();
             };
 
             Opened += WPRPopup_Opened;

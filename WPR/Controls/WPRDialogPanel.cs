@@ -26,16 +26,19 @@ namespace WPR.Controls
         {
             base.OnApplyTemplate();
             if (GetTemplateChild("BubbleButton") is Button b) b.Click += BubbleButton_Click;
-            if (GetTemplateChild("PART_Bubble") is Border br) br.MouseUp += (_,_) => HideBubble();
+            if (GetTemplateChild("PART_Bubble") is Border br) br.MouseUp += (_, _) => HideBubble();
             if (GetTemplateChild("PART_Rect") is Rectangle r) r.MouseDown += Rect_MouseDown;
 
             _HeaderPopup = GetTemplateChild("PART_Popup") as WPRPopup;
             if (_HeaderPopup == null)
                 throw new ArgumentNullException(nameof(_HeaderPopup), "Попап не найден в шаблоне!");
-            _HeaderPopup.Closed += HeaderPopupOnClosed;
+            _HeaderPopup.PopupClosed += HeaderPopupOnClosed;
         }
 
         #region Диалоговое окно
+
+        private readonly Queue<(object content, bool staysOpen)> _DialogContentQueue = new(); // Очередь объектов для отображения
+
 
         #region IsShowingProperty
         /// <summary> Показан ли какой-либо диалог </summary>
@@ -49,21 +52,6 @@ namespace WPR.Controls
 
         #endregion
 
-        /// <summary>
-        /// Статический метод для показа контента в любом окне
-        /// </summary>
-        /// <param name="window">Окно, в котором нужно показать контент</param>
-        /// <param name="Content">Объект - содержимое для показа в качестве диалога</param>
-        /// <param name="staysOpen">Не позволять закрыть содержимое при клике за его пределы</param>
-        public static void ShowOnWindow(Window window, object Content, bool staysOpen)
-        {
-            if (window == null) throw new ArgumentNullException(nameof(window));
-            if (window.Template.FindName("WindowDialogPanel", window) is WPRDialogPanel panel)
-            {
-                panel.Show(Content, staysOpen);
-            }
-        }
-
 
         /// <summary>
         /// Показать контент и затемнить родителя
@@ -72,20 +60,23 @@ namespace WPR.Controls
         /// <param name="staysOpen">Не позволять закрыть содержимое при клике за его пределы</param>
         public void Show(object content, bool staysOpen)
         {
-            if (content is IWPRDialog dlg)
+            if (content == null)
+                throw new ArgumentNullException(nameof(content));
+
+            // Диалог показан в данный момент
+            if (IsShowing)
             {
-                _WPRDialog = dlg;
-                Header = dlg.DialogContent;
+                // Поместить текущий диалог в очередь и запустить новый
+                _DialogContentQueue.Enqueue((Header, _StaysOpen));
+                _DialogContentQueue.Enqueue((content, staysOpen));
+                Hide();
             }
             else
             {
-                _WPRDialog = null;
-                Header = content;
+                _DialogContentQueue.Enqueue((content, staysOpen));
+                ShowFromQueue();
             }
-            _HeaderPopup.Show();
-            _StaysOpen = staysOpen;
-            IsShowing = true;
-            if (GetTemplateChild("PART_HeaderContent") is ContentPresenter presenter) presenter.Focus();
+
         }
 
 
@@ -97,9 +88,29 @@ namespace WPR.Controls
             if (!IsShowing) return;
             Focus();
             _HeaderPopup.Hide();
-            IsShowing = false;
             _StaysOpen = false;
             _WPRDialog = null;
+        }
+
+        // Показать следующий контент
+        private void ShowFromQueue()
+        {
+            if (!_DialogContentQueue.TryDequeue(out var nextContent)) return;
+            if (nextContent.content is IWPRDialog dlg)
+            {
+                _WPRDialog = dlg;
+                Header = dlg.DialogContent;
+            }
+            else
+            {
+                _WPRDialog = null;
+                Header = nextContent.content;
+            }
+            _HeaderPopup.Show();
+            _StaysOpen = nextContent.staysOpen;
+            IsShowing = true;
+            if (GetTemplateChild("PART_HeaderContent") is ContentPresenter presenter) presenter.Focus();
+
         }
 
         #endregion
@@ -130,7 +141,7 @@ namespace WPR.Controls
         /// <param name="Callback">True, если кнопка была нажата</param>
         public void ShowBubble(string Text, int Duration = 2000, string ButtonCommandText = "", Action<bool> Callback = null)
         {
-            _StackBubblesQueue.Enqueue(new StackBubbles { Text = Text, Duration = Duration, Buttontext = ButtonCommandText, Action=Callback });
+            _StackBubblesQueue.Enqueue(new StackBubbles { Text = Text, Duration = Duration, Buttontext = ButtonCommandText, Action = Callback });
             if (_StackBubblesQueue.Count == 1) ShowBubbleinStack();
         }
 
@@ -145,8 +156,7 @@ namespace WPR.Controls
 
         private void ShowBubbleinStack()
         {
-            if (_StackBubblesQueue.Count == 0) return;
-            var stack = _StackBubblesQueue.Peek();
+            if (!_StackBubblesQueue.TryPeek(out var stack)) return;
             BubbleText = stack.Text;
 
             if (GetTemplateChild("BubbleButton") is Button commandbutton)
@@ -206,9 +216,10 @@ namespace WPR.Controls
 
         #region PrivateMethods
 
-        private void HeaderPopupOnClosed(object sender, EventArgs e)
+        private void HeaderPopupOnClosed()
         {
-            throw new NotImplementedException();
+            IsShowing = false;
+            ShowFromQueue();
         }
 
         // Показать анимацию контента при клике на заблокированную область

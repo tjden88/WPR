@@ -53,7 +53,6 @@ namespace WPR.Demo.Pages
         private async void OnShowWindowDialogCommandAsyncExecuted()
         {
             await WPRMessageBox.InformationAsync(this, "Текст диалога пользователя");
-            await Task.Delay(300);
             //var res = await WPRMessageBox.InformationCancelAsync(this, "Текст диалога пользователя");
             //var res = await WPRMessageBox.QuestionAsync(this, "Текст диалога пользователя");
             var res = await WPRMessageBox.QuestionCancelAsync(this, "Текст диалога пользователя");
