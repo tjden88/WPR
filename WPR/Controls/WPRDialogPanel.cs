@@ -13,6 +13,7 @@ namespace WPR.Controls
     internal class WPRDialogPanel : HeaderedContentControl
     {
         private IWPRDialog _WPRDialog;
+        private bool _StaysOpen;
 
         private WPRPopup _HeaderPopup;
 
@@ -31,37 +32,22 @@ namespace WPR.Controls
             _HeaderPopup = GetTemplateChild("PART_Popup") as WPRPopup;
             if (_HeaderPopup == null)
                 throw new ArgumentNullException(nameof(_HeaderPopup), "Попап не найден в шаблоне!");
+            _HeaderPopup.Closed += HeaderPopupOnClosed;
         }
 
-        /// <summary> Текст всплывающей подсказки </summary>
-        public string BubbleText
+        #region Диалоговое окно
+
+        #region IsShowingProperty
+        /// <summary> Показан ли какой-либо диалог </summary>
+        public bool IsShowing
         {
-            get => (string)GetValue(BubbleTextProperty);
-            set => SetValue(BubbleTextProperty, value);
+            get => (bool)GetValue(IsShowingProperty);
+            set => SetValue(IsShowingProperty, value);
         }
+        public static readonly DependencyProperty IsShowingProperty =
+            DependencyProperty.Register("IsShowing", typeof(bool), typeof(WPRDialogPanel), new PropertyMetadata(false));
 
-        public static readonly DependencyProperty BubbleTextProperty =
-            DependencyProperty.Register("BubbleText", typeof(string), typeof(WPRDialogPanel), new PropertyMetadata(""));
-
-
-        /// <summary> Оставаться ли открытым при клике на заблокированную область </summary>
-        private bool StaysOpen { get; set; }
-
-        private void Rect_MouseDown(object sender, MouseEventArgs e)
-        {
-            if (StaysOpen)
-            {
-                if (Template.Resources["ShakeAnim"] is Storyboard s)
-                {
-                    s.Begin(_HeaderPopup);
-                }
-            }
-            else
-            {
-                _WPRDialog?.DialogResult?.Invoke(false);
-                Hide();
-            }
-        }
+        #endregion
 
         /// <summary>
         /// Статический метод для показа контента в любом окне
@@ -78,27 +64,6 @@ namespace WPR.Controls
             }
         }
 
-        #region Диалоговое окно
-        /// <summary> Показан ли какой-либо диалог </summary>
-        public bool IsShowing
-        {
-            get => (bool)GetValue(IsShowingProperty);
-            set => SetValue(IsShowingProperty, value);
-        }
-        public static readonly DependencyProperty IsShowingProperty =
-            DependencyProperty.Register("IsShowing", typeof(bool), typeof(WPRDialogPanel), new PropertyMetadata(false));
-
-        /// <summary>
-        /// Показать контент и затемнить родителя
-        /// </summary>
-        /// <param name="staysOpen">Не позволять закрыть содержимое при клике за его пределы</param>
-        public void Show(bool staysOpen)
-        {
-            _HeaderPopup.Show();
-            StaysOpen = staysOpen;
-            IsShowing = true;
-            if (GetTemplateChild("PART_HeaderContent") is ContentPresenter presenter) presenter.Focus();
-        }
 
         /// <summary>
         /// Показать контент и затемнить родителя
@@ -117,7 +82,10 @@ namespace WPR.Controls
                 _WPRDialog = null;
                 Header = content;
             }
-            Show(staysOpen);
+            _HeaderPopup.Show();
+            _StaysOpen = staysOpen;
+            IsShowing = true;
+            if (GetTemplateChild("PART_HeaderContent") is ContentPresenter presenter) presenter.Focus();
         }
 
 
@@ -130,12 +98,28 @@ namespace WPR.Controls
             Focus();
             _HeaderPopup.Hide();
             IsShowing = false;
-            StaysOpen = false;
+            _StaysOpen = false;
             _WPRDialog = null;
         }
+
         #endregion
 
         #region Всплывающая подсказка
+
+        #region BubbleText
+        /// <summary> Текст всплывающей подсказки </summary>
+        public string BubbleText
+        {
+            get => (string)GetValue(BubbleTextProperty);
+            set => SetValue(BubbleTextProperty, value);
+        }
+
+        public static readonly DependencyProperty BubbleTextProperty =
+            DependencyProperty.Register("BubbleText", typeof(string), typeof(WPRDialogPanel), new PropertyMetadata(""));
+
+
+        #endregion
+
 
         /// <summary>
         /// Показать всплывающую подсказку
@@ -162,7 +146,7 @@ namespace WPR.Controls
         private void ShowBubbleinStack()
         {
             if (_StackBubblesQueue.Count == 0) return;
-            StackBubbles stack = _StackBubblesQueue.Peek();
+            var stack = _StackBubblesQueue.Peek();
             BubbleText = stack.Text;
 
             if (GetTemplateChild("BubbleButton") is Button commandbutton)
@@ -179,20 +163,19 @@ namespace WPR.Controls
             }
 
 
-            if (GetTemplateChild("PART_Bubble") is Border clip)
-            {
-                ScaleTransform trans = new(1, 0);
-                clip.RenderTransform = trans;
-                DoubleAnimation anim = new(1, TimeSpan.FromSeconds(0.1));
-                anim.Completed += delegate
-                {
-                    _Animout = new DoubleAnimation(1, 0, TimeSpan.FromSeconds(0.1)) { BeginTime = TimeSpan.FromMilliseconds(stack.Duration) };
-                    _Animout.Completed += Animout_Completed;
-                    trans.BeginAnimation(ScaleTransform.ScaleYProperty, _Animout);
-                };
+            if (GetTemplateChild("PART_Bubble") is not Border clip) return;
 
-                trans.BeginAnimation(ScaleTransform.ScaleYProperty, anim);
-            }
+            ScaleTransform trans = new(1, 0);
+            clip.RenderTransform = trans;
+            DoubleAnimation anim = new(1, TimeSpan.FromSeconds(0.1));
+            anim.Completed += delegate
+            {
+                _Animout = new DoubleAnimation(1, 0, TimeSpan.FromSeconds(0.1)) { BeginTime = TimeSpan.FromMilliseconds(stack.Duration) };
+                _Animout.Completed += Animout_Completed;
+                trans.BeginAnimation(ScaleTransform.ScaleYProperty, _Animout);
+            };
+
+            trans.BeginAnimation(ScaleTransform.ScaleYProperty, anim);
 
         }
 
@@ -218,6 +201,33 @@ namespace WPR.Controls
             public string Buttontext;
             public Action<bool> Action;
         }
+        #endregion
+
+
+        #region PrivateMethods
+
+        private void HeaderPopupOnClosed(object sender, EventArgs e)
+        {
+            throw new NotImplementedException();
+        }
+
+        // Показать анимацию контента при клике на заблокированную область
+        private void Rect_MouseDown(object sender, MouseEventArgs e)
+        {
+            if (_StaysOpen)
+            {
+                if (Template.Resources["ShakeAnim"] is Storyboard s)
+                {
+                    s.Begin(_HeaderPopup);
+                }
+            }
+            else
+            {
+                _WPRDialog?.DialogResult?.Invoke(false);
+                Hide();
+            }
+        }
+
         #endregion
     }
 }
