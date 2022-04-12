@@ -35,6 +35,10 @@ namespace WPR.Controls
                 throw new ArgumentNullException(nameof(_HeaderPopup), "Попап не найден в шаблоне!");
 
             _HeaderPopup.PopupClosed += HeaderPopupOnClosed;
+            //_HeaderPopup.PopupShowed += () =>
+            //{
+            //    if (GetTemplateChild("PART_HeaderContent") is ContentPresenter presenter) presenter.Focus();
+            //};
         }
 
 
@@ -87,16 +91,19 @@ namespace WPR.Controls
         public void Hide()
         {
             if (!IsShowing) return;
-            Focus();
             _HeaderPopup.Hide();
-            _StaysOpen = false;
             _WPRDialog = null;
         }
 
         // Показать следующий контент
         private void ShowFromQueue()
         {
-            if (!_DialogContentQueue.TryDequeue(out var nextContent)) return;
+            if (!_DialogContentQueue.TryDequeue(out var nextContent))
+            {
+                Header = null;
+                Focus();
+                return;
+            }
             if (nextContent.content is IWPRDialog dlg)
             {
                 _WPRDialog = dlg;
@@ -110,7 +117,6 @@ namespace WPR.Controls
             _HeaderPopup.Show();
             _StaysOpen = nextContent.staysOpen;
             IsShowing = true;
-            if (GetTemplateChild("PART_HeaderContent") is ContentPresenter presenter) presenter.Focus();
 
         }
 
