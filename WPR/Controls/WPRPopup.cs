@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
@@ -14,8 +15,8 @@ namespace WPR.Controls
     {
         private readonly Storyboard _ShowAnimation, _HideAnimation;
         private bool _StaysOpenIsChangeg; //Определить, изменили ли временно свойство для закрытия с анимацией
-        //private readonly WPRCard _RootCard;
         private readonly Grid _RootGrid = new();
+        private readonly Thumb _Thumb = new() {Width = 0, Height = 0};
 
         #region Properties
         /// <summary> Контент Попапа. 
@@ -77,12 +78,6 @@ namespace WPR.Controls
             // Определение разметки
             Child = _RootGrid;
 
-            var thumb = new Thumb
-            {
-                Width = 0,
-                Height = 0,
-            };
-
             ScaleTransform scale = new(0, 0);
 
             _RootGrid.RenderTransform = scale;
@@ -98,19 +93,15 @@ namespace WPR.Controls
             rootCard.SetBinding(RenderTransformProperty, new Binding("RenderTransform") { Source = this });
             rootCard.SetBinding(LayoutTransformProperty, new Binding("LayoutTransform") { Source = this });
 
-            _RootGrid.Children.Add(thumb);
+            _RootGrid.Children.Add(_Thumb);
             _RootGrid.Children.Add(rootCard);
 
             PreviewMouseUp += OnMouseUp;
 
 
             // Реализация перетаскивания контента
-            MouseDown += (_, e) =>
-            {
-                if (AllowMouseMove) thumb.RaiseEvent(e);
-            };
 
-            thumb.DragDelta += (sender, e) =>
+            _Thumb.DragDelta += (sender, e) =>
             {
                 HorizontalOffset += e.HorizontalChange;
                 VerticalOffset += e.VerticalChange;
@@ -146,6 +137,12 @@ namespace WPR.Controls
 
             Opened += PRExPopup_Opened;
 
+        }
+
+        protected override void OnMouseDown(MouseButtonEventArgs e)
+        {
+            base.OnMouseDown(e);
+            _Thumb.RaiseEvent(e);
         }
 
         private void OnMouseUp(object Sender, MouseButtonEventArgs E)

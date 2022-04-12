@@ -43,7 +43,7 @@
                                     CommandParameter="{StaticResource True}"
                                     Visibility="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=YesNoButtonsVisible , Converter={StaticResource Bool2VisibilityConverter}}"/>
                         </StackPanel>
-                        <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
+                        <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto" Focusable="False">
                             <TextBlock TextWrapping="WrapWithOverflow"
                                        Text="{TemplateBinding Caption}" 
                                        Foreground="{DynamicResource PrimaryTextColorBrush}" 
