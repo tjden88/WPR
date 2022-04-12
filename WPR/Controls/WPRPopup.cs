@@ -8,6 +8,7 @@ using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
+using System.Windows.Threading;
 
 namespace WPR.Controls
 {
@@ -157,7 +158,7 @@ namespace WPR.Controls
                 HorizontalOffset = 0;
                 VerticalOffset = 0;
                 _RootGrid.IsEnabled = true;
-                _ShowAnimation.Begin(_RootGrid);
+                Dispatcher.BeginInvoke(new Action(() => _ShowAnimation.Begin(_RootGrid)), DispatcherPriority.Background);
             }
         }
 
@@ -169,7 +170,7 @@ namespace WPR.Controls
             if (Content != null)
             {
                 _RootGrid.IsEnabled = false;
-                _HideAnimation.Begin(_RootGrid);
+                Dispatcher.BeginInvoke(new Action(() => _HideAnimation.Begin(_RootGrid)), DispatcherPriority.Background);
             }
             else
             {
