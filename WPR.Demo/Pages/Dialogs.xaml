@@ -11,45 +11,40 @@
       Title="Диалоги">
 
     <controls:WPRCard >
-        <controls:WPRDialogPanel x:Name="DialogPanel">
-            <controls:WPRDialogPanel.Header>
-                <controls:WPRTitledCard IconSource="QuestionMarkBox" Header="Диалог пользователя">
-                    <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center">Привет!</TextBlock>
-                </controls:WPRTitledCard>
-            </controls:WPRDialogPanel.Header>
-            <StackPanel Orientation="Horizontal">
-                <StackPanel Margin="10" Width="200">
-                    <Button Content="Show User Dialog" HorizontalAlignment="Center" VerticalAlignment="Center" Command="{Binding ShowUserDialogCommand}"/>
-                    <controls:WPRCard HorizontalAlignment="Center" >
-                        <dialogs:WPRMsgBox Title="Заголовок"
-                                            x:Name="MsgBox"
-                                            Caption="Текст сообщения..." 
-                                            CancelButtonVisible="True"
-                                            YesNoButtonsVisible="True"/>
-                    </controls:WPRCard>
-                    <controls:WPRCard HorizontalAlignment="Center" >
-                        <dialogs:WPRInputBox Title="Введите что-нибудь"
-                                              x:Name="InputBox"
-                                              TextValue="По умолчанию"/>
-                    </controls:WPRCard>
-                </StackPanel>
-                <StackPanel Width="200">
-                    <Button Content="Show Window Dialog" HorizontalAlignment="Center" VerticalAlignment="Center" Command="{Binding ShowWindowDialogCommand}"/>
-                    <Button Content="Show Window Dialog Async" HorizontalAlignment="Center" VerticalAlignment="Center" Command="{Binding ShowWindowDialogCommandAsync}"/>
-                    <Button Content="Show Modal Dialog" HorizontalAlignment="Center" VerticalAlignment="Center" Command="{Binding ShowModalDialogCommand}"/>
 
-                    <Button Content="Show Bubble" HorizontalAlignment="Center" VerticalAlignment="Center" Click="ButtonBase_OnClick"/>
-                    <Button Content="Show Bubble Button" HorizontalAlignment="Center" VerticalAlignment="Center" Click="Button2_OnClick"/>
-
-                    <Button Content="Show InputTextBox" HorizontalAlignment="Center" VerticalAlignment="Center" Click="Button3_OnClick"/>
-                    <Button Content="Show InputTextBox2" HorizontalAlignment="Center" VerticalAlignment="Center" Click="Button4_OnClick"/>
-                </StackPanel>
-                <StackPanel Width="200" Margin="10">
-                    <controls:WPRTitledCard Name="EditDialog" Header="Кастом диалог" IconSource="Style">
-                        <Button Content="Ok" Click="CustomDialog_Click" />
-                    </controls:WPRTitledCard>
-                </StackPanel>
+        <StackPanel Orientation="Horizontal">
+            <StackPanel Margin="10" Width="200">
+                <Button Content="Show User Dialog" HorizontalAlignment="Center" VerticalAlignment="Center" Command="{Binding ShowUserDialogCommand}"/>
+                <controls:WPRCard HorizontalAlignment="Center" >
+                    <dialogs:WPRMsgBox Title="Заголовок"
+                                       x:Name="MsgBox"
+                                       Caption="Текст сообщения..." 
+                                       CancelButtonVisible="True"
+                                       YesNoButtonsVisible="True"/>
+                </controls:WPRCard>
+                <controls:WPRCard HorizontalAlignment="Center" >
+                    <dialogs:WPRInputBox Title="Введите что-нибудь"
+                                         x:Name="InputBox"
+                                         TextValue="По умолчанию"/>
+                </controls:WPRCard>
             </StackPanel>
-        </controls:WPRDialogPanel>
+            <StackPanel Width="200">
+                <Button Content="Show Window Dialog" HorizontalAlignment="Center" VerticalAlignment="Center" Command="{Binding ShowWindowDialogCommand}"/>
+                <Button Content="Show Window Dialog Async" HorizontalAlignment="Center" VerticalAlignment="Center" Command="{Binding ShowWindowDialogCommandAsync}"/>
+                <Button Content="Show Modal Dialog" HorizontalAlignment="Center" VerticalAlignment="Center" Command="{Binding ShowModalDialogCommand}"/>
+
+                <Button Content="Show Bubble" HorizontalAlignment="Center" VerticalAlignment="Center" Click="ButtonBase_OnClick"/>
+                <Button Content="Show Bubble Button" HorizontalAlignment="Center" VerticalAlignment="Center" Click="Button2_OnClick"/>
+
+                <Button Content="Show InputTextBox" HorizontalAlignment="Center" VerticalAlignment="Center" Click="Button3_OnClick"/>
+                <Button Content="Show InputTextBox2" HorizontalAlignment="Center" VerticalAlignment="Center" Click="Button4_OnClick"/>
+            </StackPanel>
+            <StackPanel Width="200" Margin="10">
+                <controls:WPRTitledCard Name="EditDialog" Header="Кастом диалог" IconSource="Style">
+                    <Button Content="Ok" Click="CustomDialog_Click" />
+                </controls:WPRTitledCard>
+            </StackPanel>
+        </StackPanel>
+
     </controls:WPRCard>
 </Page>

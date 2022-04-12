@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -22,23 +23,6 @@ namespace WPR.Demo.Pages
         {
             Debug.WriteLine(Obj);
         }
-
-        #region Command ShowUserDialogCommand - Показать диалог пользователя
-
-        private ICommand _ShowUserDialogCommand;
-
-        /// <summary>Показать диалог пользователя</summary>
-        public ICommand ShowUserDialogCommand => _ShowUserDialogCommand
-            ??= new Command(OnShowUserDialogCommandExecuted, CanShowUserDialogCommandExecute);
-
-        private bool CanShowUserDialogCommandExecute() => true;
-
-        private void OnShowUserDialogCommandExecuted()
-        {
-            DialogPanel.Show(false);
-        }
-
-        #endregion
 
         #region Command ShowWindowDialogCommand - Показать диалог окна
 
@@ -68,7 +52,7 @@ namespace WPR.Demo.Pages
 
         private async void OnShowWindowDialogCommandAsyncExecuted()
         {
-            await WPRMessageBox.InformationAsync(MsgBox, "Текст диалога пользователя");
+            await WPRMessageBox.InformationAsync(this, "Текст диалога пользователя");
             //var res = await WPRMessageBox.InformationCancelAsync(this, "Текст диалога пользователя");
             //var res = await WPRMessageBox.QuestionAsync(this, "Текст диалога пользователя");
             var res = await WPRMessageBox.QuestionCancelAsync(this, "Текст диалога пользователя");
@@ -123,24 +107,28 @@ namespace WPR.Demo.Pages
 
         class TestCustomDialog : IWPRDialog
         {
+            private readonly Dialogs _Parent;
+            private int _Count;
             public Action<bool> DialogResult { get; set; }
 
             public object DialogContent { get; set; }
             public bool StaysOpen => false;
 
-            public TestCustomDialog()
+            public TestCustomDialog(Dialogs parent, int count)
             {
+                _Parent = parent;
+                _Count = count;
                 DialogContent = new Button()
                 {
-                    Content = "OK",
-                    Command = new Command(() => DialogResult?.Invoke(true))
+                    Content =$"Запустить ещё один диалог. Текущий: {count}",
+                    Command = new Command(() => WPRMessageBox.ShowCustomDialog(parent, new TestCustomDialog(parent, count + 1)))
                 };
             }
         }
 
         private async void CustomDialog_Click(object Sender, RoutedEventArgs E)
         {
-            Debug.WriteLine(await WPRMessageBox.ShowCustomDialogAsync(this, new TestCustomDialog()));
+            Debug.WriteLine(await WPRMessageBox.ShowCustomDialogAsync(this, new TestCustomDialog(this, 0)));
         }
 
 

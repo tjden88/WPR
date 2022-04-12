@@ -16,11 +16,6 @@ namespace WPR
         private static WPRDialogPanel FindDialogPanel(DependencyObject uIElement)
         {
             if (uIElement == null) return null;
-            
-            if (uIElement is WPRDialogPanel panel)
-            {
-                return panel;
-            }
 
             if (uIElement is Window window)
             {
@@ -34,6 +29,10 @@ namespace WPR
         {
             // Ищем панель
             WPRDialogPanel panel = FindDialogPanel(sender);
+            if (panel == null)
+            {
+                throw new ArgumentNullException(nameof(panel), "Окно с панелью диалога не найдено!");
+            }
 
             WPRMsgBox messageBox = new()
             {

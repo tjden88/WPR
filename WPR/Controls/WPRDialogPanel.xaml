@@ -12,6 +12,7 @@
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type controls:WPRDialogPanel}">
                     <Grid Background="{TemplateBinding Background}" 
+                          Name="RootGrid"
                           HorizontalAlignment="{TemplateBinding HorizontalAlignment}"
                           VerticalAlignment="{TemplateBinding VerticalAlignment}">
                         <ContentPresenter x:Name="content" Content="{TemplateBinding Content}"/>
@@ -19,43 +20,38 @@
                                    WindowChrome.IsHitTestVisibleInChrome="True"
                                    Fill="#7F000000"
                                    Opacity="0"/>
-                        <Grid HorizontalAlignment="Center"  x:Name="Grid"
-                              Margin="20"
-                              VerticalAlignment="Center" 
-                              RenderTransformOrigin="0.5,0.5">
-                            <Grid.RenderTransform>
+                        <controls:WPRPopup RenderTransformOrigin="0.5,0.5"
+                                           x:Name="PART_Popup" 
+                                           StaysOpen="True" 
+                                           AllowMouseMove="True"
+                                           Placement="Center"
+                                           PlacementTarget="{Binding ElementName=RootGrid}"
+                                           HorizontalAlignment="Center"
+                                           VerticalAlignment="Center">
+
+
+                            <controls:WPRPopup.LayoutTransform>
                                 <TransformGroup>
                                     <ScaleTransform x:Name="GridScale"/>
                                     <RotateTransform x:Name="GridRotate"/>
                                 </TransformGroup>
-                            </Grid.RenderTransform>
-                            <controls:WPRCard x:Name="PART_Dialog"
-                                              IsDialogShadowStyle="True"
-                                              RenderTransformOrigin="0.5,0.5"
-                                              HorizontalAlignment="Center"
-                                              VerticalAlignment="Center"
-                                              BorderBrush="{TemplateBinding BorderBrush}"
-                                              BorderThickness="{TemplateBinding BorderThickness}">
-                                <controls:WPRCard.Content>
-                                    <ContentPresenter Focusable="True" x:Name="PART_HeaderContent"
+                            </controls:WPRPopup.LayoutTransform>
+                            <controls:WPRPopup.Content>
+                                <ContentPresenter Focusable="True" x:Name="PART_HeaderContent"
                                                       Content="{TemplateBinding Header}"
                                                       KeyboardNavigation.TabNavigation="Cycle"/>
 
-                                </controls:WPRCard.Content>
-                                <controls:WPRCard.LayoutTransform>
-                                    <ScaleTransform x:Name="ContentDialogTrans" ScaleX="0" ScaleY="{Binding ElementName=ContentDialogTrans, Path=ScaleX}"/>
-                                </controls:WPRCard.LayoutTransform>
-                                <!--<ContentPresenter  />-->
-                            </controls:WPRCard>
-                        </Grid>
+
+                            </controls:WPRPopup.Content>
+                        </controls:WPRPopup>
                         <Border x:Name="PART_Bubble" Margin="20"
-                                              RenderTransformOrigin="0.5,1"
-                                              Background="{DynamicResource PrimaryTextColorBrush}"
-                                              HorizontalAlignment="Center"
-                                              VerticalAlignment="Bottom"
-                                              BorderBrush="{TemplateBinding BorderBrush}"
-                                              BorderThickness="{TemplateBinding BorderThickness}"
-                                              CornerRadius="3">
+                                RenderTransformOrigin="0.5,1"
+                                Background="{DynamicResource PrimaryTextColorBrush}"
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Bottom"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                CornerRadius="3">
                             <Border.RenderTransform>
                                 <ScaleTransform ScaleY="0"/>
                             </Border.RenderTransform>
@@ -109,36 +105,26 @@
                         <Trigger Property="Opacity" SourceName="PART_Rect" Value="0">
                             <Setter Property="Visibility" TargetName="PART_Rect" Value="Collapsed"/>
                         </Trigger>
-                        <Trigger Property="IsShowing" Value="True">
+                        <Trigger Property="CurrentStatus" Value="Showing">
                             <Setter Property="CacheMode" TargetName="content" Value="BitmapCache"/>
                             <Setter Property="KeyboardNavigation.TabNavigation" Value="None"/>
                             <Trigger.EnterActions>
                                 <BeginStoryboard>
                                     <Storyboard>
-                                        <DoubleAnimation Duration="0:0:0.3"
+                                        <DoubleAnimation Duration="0:0:0.2"
                                                          To="1"
                                                          Storyboard.TargetProperty="Opacity"
                                                          Storyboard.TargetName="PART_Rect"/>
-                                        <DoubleAnimation Duration="0:0:0.3"
-                                                         To="1"
-                                                         Storyboard.TargetProperty="ScaleX"
-                                                         Storyboard.TargetName="ContentDialogTrans"/>
                                     </Storyboard>
                                 </BeginStoryboard>
                             </Trigger.EnterActions>
                             <Trigger.ExitActions>
                                 <BeginStoryboard>
                                     <Storyboard>
-                                        <DoubleAnimation Duration="0:0:0.3"
+                                        <DoubleAnimation Duration="0:0:0.25"
                                                          To="0"
                                                          Storyboard.TargetProperty="Opacity"
-                                                         BeginTime="0:0:0.2"
                                                          Storyboard.TargetName="PART_Rect"/>
-                                        <DoubleAnimation Duration="0:0:0.3"
-                                                         To="0"
-                                                         EasingFunction="{StaticResource ElasticEaseIn}"
-                                                         Storyboard.TargetProperty="ScaleX"
-                                                         Storyboard.TargetName="ContentDialogTrans"/>
                                     </Storyboard>
                                 </BeginStoryboard>
                             </Trigger.ExitActions>

@@ -7,6 +7,7 @@ using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
+using System.Windows.Threading;
 
 namespace WPR.Controls
 {
@@ -14,9 +15,24 @@ namespace WPR.Controls
     {
         private readonly Storyboard _ShowAnimation, _HideAnimation;
         private bool _StaysOpenIsChangeg; //Определить, изменили ли временно свойство для закрытия с анимацией
-        private readonly WPRCard _RootCard;
+        private readonly Grid _RootGrid = new() { Background = Brushes.Transparent };
+        private readonly WPRCard _RootCard = new() { IsPopupShadowStyle = true };
+        private readonly Thumb _Thumb = new() { Width = 0, Height = 0 };
+
 
         #region Properties
+
+        /// <summary>
+        /// Происходит после завершения анимации закрытия
+        /// </summary>
+        public Action PopupClosed { get; set; }
+
+        /// <summary>
+        /// Происходит после завершения анимации открытия
+        /// </summary>
+        public Action PopupShowed { get; set; }
+
+
         /// <summary> Контент Попапа. 
         /// Использовать это свойство зависимостей, НЕ ПЕРЕОПРЕДЕЛЯТЬ свойство CHild!
         /// </summary>
@@ -60,7 +76,7 @@ namespace WPR.Controls
         [Description("Закрывать при клике внутри области попапа")]
         public bool CloseOnMouseButtonUp
         {
-            get => (bool) GetValue(CloseOnMouseButtonUpProperty);
+            get => (bool)GetValue(CloseOnMouseButtonUpProperty);
             set => SetValue(CloseOnMouseButtonUpProperty, value);
         }
 
@@ -72,42 +88,30 @@ namespace WPR.Controls
         {
             PopupAnimation = PopupAnimation.None;
             AllowsTransparency = true;
-            Placement = PlacementMode.MousePoint;
-            StaysOpen = false;
 
             // Определение разметки
-            Grid grid = new();
-            Child = grid;
-
-            var thumb = new Thumb
-            {
-                Width = 0,
-                Height = 0,
-            };
+            Child = _RootGrid;
 
             ScaleTransform scale = new(0, 0);
 
-            _RootCard = new()
-            {
-                RenderTransform = scale,
-                IsPopupShadowStyle = true
-            };
+            _RootGrid.RenderTransform = scale;
+            _RootGrid.SetBinding(RenderTransformOriginProperty, new Binding("RenderTransformOrigin") { Source = this });
+
+
             _RootCard.SetBinding(ContentControl.ContentProperty, new Binding("Content") { Source = this });
             _RootCard.SetBinding(RenderTransformOriginProperty, new Binding("RenderTransformOrigin") { Source = this });
+            _RootCard.SetBinding(RenderTransformProperty, new Binding("RenderTransform") { Source = this });
+            _RootCard.SetBinding(LayoutTransformProperty, new Binding("LayoutTransform") { Source = this });
 
-            grid.Children.Add(thumb);
-            grid.Children.Add(_RootCard);
+            _RootGrid.Children.Add(_Thumb);
+            _RootGrid.Children.Add(_RootCard);
 
             PreviewMouseUp += OnMouseUp;
 
 
             // Реализация перетаскивания контента
-            MouseDown += (sender, e) =>
-            {
-                if (AllowMouseMove) thumb.RaiseEvent(e);
-            };
 
-            thumb.DragDelta += (sender, e) =>
+            _Thumb.DragDelta += (sender, e) =>
             {
                 HorizontalOffset += e.HorizontalChange;
                 VerticalOffset += e.VerticalChange;
@@ -138,27 +142,42 @@ namespace WPR.Controls
                     StaysOpen = false;
                 }
                 IsOpen = false;
-
+                PopupClosed?.Invoke();
             };
 
-            Opened += PRExPopup_Opened;
+            _ShowAnimation.Completed += delegate
+            {
+                PopupShowed?.Invoke();
+            };
 
+            Opened += WPRPopup_Opened;
+
+        }
+
+        protected override void OnMouseDown(MouseButtonEventArgs e)
+        {
+            base.OnMouseDown(e);
+            if (e.ChangedButton == MouseButton.Left && e.ClickCount == 1)
+                _Thumb.RaiseEvent(e);
         }
 
         private void OnMouseUp(object Sender, MouseButtonEventArgs E)
         {
-            if(CloseOnMouseButtonUp) Hide();
+            if (CloseOnMouseButtonUp) Hide();
         }
 
-        private void PRExPopup_Opened(object sender, EventArgs e)
+        private async void WPRPopup_Opened(object sender, EventArgs e)
         {
-            if (Content != null)
+            if (Content == null) return;
+
+
+            HorizontalOffset = 0;
+            VerticalOffset = 0;
+            _RootGrid.IsEnabled = true;
+            await Dispatcher.BeginInvoke(new Action(() =>
             {
-                HorizontalOffset = 0;
-                VerticalOffset = 0;
-                _RootCard.IsEnabled = true;
-                _ShowAnimation.Begin(_RootCard);
-            }
+                _ShowAnimation.Begin(_RootGrid);
+            }), DispatcherPriority.Background);
         }
 
         /// <summary>
@@ -168,8 +187,8 @@ namespace WPR.Controls
         {
             if (Content != null)
             {
-                _RootCard.IsEnabled = false;
-                _HideAnimation.Begin(_RootCard);
+                _RootGrid.IsEnabled = false;
+                Dispatcher.BeginInvoke(new Action(() => _HideAnimation.Begin(_RootGrid)), DispatcherPriority.Background);
             }
             else
             {
