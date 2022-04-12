@@ -25,19 +25,17 @@ namespace WPR.Dialogs
         public override void OnApplyTemplate()
         {
             base.OnApplyTemplate();
-            if (Template.FindName("TextBox", this) is TextBox t)
-            {
-                Binding binding = BindingOperations.GetBinding(t, TextBox.TextProperty);
-                if (binding != null)
-                {
-                    binding.ValidationRules.Clear();
-                    foreach (var rule in _TextValidationRules)
-                        binding.ValidationRules.Add(rule);
-                    t.GetBindingExpression(TextBox.TextProperty)?.UpdateSource();
-                    t.Focus();
-                    t.SelectAll();
-                }
-            }
+            if (Template.FindName("TextBox", this) is not TextBox t)
+                throw new ArgumentNullException(nameof(t), "Текстбокс не найден");
+
+            var binding = BindingOperations.GetBinding(t, TextBox.TextProperty);
+            if (binding == null) return;
+            binding.ValidationRules.Clear();
+            foreach (var rule in _TextValidationRules)
+                binding.ValidationRules.Add(rule);
+            t.GetBindingExpression(TextBox.TextProperty)?.UpdateSource();
+            t.Focus();
+            t.SelectAll();
         }
         protected override bool CanSetCommandExecuted() => _TextValidationRules.All(Rule => Rule.IsValid);
 
@@ -54,7 +52,7 @@ namespace WPR.Dialogs
 
         private static void PropertyChangedCallback(DependencyObject D, DependencyPropertyChangedEventArgs E)
         {
-            WPRInputBox w = (WPRInputBox)D;
+            var w = (WPRInputBox)D;
             w.TextValue = (string)E.NewValue;
         }
 
@@ -63,7 +61,7 @@ namespace WPR.Dialogs
         [Description("Текстовое значение")]
         public string TextValue
         {
-            get => (string) GetValue(TextValueProperty);
+            get => (string)GetValue(TextValueProperty);
             set => SetValue(TextValueProperty, value);
         }
 

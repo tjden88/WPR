@@ -104,6 +104,10 @@ namespace WPR.Controls
                 Focus();
                 return;
             }
+            _HeaderPopup.Show();
+            _StaysOpen = nextContent.staysOpen;
+            IsShowing = true;
+
             if (nextContent.content is IWPRDialog dlg)
             {
                 _WPRDialog = dlg;
@@ -114,9 +118,6 @@ namespace WPR.Controls
                 _WPRDialog = null;
                 Header = nextContent.content;
             }
-            _HeaderPopup.Show();
-            _StaysOpen = nextContent.staysOpen;
-            IsShowing = true;
 
         }
 
