@@ -19,6 +19,11 @@ namespace WPR.Controls
         private readonly WPRCard _RootCard = new() { IsPopupShadowStyle = true };
         private readonly Thumb _Thumb = new() { Width = 0, Height = 0 };
 
+        static WPRPopup()
+        {
+            PlacementProperty.OverrideMetadata(typeof(WPRPopup), new FrameworkPropertyMetadata(PlacementMode.MousePoint));
+            StaysOpenProperty.OverrideMetadata(typeof(WPRPopup), new FrameworkPropertyMetadata(false));
+        }
 
         #region Properties
 
