@@ -157,7 +157,8 @@ namespace WPR.Controls
         protected override void OnMouseDown(MouseButtonEventArgs e)
         {
             base.OnMouseDown(e);
-            _Thumb.RaiseEvent(e);
+            if (e.ChangedButton == MouseButton.Left && e.ClickCount == 1)
+                _Thumb.RaiseEvent(e);
         }
 
         private void OnMouseUp(object Sender, MouseButtonEventArgs E)

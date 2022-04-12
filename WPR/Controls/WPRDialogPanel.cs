@@ -12,6 +12,13 @@ namespace WPR.Controls
     /// <summary> Контрол для обёртки диалоговых окон </summary>
     internal class WPRDialogPanel : HeaderedContentControl
     {
+        public enum Status
+        {
+            NotShowing,
+            Showing,
+            Hiding
+        }
+
         private IWPRDialog _WPRDialog;
         private bool _StaysOpen;
 
@@ -35,27 +42,30 @@ namespace WPR.Controls
                 throw new ArgumentNullException(nameof(_HeaderPopup), "Попап не найден в шаблоне!");
 
             _HeaderPopup.PopupClosed += HeaderPopupOnClosed;
-            //_HeaderPopup.PopupShowed += () =>
-            //{
-            //    if (GetTemplateChild("PART_HeaderContent") is ContentPresenter presenter) presenter.Focus();
-            //};
         }
 
 
         #region Диалоговое окно
 
-        private readonly Queue<(object content, bool staysOpen)> _DialogContentQueue = new(); // Очередь объектов для отображения
+        private readonly Stack<(object content, bool staysOpen)> _DialogContentStack = new(); // Очередь объектов для отображения
 
 
-        #region IsShowingProperty
-        /// <summary> Показан ли какой-либо диалог </summary>
-        public bool IsShowing
+        #region CurrentStatus : Status - Статус показа контента
+
+        /// <summary>Статус показа контента</summary>
+        public static readonly DependencyProperty CurrentStatusProperty =
+            DependencyProperty.Register(
+                nameof(CurrentStatus),
+                typeof(Status),
+                typeof(WPRDialogPanel),
+                new PropertyMetadata(default(Status)));
+
+        /// <summary>Статус показа контента</summary>
+        public Status CurrentStatus
         {
-            get => (bool)GetValue(IsShowingProperty);
-            set => SetValue(IsShowingProperty, value);
+            get => (Status)GetValue(CurrentStatusProperty);
+            set => SetValue(CurrentStatusProperty, value);
         }
-        public static readonly DependencyProperty IsShowingProperty =
-            DependencyProperty.Register("IsShowing", typeof(bool), typeof(WPRDialogPanel), new PropertyMetadata(false));
 
         #endregion
 
@@ -68,29 +78,36 @@ namespace WPR.Controls
         public void Show(object content, bool staysOpen)
         {
 
-            // Диалог показан в данный момент
-            if (IsShowing)
+            switch (CurrentStatus)
             {
-                // Поместить текущий диалог в очередь и запустить новый
-                _DialogContentQueue.Enqueue((Header, _StaysOpen));
-                _DialogContentQueue.Enqueue((content, staysOpen));
-                Hide();
-            }
-            else
-            {
-                _DialogContentQueue.Enqueue((content, staysOpen));
-                ShowFromQueue();
-            }
+                case Status.NotShowing:
+                    _DialogContentStack.Push((content, staysOpen));
+                    ShowFromQueue();
+                    break;
 
+                case Status.Showing:
+                    // Поместить текущий диалог в очередь и запустить новый
+                    _DialogContentStack.Push((Header, _StaysOpen));
+                    _DialogContentStack.Push((content, staysOpen));
+                    Hide();
+
+                    break;
+                case Status.Hiding:
+                    _DialogContentStack.Push((content, staysOpen));
+
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
         }
-
 
         /// <summary>
         /// Скрыть контент и осветлить родителя
         /// </summary>
         public void Hide()
         {
-            if (!IsShowing) return;
+            if (CurrentStatus != Status.Showing) return;
+            CurrentStatus = Status.Hiding;
             _HeaderPopup.Hide();
             _WPRDialog = null;
         }
@@ -98,7 +115,7 @@ namespace WPR.Controls
         // Показать следующий контент
         private void ShowFromQueue()
         {
-            if (!_DialogContentQueue.TryDequeue(out var nextContent))
+            if (!_DialogContentStack.TryPop(out var nextContent))
             {
                 Header = null;
                 Focus();
@@ -106,7 +123,7 @@ namespace WPR.Controls
             }
             _HeaderPopup.Show();
             _StaysOpen = nextContent.staysOpen;
-            IsShowing = true;
+            CurrentStatus = Status.Showing;
 
             if (nextContent.content is IWPRDialog dlg)
             {
@@ -227,7 +244,7 @@ namespace WPR.Controls
 
         private void HeaderPopupOnClosed()
         {
-            IsShowing = false;
+            CurrentStatus = Status.NotShowing;
             ShowFromQueue();
         }
 

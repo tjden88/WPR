@@ -34,9 +34,9 @@ namespace WPR.Demo.Pages
 
         private void OnShowWindowDialogCommandExecuted()
         {
-            WPRMessageBox.Information(this, "Текст диалога пользователя", "Заголовок", () => Debug.WriteLine("Диалог закрыт"));
-            WPRMessageBox.InformationCancel(this, "Текст диалога пользователя", "Заголовок", (b) => Debug.WriteLine($"Диалог закрыт: {b}"));
-            WPRMessageBox.Question(this, "Текст диалога пользователя", "Заголовок", (b) => Debug.WriteLine($"Диалог закрыт: {b}"));
+            //WPRMessageBox.Information(this, "Текст диалога пользователя", "Заголовок", () => Debug.WriteLine("Диалог закрыт"));
+            //WPRMessageBox.InformationCancel(this, "Текст диалога пользователя", "Заголовок", (b) => Debug.WriteLine($"Диалог закрыт: {b}"));
+            //WPRMessageBox.Question(this, "Текст диалога пользователя", "Заголовок", (b) => Debug.WriteLine($"Диалог закрыт: {b}"));
             WPRMessageBox.QuestionCancel(this, "Текст диалога пользователя", "Заголовок", (b) => Debug.WriteLine($"Диалог закрыт: {b}"));
         }
 
@@ -107,24 +107,28 @@ namespace WPR.Demo.Pages
 
         class TestCustomDialog : IWPRDialog
         {
+            private readonly Dialogs _Parent;
+            private int _Count;
             public Action<bool> DialogResult { get; set; }
 
             public object DialogContent { get; set; }
             public bool StaysOpen => false;
 
-            public TestCustomDialog()
+            public TestCustomDialog(Dialogs parent, int count)
             {
+                _Parent = parent;
+                _Count = count;
                 DialogContent = new Button()
                 {
-                    Content = "OK",
-                    Command = new Command(() => DialogResult?.Invoke(true))
+                    Content =$"Запустить ещё один диалог. Текущий: {count}",
+                    Command = new Command(() => WPRMessageBox.ShowCustomDialog(parent, new TestCustomDialog(parent, count + 1)))
                 };
             }
         }
 
         private async void CustomDialog_Click(object Sender, RoutedEventArgs E)
         {
-            Debug.WriteLine(await WPRMessageBox.ShowCustomDialogAsync(this, new TestCustomDialog()));
+            Debug.WriteLine(await WPRMessageBox.ShowCustomDialogAsync(this, new TestCustomDialog(this, 0)));
         }
 
 

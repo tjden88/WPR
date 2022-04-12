@@ -105,7 +105,7 @@
                         <Trigger Property="Opacity" SourceName="PART_Rect" Value="0">
                             <Setter Property="Visibility" TargetName="PART_Rect" Value="Collapsed"/>
                         </Trigger>
-                        <Trigger Property="IsShowing" Value="True">
+                        <Trigger Property="CurrentStatus" Value="Showing">
                             <Setter Property="CacheMode" TargetName="content" Value="BitmapCache"/>
                             <Setter Property="KeyboardNavigation.TabNavigation" Value="None"/>
                             <Trigger.EnterActions>
