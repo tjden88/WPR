@@ -10,7 +10,7 @@ using System.Windows.Shapes;
 namespace WPR.Controls
 {
     /// <summary> Контрол для обёртки диалоговых окон </summary>
-    public class WPRDialogPanel : HeaderedContentControl
+    internal class WPRDialogPanel : HeaderedContentControl
     {
         private IWPRDialog _WPRDialog;
 

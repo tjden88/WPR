@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -22,23 +23,6 @@ namespace WPR.Demo.Pages
         {
             Debug.WriteLine(Obj);
         }
-
-        #region Command ShowUserDialogCommand - Показать диалог пользователя
-
-        private ICommand _ShowUserDialogCommand;
-
-        /// <summary>Показать диалог пользователя</summary>
-        public ICommand ShowUserDialogCommand => _ShowUserDialogCommand
-            ??= new Command(OnShowUserDialogCommandExecuted, CanShowUserDialogCommandExecute);
-
-        private bool CanShowUserDialogCommandExecute() => true;
-
-        private void OnShowUserDialogCommandExecuted()
-        {
-            DialogPanel.Show(false);
-        }
-
-        #endregion
 
         #region Command ShowWindowDialogCommand - Показать диалог окна
 
@@ -68,7 +52,8 @@ namespace WPR.Demo.Pages
 
         private async void OnShowWindowDialogCommandAsyncExecuted()
         {
-            await WPRMessageBox.InformationAsync(MsgBox, "Текст диалога пользователя");
+            await WPRMessageBox.InformationAsync(this, "Текст диалога пользователя");
+            await Task.Delay(300);
             //var res = await WPRMessageBox.InformationCancelAsync(this, "Текст диалога пользователя");
             //var res = await WPRMessageBox.QuestionAsync(this, "Текст диалога пользователя");
             var res = await WPRMessageBox.QuestionCancelAsync(this, "Текст диалога пользователя");
