@@ -30,10 +30,13 @@ namespace WPR.Controls
             if (GetTemplateChild("PART_Rect") is Rectangle r) r.MouseDown += Rect_MouseDown;
 
             _HeaderPopup = GetTemplateChild("PART_Popup") as WPRPopup;
+
             if (_HeaderPopup == null)
                 throw new ArgumentNullException(nameof(_HeaderPopup), "Попап не найден в шаблоне!");
+
             _HeaderPopup.PopupClosed += HeaderPopupOnClosed;
         }
+
 
         #region Диалоговое окно
 
@@ -60,8 +63,6 @@ namespace WPR.Controls
         /// <param name="staysOpen">Не позволять закрыть содержимое при клике за его пределы</param>
         public void Show(object content, bool staysOpen)
         {
-            if (content == null)
-                throw new ArgumentNullException(nameof(content));
 
             // Диалог показан в данный момент
             if (IsShowing)
@@ -114,6 +115,7 @@ namespace WPR.Controls
         }
 
         #endregion
+
 
         #region Всплывающая подсказка
 
