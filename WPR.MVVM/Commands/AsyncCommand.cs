@@ -91,19 +91,23 @@ namespace WPR.MVVM.Commands
 
         protected override async void ExecuteCommand(object P)
         {
+            var cancelSourceisNull = _CancelSource == null;
             try
             {
-                CancelSource ??= new();
+                if (cancelSourceisNull) CancelSource = new();
 
                 IsNowExecuting = true;
 
                 await _ExecuteAsync(P, CancelSource.Token).ConfigureAwait(true);
             }
-            catch (OperationCanceledException) { }
             finally
             {
                 IsNowExecuting = false;
-                CancelSource = null;
+                if (cancelSourceisNull)
+                {
+                    CancelSource?.Dispose();
+                    CancelSource = null;
+                }
             }
         }
     }
@@ -146,15 +150,15 @@ namespace WPR.MVVM.Commands
         {
         }
 
-         public AsyncCommand(Func<T, CancellationToken, Task> ExecuteAsync, Predicate<T> CanExecute, string CommandText) :
-            this(ExecuteAsync, CanExecute, CommandText, null, null)
+        public AsyncCommand(Func<T, CancellationToken, Task> ExecuteAsync, Predicate<T> CanExecute, string CommandText) :
+           this(ExecuteAsync, CanExecute, CommandText, null, null)
         {
-        }  
-         
-         public AsyncCommand(Func<T, Task> ExecuteAsync, Predicate<T> CanExecute, string CommandText, KeyGesture ExecuteGesture, UIElement GestureTarget) :
-            this((o, _) => ExecuteAsync(o), CanExecute, CommandText, ExecuteGesture, GestureTarget)
+        }
+
+        public AsyncCommand(Func<T, Task> ExecuteAsync, Predicate<T> CanExecute, string CommandText, KeyGesture ExecuteGesture, UIElement GestureTarget) :
+           this((o, _) => ExecuteAsync(o), CanExecute, CommandText, ExecuteGesture, GestureTarget)
         {
-        }   
+        }
 
 
         public AsyncCommand(Func<T, CancellationToken, Task> ExecuteAsync, Predicate<T> CanExecute, string CommandText, KeyGesture ExecuteGesture, UIElement GestureTarget)
@@ -184,7 +188,7 @@ namespace WPR.MVVM.Commands
 
                 IsNowExecuting = true;
 
-                await _ExecuteAsync((T) P, CancelSource.Token).ConfigureAwait(true);
+                await _ExecuteAsync((T)P, CancelSource.Token).ConfigureAwait(true);
             }
             catch (OperationCanceledException) { }
             finally
