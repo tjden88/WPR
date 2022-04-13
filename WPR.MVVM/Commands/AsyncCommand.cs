@@ -99,10 +99,10 @@ namespace WPR.MVVM.Commands
 
                 await _ExecuteAsync(P, CancelSource.Token).ConfigureAwait(true);
             }
-            catch (OperationCanceledException) { }
             finally
             {
                 IsNowExecuting = false;
+                CancelSource?.Dispose();
                 CancelSource = null;
             }
         }
