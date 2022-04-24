@@ -127,12 +127,11 @@
     </Style>
 
     <Style x:Key="WPRToolButton" TargetType="{x:Type ButtonBase}" BasedOn="{StaticResource WPRFlatButton}">
-        <Setter Property="Padding" Value="2"/>
+        <Setter Property="Padding" Value="3"/>
         <Setter Property="Foreground" Value="{DynamicResource SecondaryTextColorBrush}"/>
         <Setter Property="helpers:RippleHelper.FeedbackBrush" Value="{DynamicResource AnimationEnterColorBrush}"/>
         <Setter Property="helpers:RippleHelper.IsCentered" Value="True"/>
         <Setter Property="helpers:ButtonHelper.BorderRadius" Value="100"/>
-        <Setter Property="Height" Value="Auto"/>
         <Setter Property="helpers:ButtonHelper.NoRippleCircleOutside" Value="False"/>
     </Style>
 
