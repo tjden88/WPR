@@ -1,7 +1,6 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:controls="clr-namespace:WPR.Controls"
-                    x:Class="WPR.Styles.TabControls" >
+                    xmlns:controls="clr-namespace:WPR.Controls" >
 
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="Base.xaml"/>
@@ -9,7 +8,7 @@
 
     <Style x:Key="WPRTabItem" TargetType="{x:Type TabItem}" BasedOn="{StaticResource BaseControl}">
         <Setter Property="Padding" Value="10,6,10,6"/>
-        <EventSetter Event="SizeChanged" Handler="Tab_SizeChanged"/>
+        <Setter Property="BorderBrush" Value="{Binding BorderBrush, RelativeSource={RelativeSource AncestorType=TabControl}}"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type TabItem}">
@@ -17,20 +16,46 @@
                                                 Background="{TemplateBinding Background}">
                         <controls:Ripple RippleSpeed="0.7"
                                          Foreground="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=TabControl}, Path=Foreground}"
+                                         HorizontalContentAlignment="{Binding HorizontalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}"
                                                 RippleMouseDownSpeed="0.1">
                             <controls:Ripple.Content>
-                                <ContentPresenter x:Name="contentPresenter" 
+                                <Grid>
+                                    <ContentPresenter x:Name="contentPresenter" 
                                                       ContentSource="Header"
                                                       Focusable="False"
                                                       HorizontalAlignment="{Binding HorizontalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}"
                                                       Margin="{TemplateBinding Padding}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
                                                       VerticalAlignment="{Binding VerticalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}"/>
+                                    <Rectangle x:Name="Rect" Fill="{TemplateBinding BorderBrush}" Height="2" Margin="0,0,0,1"
+                                               VerticalAlignment="Bottom" 
+                                               RenderTransformOrigin="0.5,0.5">
+                                        <Rectangle.RenderTransform>
+                                            <ScaleTransform x:Name="RectScale" ScaleX="0"/>
+                                        </Rectangle.RenderTransform>
+                                    </Rectangle>
+                                </Grid>
                             </controls:Ripple.Content>
                         </controls:Ripple>
                     </controls:ClippingBorder>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsSelected" Value="False">
                             <Setter TargetName="contentPresenter" Property="Opacity" Value="0.65"/>
+                        </Trigger>
+                        <Trigger Property="IsSelected" Value="True">
+                            <Trigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard TargetName="RectScale" TargetProperty="ScaleX">
+                                        <DoubleAnimation Duration="0:0:0.3" EasingFunction="{StaticResource ExponentialEaseOut}" To="1"/>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.EnterActions>
+                            <Trigger.ExitActions>
+                                <BeginStoryboard>
+                                    <Storyboard TargetName="RectScale" TargetProperty="ScaleX">
+                                        <DoubleAnimation Duration="0:0:0.3"/>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.ExitActions>
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
@@ -45,8 +70,6 @@
         <Setter Property="VerticalContentAlignment" Value="Center"/>
         <Setter Property="ItemContainerStyle" Value="{StaticResource WPRTabItem}"/>
         <Setter Property="Foreground" Value="{DynamicResource PrimaryColorBrush}"/>
-        <EventSetter Event="SelectionChanged" Handler="Tab_SelectionChanged"/>
-        <EventSetter Event="Loaded" Handler="Tab_Loaded"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type TabControl}">
@@ -65,11 +88,6 @@
                                 <RowDefinition Height="Auto"/>
                             </Grid.RowDefinitions>
                             <TabPanel IsItemsHost="true" Grid.RowSpan="2" KeyboardNavigation.TabIndex="1" Panel.ZIndex="0"/>
-                            <Rectangle x:Name="Rect" Fill="{TemplateBinding BorderBrush}" Height="2" Margin="0,0,0,1"
-                                       Width="0"
-                                       VerticalAlignment="Bottom" 
-                                       HorizontalAlignment="Left"
-                                       Grid.Row="1"/>
                         </Grid>
                         <Border x:Name="contentPanel" Grid.Column="0" KeyboardNavigation.DirectionalNavigation="Contained" Grid.Row="1" KeyboardNavigation.TabIndex="2" KeyboardNavigation.TabNavigation="Local">
                             <ContentPresenter x:Name="PART_SelectedContentHost" ContentSource="SelectedContent" Margin="{TemplateBinding Padding}" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
@@ -99,7 +117,6 @@
                             <Setter Property="Height" TargetName="RowDefinition0" Value="*"/>
                             <Setter Property="Height" TargetName="RowDefinition1" Value="0"/>
                             <Setter Property="Margin" TargetName="headerPanel" Value="2,2,0,2"/>
-                            <Setter Property="Opacity" TargetName="Rect" Value="0"/>
                         </Trigger>
                         <Trigger Property="TabStripPlacement" Value="Right">
                             <Setter Property="Grid.Row" TargetName="headerPanel" Value="0"/>
@@ -111,7 +128,6 @@
                             <Setter Property="Height" TargetName="RowDefinition0" Value="*"/>
                             <Setter Property="Height" TargetName="RowDefinition1" Value="0"/>
                             <Setter Property="Margin" TargetName="headerPanel" Value="0,2,2,2"/>
-                            <Setter Property="Opacity" TargetName="Rect" Value="0"/>
                         </Trigger>
                         <Trigger Property="IsEnabled" Value="false">
                             <Setter Property="Opacity" TargetName="headerPanel" Value="0.5"/>
