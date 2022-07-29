@@ -206,12 +206,13 @@
         </ControlTemplate.Resources>
 
         <Grid x:Name="templateRoot" Margin="-8,-10,-8,0" SnapsToDevicePixels="true">
+            <Border Name="PopupPlacement" VerticalAlignment="Top" HorizontalAlignment="Left"/>
             <Popup x:Name="PART_Popup" AllowsTransparency="true"
                    Grid.ColumnSpan="2" 
                    MaxHeight="{TemplateBinding MaxDropDownHeight}"
                    IsOpen="{Binding IsDropDownOpen, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
-                   PlacementTarget="{Binding ElementName=templateRoot}"
-                   PopupAnimation="Fade" Placement="Relative">
+                   PlacementTarget="{Binding ElementName=PopupPlacement}"
+                   PopupAnimation="Fade" Placement="Left">
                 <Grid Margin="10" x:Name="PopupContent" >
                     <Border  MinWidth="{Binding ActualWidth, ElementName=templateRoot}"
                              Background="{DynamicResource BackgroundColorBrush}"
