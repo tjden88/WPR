@@ -1,0 +1,19 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0-windows</TargetFramework>
+	  <Description>Библиотека инструментов WPF</Description>
+	  <FileVersion>1.0</FileVersion>
+	  <AssemblyVersion>1.0</AssemblyVersion>
+	  <PackageLicenseExpression>MIT</PackageLicenseExpression>
+	  <GeneratePackageOnBuild>False</GeneratePackageOnBuild>
+	  <Authors>tj_d</Authors>
+	  <Copyright>tj.den88@gmail.com</Copyright>
+	  <PackageProjectUrl>https://github.com/tjden88/WPR/tree/dev/WPR.Tools</PackageProjectUrl>
+	  <PackageIcon>Style XP.png</PackageIcon>
+	  <RepositoryUrl>https://github.com/tjden88/WPR/tree/dev/WPR.Tools</RepositoryUrl>
+	  <PackageReleaseNotes>Первая версия. Добавлен сериализатор</PackageReleaseNotes>
+	  <Version>1.0</Version>
+  </PropertyGroup>
+
+</Project>
