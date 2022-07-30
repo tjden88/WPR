@@ -14,6 +14,15 @@
 	  <RepositoryUrl>https://github.com/tjden88/WPR/tree/dev/WPR.Tools</RepositoryUrl>
 	  <PackageReleaseNotes>Первая версия. Добавлен сериализатор</PackageReleaseNotes>
 	  <Version>1.0</Version>
+	  <PackageRequireLicenseAcceptance>False</PackageRequireLicenseAcceptance>
+	  <SignAssembly>False</SignAssembly>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="E:\Мусор\Иконки\Style XP.png">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+  </ItemGroup>
 
 </Project>
