@@ -223,6 +223,9 @@ namespace WPR.Controls
 
         private void Animout_Completed(object sender, EventArgs e)
         {
+            if(_StackBubblesQueue.Count == 0)
+                return;
+
             _StackBubblesQueue.Dequeue().Action?.Invoke(false);
             ShowBubbleinStack();
         }
