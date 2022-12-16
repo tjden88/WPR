@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <Version>0.0.1</Version>
+    <Version>1.0</Version>
     <PackageReleaseNotes>
       Стили базовых элементов и некоторые дополнительные контролы
     </PackageReleaseNotes>
@@ -41,7 +41,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\WPR.MVVM\WPR.MVVM.csproj" />
+    <PackageReference Include="WPR.MVVM" Version="1.1.0" />
   </ItemGroup>
 
   <ItemGroup>
@@ -50,6 +50,13 @@
     <Resource Include="Fonts\Roboto-Regular.ttf" />
     <Resource Include="Fonts\Roboto-Thin.ttf" />
     <Resource Include="Fonts\Roboto-ThinItalic.ttf" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Style XP.png">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
   </ItemGroup>
 
 </Project>

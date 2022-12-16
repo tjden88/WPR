@@ -212,7 +212,7 @@
                    MaxHeight="{TemplateBinding MaxDropDownHeight}"
                    IsOpen="{Binding IsDropDownOpen, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
                    PlacementTarget="{Binding ElementName=PopupPlacement}"
-                   PopupAnimation="Fade" Placement="Left">
+                   PopupAnimation="Fade" Placement="Relative">
                 <Grid Margin="10" x:Name="PopupContent" >
                     <Border  MinWidth="{Binding ActualWidth, ElementName=templateRoot}"
                              Background="{DynamicResource BackgroundColorBrush}"
