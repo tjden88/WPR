@@ -14,12 +14,11 @@ public class WPRStyleBrushAnimation : AnimationTimeline
 {
     public override Type TargetPropertyType => typeof(Brush);
 
-    public override object GetCurrentValue(object defaultOriginValue, object defaultDestinationValue, AnimationClock animationClock)
-    {
-        return GetCurrentValue(defaultOriginValue as Brush,
+    public override object GetCurrentValue(object defaultOriginValue, object defaultDestinationValue, AnimationClock animationClock) =>
+        GetCurrentValue(defaultOriginValue as Brush,
             defaultDestinationValue as Brush,
             animationClock);
-    }
+
     public object GetCurrentValue(Brush defaultOriginValue, Brush defaultDestinationValue, AnimationClock animationClock)
     {
         if (animationClock?.CurrentProgress == null)
@@ -27,8 +26,8 @@ public class WPRStyleBrushAnimation : AnimationTimeline
 
         //use the standard values if From and To are not set 
         //(it is the value of the given property)
-        defaultOriginValue = _From ?? defaultOriginValue;
-        defaultDestinationValue = _To ?? defaultDestinationValue;
+        defaultOriginValue = FromBrush ?? defaultOriginValue;
+        defaultDestinationValue = ToBrush ?? defaultDestinationValue;
 
         return animationClock.CurrentProgress.Value switch
         {
@@ -48,10 +47,10 @@ public class WPRStyleBrushAnimation : AnimationTimeline
         };
     }
 
-    protected override Freezable CreateInstanceCore() => new BrushAnimation();
+    protected override Freezable CreateInstanceCore() => this;
 
-    private Brush _To => Design.GetBrushFromResource(To);
-    private Brush _From => Design.GetBrushFromResource(From);
+    private Brush ToBrush => Design.GetBrushFromResource(To);
+    private Brush FromBrush => Design.GetBrushFromResource(From);
 
 
     #region To : Design.StyleBrush - Кисть назанчения
