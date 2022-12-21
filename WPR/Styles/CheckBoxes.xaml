@@ -86,6 +86,7 @@
     <!--Чекбокс-->
     <Style x:Key="WPRCheckBox" TargetType="{x:Type CheckBox}" BasedOn="{StaticResource BaseControl}">
         <Setter Property="VerticalContentAlignment" Value="Center" />
+        <Setter Property="Cursor" Value="Hand"/>
         <Setter Property="BorderThickness" Value="2"/>
         <Setter Property="BorderBrush" Value="{DynamicResource PrimaryColorBrush}"/>
         <Setter Property="helpers:RippleHelper.FeedbackBrush" Value="{DynamicResource PrimaryColorBrush}"/>

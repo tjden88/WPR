@@ -135,6 +135,7 @@
 
                         <DockPanel x:Name="PART_Buttons" Height="35" 
                                VerticalAlignment="Top"
+                               Background="{TemplateBinding BorderBrush}"
                                HorizontalAlignment="Right"
                                LastChildFill="False">
                             <Button x:Name="btnClose" Style="{StaticResource  WindowHeaderCloseButton}"

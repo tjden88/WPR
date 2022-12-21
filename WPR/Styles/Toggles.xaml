@@ -111,7 +111,7 @@
                             <ColumnDefinition Width="Auto"/>
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
-                        <Grid Background="Transparent">
+                        <Grid Background="Transparent" Cursor="Hand">
                             <Border Background="{DynamicResource SecondaryTextColorBrush}"
                                     x:Name="Border"
                                     VerticalAlignment="Center"
