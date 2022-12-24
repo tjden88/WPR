@@ -1,30 +1,29 @@
 ﻿using System;
-using System.Globalization;
 using System.Windows;
-using System.Windows.Data;
 using System.Windows.Media;
-using WPR.ColorTheme;
 using WPR.MVVM.Converters;
 using WPR.MVVM.Converters.Base;
 
-namespace WPR;
+namespace WPR.ColorTheme;
 
-public static class Design
+/// <summary>
+/// Установка и изменение цветовой темы
+/// </summary>
+public static class StyleHelper
 {
-    private static readonly TypeConverter<SolidColorBrush> _BrushLightOrDarkConverter = new (new BrushLightOrDarkConverter());
+    private static readonly TypeConverter<SolidColorBrush> _BrushLightOrDarkConverter = new(new BrushLightOrDarkConverter());
 
     private static readonly StyleColors _StyleColors = (StyleColors)Application.Current.Resources["StyleColors"];
     private static Color DarkColor => _StyleColors.DarkColor; // Кисть тёмной темы
     private static Color WhiteColor => _StyleColors.LightColor; // Кисть светлой темы
 
 
+    /// <summary> Происходит при любом изменении цветовой схемы</summary>
+    public static event EventHandler StyleChanged;
+
 
     /// <summary>Установлена ли тёмная тема</summary>
     public static bool IsDarkTheme => _StyleColors.DarkColor == _StyleColors.BackgroundColor;
-
-
-    /// <summary> Происходит при любом изменении цветовой схемы</summary>
-    public static event EventHandler StyleChanged;
 
 
     /// <summary>Задать новый рандомный стиль (цветовую палитру) элементам управления</summary>
@@ -51,6 +50,7 @@ public static class Design
         StyleChanged?.Invoke(null, EventArgs.Empty);
     }
 
+
     /// <summary>Установить цвет акцента</summary>
     public static void SetAccentColor(Color color)
     {
@@ -59,21 +59,20 @@ public static class Design
     }
 
 
+
     /// <summary>Найти кисть в ресурсах</summary>
-    /// <param name="Name">Имя кисти</param>
-    public static SolidColorBrush GetBrushFromResource(StyleColors.StyleBrushes Name)
+    /// <param name="BrushName">Имя кисти</param>
+    public static SolidColorBrush GetBrushFromResource(StyleColors.StyleBrushes BrushName)
     {
-        var br = (SolidColorBrush)Application.Current.Resources[Name.ToString()];
+        var br = (SolidColorBrush)Application.Current.Resources[BrushName.ToString()];
         return br;
     }
 
 
     #region Theme
 
-    // TODO: доработать темы
-
     /// <summary>
-    /// Установить тёмную тему. НЕ ДОРАБОТАНО
+    /// Установить тёмную тему.
     /// </summary>
     public static void SetDarkColorTheme()
     {
@@ -87,7 +86,7 @@ public static class Design
     }
 
     /// <summary>
-    /// Установить светлую тему. НЕ ДОРАБОТАНО
+    /// Установить светлую тему.
     /// </summary>
     public static void SetLightColorTheme()
     {
@@ -122,9 +121,9 @@ public static class Design
     /// <summary>Взять цвет светлее</summary>
     private static Color Lighten(Color basic, double koef)
     {
-        var lighten = Color.FromArgb(255, (byte)(basic.R + ((255 - basic.R) / koef)),
-            (byte)(basic.G + ((255 - basic.G) / koef)),
-            (byte)(basic.B + ((255 - basic.B) / koef)));
+        var lighten = Color.FromArgb(255, (byte)(basic.R + (255 - basic.R) / koef),
+            (byte)(basic.G + (255 - basic.G) / koef),
+            (byte)(basic.B + (255 - basic.B) / koef));
         return lighten;
     }
 

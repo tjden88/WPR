@@ -5,6 +5,7 @@ using System.Windows.Input;
 using WPR.Demo.Services.Interfaces;
 using WPR.MVVM.ViewModels;
 using WPR.MVVM.Commands;
+using WPR.ColorTheme;
 
 namespace WPR.Demo.ViewModels
 {
@@ -20,7 +21,7 @@ namespace WPR.Demo.ViewModels
 
         private void OnSetNewStyleCommandExecuted()
         {
-            Design.SetNewRandomStyle();
+            StyleHelper.SetNewRandomStyle();
         }
         #endregion
 
@@ -34,10 +35,10 @@ namespace WPR.Demo.ViewModels
 
         private void OnSetDarkThemeCommandExecuted()
         {
-            if (Design.IsDarkTheme)
-                Design.SetLightColorTheme();
+            if (StyleHelper.IsDarkTheme)
+                StyleHelper.SetLightColorTheme();
             else
-                Design.SetDarkColorTheme();
+                StyleHelper.SetDarkColorTheme();
         }
         #endregion
 

@@ -50,11 +50,11 @@ public class WPRStyleBrushAnimation : AnimationTimeline
 
     protected override Freezable CreateInstanceCore() => this;
 
-    private Brush ToBrush => Design.GetBrushFromResource(To);
-    private Brush FromBrush => Design.GetBrushFromResource(From);
+    private Brush ToBrush => StyleHelper.GetBrushFromResource(To);
+    private Brush FromBrush => StyleHelper.GetBrushFromResource(From);
 
 
-    #region To : Design.StyleBrushes - Кисть назанчения
+    #region To : StyleHelper.StyleBrushes - Кисть назанчения
 
     /// <summary>Кисть назанчения</summary>
     public static readonly DependencyProperty ToProperty =
@@ -76,7 +76,7 @@ public class WPRStyleBrushAnimation : AnimationTimeline
     #endregion
 
 
-    #region From : Design.StyleBrushes - Начальная кисть
+    #region From : StyleHelper.StyleBrushes - Начальная кисть
 
     /// <summary>Начальная кисть</summary>
     public static readonly DependencyProperty FromProperty =
