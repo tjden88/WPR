@@ -6,62 +6,61 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 
-namespace WPR.Styles
+namespace WPR.Styles;
+
+partial class Windows
 {
-    partial class Windows
+    private void Close_Click(object sender, RoutedEventArgs e)
     {
-        private void Close_Click(object sender, RoutedEventArgs e)
-        {
-            if (sender is Button b && Window.GetWindow(b) is Window parentWindow) parentWindow.Close();
-        }
+        if (sender is Button b && Window.GetWindow(b) is Window parentWindow) parentWindow.Close();
+    }
 
-        private void MaximizeRestoreClick(object sender, RoutedEventArgs e)
-        {
-            if (sender is Button b && Window.GetWindow(b) is Window parentWindow)
-                parentWindow.WindowState = parentWindow.WindowState == WindowState.Normal
-                    ? WindowState.Maximized
-                    : WindowState.Normal;
-        }
+    private void MaximizeRestoreClick(object sender, RoutedEventArgs e)
+    {
+        if (sender is Button b && Window.GetWindow(b) is Window parentWindow)
+            parentWindow.WindowState = parentWindow.WindowState == WindowState.Normal
+                ? WindowState.Maximized
+                : WindowState.Normal;
+    }
 
-        private void MinimizeClick(object sender, RoutedEventArgs e)
-        {
-            if (sender is Button b && Window.GetWindow(b) is Window parentWindow)
-                parentWindow.WindowState = WindowState.Minimized;
-        }
+    private void MinimizeClick(object sender, RoutedEventArgs e)
+    {
+        if (sender is Button b && Window.GetWindow(b) is Window parentWindow)
+            parentWindow.WindowState = WindowState.Minimized;
+    }
 
-        private void ModalWindow_MouseMove(object Sender, MouseEventArgs E)
+    private void ModalWindow_MouseMove(object Sender, MouseEventArgs E)
+    {
+        if (E.LeftButton == MouseButtonState.Pressed)
         {
-            if (E.LeftButton == MouseButtonState.Pressed)
+            (Sender as Window)?.DragMove();
+        }
+    }
+
+    private void ModalWindow_Loaded(object Sender, RoutedEventArgs E)
+    {
+        if (Sender is Window w)
+        {
+            w.Closing += WOnClosing;
+        }
+    }
+
+    private void WOnClosing(object Sender, CancelEventArgs E)
+    {
+        if (Sender is Window w && w.Template?.FindName("Transform", w) is ScaleTransform {ScaleX: 1.0} sc)
+        {
+            E.Cancel = true;
+            w.CacheMode = new BitmapCache();
+            DoubleAnimation a = new()
             {
-                (Sender as Window)?.DragMove();
-            }
-        }
-
-        private void ModalWindow_Loaded(object Sender, RoutedEventArgs E)
-        {
-            if (Sender is Window w)
+                Duration = TimeSpan.FromSeconds(0.3),
+                EasingFunction = new ElasticEase() {Oscillations = 1, EasingMode = EasingMode.EaseIn}
+            };
+            a.Completed += (O, Args) =>
             {
-                w.Closing += WOnClosing;
-            }
-        }
-
-        private void WOnClosing(object Sender, CancelEventArgs E)
-        {
-            if (Sender is Window w && w.Template?.FindName("Transform", w) is ScaleTransform {ScaleX: 1.0} sc)
-            {
-                E.Cancel = true;
-                w.CacheMode = new BitmapCache();
-                DoubleAnimation a = new()
-                {
-                    Duration = TimeSpan.FromSeconds(0.3),
-                    EasingFunction = new ElasticEase() {Oscillations = 1, EasingMode = EasingMode.EaseIn}
-                };
-                a.Completed += (O, Args) =>
-                {
-                    w.Close();
-                };
-                sc.BeginAnimation(ScaleTransform.ScaleXProperty, a);
-            }
+                w.Close();
+            };
+            sc.BeginAnimation(ScaleTransform.ScaleXProperty, a);
         }
     }
 }
