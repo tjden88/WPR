@@ -13,8 +13,6 @@
 
     <colorTheme:StyleColors x:Key="StyleColors"/>
 
-    <Color x:Key="WhiteColor">White</Color>
-    <Color x:Key="DarkColor">#1C1C1C</Color>
     <Color x:Key="PrimaryColor">#3F51B5</Color>
     <Color x:Key="DarkPrimaryColor">#FF212E80</Color>
     <Color x:Key="LightPrimaryColor">#C5CAE9</Color>
@@ -28,8 +26,8 @@
     <Color x:Key="AttentionColor">Red</Color>
     <Color x:Key="InactiveWindowColor">#C5CAE9</Color>
 
-    <SolidColorBrush x:Key="WhiteBrush" Color="{StaticResource WhiteColor}" p:Freeze="True"/>
-    <SolidColorBrush x:Key="DarkBrush" Color="{StaticResource DarkColor}" p:Freeze="True"/>
+    <SolidColorBrush x:Key="WhiteBrush" Color="{Binding LightColor, Source={StaticResource StyleColors}}" p:Freeze="True"/>
+    <SolidColorBrush x:Key="DarkBrush" Color="{Binding DarkColor, Source={StaticResource StyleColors}}" p:Freeze="True"/>
     <SolidColorBrush x:Key="PrimaryColorBrush" Color="{StaticResource PrimaryColor}" p:Freeze="True"/>
     <SolidColorBrush x:Key="DarkPrimaryColorBrush" Color="{StaticResource DarkPrimaryColor}" p:Freeze="True"/>
     <SolidColorBrush x:Key="LightPrimaryColorBrush" Color="{StaticResource LightPrimaryColor}" p:Freeze="True"/>

@@ -10,9 +10,9 @@ namespace WPR;
 
 public static class Design
 {
-    private static readonly Color _DarkColor = GetBrushFromResource(StyleBrush.DarkBrush).Color; // Кисть тёмной темы
-    private static readonly Color _WhiteColor = GetBrushFromResource(StyleBrush.WhiteBrush).Color; // Кисть светлой темы
     private static readonly StyleColors _StyleColors = (StyleColors)Application.Current.Resources["StyleColors"];
+    private static Color DarkColor => _StyleColors.DarkColor; // Кисть тёмной темы
+    private static Color WhiteColor => _StyleColors.LightColor; // Кисть светлой темы
 
     public enum StyleBrush
     {
@@ -34,7 +34,7 @@ public static class Design
     }
 
     /// <summary>Установлена ли тёмная тема</summary>
-    public static bool IsDarkThemeCurrent => GetBrushFromResource(StyleBrush.BackgroundColorBrush).Color == _DarkColor;
+    public static bool IsDarkThemeCurrent => GetBrushFromResource(StyleBrush.BackgroundColorBrush).Color == DarkColor;
 
 
     /// <summary> Происходит при любом изменении цветовой схемы</summary>
@@ -96,8 +96,8 @@ public static class Design
     [Obsolete("Не доработано")]
     public static void SetDarkColorTheme()
     {
-        ColorService.SetNewBrush(StyleBrush.BackgroundColorBrush, _DarkColor);
-        ColorService.SetNewBrush(StyleBrush.PrimaryTextColorBrush, _WhiteColor);
+        ColorService.SetNewBrush(StyleBrush.BackgroundColorBrush, DarkColor);
+        ColorService.SetNewBrush(StyleBrush.PrimaryTextColorBrush, WhiteColor);
 
         _StyleColors.ShadowColor = Colors.Red;
         StyleChanged?.Invoke(null, EventArgs.Empty);
@@ -110,8 +110,8 @@ public static class Design
     [Obsolete("Не доработано")]
     public static void SetLightColorTheme()
     {
-        ColorService.SetNewBrush(StyleBrush.BackgroundColorBrush, _WhiteColor);
-        ColorService.SetNewBrush(StyleBrush.PrimaryTextColorBrush, _DarkColor);
+        ColorService.SetNewBrush(StyleBrush.BackgroundColorBrush, WhiteColor);
+        ColorService.SetNewBrush(StyleBrush.PrimaryTextColorBrush, DarkColor);
         _StyleColors.ShadowColor = Colors.DimGray;
 
         StyleChanged?.Invoke(null, EventArgs.Empty);
