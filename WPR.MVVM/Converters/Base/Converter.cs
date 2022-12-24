@@ -2,10 +2,10 @@
 using System.Windows.Data;
 using System.Windows.Markup;
 
-namespace WPR.MVVM.Converters;
+namespace WPR.MVVM.Converters.Base;
 
 /// <summary>Конвертер величин</summary>
-public abstract class ConverterBase : MarkupExtension, IValueConverter
+public abstract class Converter : MarkupExtension, IValueConverter
 {
 
     /// <summary>Преобразование значения</summary>
@@ -25,7 +25,7 @@ public abstract class ConverterBase : MarkupExtension, IValueConverter
     /// <returns>Исходное значение</returns>
     /// <exception cref="NotSupportedException">Генерируется при отсутствии переопределения в классах наследниках</exception>
 
-    protected virtual object ConvertBack( object v, Type t, object p, CultureInfo c) => throw new NotSupportedException("Обратное преобразование не поддерживается");
+    protected virtual object ConvertBack(object v, Type t, object p, CultureInfo c) => throw new NotSupportedException("Обратное преобразование не поддерживается");
 
     object IValueConverter.Convert(object v, Type t, object p, CultureInfo c) => Convert(v, t, p, c);
 

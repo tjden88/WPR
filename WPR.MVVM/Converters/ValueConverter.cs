@@ -1,9 +1,10 @@
 ﻿using System.Globalization;
+using WPR.MVVM.Converters.Base;
 
 namespace WPR.MVVM.Converters;
 
-/// <summary>Базовая реализация конвертера</summary>
-public class ValueConverter : ConverterBase
+/// <summary>Конвертации значения лямбда - функцией</summary>
+public class ValueConverter : Converter
 {
     private readonly Func<object, Type, object, CultureInfo, object> _ConvertFunction;
     private readonly Func<object, Type, object, CultureInfo, object> _ConvertBackFunction;
