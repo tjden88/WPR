@@ -1,42 +1,41 @@
 ﻿using System.Globalization;
 using System.Windows.Controls;
 
-namespace WPR.MVVM.Validation
+namespace WPR.MVVM.Validation;
+
+/// <summary>Базовый класс валидаций</summary>
+public abstract class ValidationBase : ValidationRule
 {
-    /// <summary>Базовый класс валидаций</summary>
-    public abstract class ValidationBase : ValidationRule
+    /// <summary>Описание ошибки</summary>
+    public string Message { get; set; } = "Неверное значение";
+
+    /// <summary>Прошла ли проверка валидности</summary>
+    public bool IsValid { get; private set; }
+
+    /// <summary>Провести валидацию</summary>
+    protected abstract bool Validated(object value, CultureInfo cultureInfo);
+
+    public override ValidationResult Validate(object value, CultureInfo cultureInfo)
     {
-        /// <summary>Описание ошибки</summary>
-        public string Message { get; set; } = "Неверное значение";
-
-        /// <summary>Прошла ли проверка валидности</summary>
-        public bool IsValid { get; private set; }
-
-        /// <summary>Провести валидацию</summary>
-        protected abstract bool Validated(object value, CultureInfo cultureInfo);
-
-        public override ValidationResult Validate(object value, CultureInfo cultureInfo)
-        {
-            IsValid = Validated(value, cultureInfo);
-            return IsValid ? ValidationResult.ValidResult : new ValidationResult(false, Message);
-        }
+        IsValid = Validated(value, cultureInfo);
+        return IsValid ? ValidationResult.ValidResult : new ValidationResult(false, Message);
     }
+}
 
-    public abstract class ValidationBase<T> : ValidationRule
+public abstract class ValidationBase<T> : ValidationRule
+{
+    /// <summary>Описание ошибки</summary>
+    public string Message { get; set; } = "Неверное значение";
+
+    /// <summary>Прошла ли проверка валидности</summary>
+    public bool IsValid { get; private set; }
+
+    /// <summary>Провести валидацию</summary>
+    protected abstract bool Validated(T value, CultureInfo cultureInfo);
+
+    public override ValidationResult Validate(object value, CultureInfo cultureInfo)
     {
-        /// <summary>Описание ошибки</summary>
-        public string Message { get; set; } = "Неверное значение";
-
-        /// <summary>Прошла ли проверка валидности</summary>
-        public bool IsValid { get; private set; }
-
-        /// <summary>Провести валидацию</summary>
-        protected abstract bool Validated(T value, CultureInfo cultureInfo);
-
-        public override ValidationResult Validate(object value, CultureInfo cultureInfo)
-        {
-            IsValid = Validated((T)value, cultureInfo);
-            return IsValid ? ValidationResult.ValidResult : new ValidationResult(false, Message);
-        }
+        IsValid = Validated((T)value, cultureInfo);
+        return IsValid ? ValidationResult.ValidResult : new ValidationResult(false, Message);
     }
 }
