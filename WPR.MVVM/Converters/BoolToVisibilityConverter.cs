@@ -15,7 +15,7 @@ namespace WPR.MVVM.Converters
         /// <summary> Результат преобразования (по умолчанию Collapsed) </summary>
         public Visibility HiddenVisibility { get; set; } = Visibility.Collapsed;
 
-        protected override object Convert(object v, Type t, object p, CultureInfo c)
+        public override object Convert(object v, Type t, object p, CultureInfo c)
         {
             if (p as string == "!")
                 return (bool) v ? HiddenVisibility : Visibility.Visible;
@@ -23,7 +23,7 @@ namespace WPR.MVVM.Converters
             return (bool)v ? Visibility.Visible : HiddenVisibility;
         }
 
-        protected override object ConvertBack(object v, Type t, object p, CultureInfo c)
+        public override object ConvertBack(object v, Type t, object p, CultureInfo c)
         {
             if (p as string == "!")
                 return (Visibility) v != Visibility.Visible;

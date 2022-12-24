@@ -11,5 +11,5 @@ namespace WPR.MVVM.Converters;
 [ValueConversion(typeof(object), typeof(bool))]
 public class ValueIsNotNullConverter : Converter
 {
-    protected override object Convert(object v, Type t, object p, CultureInfo c) => v != null;
+    public override object Convert(object v, Type t, object p, CultureInfo c) => v != null;
 }

@@ -4,8 +4,10 @@
                     xmlns:controls="clr-namespace:WPR.Controls"
                     x:Class="WPR.Styles.Windows">
     <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="Base.xaml"/>
         <ResourceDictionary Source="Buttons.xaml"/>
     </ResourceDictionary.MergedDictionaries>
+
 
     <!--Стиль кнопки заголовка-->
     <Style x:Key="WindowTitleButton" TargetType="{x:Type Button}" BasedOn="{StaticResource WPRFlatButton}">
@@ -13,7 +15,8 @@
         <Setter Property="Margin" Value="0" />
         <Setter Property="WindowChrome.IsHitTestVisibleInChrome" Value="True" />
         <Setter Property="Focusable" Value="False"/>
-        <Setter Property="Foreground" Value="{Binding Background, RelativeSource={RelativeSource AncestorType=Window}, Converter={StaticResource BrushLightOrDarkConverter}}"/>
+        <Setter Property="Background" Value="{StaticResource TransparentBrush}"></Setter>
+        <Setter Property="Foreground" Value="{DynamicResource WindowForegroundColorBrush}" />
         <Setter Property="wh:ButtonHelper.BorderRadius" Value="0"/>
     </Style>
 
@@ -139,7 +142,7 @@
 
                         <DockPanel x:Name="PART_Buttons" Height="35" 
                                VerticalAlignment="Top"
-                               Background="{TemplateBinding BorderBrush}"
+                               Background="{TemplateBinding Background}"
                                HorizontalAlignment="Right"
                                LastChildFill="False">
                             <Button x:Name="btnClose" Style="{StaticResource  WindowHeaderCloseButton}"
@@ -205,8 +208,6 @@
 
     <!--Окно с заголовком-->
     <Style x:Key="ChromeWindow" TargetType="{x:Type Window}" BasedOn="{StaticResource BaseControl}">
-        <Setter Property="Foreground" Value="{Binding Background, RelativeSource={RelativeSource AncestorType=Window}, Converter={StaticResource BrushLightOrDarkConverter}}"/>
-
         <Setter Property="WindowChrome.WindowChrome">
             <Setter.Value>
                 <WindowChrome CaptionHeight="35"

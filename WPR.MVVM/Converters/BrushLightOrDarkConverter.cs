@@ -16,7 +16,7 @@ namespace WPR.MVVM.Converters
 
         public SolidColorBrush LowValue { get; set; } = new(Colors.Black);
 
-        protected override object Convert(object v, Type t, object p, CultureInfo c)
+        public override object Convert(object v, Type t, object p, CultureInfo c)
         {
             if (v is not SolidColorBrush solidColorBrush) return null;
             var color = solidColorBrush.Color;
@@ -24,6 +24,6 @@ namespace WPR.MVVM.Converters
             return brightness > 123 ? LowValue : HighValue;
         }
 
-        protected override object ConvertBack(object v, Type t, object p, CultureInfo c) => Convert(v, t, p, c);
+        public override object ConvertBack(object v, Type t, object p, CultureInfo c) => Convert(v, t, p, c);
     }
 }

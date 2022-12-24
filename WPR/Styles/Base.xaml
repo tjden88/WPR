@@ -29,6 +29,7 @@
     <SolidColorBrush x:Key="LightWindowBackgroundColorBrush" Color="{Binding LightWindowBackgroundColor, Source={StaticResource StyleColors}}" p:Freeze="True"/>
     <SolidColorBrush x:Key="DarkWindowBackgroundColorBrush" Color="{Binding DarkWindowBackgroundColor, Source={StaticResource StyleColors}}" p:Freeze="True"/>
     <SolidColorBrush x:Key="InactiveWindowBackgroundColorBrush" Color="{Binding InactiveWindowBackgroundColor, Source={StaticResource StyleColors}}" p:Freeze="True"/>
+    <SolidColorBrush x:Key="WindowForegroundColorBrush" Color="{Binding WindowForegroundColor, Source={StaticResource StyleColors}}" p:Freeze="True"/>
 
     <SolidColorBrush x:Key="AnimationEnterColorBrush" Color="#99858585" p:Freeze="True"/>
 

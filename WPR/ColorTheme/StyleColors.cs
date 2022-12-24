@@ -28,6 +28,7 @@ public class StyleColors : DependencyObject
         LightWindowBackgroundColorBrush,
         DarkWindowBackgroundColorBrush,
         InactiveWindowBackgroundColor,
+        WindowForegroundColor,
         AnimationEnterColorBrush,
         DangerColorBrush,
         WhiteBrush,
@@ -51,6 +52,7 @@ public class StyleColors : DependencyObject
     private static readonly Color _BackgroundColor = _LightColor;
     private static readonly Color _WindowBackgroundColor = _PrimaryColor;
     private static readonly Color _InactiveWindowBackgroundColor = _LightPrimaryColor;
+    private static readonly Color _WindowForegroundColor = _BackgroundColor;
 
     private static readonly Color _SecondaryBackgroundColor = _LightColor;
     private static readonly Color _LightWindowBackgroundColor = _PrimaryColor;
@@ -426,6 +428,28 @@ public class StyleColors : DependencyObject
     {
         get => (Color)GetValue(InactiveWindowBackgroundColorProperty);
         set => SetValue(InactiveWindowBackgroundColorProperty, value);
+    }
+
+    #endregion
+
+
+    #region WindowForegroundColor : Color - Цвет текста заголовка окна
+
+    /// <summary>Цвет текста заголовка окна</summary>
+    public static readonly DependencyProperty WindowForegroundColorProperty =
+        DependencyProperty.Register(
+            nameof(WindowForegroundColor),
+            typeof(Color),
+            typeof(StyleColors),
+            new PropertyMetadata(_WindowForegroundColor));
+
+    /// <summary>Цвет текста заголовка окна</summary>
+    [Category("StyleColors")]
+    [Description("Цвет текста заголовка окна")]
+    public Color WindowForegroundColor
+    {
+        get => (Color) GetValue(WindowForegroundColorProperty);
+        set => SetValue(WindowForegroundColorProperty, value);
     }
 
     #endregion

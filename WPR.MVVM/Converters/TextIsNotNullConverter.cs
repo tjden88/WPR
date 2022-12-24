@@ -10,7 +10,7 @@ namespace WPR.MVVM.Converters
     [ValueConversion(typeof(string), typeof(bool))]
     public class TextIsNotNullConverter : Converter
     {
-        protected override object Convert(object v, Type t, object p, CultureInfo c) =>
+        public override object Convert(object v, Type t, object p, CultureInfo c) =>
             v != null && !string.IsNullOrWhiteSpace(v.ToString());
     }
 }

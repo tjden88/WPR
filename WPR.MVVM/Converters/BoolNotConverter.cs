@@ -10,8 +10,8 @@ namespace WPR.MVVM.Converters
     [ValueConversion(typeof(bool), typeof(bool))]
     public class BoolNotConverter : Converter
     {
-        protected  override object Convert(object v, Type t, object p, CultureInfo c) => !(bool)v;
+        public override object Convert(object v, Type t, object p, CultureInfo c) => !(bool)v;
 
-        protected override object ConvertBack(object v, Type t, object p, CultureInfo c) => !(bool)v;
+        public override object ConvertBack(object v, Type t, object p, CultureInfo c) => !(bool)v;
     }
 }

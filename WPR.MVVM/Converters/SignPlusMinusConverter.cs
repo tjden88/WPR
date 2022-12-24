@@ -8,8 +8,8 @@ namespace WPR.MVVM.Converters
     [ValueConversion(typeof(double), typeof(double))]
     public class SignPlusMinusConverter : Converter
     {
-        protected override object Convert(object v, Type t, object p, CultureInfo c) => -(double)v;
+        public override object Convert(object v, Type t, object p, CultureInfo c) => -(double)v;
 
-        protected override object ConvertBack(object v, Type t, object p, CultureInfo c) => -(double)v;
+        public override object ConvertBack(object v, Type t, object p, CultureInfo c) => -(double)v;
     }
 }
