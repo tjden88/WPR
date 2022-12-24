@@ -41,7 +41,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="WPR.MVVM" Version="1.1.0" />
+    <ProjectReference Include="..\WPR.MVVM\WPR.MVVM.csproj" />
   </ItemGroup>
 
   <ItemGroup>
