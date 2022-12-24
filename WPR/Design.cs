@@ -1,8 +1,7 @@
 ﻿using System;
-using System.Linq;
 using System.Windows;
 using System.Windows.Media;
-using System.Windows.Media.Effects;
+using System.Windows.Media.Media3D;
 using WPR.ColorTheme;
 using WPR.Services;
 
@@ -14,7 +13,7 @@ public static class Design
     private static Color DarkColor => _StyleColors.DarkColor; // Кисть тёмной темы
     private static Color WhiteColor => _StyleColors.LightColor; // Кисть светлой темы
 
-    public enum StyleBrush
+    public enum StyleBrushes
     {
         None,
         PrimaryColorBrush,
@@ -22,19 +21,18 @@ public static class Design
         LightPrimaryColorBrush,
         AccentColorBrush,
         TextColorBrush,
-        PrimaryTextColorBrush,
-        SecondaryTextColorBrush,
+        SecondaryColorBrush,
         DividerColorBrush,
-        MenuBodyBrush,
         BackgroundColorBrush,
         InactiveWindowColorBrush,
         AnimationEnterColorBrush,
+        DangerColorBrush,
         WhiteBrush,
         DarkBrush
     }
 
     /// <summary>Установлена ли тёмная тема</summary>
-    public static bool IsDarkThemeCurrent => GetBrushFromResource(StyleBrush.BackgroundColorBrush).Color == DarkColor;
+    public static bool IsDarkTheme => _StyleColors.DarkColor == _StyleColors.BackgroundColor;
 
 
     /// <summary> Происходит при любом изменении цветовой схемы</summary>
@@ -54,16 +52,16 @@ public static class Design
     /// <summary>Установить главный цвет (включая тёмный и светлый)</summary>
     public static void SetPrimaryColor(Color color)
     {
-        ColorService.SetNewBrush(StyleBrush.PrimaryColorBrush, color);
+        _StyleColors.PrimaryColor = color;
 
         var darken = ColorService.Darken(color, 1.2);
-        ColorService.SetNewBrush(StyleBrush.DarkPrimaryColorBrush, darken);
+        _StyleColors.DarkPrimaryColor = darken;
 
         var lighten = ColorService.Lighten(color, 1.5);
-        ColorService.SetNewBrush(StyleBrush.LightPrimaryColorBrush, lighten);
+        _StyleColors.LightPrimaryColor = lighten;
 
         var inactiveWindowColor = ColorService.Lighten(color, 1.3);
-        ColorService.SetNewBrush(StyleBrush.InactiveWindowColorBrush, inactiveWindowColor);
+        _StyleColors.InactiveWindowColor = inactiveWindowColor;
 
         StyleChanged?.Invoke(null, EventArgs.Empty);
     }
@@ -71,47 +69,44 @@ public static class Design
     /// <summary>Установить цвет акцента</summary>
     public static void SetAccentColor(Color color)
     {
-        ColorService.SetNewBrush(StyleBrush.AccentColorBrush, color);
+        _StyleColors.AccentColor = color;
+
         StyleChanged?.Invoke(null, EventArgs.Empty);
     }
 
 
     /// <summary>Найти кисть в ресурсах</summary>
     /// <param name="Name">Имя кисти</param>
-    public static SolidColorBrush GetBrushFromResource(StyleBrush Name)
+    public static SolidColorBrush GetBrushFromResource(StyleBrushes Name)
     {
         var br = (SolidColorBrush) Application.Current.Resources[Name.ToString()];
-        br?.Freeze();
         return br;
     }
 
 
     #region Theme
 
+    // TODO: доработать темы
 
-    // TODO: доработать тёмную тему
     /// <summary>
     /// Установить тёмную тему. НЕ ДОРАБОТАНО
     /// </summary>
-    [Obsolete("Не доработано")]
     public static void SetDarkColorTheme()
     {
-        ColorService.SetNewBrush(StyleBrush.BackgroundColorBrush, DarkColor);
-        ColorService.SetNewBrush(StyleBrush.PrimaryTextColorBrush, WhiteColor);
-
+        _StyleColors.BackgroundColor = DarkColor;
+        _StyleColors.TextColor = WhiteColor;
         _StyleColors.ShadowColor = Colors.Red;
+
         StyleChanged?.Invoke(null, EventArgs.Empty);
     }
 
-    // TODO: доработать светлую тему
     /// <summary>
     /// Установить светлую тему. НЕ ДОРАБОТАНО
     /// </summary>
-    [Obsolete("Не доработано")]
     public static void SetLightColorTheme()
     {
-        ColorService.SetNewBrush(StyleBrush.BackgroundColorBrush, WhiteColor);
-        ColorService.SetNewBrush(StyleBrush.PrimaryTextColorBrush, DarkColor);
+        _StyleColors.BackgroundColor = WhiteColor;
+        _StyleColors.TextColor = DarkColor;
         _StyleColors.ShadowColor = Colors.DimGray;
 
         StyleChanged?.Invoke(null, EventArgs.Empty);

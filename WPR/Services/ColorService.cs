@@ -25,13 +25,13 @@ internal static class ColorService
     }
 
 
-    /// <summary> Установить новую кисть темы </summary>
-    internal static void SetNewBrush(Design.StyleBrush Brush, Color color)
-    {
-        var brushName = Brush.ToString();
-        var b = new SolidColorBrush(color);
-        b.Freeze();
-        Application.Current.Resources[brushName] = b;
-        Application.Current.Resources[brushName.Replace("Brush","")] = color;
-    }
+    ///// <summary> Установить новую кисть темы </summary>
+    //internal static void SetNewBrush(Design.StyleBrushes Brushes, Color color)
+    //{
+    //    var brushName = Brushes.ToString();
+    //    var b = new SolidColorBrush(color);
+    //    b.Freeze();
+    //    Application.Current.Resources[brushName] = b;
+    //    Application.Current.Resources[brushName.Replace("Brushes","")] = color;
+    //}
 }

@@ -53,44 +53,44 @@ public class WPRStyleBrushAnimation : AnimationTimeline
     private Brush FromBrush => Design.GetBrushFromResource(From);
 
 
-    #region To : Design.StyleBrush - Кисть назанчения
+    #region To : Design.StyleBrushes - Кисть назанчения
 
     /// <summary>Кисть назанчения</summary>
     public static readonly DependencyProperty ToProperty =
         DependencyProperty.Register(
             nameof(To),
-            typeof(Design.StyleBrush),
+            typeof(Design.StyleBrushes),
             typeof(WPRStyleBrushAnimation),
-            new PropertyMetadata(default(Design.StyleBrush)));
+            new PropertyMetadata(default(Design.StyleBrushes)));
 
     /// <summary>Кисть назанчения</summary>
     [Category("WPRStyleBrushAnimation")]
     [Description("Кисть назанчения")]
-    public Design.StyleBrush To
+    public Design.StyleBrushes To
     {
-        get => (Design.StyleBrush) GetValue(ToProperty);
+        get => (Design.StyleBrushes) GetValue(ToProperty);
         set => SetValue(ToProperty, value);
     }
 
     #endregion
 
 
-    #region From : Design.StyleBrush - Начальная кисть
+    #region From : Design.StyleBrushes - Начальная кисть
 
     /// <summary>Начальная кисть</summary>
     public static readonly DependencyProperty FromProperty =
         DependencyProperty.Register(
             nameof(From),
-            typeof(Design.StyleBrush),
+            typeof(Design.StyleBrushes),
             typeof(WPRStyleBrushAnimation),
-            new PropertyMetadata(default(Design.StyleBrush)));
+            new PropertyMetadata(default(Design.StyleBrushes)));
 
     /// <summary>Начальная кисть</summary>
     [Category("WPRStyleBrushAnimation")]
     [Description("Начальная кисть")]
-    public Design.StyleBrush From
+    public Design.StyleBrushes From
     {
-        get => (Design.StyleBrush) GetValue(FromProperty);
+        get => (Design.StyleBrushes) GetValue(FromProperty);
         set => SetValue(FromProperty, value);
     }
 

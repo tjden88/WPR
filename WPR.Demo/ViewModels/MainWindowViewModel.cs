@@ -34,7 +34,7 @@ namespace WPR.Demo.ViewModels
 
         private void OnSetDarkThemeCommandExecuted()
         {
-            if (Design.IsDarkThemeCurrent)
+            if (Design.IsDarkTheme)
                 Design.SetLightColorTheme();
             else
                 Design.SetDarkColorTheme();
