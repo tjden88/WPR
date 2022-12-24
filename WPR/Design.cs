@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Windows;
 using System.Windows.Media;
-using System.Windows.Media.Media3D;
 using WPR.ColorTheme;
-using WPR.Services;
 
 namespace WPR;
 
@@ -13,6 +11,9 @@ public static class Design
     private static Color DarkColor => _StyleColors.DarkColor; // Кисть тёмной темы
     private static Color WhiteColor => _StyleColors.LightColor; // Кисть светлой темы
 
+    /// <summary>
+    /// Коллекция кистей цветовой темы
+    /// </summary>
     public enum StyleBrushes
     {
         None,
@@ -54,13 +55,13 @@ public static class Design
     {
         _StyleColors.PrimaryColor = color;
 
-        var darken = ColorService.Darken(color, 1.2);
+        var darken = Darken(color, 1.2);
         _StyleColors.DarkPrimaryColor = darken;
 
-        var lighten = ColorService.Lighten(color, 1.5);
+        var lighten = Lighten(color, 1.5);
         _StyleColors.LightPrimaryColor = lighten;
 
-        var inactiveWindowColor = ColorService.Lighten(color, 1.3);
+        var inactiveWindowColor = Lighten(color, 1.3);
         _StyleColors.InactiveWindowColor = inactiveWindowColor;
 
         StyleChanged?.Invoke(null, EventArgs.Empty);
@@ -114,4 +115,26 @@ public static class Design
 
     #endregion
 
+
+    #region Private
+
+    /// <summary>Взять цвет светлее</summary>
+    private static Color Lighten(Color basic, double koef)
+    {
+        var lighten = Color.FromArgb(255, (byte)(basic.R + ((255 - basic.R) / koef)),
+            (byte)(basic.G + ((255 - basic.G) / koef)),
+            (byte)(basic.B + ((255 - basic.B) / koef)));
+        return lighten;
+    }
+
+    /// <summary>Взять цвет темнее</summary>
+    private static Color Darken(Color basic, double koef)
+    {
+        var darken = Color.FromArgb(255, (byte)(basic.R / koef),
+            (byte)(basic.G / koef),
+            (byte)(basic.B / koef));
+        return darken;
+    }
+
+    #endregion
 }
