@@ -31,7 +31,10 @@ namespace WPR
             WPRDialogPanel panel = FindDialogPanel(sender);
             if (panel == null)
             {
-                throw new ArgumentNullException(nameof(panel), "Окно с панелью диалога не найдено!");
+                //throw new ArgumentNullException(nameof(panel), "Окно с панелью диалога не найдено!");
+                var showModal = ShowModal(sender, Caption, Title, CancelButton, YesNoButtons);
+                Callback?.Invoke(showModal);
+               return;
             }
 
             WPRMsgBox messageBox = new()

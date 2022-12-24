@@ -1,4 +1,5 @@
-﻿using System.Windows.Controls;
+﻿using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
 using WPR.MVVM.Commands;
 
@@ -21,7 +22,7 @@ namespace WPR.Demo.Pages
 
         /// <summary>Тестовая команда</summary>
         public Command TestCommand => _TestCommand
-            ??= new Command(OnTestCommandExecuted, CanTestCommandExecute, "Тестовая команда", new KeyGesture(Key.A, ModifierKeys.Control), this);
+            ??= new Command(OnTestCommandExecuted, CanTestCommandExecute, "Тестовая команда", new KeyGesture(Key.A, ModifierKeys.Control), Application.Current.MainWindow);
 
         /// <summary>Проверка возможности выполнения - Тестовая команда</summary>
         private bool CanTestCommandExecute() => true;
