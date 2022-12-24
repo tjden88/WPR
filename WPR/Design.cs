@@ -5,12 +5,13 @@ using System.Windows.Data;
 using System.Windows.Media;
 using WPR.ColorTheme;
 using WPR.MVVM.Converters;
+using WPR.MVVM.Converters.Base;
 
 namespace WPR;
 
 public static class Design
 {
-    private static readonly IValueConverter _BrushLightOrDarkConverter = new BrushLightOrDarkConverter();
+    private static readonly TypeConverter<SolidColorBrush> _BrushLightOrDarkConverter = new (new BrushLightOrDarkConverter());
 
     private static readonly StyleColors _StyleColors = (StyleColors)Application.Current.Resources["StyleColors"];
     private static Color DarkColor => _StyleColors.DarkColor; // Кисть тёмной темы
@@ -113,8 +114,8 @@ public static class Design
         _StyleColors.WindowBackgroundColor = windowBackgroundColor;
         _StyleColors.InactiveWindowBackgroundColor = Lighten(windowBackgroundColor, 15);
 
-        _StyleColors.WindowForegroundColor = (Color) _BrushLightOrDarkConverter.Convert(windowBackgroundColor,
-            typeof(SolidColorBrush), null, CultureInfo.CurrentCulture);
+        var foregroungBrush = _BrushLightOrDarkConverter.Convert(new(windowBackgroundColor));
+        _StyleColors.WindowForegroundColor = foregroungBrush.Color;
     }
 
 

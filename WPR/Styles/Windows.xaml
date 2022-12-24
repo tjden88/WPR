@@ -127,13 +127,13 @@
                                     </Image.Style>
                                 </Image>
                                 <ContentControl Name="HeaderControl"
-                                                Foreground="{TemplateBinding Background, Converter={StaticResource BrushLightOrDarkConverter}}"
+                                                Foreground="{DynamicResource WindowForegroundColorBrush}"
                                                 Content="{Binding Path=(wh:WindowHelper.WindowHeaderContent), RelativeSource={RelativeSource TemplatedParent}}"/>
                             </StackPanel>
 
                             <TextBlock Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center" 
                                        FontSize="14"
-                                       Foreground="{TemplateBinding Background, Converter={StaticResource BrushLightOrDarkConverter}}"
+                                       Foreground="{DynamicResource WindowForegroundColorBrush}"
                                        Text="{TemplateBinding Title}"/>
                         </Grid>
 
