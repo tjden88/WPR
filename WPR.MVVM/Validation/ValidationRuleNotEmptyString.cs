@@ -12,7 +12,7 @@ public class ValidationRuleNotEmptyString : ValidationBase
 
     protected override bool Validated(object value, CultureInfo cultureInfo)
     {
-        return value is string s && s.Trim().Length > 0;
+        return value is string s && !string.IsNullOrWhiteSpace(s);
     }
 
 }
