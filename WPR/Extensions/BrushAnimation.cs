@@ -48,7 +48,7 @@ namespace WPR.Extensions
             };
         }
 
-        protected override Freezable CreateInstanceCore() => new BrushAnimation();
+        protected override Freezable CreateInstanceCore() => this;
 
         #region To : Brush - Конечная кисть
 

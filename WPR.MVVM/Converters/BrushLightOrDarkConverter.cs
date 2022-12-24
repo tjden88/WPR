@@ -1,11 +1,9 @@
-﻿using System;
-using System.Globalization;
+﻿using System.Globalization;
 using System.Windows.Data;
 using System.Windows.Media;
 using WPR.MVVM.Converters.Base;
-using WPR.Services;
 
-namespace WPR.Converters
+namespace WPR.MVVM.Converters
 {
     /// <summary>
     /// Возвращает светлую или тёмную кисть в зависимости от значения
@@ -14,9 +12,9 @@ namespace WPR.Converters
     [ValueConversion(typeof(SolidColorBrush), typeof(SolidColorBrush))]
     public class BrushLightOrDarkConverter : Converter
     {
-        public SolidColorBrush HighValue { get; set; } = new(ColorService.WhiteColor);
+        public SolidColorBrush HighValue { get; set; } = new(Colors.White);
 
-        public SolidColorBrush LowValue { get; set; } = new(ColorService.DarkColor);
+        public SolidColorBrush LowValue { get; set; } = new(Colors.Black);
 
         protected override object Convert(object v, Type t, object p, CultureInfo c)
         {

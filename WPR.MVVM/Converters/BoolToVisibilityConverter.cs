@@ -1,10 +1,9 @@
-﻿using System;
-using System.Globalization;
+﻿using System.Globalization;
 using System.Windows;
 using System.Windows.Data;
 using WPR.MVVM.Converters.Base;
 
-namespace WPR.Converters
+namespace WPR.MVVM.Converters
 {
     /// <summary>
     /// Преобразовывает bool в Visible, если value=true, иначе - значение свойства HiddenVisibility (по умолчанию Collapsed)

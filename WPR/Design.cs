@@ -7,6 +7,9 @@ namespace WPR
 {
     public static class Design
     {
+        private static readonly Color _DarkColor = GetBrushFromResource(StyleBrush.DarkBrush).Color; // Кисть тёмной темы
+        private static readonly Color _WhiteColor = GetBrushFromResource(StyleBrush.WhiteBrush).Color; // Кисть светлой темы
+
         public enum StyleBrush
         {
             None,
@@ -21,14 +24,15 @@ namespace WPR
             MenuBodyBrush,
             BackgroundColorBrush,
             InactiveWindowColorBrush,
-            AnimationEnterColorBrush
+            AnimationEnterColorBrush,
+            WhiteBrush,
+            DarkBrush
         }
 
         /// <summary>Установлена ли тёмная тема</summary>
-        public static bool IsDarkThemeCurrent => GetBrushFromResource(StyleBrush.BackgroundColorBrush).Color == ColorService.DarkColor;
+        public static bool IsDarkThemeCurrent => GetBrushFromResource(StyleBrush.BackgroundColorBrush).Color == _DarkColor;
 
-        /// <summary> Происходит перед изменении кисти</summary>
-        public static Action<StyleBrush, Color> BeforeBrushChanged;
+
         /// <summary> Происходит при любом изменении цветовой схемы</summary>
         public static event EventHandler StyleChanged;
 
@@ -37,27 +41,24 @@ namespace WPR
         public static void SetNewRandomStyle()
         {
             Random rnd = new();
-            Color rndColor = Color.FromRgb((byte)rnd.Next(0, 255), (byte)rnd.Next(0, 255), (byte)rnd.Next(0, 255));
+            var rndColor = Color.FromRgb((byte)rnd.Next(0, 255), (byte)rnd.Next(0, 255), (byte)rnd.Next(0, 255));
             SetPrimaryColor(rndColor);
             SetAccentColor(Color.FromRgb((byte)rnd.Next(0, 255), (byte)rnd.Next(0, 255), (byte)rnd.Next(0, 255)));
         }
 
+
         /// <summary>Установить главный цвет (включая тёмный и светлый)</summary>
         public static void SetPrimaryColor(Color color)
         {
-            BeforeBrushChanged?.Invoke(StyleBrush.PrimaryColorBrush, color);
             ColorService.SetNewBrush(StyleBrush.PrimaryColorBrush, color);
 
             var darken = ColorService.Darken(color, 1.2);
-            BeforeBrushChanged?.Invoke(StyleBrush.DarkPrimaryColorBrush, darken);
             ColorService.SetNewBrush(StyleBrush.DarkPrimaryColorBrush, darken);
 
             var lighten = ColorService.Lighten(color, 1.5);
-            BeforeBrushChanged?.Invoke(StyleBrush.LightPrimaryColorBrush, lighten);
             ColorService.SetNewBrush(StyleBrush.LightPrimaryColorBrush, lighten);
 
-            var inactiveWindowColor = ColorService.Lighten(color, 1.5);
-            BeforeBrushChanged?.Invoke(StyleBrush.InactiveWindowColorBrush, inactiveWindowColor);
+            var inactiveWindowColor = ColorService.Lighten(color, 1.3);
             ColorService.SetNewBrush(StyleBrush.InactiveWindowColorBrush, inactiveWindowColor);
 
             StyleChanged?.Invoke(null, EventArgs.Empty);
@@ -66,7 +67,6 @@ namespace WPR
         /// <summary>Установить цвет акцента</summary>
         public static void SetAccentColor(Color color)
         {
-            BeforeBrushChanged?.Invoke(StyleBrush.AccentColorBrush, color);
             ColorService.SetNewBrush(StyleBrush.AccentColorBrush, color);
             StyleChanged?.Invoke(null, EventArgs.Empty);
         }
@@ -80,12 +80,8 @@ namespace WPR
         [Obsolete("Не доработано")]
         public static void SetDarkColorTheme()
         {
-            BeforeBrushChanged?.Invoke(StyleBrush.BackgroundColorBrush, ColorService.DarkColor);
-            ColorService.SetNewBrush(StyleBrush.BackgroundColorBrush, ColorService.DarkColor);
-
-            BeforeBrushChanged?.Invoke(StyleBrush.PrimaryTextColorBrush, ColorService.WhiteColor);
-            ColorService.SetNewBrush(StyleBrush.PrimaryTextColorBrush, ColorService.WhiteColor);
-            //ColorService.SetNewBrush("TextColorBrush", ColorService.DarkColor);
+            ColorService.SetNewBrush(StyleBrush.BackgroundColorBrush, _DarkColor);
+            ColorService.SetNewBrush(StyleBrush.PrimaryTextColorBrush, _WhiteColor);
             StyleChanged?.Invoke(null, EventArgs.Empty);
         }
 
@@ -96,12 +92,8 @@ namespace WPR
         [Obsolete("Не доработано")]
         public static void SetLightColorTheme()
         {
-            BeforeBrushChanged?.Invoke(StyleBrush.BackgroundColorBrush, ColorService.WhiteColor);
-            ColorService.SetNewBrush(StyleBrush.BackgroundColorBrush, ColorService.WhiteColor);
-
-            BeforeBrushChanged?.Invoke(StyleBrush.PrimaryTextColorBrush, ColorService.DarkColor);
-            ColorService.SetNewBrush(StyleBrush.PrimaryTextColorBrush, ColorService.DarkColor);
-            //ColorService.SetNewBrush("TextColorBrush", ColorService.WhiteColor);
+            ColorService.SetNewBrush(StyleBrush.BackgroundColorBrush, _WhiteColor);
+            ColorService.SetNewBrush(StyleBrush.PrimaryTextColorBrush, _DarkColor);
             StyleChanged?.Invoke(null, EventArgs.Empty);
         }
 

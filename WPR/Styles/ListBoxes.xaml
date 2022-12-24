@@ -105,8 +105,8 @@
                                              EasingFunction="{StaticResource CircleEaseIn}"
                                              Storyboard.TargetProperty="ScaleX"
                                              Storyboard.TargetName="ScaleSelected" />
-                            <extensions:BrushStyleDynamicAnimation Storyboard.TargetProperty="Foreground" 
-                                                                   ToStyleBrush="TextColorBrush"
+                            <extensions:WPRStyleBrushAnimation Storyboard.TargetProperty="Foreground" 
+                                                                   To="TextColorBrush"
                                                                    Duration="0:0:0.3"/>
 
                         </Storyboard>
@@ -119,8 +119,8 @@
                                              EasingFunction="{StaticResource CircleEaseOut}"
                                              Storyboard.TargetProperty="ScaleX"
                                              Storyboard.TargetName="ScaleSelected" />
-                            <extensions:BrushStyleDynamicAnimation Storyboard.TargetProperty="Foreground" 
-                                                                   Duration="0:0:0.3"/>
+                            <extensions:WPRStyleBrushAnimation Storyboard.TargetProperty="Foreground" 
+                                                               Duration="0:0:0.3"/>
                         </Storyboard>
                     </BeginStoryboard>
                 </Trigger.ExitActions>

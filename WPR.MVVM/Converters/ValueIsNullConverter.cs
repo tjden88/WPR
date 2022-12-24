@@ -1,9 +1,8 @@
-﻿using System;
-using System.Globalization;
+﻿using System.Globalization;
 using System.Windows.Data;
 using WPR.MVVM.Converters.Base;
 
-namespace WPR.Converters;
+namespace WPR.MVVM.Converters;
 
 /// <summary>
 /// Истина, если значение - пустая ссылка

@@ -5,8 +5,6 @@ namespace WPR.Services
 {
     internal static class ColorService
     {
-        internal static Color DarkColor => (Color)ColorConverter.ConvertFromString("#FF383838");
-        internal static Color WhiteColor => (Color)ColorConverter.ConvertFromString("#FFFFFF");
 
         /// <summary>Взять цвет светлее</summary>
         internal static Color Lighten(Color basic, double koef)
