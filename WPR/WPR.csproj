@@ -14,7 +14,7 @@
     <PackageId>WPR.Styles</PackageId>
     <Authors>tj_d</Authors>
     <Product>tj_d</Product>
-    <Description>Пакет стилей и дополнительных контролов WPF под .netCore 5 в стиле Material Design</Description>
+    <Description>Пакет стилей и дополнительных контролов WPF под .Net Core в стиле Material Design</Description>
     <Copyright>tj.den88@gmail.com</Copyright>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageProjectUrl>https://github.com/tjden88/WPR.Styles</PackageProjectUrl>
