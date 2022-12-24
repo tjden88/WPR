@@ -11,28 +11,7 @@ public static class Design
     private static Color DarkColor => _StyleColors.DarkColor; // Кисть тёмной темы
     private static Color WhiteColor => _StyleColors.LightColor; // Кисть светлой темы
 
-    /// <summary>
-    /// Коллекция кистей цветовой темы
-    /// </summary>
-    public enum StyleBrushes
-    {
-        None,
-        PrimaryColorBrush,
-        DarkPrimaryColorBrush,
-        LightPrimaryColorBrush,
-        AccentColorBrush,
-        TextColorBrush,
-        SecondaryColorBrush,
-        DividerColorBrush,
-        BackgroundColorBrush,
-        SecondaryBackgroundColorBrush,
-        WindowBackgroundColorBrush,
-        InactiveWindowBackgroundColor,
-        AnimationEnterColorBrush,
-        DangerColorBrush,
-        WhiteBrush,
-        DarkBrush
-    }
+
 
     /// <summary>Установлена ли тёмная тема</summary>
     public static bool IsDarkTheme => _StyleColors.DarkColor == _StyleColors.BackgroundColor;
@@ -55,17 +34,14 @@ public static class Design
     /// <summary>Установить главный цвет (включая тёмный и светлый)</summary>
     public static void SetPrimaryColor(Color color)
     {
+        if (_StyleColors.LightWindowBackgroundColor == _StyleColors.PrimaryColor)
+            _StyleColors.LightWindowBackgroundColor = color;
+
         _StyleColors.PrimaryColor = color;
+        _StyleColors.DarkPrimaryColor = Darken(color, 1.2);
+        _StyleColors.LightPrimaryColor = Lighten(color, 1.5);
 
-        var darken = Darken(color, 1.2);
-        _StyleColors.DarkPrimaryColor = darken;
-
-        var lighten = Lighten(color, 1.5);
-        _StyleColors.LightPrimaryColor = lighten;
-
-        var inactiveWindowColor = Lighten(color, 1.3);
-        _StyleColors.InactiveWindowBackgroundColor = inactiveWindowColor;
-
+        SetWindowColors(IsDarkTheme);
         StyleChanged?.Invoke(null, EventArgs.Empty);
     }
 
@@ -73,16 +49,15 @@ public static class Design
     public static void SetAccentColor(Color color)
     {
         _StyleColors.AccentColor = color;
-
         StyleChanged?.Invoke(null, EventArgs.Empty);
     }
 
 
     /// <summary>Найти кисть в ресурсах</summary>
     /// <param name="Name">Имя кисти</param>
-    public static SolidColorBrush GetBrushFromResource(StyleBrushes Name)
+    public static SolidColorBrush GetBrushFromResource(StyleColors.StyleBrushes Name)
     {
-        var br = (SolidColorBrush) Application.Current.Resources[Name.ToString()];
+        var br = (SolidColorBrush)Application.Current.Resources[Name.ToString()];
         return br;
     }
 
@@ -101,6 +76,7 @@ public static class Design
         _StyleColors.TextColor = WhiteColor;
         _StyleColors.ShadowColor = Colors.Black;
 
+        SetWindowColors(true);
         StyleChanged?.Invoke(null, EventArgs.Empty);
     }
 
@@ -111,10 +87,10 @@ public static class Design
     {
         _StyleColors.BackgroundColor = WhiteColor;
         _StyleColors.SecondaryBackgroundColor = WhiteColor;
-
         _StyleColors.TextColor = DarkColor;
         _StyleColors.ShadowColor = Colors.DimGray;
 
+        SetWindowColors(false);
         StyleChanged?.Invoke(null, EventArgs.Empty);
     }
 
@@ -122,6 +98,17 @@ public static class Design
 
 
     #region Private
+
+    private static void SetWindowColors(bool isDarkTheme)
+    {
+        var windowBackgroundColor = isDarkTheme
+        ? _StyleColors.DarkWindowBackgroundColor
+        : _StyleColors.LightWindowBackgroundColor;
+
+        _StyleColors.WindowBackgroundColor = windowBackgroundColor;
+        _StyleColors.InactiveWindowBackgroundColor = Lighten(windowBackgroundColor, 15);
+    }
+
 
     /// <summary>Взять цвет светлее</summary>
     private static Color Lighten(Color basic, double koef)

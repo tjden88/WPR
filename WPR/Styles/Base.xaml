@@ -26,6 +26,8 @@
     <SolidColorBrush x:Key="SecondaryBackgroundColorBrush" Color="{Binding SecondaryBackgroundColor, Source={StaticResource StyleColors}}" p:Freeze="True"/>
     <SolidColorBrush x:Key="DangerColorBrush" Color="{Binding DangerColor, Source={StaticResource StyleColors}}" p:Freeze="True"/>
     <SolidColorBrush x:Key="WindowBackgroundColorBrush" Color="{Binding WindowBackgroundColor, Source={StaticResource StyleColors}}" p:Freeze="True"/>
+    <SolidColorBrush x:Key="LightWindowBackgroundColorBrush" Color="{Binding LightWindowBackgroundColor, Source={StaticResource StyleColors}}" p:Freeze="True"/>
+    <SolidColorBrush x:Key="DarkWindowBackgroundColorBrush" Color="{Binding DarkWindowBackgroundColor, Source={StaticResource StyleColors}}" p:Freeze="True"/>
     <SolidColorBrush x:Key="InactiveWindowBackgroundColorBrush" Color="{Binding InactiveWindowBackgroundColor, Source={StaticResource StyleColors}}" p:Freeze="True"/>
 
     <SolidColorBrush x:Key="AnimationEnterColorBrush" Color="#99858585" p:Freeze="True"/>

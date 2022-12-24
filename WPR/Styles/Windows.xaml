@@ -7,18 +7,18 @@
         <ResourceDictionary Source="Buttons.xaml"/>
     </ResourceDictionary.MergedDictionaries>
 
+    <!--Стиль кнопки заголовка-->
     <Style x:Key="WindowTitleButton" TargetType="{x:Type Button}" BasedOn="{StaticResource WPRFlatButton}">
         <Setter Property="FontSize" Value="11"/>
         <Setter Property="Margin" Value="0" />
         <Setter Property="WindowChrome.IsHitTestVisibleInChrome" Value="True" />
-        <Setter Property="Foreground" Value="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=(wh:WindowHelper.WindowHeaderForeground)}" />
         <Setter Property="Focusable" Value="False"/>
+        <Setter Property="Foreground" Value="{Binding Background, RelativeSource={RelativeSource AncestorType=Window}, Converter={StaticResource BrushLightOrDarkConverter}}"/>
         <Setter Property="wh:ButtonHelper.BorderRadius" Value="0"/>
     </Style>
 
+    <!--Кнопка разворачивания-->
     <Style x:Key="WindowHeaderMaxNormButton" TargetType="{x:Type Button}" BasedOn="{StaticResource WindowTitleButton}">
-        <Setter Property="Background" Value="#00CBCACA"/>
-        <Setter Property="BorderThickness" Value="0"/>
         <Setter Property="Width" Value="46"/>
         <Setter Property="Margin" Value="0,0,0,3"/>
         <Setter Property="Template">
@@ -50,8 +50,9 @@
         </Setter>
     </Style>
 
+    <!--Кнопка закрыть-->
     <Style x:Key="WindowHeaderCloseButton" TargetType="{x:Type Button}" BasedOn="{ StaticResource WindowHeaderMaxNormButton }" >
-        <Setter Property="Background" Value="#00FF0000"/>
+        <Setter Property="Background" Value="{StaticResource TransparentBrush}"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Button}">
@@ -81,11 +82,13 @@
         </Setter>
     </Style>
 
+
+    <!--Шаблон стиля окна-->
     <ControlTemplate TargetType="{x:Type Window}" x:Key="ChromeWindowTemplate">
         <AdornerDecorator>
             <controls:WPRDialogPanel x:Name="WindowDialogPanel">
                 <Border Background="{TemplateBinding Background }"
-                    BorderThickness="1"
+                        BorderThickness="1"
                     BorderBrush="{TemplateBinding BorderBrush }">
                     <Border.Style>
                         <Style TargetType="{x:Type Border}">
@@ -99,7 +102,7 @@
                     <Grid>
                         <Grid x:Name="TitlePanel"
                                Height="35"
-                               Background="{TemplateBinding BorderBrush}"
+                               Background="{TemplateBinding Background}"
                                VerticalAlignment="Top">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition MinWidth="{Binding ActualWidth, ElementName=HeaderControl}"/>
@@ -107,7 +110,7 @@
                                 <ColumnDefinition MinWidth="{Binding ActualWidth, ElementName=PART_Buttons}"/>
                             </Grid.ColumnDefinitions>
 
-                            <StackPanel Orientation="Horizontal"  HorizontalAlignment="Left">
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
                                 <Image Stretch="Fill" Source="{TemplateBinding Icon}" RenderOptions.BitmapScalingMode="HighQuality">
                                     <Image.Style>
                                         <Style TargetType="Image">
@@ -121,15 +124,16 @@
                                     </Image.Style>
                                 </Image>
                                 <ContentControl Name="HeaderControl"
+                                                Foreground="{TemplateBinding Background, Converter={StaticResource BrushLightOrDarkConverter}}"
                                                 Content="{Binding Path=(wh:WindowHelper.WindowHeaderContent), RelativeSource={RelativeSource TemplatedParent}}"/>
                             </StackPanel>
 
                             <TextBlock Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center" 
-                                       Foreground="{Binding Path=(wh:WindowHelper.WindowHeaderForeground) , RelativeSource={RelativeSource TemplatedParent}}"
                                        FontSize="14"
+                                       Foreground="{TemplateBinding Background, Converter={StaticResource BrushLightOrDarkConverter}}"
                                        Text="{TemplateBinding Title}"/>
                         </Grid>
-                        
+
 
                         <ContentPresenter Margin="0,35,0,0"/>
 
@@ -201,6 +205,8 @@
 
     <!--Окно с заголовком-->
     <Style x:Key="ChromeWindow" TargetType="{x:Type Window}" BasedOn="{StaticResource BaseControl}">
+        <Setter Property="Foreground" Value="{Binding Background, RelativeSource={RelativeSource AncestorType=Window}, Converter={StaticResource BrushLightOrDarkConverter}}"/>
+
         <Setter Property="WindowChrome.WindowChrome">
             <Setter.Value>
                 <WindowChrome CaptionHeight="35"
@@ -212,11 +218,11 @@
             </Setter.Value>
         </Setter>
         <Setter Property="BorderBrush" Value="{DynamicResource PrimaryColorBrush}" />
-        <Setter Property="Background" Value="{DynamicResource BackgroundColorBrush}" />
-        <Setter Property="wh:WindowHelper.WindowHeaderForeground" Value="{DynamicResource TextColorBrush}" />
-        <Setter Property="UseLayoutRounding" Value="True"/>
+        <Setter Property="Background" Value="{DynamicResource WindowBackgroundColorBrush}"/>
+        <!--<Setter Property="UseLayoutRounding" Value="True"/>-->
         <Setter Property="Template" Value="{StaticResource ChromeWindowTemplate}"/>
     </Style>
+
 
     <!--Модальное окно с сообщением-->
     <Style TargetType="{x:Type Window}" x:Key="WPRModalWindow" BasedOn="{StaticResource BaseControl}">

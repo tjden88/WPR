@@ -47,5 +47,9 @@
                    Background="{DynamicResource InactiveWindowBackgroundColorBrush}" />
         <TextBlock Text="WindowBackgroundColorBrush"
                    Background="{DynamicResource WindowBackgroundColorBrush}" />
+        <TextBlock Text="LightWindowBackgroundColorBrush"
+                   Background="{DynamicResource LightWindowBackgroundColorBrush}" />
+        <TextBlock Text="DarkWindowBackgroundColorBrush"
+                   Background="{DynamicResource DarkWindowBackgroundColorBrush}" />
     </StackPanel>
 </Page>

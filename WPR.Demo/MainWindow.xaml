@@ -6,7 +6,7 @@
         xmlns:helpers="clr-namespace:WPR.Helpers;assembly=WPR"
         DataContext="{Binding Source={StaticResource Locator}, Path=MainWindowViewModel}"
         Style="{StaticResource ChromeWindow}"
-        Title="{Binding Title}" Height="650" Width="1000">
+        Title="{Binding Title}" Height="900" Width="1000">
 
     <helpers:WindowHelper.WindowHeaderContent>
         <StackPanel Margin="3" Orientation="Horizontal" HorizontalAlignment="Left" Width="Auto" >
