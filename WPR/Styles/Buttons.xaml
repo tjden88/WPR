@@ -119,7 +119,7 @@
     <Style x:Key="PrimaryWPRButton" TargetType="{x:Type ButtonBase}" BasedOn="{StaticResource WPRFlatButton}">
         <Setter Property="Background" Value="{DynamicResource PrimaryColorBrush}"/>
         <Setter Property="Foreground" Value="{DynamicResource TextColorBrush}" />
-        <Setter Property="helpers:ButtonHelper.ButtonShadow" Value="{StaticResource ButtonShadow}"/>
+        <Setter Property="helpers:ButtonHelper.ButtonShadow" Value="{DynamicResource ButtonShadow}"/>
     </Style>
 
     <Style x:Key="AccentWPRButton" TargetType="{x:Type ButtonBase}" BasedOn="{StaticResource PrimaryWPRButton }">
@@ -163,7 +163,7 @@
 
                     <Grid>
                         <Border Background="{TemplateBinding Background}"
-                                Effect="{StaticResource SmallShadow}"
+                                Effect="{DynamicResource SmallShadow}"
                                 BorderBrush="{TemplateBinding BorderBrush}"
                                 BorderThickness="{TemplateBinding BorderThickness}"
                                 CornerRadius="{Binding Path=(helpers:ButtonHelper.BorderRadius), RelativeSource={RelativeSource Mode=TemplatedParent}}">

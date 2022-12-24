@@ -48,13 +48,12 @@
     <SolidColorBrush x:Key="TransparentBrush" Color="Transparent" p:Freeze="True"/>
 
     <!--Тени-->
-    <Color x:Key="ShadowColor">DimGray</Color>
-    <DropShadowEffect x:Key="PopupSmallShadow" Color="{DynamicResource ShadowColor}" Direction="270" BlurRadius="10" ShadowDepth="2" Opacity="0.5" p:Freeze="True"/>
-    <DropShadowEffect x:Key="PopupBigShadow" Color="{DynamicResource ShadowColor}" Direction="270" BlurRadius="20" ShadowDepth="2" Opacity="0.7" p:Freeze="True"/>
+    <DropShadowEffect x:Key="PopupSmallShadow" Color="{Binding ShadowColor, Source={StaticResource StyleColors}}" Direction="270" BlurRadius="10" ShadowDepth="2" Opacity="0.5" p:Freeze="True"/>
+    <DropShadowEffect x:Key="PopupBigShadow" Color="{Binding ShadowColor, Source={StaticResource StyleColors}}" Direction="270" BlurRadius="20" ShadowDepth="2" Opacity="0.7" p:Freeze="True"/>
     <DropShadowEffect x:Key="ButtonShadow"  Color="{Binding ShadowColor, Source={StaticResource StyleColors}}" Opacity="0.7" ShadowDepth="3" p:Freeze="True"/>
-    <DropShadowEffect x:Key="DialogShadow" Color="{DynamicResource ShadowColor}" ShadowDepth="5" BlurRadius="20" Direction="270" p:Freeze="True"/>
+    <DropShadowEffect x:Key="DialogShadow" Color="{Binding ShadowColor, Source={StaticResource StyleColors}}" ShadowDepth="5" BlurRadius="20" Direction="270" p:Freeze="True"/>
     <DropShadowEffect x:Key="CardShadow" Color="{Binding ShadowColor, Source={StaticResource StyleColors}}" Opacity="0.4" ShadowDepth="0" BlurRadius="15" p:Freeze="True"/>
-    <DropShadowEffect x:Key="SmallShadow" Color="{DynamicResource ShadowColor}" Direction="270" BlurRadius="10" ShadowDepth="0" Opacity="0.3" p:Freeze="True"/>
+    <DropShadowEffect x:Key="SmallShadow" Color="{Binding ShadowColor, Source={StaticResource StyleColors}}" Direction="270" BlurRadius="10" ShadowDepth="0" Opacity="0.3" p:Freeze="True"/>
 
     <!--Функции плавности-->
     <CircleEase EasingMode="EaseIn" x:Key="CircleEaseIn" p:Freeze="True"/>

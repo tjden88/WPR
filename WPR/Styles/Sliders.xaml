@@ -29,7 +29,7 @@
             </Ellipse>
             <Ellipse x:Name="grip" Fill="{TemplateBinding Foreground}" Stretch="Fill"
                          VerticalAlignment="Center" HorizontalAlignment="Center" Width="{TemplateBinding Width}" Height="{TemplateBinding Height}"
-                         Effect="{StaticResource ButtonShadow}"
+                         Effect="{DynamicResource ButtonShadow}"
                          RenderTransformOrigin="0.5,0.5">
                 <Ellipse.RenderTransform>
                     <ScaleTransform x:Name="scalegrip" ScaleX="1" ScaleY="{Binding ElementName=scalegrip, Path=ScaleX}"/>

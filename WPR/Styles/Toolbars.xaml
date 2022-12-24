@@ -108,7 +108,7 @@
                                         Background="{DynamicResource MenuBodyBrush}"
                                         TextBlock.FontWeight="ExtraBold"
                                         CornerRadius="2" Margin="10"
-                                        Effect="{StaticResource PopupSmallShadow}">
+                                        Effect="{DynamicResource PopupSmallShadow}">
                                     <Border Background="Transparent">
                                         <ToolBarOverflowPanel x:Name="PART_ToolBarOverflowPanel" 
                                                               KeyboardNavigation.DirectionalNavigation="Cycle" 

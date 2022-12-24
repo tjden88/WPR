@@ -126,7 +126,7 @@
                                          StartRippleOnClick="False" />
                                 <Ellipse x:Name="Ellipse" Width="18" Height="18" Fill="{DynamicResource BackgroundColorBrush}" 
                                          Stroke="{DynamicResource SecondaryTextColorBrush}"
-                                         Effect="{StaticResource SmallShadow}"
+                                         Effect="{DynamicResource SmallShadow}"
                                          Margin="2"/>
                                 <Grid.RenderTransform>
                                     <TranslateTransform x:Name="Translategrid" />
