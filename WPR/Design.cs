@@ -1,6 +1,9 @@
 ﻿using System;
+using System.Linq;
 using System.Windows;
 using System.Windows.Media;
+using System.Windows.Media.Effects;
+using WPR.ColorTheme;
 using WPR.Services;
 
 namespace WPR;
@@ -9,6 +12,7 @@ public static class Design
 {
     private static readonly Color _DarkColor = GetBrushFromResource(StyleBrush.DarkBrush).Color; // Кисть тёмной темы
     private static readonly Color _WhiteColor = GetBrushFromResource(StyleBrush.WhiteBrush).Color; // Кисть светлой темы
+    private static readonly StyleColors _StyleColors = (StyleColors)Application.Current.Resources["StyleColors"];
 
     public enum StyleBrush
     {
@@ -72,6 +76,18 @@ public static class Design
     }
 
 
+    /// <summary>Найти кисть в ресурсах</summary>
+    /// <param name="Name">Имя кисти</param>
+    public static SolidColorBrush GetBrushFromResource(StyleBrush Name)
+    {
+        var br = (SolidColorBrush) Application.Current.Resources[Name.ToString()];
+        br?.Freeze();
+        return br;
+    }
+
+
+    #region Theme
+
 
     // TODO: доработать тёмную тему
     /// <summary>
@@ -82,6 +98,8 @@ public static class Design
     {
         ColorService.SetNewBrush(StyleBrush.BackgroundColorBrush, _DarkColor);
         ColorService.SetNewBrush(StyleBrush.PrimaryTextColorBrush, _WhiteColor);
+
+        _StyleColors.ShadowColor = Colors.Red;
         StyleChanged?.Invoke(null, EventArgs.Empty);
     }
 
@@ -94,15 +112,11 @@ public static class Design
     {
         ColorService.SetNewBrush(StyleBrush.BackgroundColorBrush, _WhiteColor);
         ColorService.SetNewBrush(StyleBrush.PrimaryTextColorBrush, _DarkColor);
+        _StyleColors.ShadowColor = Colors.DimGray;
+
         StyleChanged?.Invoke(null, EventArgs.Empty);
     }
 
-    /// <summary>Найти кисть в ресурсах</summary>
-    /// <param name="Name">Имя кисти</param>
-    public static SolidColorBrush GetBrushFromResource(StyleBrush Name)
-    {
-        var br = (SolidColorBrush) Application.Current.Resources[Name.ToString()];
-        br?.Freeze();
-        return br;
-    }
+    #endregion
+
 }

@@ -38,6 +38,11 @@
     <None Remove="Fonts\RobotoCondensed-Light.ttf" />
     <None Remove="Fonts\RobotoCondensed-LightItalic.ttf" />
     <None Remove="Fonts\RobotoCondensed-Regular.ttf" />
+    <None Remove="Usage.txt" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="Usage.txt" />
   </ItemGroup>
 
   <ItemGroup>

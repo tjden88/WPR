@@ -1,7 +1,8 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:p="http://schemas.microsoft.com/winfx/2006/xaml/presentation/options"
-                    xmlns:converters="clr-namespace:WPR.MVVM.Converters;assembly=WPR.MVVM">
+                    xmlns:converters="clr-namespace:WPR.MVVM.Converters;assembly=WPR.MVVM"
+                    xmlns:colorTheme="clr-namespace:WPR.ColorTheme">
 
     <!--<FontFamily x:Key="RobotoFont"></FontFamily>-->
     <!--Шрифты-->
@@ -9,8 +10,11 @@
     <FontFamily x:Key="RobotoFontLight">pack://application:,,,/WPR;component/Fonts/#Roboto Thin</FontFamily>
 
     <!--Кисти и цвета-->
+
+    <colorTheme:StyleColors x:Key="StyleColors"/>
+
     <Color x:Key="WhiteColor">White</Color>
-    <Color x:Key="DarkColor">#FF383838</Color>
+    <Color x:Key="DarkColor">#1C1C1C</Color>
     <Color x:Key="PrimaryColor">#3F51B5</Color>
     <Color x:Key="DarkPrimaryColor">#FF212E80</Color>
     <Color x:Key="LightPrimaryColor">#C5CAE9</Color>
@@ -45,12 +49,12 @@
 
     <!--Тени-->
     <Color x:Key="ShadowColor">DimGray</Color>
-    <DropShadowEffect x:Key="PopupSmallShadow" Color="{StaticResource ShadowColor}" Direction="270" BlurRadius="10" ShadowDepth="2" Opacity="0.5" p:Freeze="True"/>
-    <DropShadowEffect x:Key="PopupBigShadow" Color="{StaticResource ShadowColor}" Direction="270" BlurRadius="20" ShadowDepth="2" Opacity="0.7" p:Freeze="True"/>
-    <DropShadowEffect x:Key="ButtonShadow"  Color="{StaticResource ShadowColor}" Opacity="0.7" ShadowDepth="3" p:Freeze="True"/>
-    <DropShadowEffect x:Key="DialogShadow" Color="{StaticResource ShadowColor}" ShadowDepth="5" BlurRadius="20" Direction="270" p:Freeze="True"/>
-    <DropShadowEffect x:Key="CardShadow" Color="{StaticResource ShadowColor}" Opacity="0.3" ShadowDepth="0" BlurRadius="15" p:Freeze="True"/>
-    <DropShadowEffect x:Key="SmallShadow" Color="{StaticResource ShadowColor}" Direction="270" BlurRadius="10" ShadowDepth="0" Opacity="0.3" p:Freeze="True"/>
+    <DropShadowEffect x:Key="PopupSmallShadow" Color="{DynamicResource ShadowColor}" Direction="270" BlurRadius="10" ShadowDepth="2" Opacity="0.5" p:Freeze="True"/>
+    <DropShadowEffect x:Key="PopupBigShadow" Color="{DynamicResource ShadowColor}" Direction="270" BlurRadius="20" ShadowDepth="2" Opacity="0.7" p:Freeze="True"/>
+    <DropShadowEffect x:Key="ButtonShadow"  Color="{Binding ShadowColor, Source={StaticResource StyleColors}}" Opacity="0.7" ShadowDepth="3" p:Freeze="True"/>
+    <DropShadowEffect x:Key="DialogShadow" Color="{DynamicResource ShadowColor}" ShadowDepth="5" BlurRadius="20" Direction="270" p:Freeze="True"/>
+    <DropShadowEffect x:Key="CardShadow" Color="{Binding ShadowColor, Source={StaticResource StyleColors}}" Opacity="0.4" ShadowDepth="0" BlurRadius="15" p:Freeze="True"/>
+    <DropShadowEffect x:Key="SmallShadow" Color="{DynamicResource ShadowColor}" Direction="270" BlurRadius="10" ShadowDepth="0" Opacity="0.3" p:Freeze="True"/>
 
     <!--Функции плавности-->
     <CircleEase EasingMode="EaseIn" x:Key="CircleEaseIn" p:Freeze="True"/>
@@ -75,7 +79,7 @@
     <converters:ValueIsNotNullConverter x:Key="ValueIsNotNullConverter"/>
     <converters:ValueIsNullConverter x:Key="ValueIsNullConverter"/>
     <converters:BoolNotConverter x:Key="BoolNotConverter"/>
-    <converters:BrushLightOrDarkConverter x:Key="BrushLightOrDarkConverter"/>
+    <converters:BrushLightOrDarkConverter x:Key="BrushLightOrDarkConverter" HighValue="{StaticResource WhiteBrush}" LowValue="{StaticResource DarkBrush}"/>
     <converters:SignPlusMinusConverter x:Key="SignPlusMinusConverter"/>
     <converters:EnumToBoolConverter x:Key="EnumToBoolConverter"/>
 
