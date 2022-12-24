@@ -23,7 +23,7 @@
                              Text="{Binding RelativeSource={RelativeSource TemplatedParent},Path= TextExpression, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                              Style="{ Binding RelativeSource={RelativeSource TemplatedParent},Path=TextBoxStyle, TargetNullValue={StaticResource WPRTextBox}}">
                             <helpers:TextHelper.Description>
-                                <TextBlock Foreground="{DynamicResource AttentionColorBrush}"
+                                <TextBlock Foreground="{DynamicResource DangerColorBrush}"
                                            TextWrapping="WrapWithOverflow"
                                            Text="{TemplateBinding DescriptionText}"/>
                             </helpers:TextHelper.Description>

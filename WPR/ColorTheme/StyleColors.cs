@@ -22,8 +22,10 @@ public class StyleColors : DependencyObject
     private static readonly Color _DividerColor = (Color)ColorConverter.ConvertFromString("#FFE0E0E0")!;
     private static readonly Color _ShadowColor = Colors.DimGray;
 
-    private static readonly Color _BackgroundColor = Colors.White;
-    private static readonly Color _InactiveWindowColor = (Color)ColorConverter.ConvertFromString("#C5CAE9")!;
+    private static readonly Color _BackgroundColor = _LightColor;
+    private static readonly Color _SecondaryBackgroundColor = _LightColor;
+    private static readonly Color _WindowBackgroundColor = _PrimaryColor;
+    private static readonly Color _InactiveWindowBackgroundColor = _LightPrimaryColor;
 
 
     #region ShadowColor : Color - Цвет тени
@@ -261,7 +263,7 @@ public class StyleColors : DependencyObject
     [Description("Цвет разделителей")]
     public Color DividerColor
     {
-        get => (Color) GetValue(DividerColorProperty);
+        get => (Color)GetValue(DividerColorProperty);
         set => SetValue(DividerColorProperty, value);
     }
 
@@ -283,30 +285,74 @@ public class StyleColors : DependencyObject
     [Description("Цвет фона")]
     public Color BackgroundColor
     {
-        get => (Color) GetValue(BackgroundColorProperty);
+        get => (Color)GetValue(BackgroundColorProperty);
         set => SetValue(BackgroundColorProperty, value);
     }
 
     #endregion
 
 
-    #region InactiveWindowColor : Color - Цвет фона неактивного окна
+    #region SecondaryBackgroundColor : Color - Вторичный фон (например, для карточек)
 
-    /// <summary>Цвет фона неактивного окна</summary>
-    public static readonly DependencyProperty InactiveWindowColorProperty =
+    /// <summary>Вторичный фон (например, для карточек)</summary>
+    public static readonly DependencyProperty SecondaryBackgroundColorProperty =
         DependencyProperty.Register(
-            nameof(InactiveWindowColor),
+            nameof(SecondaryBackgroundColor),
             typeof(Color),
             typeof(StyleColors),
-            new PropertyMetadata(_InactiveWindowColor));
+            new PropertyMetadata(_SecondaryBackgroundColor));
+
+    /// <summary>Вторичный фон (например, для карточек)</summary>
+    [Category("StyleColors")]
+    [Description("Вторичный фон (например, для карточек)")]
+    public Color SecondaryBackgroundColor
+    {
+        get => (Color)GetValue(SecondaryBackgroundColorProperty);
+        set => SetValue(SecondaryBackgroundColorProperty, value);
+    }
+
+    #endregion
+
+
+    #region WindowBackgroundColor : Color - Фон окна
+
+    /// <summary>Фон окна</summary>
+    public static readonly DependencyProperty WindowBackgroundColorProperty =
+        DependencyProperty.Register(
+            nameof(WindowBackgroundColor),
+            typeof(Color),
+            typeof(StyleColors),
+            new PropertyMetadata(_WindowBackgroundColor));
+
+    /// <summary>Фон окна</summary>
+    [Category("StyleColors")]
+    [Description("Фон окна")]
+    public Color WindowBackgroundColor
+    {
+        get => (Color)GetValue(WindowBackgroundColorProperty);
+        set => SetValue(WindowBackgroundColorProperty, value);
+    }
+
+    #endregion
+
+
+    #region InactiveWindowBackgroundColor : Color - Цвет фона неактивного окна
+
+    /// <summary>Цвет фона неактивного окна</summary>
+    public static readonly DependencyProperty InactiveWindowBackgroundColorProperty =
+        DependencyProperty.Register(
+            nameof(InactiveWindowBackgroundColor),
+            typeof(Color),
+            typeof(StyleColors),
+            new PropertyMetadata(_InactiveWindowBackgroundColor));
 
     /// <summary>Цвет фона неактивного окна</summary>
     [Category("StyleColors")]
     [Description("Цвет фона неактивного окна")]
-    public Color InactiveWindowColor
+    public Color InactiveWindowBackgroundColor
     {
-        get => (Color) GetValue(InactiveWindowColorProperty);
-        set => SetValue(InactiveWindowColorProperty, value);
+        get => (Color)GetValue(InactiveWindowBackgroundColorProperty);
+        set => SetValue(InactiveWindowBackgroundColorProperty, value);
     }
 
     #endregion

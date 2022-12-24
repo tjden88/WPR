@@ -316,7 +316,7 @@
 
                     <ItemsControl.ItemTemplate>
                         <DataTemplate >
-                            <TextBlock Foreground="{StaticResource AttentionColorBrush}" 
+                            <TextBlock Foreground="{StaticResource DangerColorBrush}" 
                                        Text="{Binding ErrorContent}"
                                        TextWrapping ="Wrap"
                                        FontSize="11"/>
@@ -422,8 +422,8 @@
                 <Setter Property="Opacity" Value="0.5"/>
             </Trigger>
             <Trigger Property="Validation.HasError" Value="True">
-                <Setter Property="BorderBrush" Value="{StaticResource AttentionColorBrush}"/>
-                <Setter Property="Foreground" TargetName="FloatingHint" Value="{StaticResource AttentionColorBrush}"/>
+                <Setter Property="BorderBrush" Value="{StaticResource DangerColorBrush}"/>
+                <Setter Property="Foreground" TargetName="FloatingHint" Value="{StaticResource DangerColorBrush}"/>
                 <Setter TargetName="ErrorText" Property="Visibility" Value="Visible"/>
                 <Setter TargetName="Description" Property="Visibility" Value="Hidden"/>
             </Trigger>

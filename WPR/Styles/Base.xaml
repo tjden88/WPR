@@ -23,8 +23,10 @@
     <SolidColorBrush x:Key="SecondaryColorBrush"  Color="{Binding SecondaryColor, Source={StaticResource StyleColors}}" p:Freeze="True"/>
     <SolidColorBrush x:Key="DividerColorBrush" Color="{Binding DividerColor, Source={StaticResource StyleColors}}" p:Freeze="True"/>
     <SolidColorBrush x:Key="BackgroundColorBrush" Color="{Binding BackgroundColor, Source={StaticResource StyleColors}}" p:Freeze="True"/>
+    <SolidColorBrush x:Key="SecondaryBackgroundColorBrush" Color="{Binding SecondaryBackgroundColor, Source={StaticResource StyleColors}}" p:Freeze="True"/>
     <SolidColorBrush x:Key="DangerColorBrush" Color="{Binding DangerColor, Source={StaticResource StyleColors}}" p:Freeze="True"/>
-    <SolidColorBrush x:Key="InactiveWindowColorBrush" Color="{Binding InactiveWindowColor, Source={StaticResource StyleColors}}" p:Freeze="True"/>
+    <SolidColorBrush x:Key="WindowBackgroundColorBrush" Color="{Binding WindowBackgroundColor, Source={StaticResource StyleColors}}" p:Freeze="True"/>
+    <SolidColorBrush x:Key="InactiveWindowBackgroundColorBrush" Color="{Binding InactiveWindowBackgroundColor, Source={StaticResource StyleColors}}" p:Freeze="True"/>
 
     <SolidColorBrush x:Key="AnimationEnterColorBrush" Color="#99858585" p:Freeze="True"/>
 
@@ -34,8 +36,8 @@
     <DropShadowEffect x:Key="PopupSmallShadow" Color="{Binding ShadowColor, Source={StaticResource StyleColors}}" Direction="270" BlurRadius="10" ShadowDepth="2" Opacity="0.5" p:Freeze="True"/>
     <DropShadowEffect x:Key="PopupBigShadow" Color="{Binding ShadowColor, Source={StaticResource StyleColors}}" Direction="270" BlurRadius="20" ShadowDepth="2" Opacity="0.7" p:Freeze="True"/>
     <DropShadowEffect x:Key="ButtonShadow"  Color="{Binding ShadowColor, Source={StaticResource StyleColors}}" Opacity="0.7" ShadowDepth="3" p:Freeze="True"/>
-    <DropShadowEffect x:Key="DialogShadow" Color="{Binding ShadowColor, Source={StaticResource StyleColors}}" ShadowDepth="5" BlurRadius="20" Direction="270" p:Freeze="True"/>
-    <DropShadowEffect x:Key="CardShadow" Color="{Binding ShadowColor, Source={StaticResource StyleColors}}" Opacity="0.4" ShadowDepth="0" BlurRadius="15" p:Freeze="True"/>
+    <DropShadowEffect x:Key="DialogShadow" Color="{Binding ShadowColor, Source={StaticResource StyleColors}}" ShadowDepth="5" BlurRadius="30" Direction="270" p:Freeze="True"/>
+    <DropShadowEffect x:Key="CardShadow" Color="{Binding ShadowColor, Source={StaticResource StyleColors}}" Opacity="0.4" ShadowDepth="0" BlurRadius="18" p:Freeze="True"/>
     <DropShadowEffect x:Key="SmallShadow" Color="{Binding ShadowColor, Source={StaticResource StyleColors}}" Direction="270" BlurRadius="10" ShadowDepth="0" Opacity="0.3" p:Freeze="True"/>
 
     <!--Функции плавности-->

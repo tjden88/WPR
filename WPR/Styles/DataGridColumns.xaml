@@ -182,7 +182,7 @@
         <Setter Property="Validation.ErrorTemplate">
             <Setter.Value>
                 <ControlTemplate>
-                    <Border BorderBrush="{StaticResource AttentionColorBrush}"
+                    <Border BorderBrush="{StaticResource DangerColorBrush}"
                             Margin="-1 0 -1 -4"
                             BorderThickness="0 0 0 2"
                             Padding="1 0 1 2">

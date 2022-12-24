@@ -71,7 +71,7 @@
                                    Focusable="False"
                                    Content="{Binding Path=(helpers:TextHelper.Description), RelativeSource={RelativeSource TemplatedParent}}"
                                    HorizontalAlignment="Left"
-                                   Foreground="{DynamicResource SecondaryTextColorBrush}"
+                                   Foreground="{DynamicResource SecondaryColorBrush}"
                                    FontSize="11" Margin="0,3,0,0"/>
 
                         <ItemsControl Name="ErrorText" Visibility="Hidden" Grid.Row="1" Margin="0,3,0,0"
@@ -80,7 +80,7 @@
 
                             <ItemsControl.ItemTemplate>
                                 <DataTemplate >
-                                    <TextBlock Foreground="{StaticResource AttentionColorBrush}" 
+                                    <TextBlock Foreground="{StaticResource DangerColorBrush}" 
                                                Text="{Binding ErrorContent}"
                                                TextWrapping ="Wrap"
                                                FontSize="11"/>
@@ -91,7 +91,7 @@
                     <ControlTemplate.Triggers>
 
                         <Trigger Property="Validation.HasError" Value="True">
-                            <Setter Property="Background" Value="{StaticResource AttentionColorBrush}"/>
+                            <Setter Property="Background" Value="{StaticResource DangerColorBrush}"/>
                             <Setter TargetName="ErrorText" Property="Visibility" Value="Visible"/>
                             <Setter TargetName="Description" Property="Visibility" Value="Hidden"/>
                         </Trigger>

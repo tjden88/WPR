@@ -25,7 +25,9 @@ public static class Design
         SecondaryColorBrush,
         DividerColorBrush,
         BackgroundColorBrush,
-        InactiveWindowColorBrush,
+        SecondaryBackgroundColorBrush,
+        WindowBackgroundColorBrush,
+        InactiveWindowBackgroundColor,
         AnimationEnterColorBrush,
         DangerColorBrush,
         WhiteBrush,
@@ -62,7 +64,7 @@ public static class Design
         _StyleColors.LightPrimaryColor = lighten;
 
         var inactiveWindowColor = Lighten(color, 1.3);
-        _StyleColors.InactiveWindowColor = inactiveWindowColor;
+        _StyleColors.InactiveWindowBackgroundColor = inactiveWindowColor;
 
         StyleChanged?.Invoke(null, EventArgs.Empty);
     }
@@ -95,8 +97,9 @@ public static class Design
     public static void SetDarkColorTheme()
     {
         _StyleColors.BackgroundColor = DarkColor;
+        _StyleColors.SecondaryBackgroundColor = Lighten(DarkColor, 10);
         _StyleColors.TextColor = WhiteColor;
-        _StyleColors.ShadowColor = Colors.Red;
+        _StyleColors.ShadowColor = Colors.Black;
 
         StyleChanged?.Invoke(null, EventArgs.Empty);
     }
@@ -107,6 +110,8 @@ public static class Design
     public static void SetLightColorTheme()
     {
         _StyleColors.BackgroundColor = WhiteColor;
+        _StyleColors.SecondaryBackgroundColor = WhiteColor;
+
         _StyleColors.TextColor = DarkColor;
         _StyleColors.ShadowColor = Colors.DimGray;
 

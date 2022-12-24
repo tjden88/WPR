@@ -256,7 +256,7 @@
         <Setter Property="ValidationErrorTemplate">
             <Setter.Value>
                 <ControlTemplate>
-                    <TextBlock Foreground="{StaticResource AttentionColorBrush}" Margin="5,0,0,0" Text="!" VerticalAlignment="Center"/>
+                    <TextBlock Foreground="{StaticResource DangerColorBrush}" Margin="5,0,0,0" Text="!" VerticalAlignment="Center"/>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
