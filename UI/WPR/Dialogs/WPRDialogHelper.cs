@@ -41,7 +41,7 @@ public static class WPRDialogHelper
             return;
         }
 
-        WPRMsgBox messageBox = new()
+        MessageDialog messageBox = new()
         {
             Title = Title,
             Caption = Caption,
@@ -76,7 +76,7 @@ public static class WPRDialogHelper
     {
         bool? result = null;
 
-        WPRMsgBox messageBox = new()
+        MessageDialog messageBox = new()
         {
             Title = Title,
             Caption = Caption,
@@ -337,7 +337,7 @@ public static class WPRDialogHelper
         // Ищем панель
         var panel = FindDialogPanel(sender);
 
-        WPRInputBox inputBox = new(ValidationRules)
+        InputDialog inputDialog = new(ValidationRules)
         {
             Title = Title,
             TextValue = DefaultValue
@@ -345,21 +345,21 @@ public static class WPRDialogHelper
 
         if (panel is null)
         {
-            var dlg = new WPRDialog(inputBox);
-            inputBox.DialogResult += b => dlg.SetResult(b == true);
+            var dlg = new WPRDialog(inputDialog);
+            inputDialog.DialogResult += b => dlg.SetResult(b == true);
 
             var result = ShowCustomModal(sender, dlg);
-            Callback?.Invoke(result, inputBox.TextValue);
+            Callback?.Invoke(result, inputDialog.TextValue);
             return;
         }
 
             // При клике по кнопке мессаджа закрыть окно и вернуть прозрачность как была
-        inputBox.DialogResult += b =>
+        inputDialog.DialogResult += b =>
         {
             panel.Hide();
-            Callback?.Invoke(b == true, inputBox.TextValue);
+            Callback?.Invoke(b == true, inputDialog.TextValue);
         };
-        panel.Show(inputBox, true);
+        panel.Show(inputDialog, true);
     }
 
 

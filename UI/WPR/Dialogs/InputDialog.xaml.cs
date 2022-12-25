@@ -10,18 +10,18 @@ using WPR.MVVM.Validation;
 
 namespace WPR.Dialogs;
 
-public class WPRInputBox : DialogBase
+public class InputDialog : DialogBase
 {
     private readonly IEnumerable<PredicateValidationRule<string>> _TextValidationRules;
 
-    static WPRInputBox()
+    static InputDialog()
     {
-        DefaultStyleKeyProperty.OverrideMetadata(typeof(WPRInputBox), new FrameworkPropertyMetadata(typeof(WPRInputBox)));
+        DefaultStyleKeyProperty.OverrideMetadata(typeof(InputDialog), new FrameworkPropertyMetadata(typeof(InputDialog)));
     }
 
-    public WPRInputBox() => _TextValidationRules = Array.Empty<PredicateValidationRule<string>>();
+    public InputDialog() => _TextValidationRules = Array.Empty<PredicateValidationRule<string>>();
 
-    public WPRInputBox(IEnumerable<PredicateValidationRule<string>> TextValidationRules) => _TextValidationRules = TextValidationRules;
+    public InputDialog(IEnumerable<PredicateValidationRule<string>> TextValidationRules) => _TextValidationRules = TextValidationRules;
 
     public override void OnApplyTemplate()
     {
@@ -47,11 +47,11 @@ public class WPRInputBox : DialogBase
         DependencyProperty.Register(
             nameof(Caption),
             typeof(string),
-            typeof(WPRInputBox),
+            typeof(InputDialog),
             new PropertyMetadata(default(string)));
 
     /// <summary>Описание</summary>
-    [Category("WPRInputBox")]
+    [Category("InputDialog")]
     [Description("Описание")]
     public string Caption
     {
@@ -68,12 +68,12 @@ public class WPRInputBox : DialogBase
         DependencyProperty.Register(
             nameof(TextValue),
             typeof(string),
-            typeof(WPRInputBox),
+            typeof(InputDialog),
             new PropertyMetadata(default(string), PropertyChangedCallback));
 
     private static void PropertyChangedCallback(DependencyObject D, DependencyPropertyChangedEventArgs E)
     {
-        var w = (WPRInputBox)D;
+        var w = (InputDialog)D;
         w.TextValue = (string)E.NewValue;
     }
 

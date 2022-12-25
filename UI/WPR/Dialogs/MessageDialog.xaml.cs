@@ -4,11 +4,11 @@ using WPR.Dialogs.Base;
 
 namespace WPR.Dialogs;
 
-public class WPRMsgBox : DialogBase
+public class MessageDialog : DialogBase
 {
-    static WPRMsgBox()
+    static MessageDialog()
     {
-        DefaultStyleKeyProperty.OverrideMetadata(typeof(WPRMsgBox), new FrameworkPropertyMetadata(typeof(WPRMsgBox)));
+        DefaultStyleKeyProperty.OverrideMetadata(typeof(MessageDialog), new FrameworkPropertyMetadata(typeof(MessageDialog)));
     }
 
     #region Caption : string - Текст сообщения
@@ -18,7 +18,7 @@ public class WPRMsgBox : DialogBase
         DependencyProperty.Register(
             nameof(Caption),
             typeof(string),
-            typeof(WPRMsgBox),
+            typeof(MessageDialog),
             new PropertyMetadata(default(string)));
 
     /// <summary>Текст сообщения</summary>
@@ -39,7 +39,7 @@ public class WPRMsgBox : DialogBase
         DependencyProperty.Register(
             nameof(CancelButtonVisible),
             typeof(bool),
-            typeof(WPRMsgBox),
+            typeof(MessageDialog),
             new PropertyMetadata(default(bool)));
 
     /// <summary>Видимость кнопки отмены</summary>
@@ -60,7 +60,7 @@ public class WPRMsgBox : DialogBase
         DependencyProperty.Register(
             nameof(YesNoButtonsVisible),
             typeof(bool),
-            typeof(WPRMsgBox),
+            typeof(MessageDialog),
             new PropertyMetadata(default(bool)));
 
     /// <summary>Видимость кнопок Да,Нет. Если false - видна кнопка OK</summary>
@@ -81,11 +81,11 @@ public class WPRMsgBox : DialogBase
         DependencyProperty.Register(
             nameof(IsErrorMessage),
             typeof(bool),
-            typeof(WPRMsgBox),
+            typeof(MessageDialog),
             new PropertyMetadata(default(bool)));
 
     /// <summary>Истино, если это сообщение об ошибке</summary>
-    [Category("WPRMsgBox")]
+    [Category("MessageDialog")]
     [Description("Истино, если это сообщение об ошибке")]
     public bool IsErrorMessage
     {

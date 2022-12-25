@@ -89,9 +89,10 @@ namespace WPR.Demo.Pages
 
         private void Button3_OnClick(object Sender, RoutedEventArgs E)
         {
-            WPRDialogHelper.InputText(null, // Модальное
+            WPRDialogHelper.InputText(null,// Модальное
                 "Ввод текста:",
                 (B, S) => {if(B) Debug.WriteLine(S);},
+                "Описание",
                 "Стартовое значение",
                 S => S.Length>0,
                 "Поле не может быть пустым");
@@ -101,6 +102,7 @@ namespace WPR.Demo.Pages
             WPRDialogHelper.InputText(this,
                 "Ввод текста:",
                 (B, S) => { Debug.WriteLine(B + S); },
+                "Описание",
                 "12",
                 S => S.Length > 3,
                 "Нужно больше 3 символов");

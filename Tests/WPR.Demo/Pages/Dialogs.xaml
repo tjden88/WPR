@@ -16,14 +16,14 @@
             <StackPanel Margin="10" Width="400">
                 <Button Content="Show User Dialog" HorizontalAlignment="Center" VerticalAlignment="Center" Click="Button_Click" />
                 <controls:WPRCard HorizontalAlignment="Center" >
-                    <dialogs:WPRMsgBox Title="Заголовок"
+                    <dialogs:MessageDialog Title="Заголовок"
                                        x:Name="MsgBox"
                                        Caption="Текст сообщения..." 
                                        CancelButtonVisible="True"
                                        YesNoButtonsVisible="True"/>
                 </controls:WPRCard>
                 <controls:WPRCard HorizontalAlignment="Center" >
-                    <dialogs:WPRInputBox Title="Введите что-нибудь"
+                    <dialogs:InputDialog Title="Введите что-нибудь"
                                          x:Name="InputBox"
                                          TextValue="По умолчанию"/>
                 </controls:WPRCard>

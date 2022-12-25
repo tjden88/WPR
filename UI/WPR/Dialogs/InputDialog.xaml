@@ -10,10 +10,10 @@
     <s:Boolean x:Key="True">True</s:Boolean>
     <s:Boolean x:Key="False">False</s:Boolean>
 
-    <Style TargetType="{x:Type dialogs:WPRInputBox}">
+    <Style TargetType="{x:Type dialogs:InputDialog}">
         <Setter Property="Template">
             <Setter.Value>
-                <ControlTemplate TargetType="{x:Type dialogs:WPRInputBox}">
+                <ControlTemplate TargetType="{x:Type dialogs:InputDialog}">
                     <Grid>
                         <StackPanel Orientation="Vertical">
                             <TextBlock TextWrapping="Wrap"

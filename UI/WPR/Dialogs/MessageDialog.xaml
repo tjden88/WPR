@@ -12,10 +12,10 @@
         <s:Boolean x:Key="True">True</s:Boolean>
         <s:Boolean x:Key="False">False</s:Boolean>
 
-    <Style TargetType="{x:Type dialogs:WPRMsgBox}">
+    <Style TargetType="{x:Type dialogs:MessageDialog}">
         <Setter Property="Template">
             <Setter.Value>
-                <ControlTemplate TargetType="{x:Type dialogs:WPRMsgBox}">
+                <ControlTemplate TargetType="{x:Type dialogs:MessageDialog}">
                     <DockPanel>
                         <TextBlock x:Name="TitleText"
                                    DockPanel.Dock="Top"
