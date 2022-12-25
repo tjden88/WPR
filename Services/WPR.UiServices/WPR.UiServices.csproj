@@ -1,0 +1,15 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFrameworks>net6.0-windows;net7.0-windows</TargetFrameworks>
+	  <useWpf>true</useWpf>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Interfaces\WPR.Interfaces\WPR.Interfaces.csproj" />
+    <ProjectReference Include="..\..\UI\WPR\WPR.csproj" />
+  </ItemGroup>
+
+</Project>
