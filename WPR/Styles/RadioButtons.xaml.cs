@@ -6,10 +6,10 @@ namespace WPR.Styles;
 
 partial class RadioButtons
 {
-    void WPRRadioButton_MouseDown(object sender, EventArgs e)
+    private void WPRRadioButton_MouseDown(object sender, EventArgs e)
     {
         if (sender is not RadioButton radioButton) return;
-        Ripple ripple = radioButton.Template.FindName("Ripple", radioButton) as Ripple;
+        var ripple = radioButton.Template.FindName("Ripple", radioButton) as Ripple;
         ripple?.StartRipple();
     }
 }

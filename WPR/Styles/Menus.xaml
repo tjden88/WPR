@@ -24,7 +24,7 @@
     <ContextMenu x:Key="WPRDefaultContextMenu">
         <MenuItem Command="Cut" Header="Вырезать">
             <MenuItem.Icon>
-                <controls:WPRIcon Source="ContentCut" />
+                <controls:WPRIcon Source="ContentCut"/>
             </MenuItem.Icon>
         </MenuItem>
         <MenuItem Command="Copy" Header="Копировать">
@@ -46,7 +46,7 @@
     </ContextMenu>
 
     <Style x:Key="WPRMenu" TargetType="{x:Type MenuBase}" BasedOn="{StaticResource BaseControl}">
-        <Setter Property="Background" Value="{DynamicResource BackgroundColorBrush}"/>
+        <Setter Property="Background" Value="{DynamicResource SecondaryBackgroundColorBrush}"/>
         <Setter Property="VerticalContentAlignment" Value="Center"/>
         <Setter Property="Template">
             <Setter.Value>
@@ -83,7 +83,7 @@
                                 Margin="10"
                                 CornerRadius="2">
                         <Border Background="Transparent">
-                            <ScrollViewer x:Name="SubMenuScrollViewer">
+                            <ScrollViewer x:Name="SubMenuScrollViewer" VerticalScrollBarVisibility="Hidden">
                                 <Grid RenderOptions.ClearTypeHint="Enabled" Margin="0 8">
                                     <ItemsPresenter x:Name="ItemsPresenter"
                                                     KeyboardNavigation.DirectionalNavigation="Cycle"
@@ -105,8 +105,8 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type MenuItem}">
-                    <Grid ClipToBounds="True">
-                        <Border x:Name="templateRoot"
+                    <Grid ClipToBounds="True" Background="{StaticResource TransparentBrush}">
+                        <Border x:Name="templateRoot" 
                                 BorderBrush="{TemplateBinding BorderBrush}"
                                 BorderThickness="{TemplateBinding BorderThickness}"
                                 Background="{TemplateBinding Background}"
@@ -117,12 +117,11 @@
                                 Background="{StaticResource AnimationEnterColorBrush}"
                                 SnapsToDevicePixels="True"
                                 Opacity="0"/>
-                        <controls:Ripple RippleSpeed="0.8"
+                        <controls:Ripple RippleSpeed="0.8" 
                                             RippleMouseDownSpeed="0.2"
                                             Focusable="False">
-                            <Grid Height="{TemplateBinding Height}" Background="Transparent">
-                                <Grid VerticalAlignment="Center"
-                                          Background="Transparent"
+                            <Grid Height="{TemplateBinding Height}" Background="{StaticResource TransparentBrush}">
+                                <Grid VerticalAlignment="Center" Background="{StaticResource TransparentBrush}"
                                           Margin="{TemplateBinding Padding}">
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="Auto" SharedSizeGroup="IconGroup"/>
@@ -146,7 +145,7 @@
                                             <Canvas Width="24" Height="24">
                                                 <Path Data="M21,7L9,19L3.5,13.5L4.91,12.09L9,16.17L19.59,5.59L21,7Z" 
                                                       x:Name="Glyph"
-                                                      Fill="{TemplateBinding Foreground}" FlowDirection="LeftToRight" />
+                                                      Fill="{DynamicResource AccentColorBrush}" FlowDirection="LeftToRight" />
                                             </Canvas>
                                         </Viewbox>
                                     </Grid>
@@ -163,15 +162,16 @@
                                     <Grid x:Name="InputGestureTextWrapper"
                                               Grid.Column="2"
                                               Visibility="Collapsed">
-                                        <TextBlock Margin="16 0 0 0"
+                                        <TextBlock Margin="16 2 0 0"
                                                    Opacity="0.7"
+                                                   FontSize="14"
                                                    VerticalAlignment="Center" HorizontalAlignment="Right"
                                                    Text="{TemplateBinding InputGestureText}"
                                                    SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
                                                    Foreground="{TemplateBinding Foreground}"/>
                                     </Grid>
                                     <Grid x:Name="SubBlock"
-                                              Grid.Column="2"
+                                          Grid.Column="2"
                                               Visibility="Collapsed"
                                               Margin="16 0 0 0">
                                         <Path Width="5" Height="10"
@@ -179,7 +179,7 @@
                                                   HorizontalAlignment="Right"
                                                   VerticalAlignment="Center"
                                                   Data="M0,16 L8,8 L0,0 Z"
-                                                  Fill="{TemplateBinding Foreground}"
+                                                  Fill="{DynamicResource AccentColorBrush}"
                                                   SnapsToDevicePixels="False"/>
                                     </Grid>
                                 </Grid>
@@ -192,10 +192,10 @@
                                PopupAnimation="Slide"
                                Placement="Bottom">
                             <Border x:Name="SubMenuBorder" Margin="10"
-                                    Background="{Binding Path=Background, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=MenuBase}}"
+                                    Background="{DynamicResource SecondaryBackgroundColorBrush}"
                                     Effect="{DynamicResource PopupSmallShadow}"
                                     CornerRadius="2">
-                                <ScrollViewer x:Name="SubMenuScrollViewer">
+                                <ScrollViewer x:Name="SubMenuScrollViewer" VerticalScrollBarVisibility="Hidden">
                                     <ItemsPresenter x:Name="ItemsPresenter"
                                                     Margin="0 14"
                                                     RenderOptions.ClearTypeHint="Enabled"

@@ -81,6 +81,7 @@ public static class StyleHelper
         _StyleColors.TextColor = WhiteColor;
         _StyleColors.ShadowColor = Colors.Black;
         _StyleColors.DividerColor = Lighten(_StyleColors.DarkColor, 5);
+        _StyleColors.ContrastColor = (Color)ColorConverter.ConvertFromString("#c8c8c8")!;
 
         SetWindowColors(true);
         StyleChanged?.Invoke(null, EventArgs.Empty);
@@ -96,6 +97,8 @@ public static class StyleHelper
         _StyleColors.TextColor = DarkColor;
         _StyleColors.ShadowColor = Colors.DimGray;
         _StyleColors.DividerColor = (Color)ColorConverter.ConvertFromString("#FFE0E0E0")!;
+        _StyleColors.ContrastColor = DarkColor;
+
 
         SetWindowColors(false);
         StyleChanged?.Invoke(null, EventArgs.Empty);

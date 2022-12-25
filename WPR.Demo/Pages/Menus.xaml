@@ -11,12 +11,56 @@
 
     <Grid>
         <StackPanel>
-            <Menu >
+            <Menu>
                 <MenuItem Header="Menu">
                     <MenuItem Header="Create">
                         <MenuItem.Icon>
                             <controls:WPRIcon Source="Create"/>
                         </MenuItem.Icon>
+                        <MenuItem Header="Create" IsCheckable="True" IsChecked="True"/>
+                        <MenuItem Header="Create" IsCheckable="True" IsChecked="True"/>
+                        <MenuItem Header="Create" IsCheckable="True" IsChecked="True"/>
+                        <MenuItem Header="Create" IsCheckable="True" IsChecked="True"/>
+                        <MenuItem Header="Create" IsCheckable="True" IsChecked="True"/>
+                        <MenuItem Header="Create" IsCheckable="True" IsChecked="True"/>
+                        <MenuItem Header="Create" IsCheckable="True" IsChecked="True"/>
+                        <MenuItem Header="Create" IsCheckable="True" IsChecked="True"/>
+                        <MenuItem Header="Create" IsCheckable="True" IsChecked="True"/>
+                        <MenuItem Header="Create" IsCheckable="True" IsChecked="True"/>
+                        <MenuItem Header="Create" IsCheckable="True" IsChecked="True"/>
+                        <MenuItem Header="Create" IsCheckable="True" IsChecked="True"/>
+                        <MenuItem Header="Create" IsCheckable="True" IsChecked="True"/>
+                        <MenuItem Header="Create" IsCheckable="True" IsChecked="True"/>
+                        <MenuItem Header="Create" IsCheckable="True" IsChecked="True"/>
+                        <MenuItem Header="Create" IsCheckable="True" IsChecked="True"/>
+                        <MenuItem Header="Create" IsCheckable="True" IsChecked="True"/>
+                        <MenuItem Header="Create" IsCheckable="True" IsChecked="True"/>
+                        <MenuItem Header="Create" IsCheckable="True" IsChecked="True"/>
+                        <MenuItem Header="Create" IsCheckable="True" IsChecked="True"/>
+                        <MenuItem Header="Create" IsCheckable="True" IsChecked="True"/>
+                        <MenuItem Header="Create" IsCheckable="True" IsChecked="True"/>
+                        <MenuItem Header="Create" IsCheckable="True" IsChecked="True"/>
+                        <MenuItem Header="Create" IsCheckable="True" IsChecked="True"/>
+                        <MenuItem Header="Create" IsCheckable="True" IsChecked="True"/>
+                        <MenuItem Header="Create" IsCheckable="True" IsChecked="True"/>
+                        <MenuItem Header="Create" IsCheckable="True" IsChecked="True"/>
+                        <MenuItem Header="Create" IsCheckable="True" IsChecked="True"/>
+                        <MenuItem Header="Create" IsCheckable="True" IsChecked="True"/>
+                        <MenuItem Header="Create" IsCheckable="True" IsChecked="True"/>
+                        <MenuItem Header="Create" IsCheckable="True" IsChecked="True"/>
+                        <MenuItem Header="Create" IsCheckable="True" IsChecked="True"/>
+                        <MenuItem Header="Create" IsCheckable="True" IsChecked="True"/>
+                        <MenuItem Header="Create" IsCheckable="True" IsChecked="True"/>
+                        <MenuItem Header="Create" IsCheckable="True" IsChecked="True"/>
+                        <MenuItem Header="Create" IsCheckable="True" IsChecked="True"/>
+                        <MenuItem Header="Create" IsCheckable="True" IsChecked="True"/>
+                        <MenuItem Header="Create" IsCheckable="True" IsChecked="True"/>
+                        <MenuItem Header="Create" IsCheckable="True" IsChecked="True"/>
+                        <MenuItem Header="Create" IsCheckable="True" IsChecked="True"/>
+                        <MenuItem Header="Create" IsCheckable="True" IsChecked="True"/>
+                        <MenuItem Header="Create" IsCheckable="True" IsChecked="True"/>
+                        <MenuItem Header="Create" IsCheckable="True" IsChecked="True"/>
+                        <MenuItem Header="Create" IsCheckable="True" IsChecked="True"/>
                         <MenuItem Header="Create" IsCheckable="True" IsChecked="True"/>
                         <MenuItem Header="Create" IsCheckable="True" IsChecked="True"/>
                         <Separator/>
@@ -31,7 +75,7 @@
                     <MenuItem Header="Close"/>
                 </MenuItem>
             </Menu>
-            <ToolBarTray>
+            <ToolBarTray Margin="0,10">
                 <ToolBar Header="Head">
                     <Button Content="Test"/>
                     <Button Command="Cut" Foreground="{DynamicResource PrimaryTextColorBrush}">

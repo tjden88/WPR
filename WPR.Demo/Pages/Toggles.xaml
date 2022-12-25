@@ -21,26 +21,28 @@
                 <CheckBox Content="Tristate" Margin="5" IsThreeState="True" IsChecked="{x:Null}"/>
                 <CheckBox Content="TristateDisabled" Margin="5" IsEnabled="False" IsChecked="{x:Null}"/>
                 <TextBlock Text="Toggle Buttons" Margin="5"/>
-                <controls:ClippingBorder ClipToBounds="True"
-                                            CornerRadius="3"
-                                            Background="{DynamicResource DividerColorBrush}"
-                                            HorizontalAlignment="Center" 
-                                            Margin="5">
-                    <StackPanel Orientation="Horizontal">
-                        <ToggleButton IsChecked="True" helpers:ButtonHelper.BorderRadius="0" Margin="0"
-                              ToolTip="Полужирный">
-                            <controls:WPRIcon Source="FormatBold" Width="34" IconSize="18"/>
-                        </ToggleButton>
-                        <ToggleButton helpers:ButtonHelper.BorderRadius="0" Margin="0"
-                              ToolTip="Наклонный">
-                            <controls:WPRIcon Source="FormatItalic" Width="34" IconSize="18"/>
-                        </ToggleButton>
-                        <ToggleButton helpers:ButtonHelper.BorderRadius="0" Margin="0"
-                                      ToolTip="Подчёркнутый">
-                            <controls:WPRIcon Source="FormatUnderlined" Width="34" IconSize="18"/>
-                        </ToggleButton>
-                    </StackPanel>
-                </controls:ClippingBorder>
+                <Border Effect="{StaticResource PopupSmallShadow}">
+                    <controls:ClippingBorder ClipToBounds="True"
+                                             CornerRadius="3"
+                                             Background="{DynamicResource DividerColorBrush}"
+                                             HorizontalAlignment="Center" 
+                                             Margin="5">
+                        <StackPanel Orientation="Horizontal">
+                            <ToggleButton IsChecked="True" helpers:ButtonHelper.BorderRadius="0" Margin="0"
+                                          ToolTip="Полужирный">
+                                <controls:WPRIcon Source="FormatBold" Width="34" IconSize="18"/>
+                            </ToggleButton>
+                            <ToggleButton helpers:ButtonHelper.BorderRadius="0" Margin="0"
+                                          ToolTip="Наклонный">
+                                <controls:WPRIcon Source="FormatItalic" Width="34" IconSize="18"/>
+                            </ToggleButton>
+                            <ToggleButton helpers:ButtonHelper.BorderRadius="0" Margin="0"
+                                          ToolTip="Подчёркнутый">
+                                <controls:WPRIcon Source="FormatUnderlined" Width="34" IconSize="18"/>
+                            </ToggleButton>
+                        </StackPanel>
+                    </controls:ClippingBorder>
+                </Border>
                 <ToggleButton Style="{StaticResource WPRSwitchToggleButton}" Content="Switcher" Margin="5"/>
                 <ToggleButton Style="{StaticResource WPRSwitchToggleButton}" IsChecked="True" Content="SwitcherChecked" Margin="5"/>
                 </StackPanel>

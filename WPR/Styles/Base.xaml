@@ -31,6 +31,7 @@
     <SolidColorBrush x:Key="DarkWindowBackgroundColorBrush" Color="{Binding DarkWindowBackgroundColor, Source={StaticResource StyleColors}}" p:Freeze="True"/>
     <SolidColorBrush x:Key="InactiveWindowBackgroundColorBrush" Color="{Binding InactiveWindowBackgroundColor, Source={StaticResource StyleColors}}" p:Freeze="True"/>
     <SolidColorBrush x:Key="WindowForegroundColorBrush" Color="{Binding WindowForegroundColor, Source={StaticResource StyleColors}}" p:Freeze="True"/>
+    <SolidColorBrush x:Key="ContrastColorBrush" Color="{Binding ContrastColor, Source={StaticResource StyleColors}}" p:Freeze="True"/>
 
     <SolidColorBrush x:Key="AnimationEnterColorBrush" Color="#99858585" p:Freeze="True"/>
 
@@ -106,6 +107,7 @@
         <Setter Property="FontSize" Value="16"/>
         <Setter Property="FontFamily" Value="{StaticResource RobotoFont}" />
         <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="BorderBrush" Value="{DynamicResource SecondaryColorBrush}"></Setter>
         <Setter Property="FocusVisualStyle" Value="{StaticResource BaseFocusVisualStyle}"/>
     </Style>
 </ResourceDictionary>

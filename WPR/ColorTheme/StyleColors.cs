@@ -33,7 +33,8 @@ public class StyleColors : DependencyObject
         AnimationEnterColorBrush,
         DangerColorBrush,
         WhiteBrush,
-        DarkBrush
+        DarkBrush,
+        ContrastColorBrush
     }
 
 
@@ -58,6 +59,7 @@ public class StyleColors : DependencyObject
     private static readonly Color _SecondaryBackgroundColor = _LightColor;
     private static readonly Color _LightWindowBackgroundColor = _PrimaryColor;
     private static readonly Color _DarkWindowBackgroundColor = _DarkColor;
+    private static readonly Color _ContrastColor = _DarkColor;
 
 
     #region ShadowColor : Color - Цвет тени
@@ -451,6 +453,28 @@ public class StyleColors : DependencyObject
     {
         get => (Color) GetValue(WindowForegroundColorProperty);
         set => SetValue(WindowForegroundColorProperty, value);
+    }
+
+    #endregion
+
+
+    #region ContrastColor : Color - Контрастный к основному фону цвет (например для всплывающиз сообщений)
+
+    /// <summary>Контрастный к основному фону цвет (например для всплывающиз сообщений)</summary>
+    public static readonly DependencyProperty ContrastColorProperty =
+        DependencyProperty.Register(
+            nameof(ContrastColor),
+            typeof(Color),
+            typeof(StyleColors),
+            new PropertyMetadata(_ContrastColor));
+
+    /// <summary>Контрастный к основному фону цвет (например для всплывающиз сообщений)</summary>
+    [Category("StyleColors")]
+    [Description("Контрастный к основному фону цвет (например для всплывающиз сообщений)")]
+    public Color ContrastColor
+    {
+        get => (Color) GetValue(ContrastColorProperty);
+        set => SetValue(ContrastColorProperty, value);
     }
 
     #endregion

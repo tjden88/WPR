@@ -9,7 +9,7 @@ namespace WPR.Styles;
 
 partial class Toggles
 {
-    void WPRToggleButton_MouseUp(object sender, MouseButtonEventArgs e)
+    private void WPRToggleButton_MouseUp(object sender, MouseButtonEventArgs e)
     {
         if(sender is not ToggleButton toggleButton) return;
         if(toggleButton.Template.FindName("PART_ellipse", toggleButton) is not Ellipse ellipse) return;
@@ -20,7 +20,8 @@ partial class Toggles
         Canvas.SetLeft(ellipse, e.GetPosition(toggleButton).X - maxWidth / 2);
         Canvas.SetTop(ellipse, e.GetPosition(toggleButton).Y - maxWidth / 2);
     }
-    void WPRSwither_MouseUp(object sender, MouseButtonEventArgs e)
+
+    private void WPRSwither_MouseUp(object sender, MouseButtonEventArgs e)
     {
         if (sender is not ToggleButton toggleButton) return;
         if (toggleButton.Template.FindName("Ripple", toggleButton) is not Ripple ripple) return;

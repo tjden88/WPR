@@ -93,7 +93,7 @@
         <Setter Property="Padding" Value="5"/>
         <Setter Property="VerticalContentAlignment" Value="Center"/>
         <Setter Property="HorizontalContentAlignment" Value="Center"/>
-        <Setter Property="helpers:RippleHelper.FeedbackBrush" Value="{StaticResource AnimationEnterColorBrush}"/>
+        <Setter Property="helpers:RippleHelper.FeedbackBrush" Value="{StaticResource PrimaryColorBrush}"/>
         <EventSetter Event="PreviewMouseLeftButtonUp" Handler="WPRToggleButton_MouseUp"/>
         <Setter Property="Template" Value="{StaticResource WPRToggleControlTemplate}"/>
     </Style>
@@ -146,12 +146,6 @@
                                                  To="16" 
                                                  Storyboard.TargetName="Translategrid"
                                                  Storyboard.TargetProperty="X"/>
-                                <!--<ColorAnimation Storyboard.TargetName="Ellipse" Storyboard.TargetProperty="Fill.Color"
-                                                To="{DynamicResource DarkPrimaryColor}"
-                                                Duration="0:0:0.2"/>
-                                <ColorAnimation Storyboard.TargetName="Border" Storyboard.TargetProperty="Background.Color"
-                                                To="{DynamicResource LightPrimaryColor}"
-                                                Duration="0:0:0.2"/>-->
                             </Storyboard>
                         </BeginStoryboard>
                     </Trigger.EnterActions>
@@ -161,11 +155,7 @@
                                 <DoubleAnimation Duration="0:0:0.2" 
                                                  Storyboard.TargetName="Translategrid"
                                                  Storyboard.TargetProperty="X"/>
-                                <!--<ColorAnimation Storyboard.TargetName="Ellipse" Storyboard.TargetProperty="Fill.Color"
-                                                Duration="0:0:0.2"/>
-                                <ColorAnimation Storyboard.TargetName="Border" Storyboard.TargetProperty="Background.Color"
-                                                Duration="0:0:0.2"/>-->
-                                    </Storyboard>
+                            </Storyboard>
                         </BeginStoryboard>
                     </Trigger.ExitActions>
                 </Trigger>
