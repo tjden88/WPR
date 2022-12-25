@@ -110,7 +110,8 @@ namespace WPR.Demo.Pages
         {
             private readonly Dialogs _Parent;
             private int _Count;
-            public Action<bool> DialogResult { get; set; }
+
+            public Action<bool> SetDialogResult { get; set; }
 
             public object DialogContent { get; set; }
             public bool StaysOpen => false;
@@ -132,6 +133,9 @@ namespace WPR.Demo.Pages
             Debug.WriteLine(await WPRMessageBox.ShowCustomDialogAsync(this, new TestCustomDialog(this, 0)));
         }
 
-
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            WPRMessageBox.ShowCustomDialog(this, new WprDialog(), b => Debug.WriteLine(b));
+        }
     }
 }

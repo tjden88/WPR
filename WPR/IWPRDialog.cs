@@ -1,16 +1,15 @@
 ﻿using System;
-
 namespace WPR;
 
 /// <summary> Интерфейс для реализации объекта в качестве диалогового окна </summary>
 public interface IWPRDialog
 {
-    /// <summary>Результат диалога</summary>
-    Action<bool> DialogResult { get; set; }
+    /// <summary>Установить результат диалога</summary>
+    Action<bool> SetDialogResult { get; set; }
 
     /// <summary>Контент диалога</summary>
-    object DialogContent { get; }
+    object DialogContent => this;
 
     /// <summary> Оставлять диалог открытым при клике вне его области </summary>
-    bool StaysOpen { get; }
+    bool StaysOpen => true;
 }

@@ -1,0 +1,20 @@
+﻿<UserControl x:Class="WPR.Demo.WprDialog"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:WPR.Demo"
+             xmlns:controls="clr-namespace:WPR.Controls;assembly=WPR"
+             xmlns:helpers="clr-namespace:WPR.Helpers;assembly=WPR"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <controls:WPRTitledCard Header="Пользовательский диалог">
+        <StackPanel Margin="15">
+            <TextBox helpers:TextHelper.Hint="Текст"></TextBox>
+            <Separator/>
+            <Button Content="Ок" HorizontalAlignment="Right" Click="Button_Click_1"></Button>
+            <Button Content="Отмена" HorizontalAlignment="Right" Click="Button_Click"></Button>
+        </StackPanel>
+
+    </controls:WPRTitledCard> 
+</UserControl>

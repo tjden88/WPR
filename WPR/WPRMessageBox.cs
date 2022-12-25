@@ -28,7 +28,7 @@ public static class WPRMessageBox
     private static void Show(DependencyObject sender, string Caption, string Title, Action<bool?> Callback, bool CancelButton, bool YesNoButtons)
     {
         // Ищем панель
-        WPRDialogPanel panel = FindDialogPanel(sender);
+        var panel = FindDialogPanel(sender);
         if (panel == null)
         {
             //throw new ArgumentNullException(nameof(panel), "Окно с панелью диалога не найдено!");
@@ -284,7 +284,7 @@ public static class WPRMessageBox
     public static void InputText(DependencyObject sender, string Title, Action<bool, string> Callback, string DefaultValue, IEnumerable<PredicateValidationRule<string>> ValidationRules)
     {
         // Ищем панель
-        WPRDialogPanel panel = FindDialogPanel(sender);
+        var panel = FindDialogPanel(sender);
 
         WPRInputBox inputBox = new(ValidationRules)
         {
@@ -327,9 +327,9 @@ public static class WPRMessageBox
     public static void ShowCustomDialog(DependencyObject sender, IWPRDialog Content, Action<bool> Callback = null)
     {
         // Ищем панель
-        WPRDialogPanel panel = FindDialogPanel(sender);
+        var panel = FindDialogPanel(sender);
 
-        Content.DialogResult += (b) =>
+        Content.SetDialogResult += b =>
         {
             panel.Hide();
             Callback?.Invoke(b);

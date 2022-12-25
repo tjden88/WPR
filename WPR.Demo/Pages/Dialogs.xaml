@@ -14,7 +14,7 @@
 
         <StackPanel Orientation="Horizontal">
             <StackPanel Margin="10" Width="200">
-                <Button Content="Show User Dialog" HorizontalAlignment="Center" VerticalAlignment="Center" Command="{Binding ShowModalDialogCommand}"/>
+                <Button Content="Show User Dialog" HorizontalAlignment="Center" VerticalAlignment="Center" Click="Button_Click" />
                 <controls:WPRCard HorizontalAlignment="Center" >
                     <dialogs:WPRMsgBox Title="Заголовок"
                                        x:Name="MsgBox"

@@ -263,7 +263,7 @@ internal class WPRDialogPanel : HeaderedContentControl
         }
         else
         {
-            _WPRDialog?.DialogResult?.Invoke(false);
+            _WPRDialog?.SetDialogResult?.Invoke(false);
             Hide();
         }
     }
