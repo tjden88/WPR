@@ -1,27 +1,29 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
 using System.Windows;
 using WPR.Controls;
-using WPR.Dialogs;
 using WPR.Dialogs.Base;
 using WPR.MVVM.Validation;
 
-namespace WPR;
+namespace WPR.Dialogs;
 
 /// <summary>Диалоговые окна</summary>
-public static class WPRMessageBox
+public static class WPRDialogHelper
 {
+    private static readonly Style _ModalWindowStyle = (Style) Application.Current.Resources["WPRModalWindow"];
+
     #region Private
     // Найти панель для отображения диалога
+    [return: MaybeNull]
     private static WPRDialogPanel FindDialogPanel(DependencyObject uIElement)
     {
-        if (uIElement == null) return null;
+        if (uIElement == null)
+            return null;
 
         if (uIElement is Window window)
-        {
-            return window?.Template?.FindName("WindowDialogPanel", window) as WPRDialogPanel;
-        }
+            return window.Template?.FindName("WindowDialogPanel", window) as WPRDialogPanel;
 
         return uIElement.FindVisualParent<WPRDialogPanel>();
     }
@@ -80,7 +82,7 @@ public static class WPRMessageBox
             YesNoButtonsVisible = YesNoButtons
         };
 
-        var owner = sender is Window w ? w : sender?.FindVisualParent<Window>();
+        var owner = sender as Window ?? sender?.FindVisualParent<Window>();
 
         var panel = FindDialogPanel(owner);
 
@@ -90,7 +92,7 @@ public static class WPRMessageBox
             Owner = owner,
             Topmost = owner == null,
             Content = messageBox,
-            Style = (Style)Application.Current.Resources["WPRModalWindow"]
+            Style = _ModalWindowStyle
         };
 
         messageBox.DialogResult += B =>
@@ -106,7 +108,39 @@ public static class WPRMessageBox
         panel?.Hide();
 
         return result;
-    } 
+    }
+
+    public static bool ShowCustomModal(DependencyObject sender, IWPRDialog Content)
+    {
+        var result = false;
+
+        var owner = sender as Window ?? sender?.FindVisualParent<Window>();
+
+        var panel = FindDialogPanel(owner);
+
+        Window dlg = new()
+        {
+            WindowStartupLocation = WindowStartupLocation.CenterOwner,
+            Owner = owner,
+            Topmost = owner == null,
+            Content = Content.DialogContent,
+            Style = _ModalWindowStyle
+        };
+
+        Content.SetDialogResult += B =>
+        {
+            result = B;
+            dlg.Close();
+        };
+
+        panel?.Show(null, true);
+
+        dlg.ShowDialog();
+
+        panel?.Hide();
+
+        return result;
+    }
     #endregion
 
     #region Information
@@ -257,14 +291,20 @@ public static class WPRMessageBox
     public static void Bubble(DependencyObject sender, string Text, int Duration = 3000)
     {
         var p = FindDialogPanel(sender);
-        p?.ShowBubble(Text, Duration);
+        if(p == null)
+            Show(sender, Text, null, null, false, false);
+        else
+            p.ShowBubble(Text, Duration);
     }
 
     /// <summary>Показать всплывающее сообщение с кнопкой</summary>
     public static void Bubble(DependencyObject sender, string Text, string ButtonText, Action<bool> Callback, int Duration = 4000)
     {
         var p = FindDialogPanel(sender);
-        p?.ShowBubble(Text, Duration, ButtonText, Callback);
+        if (p == null)
+            Show(sender, Text, null, res => Callback?.Invoke(res == true), false, false);
+        else
+            p.ShowBubble(Text, Duration, ButtonText, Callback);
     }
     #endregion
 
@@ -292,8 +332,17 @@ public static class WPRMessageBox
             Title = Title,
             TextValue = DefaultValue
         };
-        // При клике по кнопке мессаджа закрыть окно и вернуть прозрачность как была
-        inputBox.DialogResult += (b) =>
+
+        if (panel is null)
+        {
+            var dlg = new WPRDialog(inputBox, null);
+            var result = ShowCustomModal(sender, dlg);
+            Callback?.Invoke(result, inputBox.TextValue);
+            return;
+        }
+
+            // При клике по кнопке мессаджа закрыть окно и вернуть прозрачность как была
+        inputBox.DialogResult += b =>
         {
             panel.Hide();
             Callback?.Invoke(b == true, inputBox.TextValue);
@@ -329,6 +378,13 @@ public static class WPRMessageBox
     {
         // Ищем панель
         var panel = FindDialogPanel(sender);
+
+        if (panel is null)
+        {
+            var modal = ShowCustomModal(sender, Content);
+            Callback?.Invoke(modal);
+            return;
+        }
 
         Content.SetDialogResult += b =>
         {

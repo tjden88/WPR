@@ -12,6 +12,7 @@ public static class SystemExtensions
     /// <summary> Поиск визуального родителя по типу </summary>
     /// <typeparam name="T">Тип искомого родительского элемента</typeparam>
     /// <param name="child">Объект, родителя которого надо найти</param>
+    [return: MaybeNull]
     public static T FindVisualParent<T>(this DependencyObject child) where T : DependencyObject
     {
         var parentObject = VisualTreeHelper.GetParent(child);
@@ -25,6 +26,7 @@ public static class SystemExtensions
     /// <summary> Поиск логического родителя по типу </summary>
     /// <typeparam name="T">Тип искомого родительского элемента</typeparam>
     /// <param name="child">Объект, родителя которого надо найти</param>
+    [return: MaybeNull]
     public static T FindLogicalParent<T>(this DependencyObject child) where T : DependencyObject
     {
         var parentObject = LogicalTreeHelper.GetParent(child);
@@ -37,6 +39,7 @@ public static class SystemExtensions
 
     /// <summary> Поиск визуального потомка по типу </summary>
     /// <typeparam name="T">Тип искомого элемента</typeparam>
+    [return: MaybeNull]
     public static T FindVisualChild<T>(this DependencyObject depObj) where T : DependencyObject
     {
         if (depObj == null) return null;

@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Diagnostics;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using WPR.Dialogs;
 using WPR.Dialogs.Base;
-using WPR.MVVM.Commands;
 using WPR.MVVM.Commands.Base;
 
 namespace WPR.Demo.Pages
@@ -36,10 +35,10 @@ namespace WPR.Demo.Pages
 
         private void OnShowWindowDialogCommandExecuted()
         {
-            //WPRMessageBox.Information(this, "Текст диалога пользователя", "Заголовок", () => Debug.WriteLine("Диалог закрыт"));
-            //WPRMessageBox.InformationCancel(this, "Текст диалога пользователя", "Заголовок", (b) => Debug.WriteLine($"Диалог закрыт: {b}"));
-            //WPRMessageBox.Question(this, "Текст диалога пользователя", "Заголовок", (b) => Debug.WriteLine($"Диалог закрыт: {b}"));
-            WPRMessageBox.QuestionCancel(this, "Текст диалога пользователя", "Заголовок", (b) => Debug.WriteLine($"Диалог закрыт: {b}"));
+            //WPRDialogHelper.Information(this, "Текст диалога пользователя", "Заголовок", () => Debug.WriteLine("Диалог закрыт"));
+            //WPRDialogHelper.InformationCancel(this, "Текст диалога пользователя", "Заголовок", (b) => Debug.WriteLine($"Диалог закрыт: {b}"));
+            //WPRDialogHelper.Question(this, "Текст диалога пользователя", "Заголовок", (b) => Debug.WriteLine($"Диалог закрыт: {b}"));
+            WPRDialogHelper.QuestionCancel(this, "Текст диалога пользователя", "Заголовок", (b) => Debug.WriteLine($"Диалог закрыт: {b}"));
         }
 
         #endregion
@@ -54,10 +53,10 @@ namespace WPR.Demo.Pages
 
         private async void OnShowWindowDialogCommandAsyncExecuted()
         {
-            await WPRMessageBox.InformationAsync(this, "Текст диалога пользователя");
-            //var res = await WPRMessageBox.InformationCancelAsync(this, "Текст диалога пользователя");
-            //var res = await WPRMessageBox.QuestionAsync(this, "Текст диалога пользователя");
-            var res = await WPRMessageBox.QuestionCancelAsync(this, "Текст диалога пользователя");
+            await WPRDialogHelper.InformationAsync(this, "Текст диалога пользователя");
+            //var res = await WPRDialogHelper.InformationCancelAsync(this, "Текст диалога пользователя");
+            //var res = await WPRDialogHelper.QuestionAsync(this, "Текст диалога пользователя");
+            var res = await WPRDialogHelper.QuestionCancelAsync(this, "Текст диалога пользователя");
             Debug.WriteLine($"Асинхронный диалог закрыт: {res}");
         }
 
@@ -73,24 +72,24 @@ namespace WPR.Demo.Pages
 
         private void OnShowModalDialogCommandExecuted()
         {
-            Debug.WriteLine(WPRMessageBox.ShowModal(this, "Модальный диалог", "Заголовок", true));
+            Debug.WriteLine(WPRDialogHelper.ShowModal(this, "Модальный диалог", "Заголовок", true));
         }
 
         #endregion
 
         private void ButtonBase_OnClick(object Sender, RoutedEventArgs E)
         {
-            WPRMessageBox.Bubble(this, "Всплывающее сообщение");
+            WPRDialogHelper.Bubble(this, "Всплывающее сообщение");
         }
 
         private void Button2_OnClick(object Sender, RoutedEventArgs E)
         {
-            WPRMessageBox.Bubble(this, "Всплывающее сообщение с кнопкой", "YEP!", _ => Debug.WriteLine("Clicked!"));
+            WPRDialogHelper.Bubble(this, "Всплывающее сообщение с кнопкой", "YEP!", _ => Debug.WriteLine("Clicked!"));
         }
 
         private void Button3_OnClick(object Sender, RoutedEventArgs E)
         {
-            WPRMessageBox.InputText(this,
+            WPRDialogHelper.InputText(this,
                 "Ввод текста:",
                 (B, S) => {if(B) Debug.WriteLine(S);},
                 "Стартовое значение",
@@ -99,7 +98,7 @@ namespace WPR.Demo.Pages
         }
         private void Button4_OnClick(object Sender, RoutedEventArgs E)
         {
-            WPRMessageBox.InputText(this,
+            WPRDialogHelper.InputText(this,
                 "Ввод текста:",
                 (B, S) => { Debug.WriteLine(B + S); },
                 "12",
@@ -124,19 +123,19 @@ namespace WPR.Demo.Pages
                 DialogContent = new Button()
                 {
                     Content =$"Запустить ещё один диалог. Текущий: {count}",
-                    Command = new Command(() => WPRMessageBox.ShowCustomDialog(parent, new TestCustomDialog(parent, count + 1)))
+                    Command = new Command(() => WPRDialogHelper.ShowCustomDialog(parent, new TestCustomDialog(parent, count + 1)))
                 };
             }
         }
 
         private async void CustomDialog_Click(object Sender, RoutedEventArgs E)
         {
-            Debug.WriteLine(await WPRMessageBox.ShowCustomDialogAsync(this, new TestCustomDialog(this, 0)));
+            Debug.WriteLine(await WPRDialogHelper.ShowCustomDialogAsync(this, new TestCustomDialog(this, 0)));
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            WPRMessageBox.ShowCustomDialog(this, new WprDialog(), b => Debug.WriteLine(b));
+            WPRDialogHelper.ShowCustomDialog(this, new WprDialog(), b => Debug.WriteLine(b));
         }
     }
 }

@@ -3,7 +3,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Controls;
 using System.Windows.Input;
-using WPR.MVVM.Commands;
+using WPR.Dialogs;
 using WPR.MVVM.Commands.Base;
 
 namespace WPR.Demo.Pages
@@ -20,7 +20,7 @@ namespace WPR.Demo.Pages
 
         private int _Count;
 
-        private void ShowBubble(string text) => WPRMessageBox.Bubble(this, text);
+        private void ShowBubble(string text) => WPRDialogHelper.Bubble(this, text);
 
         #region Command SimpleCommand - Простая команда
 
