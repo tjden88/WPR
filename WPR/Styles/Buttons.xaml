@@ -6,7 +6,7 @@
         <ResourceDictionary Source="Base.xaml"/>
     </ResourceDictionary.MergedDictionaries>
 
-
+    <!--Шаблон кнопки-->
     <ControlTemplate TargetType="{x:Type ButtonBase}" x:Key="WPRButtonTemplate">
         <Grid >
             <Border x:Name="ShadowBorder"
@@ -30,6 +30,7 @@
                     <controls:Ripple x:Name="Ripple" 
                                          SnapsToDevicePixels="False"
                                          RippleSpeed="0.7"
+                                         Foreground="{TemplateBinding Foreground}"
                                          RippleMouseDownSpeed="0.7"
                                          HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
                                          VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
@@ -118,7 +119,7 @@
 
     <Style x:Key="PrimaryWPRButton" TargetType="{x:Type ButtonBase}" BasedOn="{StaticResource WPRFlatButton}">
         <Setter Property="Background" Value="{DynamicResource PrimaryColorBrush}"/>
-        <Setter Property="Foreground" Value="{DynamicResource TextColorBrush}" />
+        <Setter Property="Foreground" Value="{DynamicResource LightColorBrush}" />
         <Setter Property="helpers:ButtonHelper.ButtonShadow" Value="{DynamicResource ButtonShadow}"/>
     </Style>
 
@@ -154,7 +155,7 @@
         <Setter Property="helpers:ButtonHelper.BorderRadius" Value="14"/>
         <Setter Property="Foreground" Value="{DynamicResource TextColorBrush}"/>
         <Setter Property="Padding" Value="50,0,15,0"/>
-        <Setter Property="Background" Value="{DynamicResource BackgroundColorBrush}"/>
+        <Setter Property="Background" Value="{DynamicResource SecondaryBackgroundColorBrush}"/>
         <Setter Property="HorizontalContentAlignment" Value="Left"/>
         <Setter Property="VerticalContentAlignment" Value="Center"/>
         <Setter Property="Template">
@@ -257,12 +258,10 @@
 
     <Style x:Key="RoundedButtonWithFloatingHintPrimary" TargetType="{x:Type ButtonBase}" BasedOn="{StaticResource RoundedButtonWithFloatingHint}">
         <Setter Property="Background" Value="{DynamicResource PrimaryColorBrush}"/>
-        <Setter Property="Foreground" Value="{DynamicResource TextColorBrush}"/>
     </Style>
 
     <Style x:Key="RoundedButtonWithFloatingHintAccent" TargetType="{x:Type ButtonBase}" BasedOn="{StaticResource RoundedButtonWithFloatingHint}">
         <Setter Property="Background" Value="{DynamicResource AccentColorBrush}"/>
-        <Setter Property="Foreground" Value="{DynamicResource TextColorBrush}"/>
     </Style>
 
     <!--Служебная кнопка действий, изчезает если неактивна-->

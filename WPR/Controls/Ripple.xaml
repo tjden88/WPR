@@ -1,7 +1,11 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:local="clr-namespace:WPR.Controls">
-    <Style TargetType="{x:Type local:Ripple}">
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="../Styles/Base.xaml"/>
+    </ResourceDictionary.MergedDictionaries>
+
+    <Style TargetType="{x:Type local:Ripple}" BasedOn="{StaticResource BaseControl}">
         <Setter Property="Background" Value="{DynamicResource LightPrimaryColorBrush}"/>
         <Setter Property="HorizontalAlignment" Value="Stretch" />
         <Setter Property="VerticalAlignment" Value="Stretch" />

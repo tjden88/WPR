@@ -15,6 +15,7 @@ public class StyleColors : DependencyObject
     public enum StyleBrushes
     {
         None,
+        Transparent,
         PrimaryColorBrush,
         DarkPrimaryColorBrush,
         LightPrimaryColorBrush,

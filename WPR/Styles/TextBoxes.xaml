@@ -35,13 +35,13 @@
                             <ContentControl IsTabStop="False" x:Name="FloatingHint"
                                             Content="{Binding Path=(helpers:TextHelper.Hint), RelativeSource={RelativeSource TemplatedParent}}"
                                             HorizontalAlignment="Left"
-                                            VerticalAlignment="Top"
+                                            VerticalAlignment="Bottom"
                                             Foreground="{TemplateBinding Background}"
                                             FontSize="{TemplateBinding FontSize}"
                                             Margin="0,3">
                                 <ContentControl.RenderTransform>
                                     <TransformGroup>
-                                        <TranslateTransform x:Name="TranslateTransform" Y="{Binding ActualHeight, ElementName=FloatingHint, Converter={StaticResource SignPlusMinusConverter}}"/>
+                                        <TranslateTransform x:Name="TranslateTransform" Y="{Binding ActualHeight, ElementName=ContentGrid, Converter={StaticResource SignPlusMinusConverter}}"/>
                                         <ScaleTransform x:Name="ScaleTransform" ScaleX="0.9" ScaleY="{Binding Path=ScaleX, RelativeSource={RelativeSource Self}}"/>
                                     </TransformGroup>
                                 </ContentControl.RenderTransform>

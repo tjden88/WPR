@@ -14,20 +14,12 @@
     <DockPanel Background="{DynamicResource BackgroundColorBrush}">
         <StackPanel Width="200" Margin="10">
             <TextBox Margin="15" helpers:TextHelper.Hint="Возраст: 21-100" 
-                     helpers:TextHelper.Description="ValidatedTextBox">
-                <TextBox.Text>
-                    <Binding Path="Age"
-                             UpdateSourceTrigger="PropertyChanged" >
-                        <Binding.ValidationRules>
-                            <local:AgeRangeRule Min="21" Max="100"/>
-                        </Binding.ValidationRules>
-                    </Binding>
-                </TextBox.Text>
+                     helpers:TextHelper.Description="ValidatedTextBox" FontSize="40">
             </TextBox>
             <TextBox Margin="15" helpers:TextHelper.Hint="Подсказка" 
                      helpers:TextHelper.Description="Описание"
                      Text="Текст"/>
-            <Border Background="Cyan" CornerRadius="15">
+            <Border CornerRadius="15">
                 <TextBox x:Name="Clearable" Margin="10"
                          Style="{StaticResource WPRFlatTextBox}" 
                          helpers:TextHelper.ShowClearButton="True"
@@ -47,9 +39,13 @@
         <StackPanel Width="200">
             <ComboBox helpers:TextHelper.Description="Описание"  SelectedIndex="-1"
           helpers:TextHelper.Hint="Not Editable"
-          Margin="10"
+          Margin="0,30"
           Name="Box">
-                <ComboBoxItem Content="Item 1"/>
+                <ComboBoxItem>
+                    <ComboBoxItem.Content>
+                        <TextBlock FontSize="32">Item 1</TextBlock>
+                    </ComboBoxItem.Content>
+                </ComboBoxItem>
                 <ComboBoxItem Content="Item 2"/>
                 <ComboBoxItem Content="Item 3"/>
                 <ComboBoxItem Content="Item 4"/>
