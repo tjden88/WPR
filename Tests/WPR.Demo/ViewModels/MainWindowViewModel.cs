@@ -4,7 +4,6 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using WPR.Demo.Services.Interfaces;
 using WPR.MVVM.ViewModels;
-using WPR.MVVM.Commands;
 using WPR.ColorTheme;
 using WPR.MVVM.Commands.Base;
 

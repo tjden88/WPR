@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows;
 using System.Windows.Controls;
-using WPR.Dialogs.Base;
+using WPR.Interfaces.Base.UI;
 
 namespace WPR.Demo
 {

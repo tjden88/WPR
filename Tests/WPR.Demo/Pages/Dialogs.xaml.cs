@@ -4,7 +4,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using WPR.Dialogs;
-using WPR.Dialogs.Base;
+using WPR.Interfaces.Base.UI;
 using WPR.MVVM.Commands.Base;
 
 namespace WPR.Demo.Pages

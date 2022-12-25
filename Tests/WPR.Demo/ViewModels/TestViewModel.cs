@@ -1,5 +1,4 @@
-﻿using WPR.MVVM.Commands;
-using WPR.MVVM.ViewModels;
+﻿using WPR.MVVM.ViewModels;
 
 namespace WPR.Demo.ViewModels
 {

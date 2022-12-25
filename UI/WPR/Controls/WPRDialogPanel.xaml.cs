@@ -6,7 +6,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
-using WPR.Dialogs.Base;
+using WPR.Interfaces.Base.UI;
 
 namespace WPR.Controls;
 
