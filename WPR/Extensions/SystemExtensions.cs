@@ -1,4 +1,5 @@
 ﻿using System.Data;
+using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Windows;
 using System.Windows.Media;
@@ -13,9 +14,11 @@ public static class SystemExtensions
     /// <param name="child">Объект, родителя которого надо найти</param>
     public static T FindVisualParent<T>(this DependencyObject child) where T : DependencyObject
     {
-        DependencyObject parentObject = VisualTreeHelper.GetParent(child);
-        if (parentObject == null) return null;
-        return parentObject is T parent ? parent : FindVisualParent<T>(parentObject);
+        var parentObject = VisualTreeHelper.GetParent(child);
+        return parentObject is null
+            ? null
+            : parentObject as T
+              ?? FindVisualParent<T>(parentObject);
 
     }
 
@@ -24,9 +27,11 @@ public static class SystemExtensions
     /// <param name="child">Объект, родителя которого надо найти</param>
     public static T FindLogicalParent<T>(this DependencyObject child) where T : DependencyObject
     {
-        DependencyObject parentObject = LogicalTreeHelper.GetParent(child);
-        if (parentObject == null) return null;
-        return parentObject is T parent ? parent : FindLogicalParent<T>(parentObject);
+        var parentObject = LogicalTreeHelper.GetParent(child);
+        return parentObject is null
+           ? null
+           : parentObject as T
+             ?? FindLogicalParent<T>(parentObject);
 
     }
 
@@ -36,11 +41,11 @@ public static class SystemExtensions
     {
         if (depObj == null) return null;
 
-        for (int i = 0; i < VisualTreeHelper.GetChildrenCount(depObj); i++)
+        for (var i = 0; i < VisualTreeHelper.GetChildrenCount(depObj); i++)
         {
             var child = VisualTreeHelper.GetChild(depObj, i);
 
-            var result = (child as T) ?? FindVisualChild<T>(child);
+            var result = child as T ?? FindVisualChild<T>(child);
             if (result != null) return result;
         }
         return null;
@@ -49,6 +54,7 @@ public static class SystemExtensions
     private static readonly IFormatProvider _Formatter = new NumberFormatInfo { NumberDecimalSeparator = "." };
     private static readonly DataTable _TableForCalculationExpression = new() { Locale = CultureInfo.InvariantCulture }; // Калькулятор
 
+
     /// <summary>
     /// Конвертировать объект в double
     /// </summary>
@@ -56,9 +62,10 @@ public static class SystemExtensions
     /// <returns></returns>
     public static double ConvertToDouble(this object obj)
     {
-        var parse = obj.ToString()?.Replace(",", ".").Trim();
-        double.TryParse(parse, NumberStyles.Any, _Formatter, out var result);
-        return result;
+        var parse = obj?.ToString()?.Replace(",", ".").Trim();
+        var parsed = double.TryParse(parse, NumberStyles.Any, _Formatter, out var result);
+        return parsed ? result : default;
+
     }
 
     /// <summary>
@@ -68,9 +75,9 @@ public static class SystemExtensions
     /// <returns></returns>
     public static int ConvertToInt(this object obj)
     {
-        var parse = obj.ToString()?.Replace(",", ".").Trim();
-        int.TryParse(parse, NumberStyles.Any, _Formatter, out var result);
-        return result;
+        var parse = obj?.ToString()?.Replace(",", ".").Trim();
+        var parsed = int.TryParse(parse, NumberStyles.Any, _Formatter, out var result);
+        return parsed ? result : default;
     }
 
     /// <summary>
@@ -101,21 +108,16 @@ public static class SystemExtensions
         }
     }
 
+
     /// <summary>
-    /// Потокобезопасное действие через Dispatcher
+    /// Потокобезопасное действие через Dispatcher текущего приложения
     /// </summary>
-    /// <param name="obj">Диспетчеризуемый объект</param>
+    /// <param name="obj">Объект действия</param>
     /// <param name="Action">Делегат действия</param>
-    public static void DoDispatherAction(this DispatcherObject obj, Action Action)
+    /// <param name="Priority">Приоритет действия</param>
+    public static void DoDispatherAction<T>(this T obj, [NotNull] Action<T> Action, DispatcherPriority Priority = DispatcherPriority.Normal)
     {
-        if (obj.Dispatcher.CheckAccess())
-        {
-            Action?.Invoke();
-        }
-        else
-        {
-            obj.Dispatcher.Invoke(Action);
-        }
+        Application.Current.Dispatcher.BeginInvoke(Priority, Action);
     }
 
     /// <summary>
@@ -123,5 +125,9 @@ public static class SystemExtensions
     /// </summary>
     /// <param name="obj">Объект действия</param>
     /// <param name="Action">Делегат действия</param>
-    public static void DoDispatherAction<T>(this T obj, Action<T> Action) => DoDispatherAction(Application.Current, () => Action?.Invoke(obj));
+    /// <param name="Priority">Приоритет действия</param>
+    public static void DoDispatherAction(this object obj, [NotNull] Action Action, DispatcherPriority Priority = DispatcherPriority.Normal)
+    {
+        Application.Current.Dispatcher.BeginInvoke(Priority, Action);
+    }
 }

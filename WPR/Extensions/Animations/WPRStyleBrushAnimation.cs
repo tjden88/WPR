@@ -6,7 +6,7 @@ using System.Windows.Media;
 using System.Windows.Media.Animation;
 using WPR.ColorTheme;
 
-namespace WPR.Extensions;
+namespace WPR.Extensions.Animations;
 
 /// <summary>
 /// Анимация кистей на основе цветов текущего стиля
@@ -69,7 +69,7 @@ public class WPRStyleBrushAnimation : AnimationTimeline
     [Description("Кисть назанчения")]
     public StyleColors.StyleBrushes To
     {
-        get => (StyleColors.StyleBrushes) GetValue(ToProperty);
+        get => (StyleColors.StyleBrushes)GetValue(ToProperty);
         set => SetValue(ToProperty, value);
     }
 
@@ -91,7 +91,7 @@ public class WPRStyleBrushAnimation : AnimationTimeline
     [Description("Начальная кисть")]
     public StyleColors.StyleBrushes From
     {
-        get => (StyleColors.StyleBrushes) GetValue(FromProperty);
+        get => (StyleColors.StyleBrushes)GetValue(FromProperty);
         set => SetValue(FromProperty, value);
     }
 
