@@ -171,11 +171,12 @@
         </Setter>
     </Style>
 
-    <Style x:Key="ComboBoxEditableTextBox" TargetType="{x:Type TextBox}">
+    <Style x:Key="ComboBoxEditableTextBox" TargetType="{x:Type TextBox}" BasedOn="{StaticResource BaseControl}">
         <Setter Property="OverridesDefaultStyle" Value="true"/>
         <Setter Property="AllowDrop" Value="true"/>
         <Setter Property="MinWidth" Value="0"/>
         <Setter Property="MinHeight" Value="0"/>
+        <Setter Property="SelectionBrush" Value="{DynamicResource PrimaryColorBrush}"></Setter>
         <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
         <Setter Property="ScrollViewer.PanningMode" Value="VerticalFirst"/>
         <Setter Property="CaretBrush" Value="{Binding Path=BorderBrush, RelativeSource={RelativeSource Mode=TemplatedParent}}"/>

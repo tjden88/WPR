@@ -71,7 +71,8 @@
         <Setter Property="Background" Value="{StaticResource TransparentBrush}"/>
         <Setter Property="BorderBrush" Value="{StaticResource TransparentBrush}"/>
         <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
-        <Setter Property="Padding" Value=" 10,4"/>
+        <Setter Property="Padding" Value=" 12,7"/>
+        <Setter Property="Margin" Value="0"></Setter>
         <Setter Property="BorderThickness" Value="1"/>
         <Setter Property="Template">
             <Setter.Value>
@@ -99,9 +100,8 @@
                     <!--<Condition Property="IsReadOnly" Value="False"/>-->
                 </MultiTrigger.Conditions>
                 <MultiTrigger.Setters>
-                    <Setter Property="BorderBrush" Value="{DynamicResource SecondaryColorBrush}"/>
-                    <Setter Property="Background" Value="{DynamicResource BackgroundColorBrush}"/>
-                    <Setter Property="Foreground" Value="{DynamicResource TextColorBrush}"/>
+                    <Setter Property="BorderBrush" Value="{DynamicResource DarkColorBrush}"/>
+                    <Setter Property="Background" Value="{DynamicResource SecondaryBackgroundColorBrush}"/>
                 </MultiTrigger.Setters>
             </MultiTrigger>
             <Trigger Property="IsEnabled" Value="False">

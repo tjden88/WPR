@@ -103,7 +103,7 @@
                     <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
 
-                <ToggleButton x:Name="toggleButton" BorderBrush="{TemplateBinding BorderBrush}"
+                <ToggleButton x:Name="toggleButton" BorderBrush="{DynamicResource AccentColorBrush}"
                           BorderThickness="{TemplateBinding BorderThickness}"
                           Background="{TemplateBinding Background}" 
                           Grid.ColumnSpan="2"
@@ -175,7 +175,6 @@
     <!--TextColumnStyles-->
 
     <Style x:Key="WPRDataGridTextColumnEditingStyle" TargetType="{x:Type TextBox}" BasedOn="{StaticResource WPRFlatTextBox}">
-        <Setter Property="Background" Value="{DynamicResource SecondaryBackgroundColorBrush}"></Setter>
         <Setter Property="Margin" Value="-1 0 -1,0" />
     </Style>
 
