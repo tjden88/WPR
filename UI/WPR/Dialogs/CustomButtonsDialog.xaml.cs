@@ -1,7 +1,9 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.ComponentModel;
 using System.Windows;
 using System.Windows.Data;
 using WPR.Dialogs.Base;
+using WPR.Interfaces.Base.UI;
 using WPR.MVVM.Converters;
 
 namespace WPR.Dialogs;
@@ -9,11 +11,17 @@ namespace WPR.Dialogs;
 /// <summary>
 /// Диалог с произвольными кнопками
 /// </summary>
-public class CustomButtonsDialog : DialogBase
+public class CustomButtonsDialog : DialogBase, IWPRDialog
 {
     static CustomButtonsDialog()
     {
         DefaultStyleKeyProperty.OverrideMetadata(typeof(CustomButtonsDialog), new FrameworkPropertyMetadata(typeof(CustomButtonsDialog)));
+    }
+
+
+    public CustomButtonsDialog()
+    {
+        DialogResult += B => DialogBaseResult = B;
     }
 
 
@@ -108,4 +116,9 @@ public class CustomButtonsDialog : DialogBase
     /// <summary> Конвертер для скрытия лишних кнопок </summary>
     public IValueConverter StringToVisibilityValueConverter => new ValueConverter((o, _, p, _) =>
         o?.ToString() is null ? Visibility.Collapsed : Visibility.Visible);
+
+    public Action<bool> SetDialogResult { get; set; }
+
+    /// <summary> Результат выполнения базового диалога </summary>
+    public bool? DialogBaseResult { get; set; }
 }

@@ -38,10 +38,9 @@ public class UserDialog : IUserDialog
 
 
     public async Task<bool?> CustomQuestionAsync(string message, string? Title, string TrueCaption, string? FalseCaption = null,
-        string? NullCaption = null)
-    {
-        throw new NotImplementedException();
-    }
+        string? NullCaption = null) =>
+        await WPRDialogHelper.ShowCustomButtonsDialog(Active, message, Title, TrueCaption, FalseCaption,
+            NullCaption);
 
 
     public async Task LoadingAsync(CancellationToken cancel = default)

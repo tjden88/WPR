@@ -383,6 +383,27 @@ public static class WPRDialogHelper
 
     #endregion
 
+    #region CustomButtons
+
+    public static async Task<bool?> ShowCustomButtonsDialog(DependencyObject sender, string Caption, string Title, string AcceptButtonText,
+        string DeclineButtonText, string CancelButtonText)
+    {
+        var dialog = new CustomButtonsDialog
+        {
+            Title = Title,
+            AcceptButtonText = AcceptButtonText,
+            DeclineButtonText = DeclineButtonText,
+            CancelButtonText = CancelButtonText,
+            Caption = Caption,
+        };
+
+        await ShowCustomDialogAsync(sender, dialog);
+
+        return dialog.DialogBaseResult;
+    }
+
+    #endregion
+
     #region CustomDialog
 
     /// <summary>Показать диалог с кастомным содержимым</summary>
