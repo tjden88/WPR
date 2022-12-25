@@ -182,7 +182,7 @@ namespace WPR.Demo.Pages
                 if (cancel.IsCancellationRequested)
                 {
                     this.DoDispatherAction(() => ShowBubble("Very Long Task Was Cancelled..."));
-                    cancel.ThrowIfCancellationRequested();
+                    break;
                 }
             }
             this.DoDispatherAction(() => ShowBubble("Very Long Task Completed!"));
