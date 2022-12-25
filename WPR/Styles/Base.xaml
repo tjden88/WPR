@@ -13,8 +13,8 @@
     <colorTheme:StyleColors x:Key="StyleColors"/>
 
 
-    <SolidColorBrush x:Key="WhiteBrush" Color="{Binding LightColor, Source={StaticResource StyleColors}}" p:Freeze="True"/>
-    <SolidColorBrush x:Key="DarkBrush" Color="{Binding DarkColor, Source={StaticResource StyleColors}}" p:Freeze="True"/>
+    <SolidColorBrush x:Key="LightColorBrush" Color="{Binding LightColor, Source={StaticResource StyleColors}}" p:Freeze="True"/>
+    <SolidColorBrush x:Key="DarkColorBrush" Color="{Binding DarkColor, Source={StaticResource StyleColors}}" p:Freeze="True"/>
     <SolidColorBrush x:Key="PrimaryColorBrush" Color="{Binding PrimaryColor, Source={StaticResource StyleColors}}" p:Freeze="True"/>
     <SolidColorBrush x:Key="DarkPrimaryColorBrush"  Color="{Binding DarkPrimaryColor, Source={StaticResource StyleColors}}" p:Freeze="True"/>
     <SolidColorBrush x:Key="LightPrimaryColorBrush" Color="{Binding LightPrimaryColor, Source={StaticResource StyleColors}}" p:Freeze="True"/>
@@ -67,8 +67,8 @@
     <converters:ValueIsNullConverter x:Key="ValueIsNullConverter"/>
     <converters:BoolNotConverter x:Key="BoolNotConverter"/>
     <converters:BrushLightOrDarkConverter x:Key="BrushLightOrDarkConverter" 
-                                          HighValue="{StaticResource WhiteBrush}"
-                                          LowValue="{StaticResource DarkBrush}"/>
+                                          HighValue="{StaticResource LightColorBrush}"
+                                          LowValue="{StaticResource DarkColorBrush}"/>
     <converters:SignPlusMinusConverter x:Key="SignPlusMinusConverter"/>
     <converters:EnumToBoolConverter x:Key="EnumToBoolConverter"/>
 

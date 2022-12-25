@@ -10,7 +10,7 @@
       d:DesignHeight="450" d:DesignWidth="800"
       Title="Диалоги">
 
-    <controls:WPRCard >
+    <controls:WPRCard Background="{DynamicResource BackgroundColorBrush}">
 
         <StackPanel Orientation="Horizontal">
             <StackPanel Margin="10" Width="200">
@@ -41,7 +41,10 @@
             </StackPanel>
             <StackPanel Width="200" Margin="10">
                 <controls:WPRTitledCard Name="EditDialog" Header="Кастом диалог" IconSource="Style">
-                    <Button Content="Ok" Click="CustomDialog_Click" />
+                    <StackPanel>
+                        <TextBlock Text="Содержание..." HorizontalAlignment="Center" Margin="20"></TextBlock>
+                        <Button Content="Ok" Click="CustomDialog_Click" />
+                    </StackPanel>
                 </controls:WPRTitledCard>
             </StackPanel>
         </StackPanel>

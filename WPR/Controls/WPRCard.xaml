@@ -11,7 +11,7 @@
 
         <Setter Property="helpers:ButtonHelper.BorderRadius" Value="3"/>
         <Setter Property="Margin" Value="10"/>
-        <Setter Property="Background" Value="{DynamicResource BackgroundColorBrush}" />
+        <Setter Property="Background" Value="{DynamicResource SecondaryBackgroundColorBrush}" />
         <Setter Property="Focusable" Value="False"/>
         <Setter Property="Template">
             <Setter.Value>

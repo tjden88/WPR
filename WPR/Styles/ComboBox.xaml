@@ -307,7 +307,7 @@
                                             Grid.Row="1" 
                                             Content="{Binding Path=(helpers:TextHelper.Description), RelativeSource={RelativeSource TemplatedParent}}"
                                             HorizontalAlignment="Left"
-                                            Foreground="{DynamicResource SecondaryTextColorBrush}"
+                                            Foreground="{DynamicResource SecondaryColorBrush}"
                                             FontSize="10"/>
 
                 <ItemsControl Name="ErrorText" Visibility="Hidden" Grid.Row="1" Margin="0"
@@ -348,7 +348,7 @@
                     <Condition SourceName="PART_EditableTextBox" Property="Text" Value=""/>
                 </MultiTrigger.Conditions>
                 <MultiTrigger.Setters>
-                    <Setter Property="Foreground" TargetName="FloatingHint" Value="{DynamicResource SecondaryTextColorBrush}"/>
+                    <Setter Property="Foreground" TargetName="FloatingHint" Value="{DynamicResource SecondaryColorBrush}"/>
                     <Setter Property="Tag" TargetName="BottomRect" Value="1"/>
                 </MultiTrigger.Setters>
             </MultiTrigger>

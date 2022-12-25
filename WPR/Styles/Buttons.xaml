@@ -128,7 +128,7 @@
 
     <Style x:Key="WPRToolButton" TargetType="{x:Type ButtonBase}" BasedOn="{StaticResource WPRFlatButton}">
         <Setter Property="Padding" Value="3"/>
-        <Setter Property="Foreground" Value="{DynamicResource SecondaryTextColorBrush}"/>
+        <Setter Property="Foreground" Value="{DynamicResource SecondaryColorBrush}"/>
         <Setter Property="helpers:RippleHelper.FeedbackBrush" Value="{DynamicResource AnimationEnterColorBrush}"/>
         <Setter Property="helpers:RippleHelper.IsCentered" Value="True"/>
         <Setter Property="helpers:ButtonHelper.BorderRadius" Value="100"/>
@@ -142,7 +142,7 @@
     <Style x:Key="MenuButton" TargetType="{x:Type ButtonBase}" BasedOn="{StaticResource WPRFlatButton}">
         <Setter Property="Padding" Value="3,0,3,0"/>
         <Setter Property="helpers:ButtonHelper.BorderRadius" Value="0"/>
-        <Setter Property="Foreground" Value="{DynamicResource SecondaryTextColorBrush}"/>
+        <Setter Property="Foreground" Value="{DynamicResource SecondaryColorBrush}"/>
         <Setter Property="MinWidth" Value="32"/>
         <Setter Property="MinHeight" Value="32"/>
     </Style>
@@ -152,7 +152,7 @@
         <Setter Property="Height" Value="28"/>
         <Setter Property="Margin" Value="1,0,1,0"/>
         <Setter Property="helpers:ButtonHelper.BorderRadius" Value="14"/>
-        <Setter Property="Foreground" Value="{DynamicResource PrimaryTextColorBrush}"/>
+        <Setter Property="Foreground" Value="{DynamicResource TextColorBrush}"/>
         <Setter Property="Padding" Value="50,0,15,0"/>
         <Setter Property="Background" Value="{DynamicResource BackgroundColorBrush}"/>
         <Setter Property="HorizontalContentAlignment" Value="Left"/>
@@ -181,7 +181,7 @@
     <Style x:Key="RoundedButtonWithFloatingHint" TargetType="{x:Type ButtonBase}">
         <Setter Property="Background" Value="{DynamicResource BackgroundColorBrush}"/>
         <Setter Property="helpers:RippleHelper.FeedbackBrush" Value="{StaticResource LightPrimaryColorBrush}"/>
-        <Setter Property="Foreground" Value="{DynamicResource PrimaryTextColorBrush}"/>
+        <Setter Property="Foreground" Value="{DynamicResource TextColorBrush}"/>
         <Setter Property="HorizontalContentAlignment" Value="Right"/>
         <Setter Property="VerticalContentAlignment" Value="Center"/>
         <Setter Property="Template">

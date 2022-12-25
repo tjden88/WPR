@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:helpers="clr-namespace:WPR.Helpers;assembly=WPR"
+        Topmost="True"
         DataContext="{Binding Source={StaticResource Locator}, Path=MainWindowViewModel}"
         Style="{StaticResource ChromeWindow}"
         Title="{Binding Title}" Height="900" Width="1000">
@@ -15,7 +16,7 @@
             <Button Content="Тестовое окно" Command="{Binding ShowTestWindowCommand}"  Style="{StaticResource WindowTitleButton}"/>
         </StackPanel>
     </helpers:WindowHelper.WindowHeaderContent>
-    <Grid >
+    <Grid Background="{DynamicResource BackgroundColorBrush}" >
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="200"/>
             <ColumnDefinition/>

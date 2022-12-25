@@ -45,30 +45,32 @@
 
                             </controls:WPRPopup.Content>
                         </controls:WPRPopup>
+
                         <Border x:Name="PART_Bubble" Margin="20"
                                 RenderTransformOrigin="0.5,1"
-                                Background="{DynamicResource PrimaryTextColorBrush}"
                                 HorizontalAlignment="Center"
                                 VerticalAlignment="Bottom"
                                 BorderBrush="{TemplateBinding BorderBrush}"
-                                BorderThickness="{TemplateBinding BorderThickness}"
-                                CornerRadius="3">
+                                BorderThickness="{TemplateBinding BorderThickness}">
                             <Border.RenderTransform>
                                 <ScaleTransform ScaleY="0"/>
                             </Border.RenderTransform>
-                            <StackPanel Orientation="Horizontal"
-                                       HorizontalAlignment="Center"
-                                       VerticalAlignment="Center">
-                                <TextBlock Text="{TemplateBinding BubbleText}"                                        
-                                       Foreground="{DynamicResource TextColorBrush}"                                       
-                                       FontSize="12"                                  
-                                       Margin="15"/>
-                                <Button  Margin="7"
-                                         x:Name="BubbleButton"
-                                         Background="{x:Null}"
-                                         Foreground="{DynamicResource AccentColorBrush}"
-                                         Visibility="Collapsed"/>
-                            </StackPanel>
+                            <Grid>
+                                <Border CornerRadius="3" Background="{DynamicResource TextColorBrush}" Effect="{DynamicResource ButtonShadow}"/>
+                                <StackPanel Orientation="Horizontal"
+                                            HorizontalAlignment="Center"
+                                            VerticalAlignment="Center">
+                                    <TextBlock Text="{TemplateBinding BubbleText}"                                        
+                                               Foreground="{DynamicResource BackgroundColorBrush}"                                       
+                                               FontSize="14"                                  
+                                               Margin="15"/>
+                                    <Button  Margin="7"
+                                             x:Name="BubbleButton"
+                                             Background="{x:Null}"
+                                             Foreground="{DynamicResource AccentColorBrush}"
+                                             Visibility="Collapsed"/>
+                                </StackPanel>
+                            </Grid>
                         </Border>
                     </Grid>
                     <ControlTemplate.Resources>

@@ -112,7 +112,7 @@
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
                         <Grid Background="Transparent" Cursor="Hand">
-                            <Border Background="{DynamicResource SecondaryTextColorBrush}"
+                            <Border Background="{DynamicResource SecondaryColorBrush}"
                                     x:Name="Border"
                                     VerticalAlignment="Center"
                                     Margin="6"
@@ -125,7 +125,7 @@
                                          RippleInCenter="True"
                                          StartRippleOnClick="False" />
                                 <Ellipse x:Name="Ellipse" Width="18" Height="18" Fill="{DynamicResource BackgroundColorBrush}" 
-                                         Stroke="{DynamicResource SecondaryTextColorBrush}"
+                                         Stroke="{DynamicResource SecondaryColorBrush}"
                                          Effect="{DynamicResource SmallShadow}"
                                          Margin="2"/>
                                 <Grid.RenderTransform>

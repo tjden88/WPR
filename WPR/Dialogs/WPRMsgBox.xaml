@@ -46,7 +46,7 @@
                         <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto" Focusable="False">
                             <TextBlock TextWrapping="WrapWithOverflow"
                                        Text="{TemplateBinding Caption}" 
-                                       Foreground="{DynamicResource PrimaryTextColorBrush}" 
+                                       Foreground="{DynamicResource TextColorBrush}" 
                                        FontSize="14"
                                        Margin="10"/>
                         </ScrollViewer>
