@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
-using WPR.Infrastructure.Icons;
+using WPR.Icons;
 
 namespace WPR.Controls;
 

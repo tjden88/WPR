@@ -8,7 +8,7 @@ using System.Windows.Controls.Primitives;
 using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Media;
-using WPR.Infrastructure.Icons;
+using WPR.Icons;
 
 namespace WPR.Demo.Pages
 {

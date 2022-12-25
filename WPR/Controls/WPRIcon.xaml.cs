@@ -4,7 +4,7 @@ using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
-using WPR.Infrastructure.Icons;
+using WPR.Icons;
 
 namespace WPR.Controls;
 

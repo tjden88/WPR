@@ -1,8 +1,8 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:helpers="clr-namespace:WPR.Helpers"
-                    xmlns:commands="clr-namespace:WPR.Infrastructure.Commands"
-                    xmlns:controls="clr-namespace:WPR.Controls">
+                    xmlns:controls="clr-namespace:WPR.Controls"
+                    xmlns:commands="clr-namespace:WPR.MVVM.Commands;assembly=WPR.MVVM">
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="Base.xaml"/>
         <ResourceDictionary Source="Buttons.xaml"/>
