@@ -7,6 +7,7 @@
     <!--Шрифты-->
     <FontFamily x:Key="RobotoFont">pack://application:,,,/WPR;component/Fonts/#Roboto</FontFamily>
     <FontFamily x:Key="RobotoFontLight">pack://application:,,,/WPR;component/Fonts/#Roboto Thin</FontFamily>
+    <FontFamily x:Key="Montserrat">pack://application:,,,/WPR;component/Fonts/#Montserrat</FontFamily>
 
     <!--Кисти и цвета-->
 

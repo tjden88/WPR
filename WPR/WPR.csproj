@@ -25,6 +25,8 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Fonts\Montserrat-Italic-VariableFont_wght.ttf" />
+    <None Remove="Fonts\Montserrat-VariableFont_wght.ttf" />
     <None Remove="Fonts\Roboto-Black.ttf" />
     <None Remove="Fonts\Roboto-BlackItalic.ttf" />
     <None Remove="Fonts\Roboto-BoldItalic.ttf" />
@@ -50,6 +52,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="Fonts\Montserrat-Italic-VariableFont_wght.ttf" />
+    <Resource Include="Fonts\Montserrat-VariableFont_wght.ttf" />
     <Resource Include="Fonts\Roboto-Bold.ttf" />
     <Resource Include="Fonts\Roboto-Italic.ttf" />
     <Resource Include="Fonts\Roboto-Regular.ttf" />
