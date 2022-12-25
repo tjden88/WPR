@@ -1,0 +1,113 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:p="http://schemas.microsoft.com/winfx/2006/xaml/presentation/options"
+                    xmlns:converters="clr-namespace:WPR.MVVM.Converters;assembly=WPR.MVVM"
+                    xmlns:colorTheme="clr-namespace:WPR.ColorTheme">
+
+    <!--Шрифты-->
+    <FontFamily x:Key="RobotoFont">pack://application:,,,/WPR;component/Fonts/#Roboto</FontFamily>
+    <FontFamily x:Key="RobotoFontLight">pack://application:,,,/WPR;component/Fonts/#Roboto Thin</FontFamily>
+    <FontFamily x:Key="Montserrat">pack://application:,,,/WPR;component/Fonts/#Montserrat</FontFamily>
+
+    <!--Кисти и цвета-->
+
+    <colorTheme:StyleColors x:Key="StyleColors"/>
+
+
+    <SolidColorBrush x:Key="LightColorBrush" Color="{Binding LightColor, Source={StaticResource StyleColors}}" p:Freeze="True"/>
+    <SolidColorBrush x:Key="DarkColorBrush" Color="{Binding DarkColor, Source={StaticResource StyleColors}}" p:Freeze="True"/>
+    <SolidColorBrush x:Key="PrimaryColorBrush" Color="{Binding PrimaryColor, Source={StaticResource StyleColors}}" p:Freeze="True"/>
+    <SolidColorBrush x:Key="DarkPrimaryColorBrush"  Color="{Binding DarkPrimaryColor, Source={StaticResource StyleColors}}" p:Freeze="True"/>
+    <SolidColorBrush x:Key="LightPrimaryColorBrush" Color="{Binding LightPrimaryColor, Source={StaticResource StyleColors}}" p:Freeze="True"/>
+    <SolidColorBrush x:Key="TextColorBrush"  Color="{Binding TextColor, Source={StaticResource StyleColors}}" p:Freeze="True"/>
+    <SolidColorBrush x:Key="AccentColorBrush"  Color="{Binding AccentColor, Source={StaticResource StyleColors}}" p:Freeze="True"/>
+    <SolidColorBrush x:Key="SecondaryColorBrush"  Color="{Binding SecondaryColor, Source={StaticResource StyleColors}}" p:Freeze="True"/>
+    <SolidColorBrush x:Key="DividerColorBrush" Color="{Binding DividerColor, Source={StaticResource StyleColors}}" p:Freeze="True"/>
+    <SolidColorBrush x:Key="BackgroundColorBrush" Color="{Binding BackgroundColor, Source={StaticResource StyleColors}}" p:Freeze="True"/>
+    <SolidColorBrush x:Key="SecondaryBackgroundColorBrush" Color="{Binding SecondaryBackgroundColor, Source={StaticResource StyleColors}}" p:Freeze="True"/>
+    <SolidColorBrush x:Key="DangerColorBrush" Color="{Binding DangerColor, Source={StaticResource StyleColors}}" p:Freeze="True"/>
+    <SolidColorBrush x:Key="WindowBackgroundColorBrush" Color="{Binding WindowBackgroundColor, Source={StaticResource StyleColors}}" p:Freeze="True"/>
+    <SolidColorBrush x:Key="LightWindowBackgroundColorBrush" Color="{Binding LightWindowBackgroundColor, Source={StaticResource StyleColors}}" p:Freeze="True"/>
+    <SolidColorBrush x:Key="DarkWindowBackgroundColorBrush" Color="{Binding DarkWindowBackgroundColor, Source={StaticResource StyleColors}}" p:Freeze="True"/>
+    <SolidColorBrush x:Key="InactiveWindowBackgroundColorBrush" Color="{Binding InactiveWindowBackgroundColor, Source={StaticResource StyleColors}}" p:Freeze="True"/>
+    <SolidColorBrush x:Key="WindowForegroundColorBrush" Color="{Binding WindowForegroundColor, Source={StaticResource StyleColors}}" p:Freeze="True"/>
+    <SolidColorBrush x:Key="ContrastColorBrush" Color="{Binding ContrastColor, Source={StaticResource StyleColors}}" p:Freeze="True"/>
+
+    <SolidColorBrush x:Key="AnimationEnterColorBrush" Color="#99858585" p:Freeze="True"/>
+
+    <SolidColorBrush x:Key="TransparentBrush" Color="Transparent" p:Freeze="True"/>
+
+    <!--Тени-->
+    <DropShadowEffect x:Key="PopupSmallShadow" Color="{Binding ShadowColor, Source={StaticResource StyleColors}}" Direction="270" BlurRadius="10" ShadowDepth="2" Opacity="0.5" p:Freeze="True"/>
+    <DropShadowEffect x:Key="PopupBigShadow" Color="{Binding ShadowColor, Source={StaticResource StyleColors}}" Direction="270" BlurRadius="20" ShadowDepth="2" Opacity="0.7" p:Freeze="True"/>
+    <DropShadowEffect x:Key="ButtonShadow"  Color="{Binding ShadowColor, Source={StaticResource StyleColors}}" Opacity="0.7" ShadowDepth="3" p:Freeze="True"/>
+    <DropShadowEffect x:Key="DialogShadow" Color="{Binding ShadowColor, Source={StaticResource StyleColors}}" ShadowDepth="5" BlurRadius="30" Direction="270" p:Freeze="True"/>
+    <DropShadowEffect x:Key="CardShadow" Color="{Binding ShadowColor, Source={StaticResource StyleColors}}" Opacity="0.4" ShadowDepth="0" BlurRadius="18" p:Freeze="True"/>
+    <DropShadowEffect x:Key="SmallShadow" Color="{Binding ShadowColor, Source={StaticResource StyleColors}}" Direction="270" BlurRadius="10" ShadowDepth="0" Opacity="0.3" p:Freeze="True"/>
+
+    <!--Функции плавности-->
+    <CircleEase EasingMode="EaseIn" x:Key="CircleEaseIn" p:Freeze="True"/>
+    <CircleEase EasingMode="EaseOut" x:Key="CircleEaseOut" p:Freeze="True"/>
+    <CircleEase EasingMode="EaseInOut" x:Key="CircleEaseInOut" p:Freeze="True"/>
+    <ElasticEase EasingMode="EaseIn" x:Key="ElasticEaseIn" Oscillations="1" p:Freeze="True"/>
+    <ElasticEase EasingMode="EaseOut" x:Key="ElasticEaseOut" Oscillations="1" p:Freeze="True"/>
+    <ElasticEase EasingMode="EaseInOut" x:Key="ElasticEaseInOut" Oscillations="1" p:Freeze="True"/>
+    <SineEase EasingMode="EaseIn" x:Key="SineEaseIn" p:Freeze="True"/>
+    <SineEase EasingMode="EaseOut" x:Key="SineEaseOut" p:Freeze="True"/>
+    <SineEase EasingMode="EaseInOut" x:Key="SineEaseInOut" p:Freeze="True"/>
+    <BackEase EasingMode="EaseIn" x:Key="BackEaseIn" p:Freeze="True"/>
+    <BackEase EasingMode="EaseOut" x:Key="BackEaseOut" p:Freeze="True"/>
+    <BackEase EasingMode="EaseInOut" x:Key="BackEaseInOut" p:Freeze="True"/>
+    <ExponentialEase EasingMode="EaseIn" x:Key="ExponentialEaseIn" p:Freeze="True"/>
+    <ExponentialEase EasingMode="EaseOut" x:Key="ExponentialEaseOut" p:Freeze="True"/>
+    <ExponentialEase EasingMode="EaseInOut" x:Key="ExponentialEaseInOut" p:Freeze="True"/>
+
+    <!--Конвертеры-->
+    <converters:BoolToVisibilityConverter x:Key="Bool2VisibilityConverter"/>
+    <converters:TextIsNotNullConverter x:Key="TextIsNotNullConverter"/>
+    <converters:ValueIsNotNullConverter x:Key="ValueIsNotNullConverter"/>
+    <converters:ValueIsNullConverter x:Key="ValueIsNullConverter"/>
+    <converters:BoolNotConverter x:Key="BoolNotConverter"/>
+    <converters:BrushLightOrDarkConverter x:Key="BrushLightOrDarkConverter" 
+                                          HighValue="{StaticResource LightColorBrush}"
+                                          LowValue="{StaticResource DarkColorBrush}"/>
+    <converters:SignPlusMinusConverter x:Key="SignPlusMinusConverter"/>
+    <converters:EnumToBoolConverter x:Key="EnumToBoolConverter"/>
+
+
+    <!--Стиль для элемента в фокусе-->
+    <Style x:Key="BaseFocusVisualStyle" TargetType="{x:Type Control}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate>
+                    <Rectangle StrokeThickness="1"
+                               Stroke="{DynamicResource DarkPrimaryColorBrush}"
+                               StrokeDashArray="2 4"
+                               RadiusX="3" RadiusY="3" />
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+
+    <!--Базовый стиль для всех контролов-->
+    <Style x:Key="FrameworkElementStyle" TargetType="{x:Type FrameworkElement}">
+        <Setter Property="ToolTipService.InitialShowDelay" Value="200"/>
+        <Setter Property="Validation.ErrorTemplate">
+            <Setter.Value>
+                <ControlTemplate/>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!--Базовый стиль для всех контролов-->
+    <Style x:Key="BaseControl" TargetType="{x:Type Control}" BasedOn="{StaticResource FrameworkElementStyle}">
+        <Setter Property="Background" Value="{x:Null}" />
+        <Setter Property="Foreground" Value="{DynamicResource TextColorBrush}"/>
+        <Setter Property="FontSize" Value="16"/>
+        <Setter Property="FontFamily" Value="{StaticResource RobotoFont}" />
+        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="BorderBrush" Value="{DynamicResource SecondaryColorBrush}"></Setter>
+        <Setter Property="FocusVisualStyle" Value="{StaticResource BaseFocusVisualStyle}"/>
+    </Style>
+</ResourceDictionary>

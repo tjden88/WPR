@@ -1,0 +1,37 @@
+﻿<Window x:Class="WPR.Demo.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" mc:Ignorable="d"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:helpers="clr-namespace:WPR.Helpers;assembly=WPR"
+        Topmost="True"
+        DataContext="{Binding Source={StaticResource Locator}, Path=MainWindowViewModel}"
+        Style="{StaticResource ChromeWindow}"
+        Title="{Binding Title}" Height="900" Width="1200">
+
+    <helpers:WindowHelper.WindowHeaderContent>
+        <StackPanel Margin="3" Orientation="Horizontal" HorizontalAlignment="Left" Width="Auto" >
+            <Button Content="Новый стиль" Command="{Binding SetNewStyleCommand}"  Style="{StaticResource WindowTitleButton}"/>
+            <Button Content="Переключить тему" Command="{Binding SetDarkThemeCommand}"  Style="{StaticResource WindowTitleButton}"/>
+            <Button Content="Тестовое окно" Command="{Binding ShowTestWindowCommand}"  Style="{StaticResource WindowTitleButton}"/>
+        </StackPanel>
+    </helpers:WindowHelper.WindowHeaderContent>
+    <Grid Background="{DynamicResource BackgroundColorBrush}" >
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="250"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+
+        <ListBox ItemsSource="{Binding Pages}"
+         Style="{StaticResource WPRMenuListBox}"
+         Foreground="{DynamicResource AccentColorBrush}"
+         SelectedValue="{Binding SelectedPage}">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock Text="{Binding Title}" />
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+        <Frame NavigationUIVisibility="Hidden" Grid.Column="1" Content="{Binding SelectedPage}"/>
+    </Grid>
+</Window>

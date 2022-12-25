@@ -1,0 +1,197 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="Base.xaml"/>
+        <ResourceDictionary Source="DataGrids.xaml"/>
+        <ResourceDictionary Source="CheckBoxes.xaml"/>
+        <ResourceDictionary Source="ComboBox.xaml"/>
+        <ResourceDictionary Source="TextBoxes.xaml"/>
+    </ResourceDictionary.MergedDictionaries>
+
+
+    <Style x:Key="WPRDataGridComboBoxCellStyle" TargetType="{x:Type DataGridCell}" BasedOn="{StaticResource WPRDataGridCell}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type DataGridCell}">
+                    <Grid>
+                        <Border BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            Background="{TemplateBinding Background}"
+                            SnapsToDevicePixels="True">
+                            <ContentPresenter SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" Margin="{TemplateBinding Padding}"/>
+                        </Border>
+                        <Border x:Name="NoHitBorder" Background="{StaticResource TransparentBrush}" Visibility="Hidden"/>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsReadOnly" Value="True">
+                            <Setter Property="Visibility" TargetName="NoHitBorder" Value="Visible"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+
+    <!--CheckBoxColumnStyles-->
+
+    <Style x:Key="WPRDataGridCheckBoxCellStyle" TargetType="{x:Type DataGridCell}" BasedOn="{StaticResource BaseControl}">
+        <Setter Property="Padding" Value=" 10,5,10,5"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type DataGridCell}">
+                    <ContentPresenter SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" Margin="{TemplateBinding Padding}"/>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsReadOnly" Value="True">
+                            <Setter Property="IsHitTestVisible" Value="False"/>
+                            <Setter Property="Focusable"  Value="False"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Style.Triggers>
+            <Trigger Property="IsEnabled" Value="False">
+                <Setter Property="Opacity" Value="0.5"/>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+    <Style x:Key="WPRDataGridCheckBoxColumnEditingStyle" TargetType="{x:Type CheckBox}" BasedOn="{StaticResource WPRCheckBox}" >
+        <Setter Property="HorizontalAlignment" Value="Center"/>
+        <Setter Property="VerticalAlignment" Value="Center"/>
+        <Setter Property="SnapsToDevicePixels" Value="False"/>
+    </Style>
+
+    <Style x:Key="WPRDataGridCheckBoxColumnStyle" TargetType="{x:Type CheckBox}" BasedOn="{StaticResource WPRDataGridCheckBoxColumnEditingStyle}" >
+        <Setter Property="Focusable" Value="False" />
+    </Style>
+
+
+    <!--ComboBoxColumn-->
+    <ControlTemplate x:Key="DataGridComboBoxTemplate" TargetType="{x:Type ComboBox}">
+
+        <Grid x:Name="templateRoot" Margin="-8,0,-8,0" SnapsToDevicePixels="true">
+            <Popup x:Name="PART_Popup" AllowsTransparency="true"
+                   Grid.ColumnSpan="2" 
+                   IsOpen="{Binding IsDropDownOpen, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
+                   PlacementTarget="{Binding ElementName=templateRoot}"
+                   PopupAnimation="Fade" Placement="Bottom">
+
+                <Border Margin="10"  MinWidth="{Binding ActualWidth, ElementName=templateRoot}"
+                        MaxHeight="{TemplateBinding MaxDropDownHeight}"
+                        x:Name="dropDownBorder" 
+                        BorderBrush="{TemplateBinding Background}"
+                        Effect="{DynamicResource PopupSmallShadow}">
+                    <Border BorderThickness="1" CornerRadius="3"  Margin="0,10,0,0" BorderBrush="{DynamicResource AnimationEnterColorBrush}">
+                        <StackPanel Orientation="Vertical">
+                            <ScrollViewer x:Name="DropDownScrollViewer" Background="{DynamicResource BackgroundColorBrush}">
+                                <ItemsPresenter x:Name="ItemsPresenter" KeyboardNavigation.DirectionalNavigation="Contained" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
+                            </ScrollViewer>
+                        </StackPanel>
+                    </Border>
+                </Border>
+            </Popup>
+            <Grid Margin="8,0,8,0" Background="{TemplateBinding Background}">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition MinWidth="{DynamicResource {x:Static SystemParameters.VerticalScrollBarWidthKey}}" Width="0"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <ToggleButton x:Name="toggleButton" BorderBrush="{DynamicResource AccentColorBrush}"
+                          BorderThickness="{TemplateBinding BorderThickness}"
+                          Background="{TemplateBinding Background}" 
+                          Grid.ColumnSpan="2"
+                          IsChecked="{Binding IsDropDownOpen, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}" 
+                         Style="{StaticResource ComboBoxToggleButton}"
+                              Visibility="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=DataGridCell}, Path=IsEditing,
+                    Converter={StaticResource Bool2VisibilityConverter}}"/>
+
+                <ContentPresenter x:Name="contentPresenter" 
+                              ContentTemplate="{TemplateBinding SelectionBoxItemTemplate}" 
+                              ContentTemplateSelector="{TemplateBinding ItemTemplateSelector}" 
+                              Content="{TemplateBinding SelectionBoxItem}"
+                              ContentStringFormat="{TemplateBinding SelectionBoxItemStringFormat}" 
+                              HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" 
+                              IsHitTestVisible="false" 
+                              Margin="0"
+                              SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                            VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+
+                <TextBox x:Name="PART_EditableTextBox"
+                         HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                         IsReadOnly="{Binding IsReadOnly, RelativeSource={RelativeSource TemplatedParent}}"
+                         Margin="0" 
+                         Style="{StaticResource WPRFlatTextBox}" 
+                         Visibility="Hidden"
+                         VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"/>
+            </Grid>
+        </Grid>
+        <ControlTemplate.Triggers>
+
+            <Trigger Property="IsEditable" Value="True">
+                <Setter Property="Visibility" TargetName="contentPresenter" Value="Hidden"/>
+                <Setter Property="Visibility" TargetName="PART_EditableTextBox" Value="Visible"/>
+            </Trigger>
+            <!--<Trigger Property="HasItems" Value="false">
+                <Setter Property="Height" TargetName="dropDownBorder" Value="95"/>
+            </Trigger>-->
+            <MultiTrigger>
+                <MultiTrigger.Conditions>
+                    <Condition Property="IsGrouping" Value="true"/>
+                    <Condition Property="VirtualizingPanel.IsVirtualizingWhenGrouping" Value="false"/>
+                </MultiTrigger.Conditions>
+                <Setter Property="ScrollViewer.CanContentScroll" Value="false"/>
+            </MultiTrigger>
+            <Trigger Property="IsEnabled" Value="False">
+                <Setter Property="Opacity" Value="0.5"/>
+            </Trigger>
+        </ControlTemplate.Triggers>
+    </ControlTemplate>
+
+    <!--ComboBoxColumnStyles-->
+
+    <Style x:Key="WPRDataGridComboBoxColumnStyle" TargetType="{x:Type ComboBox}" BasedOn="{StaticResource WPRComboBox}">
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="Foreground" Value="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=DataGridCell}, Path=Foreground}"/>
+        <Setter Property="Template" Value="{StaticResource DataGridComboBoxTemplate}"/>
+        <Setter Property="IsHitTestVisible" Value="False" />
+        <Setter Property="Focusable" Value="False" />
+    </Style>
+
+    <Style x:Key="WPRDataGridComboBoxColumnEditingStyle" TargetType="{x:Type ComboBox}" BasedOn="{StaticResource WPRComboBox}">
+        <!--<EventSetter Event="SelectionChanged" Handler="WPRDataGridComboBoxColumnCell_SelectionChanged"/>-->
+        <Setter Property="Background" Value="{DynamicResource SecondaryBackgroundColorBrush}"/>
+        <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+        <Setter Property="Template" Value="{StaticResource DataGridComboBoxTemplate}"/>
+    </Style>
+
+ 
+    <!--TextColumnStyles-->
+
+    <Style x:Key="WPRDataGridTextColumnEditingStyle" TargetType="{x:Type TextBox}" BasedOn="{StaticResource WPRFlatTextBox}">
+        <Setter Property="Margin" Value="-1 0 -1,0" />
+    </Style>
+
+    <Style x:Key="WPRDataGridTextColumnStyle" TargetType="{x:Type TextBlock}" BasedOn="{StaticResource {x:Type TextBlock}}">
+        <Setter Property="Validation.ErrorTemplate">
+            <Setter.Value>
+                <ControlTemplate>
+                    <Border BorderBrush="{StaticResource DangerColorBrush}"
+                            Margin="-1 0 -1 -4"
+                            BorderThickness="0 0 0 2"
+                            Padding="1 0 1 2">
+                        <AdornedElementPlaceholder/>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    
+</ResourceDictionary>
