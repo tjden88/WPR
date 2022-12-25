@@ -6,7 +6,7 @@ namespace WPR.Styles;
 
 partial class DataGrids
 {
-    private static readonly ResourceDictionary CellThemes = new()
+    private static readonly ResourceDictionary _CellThemes = new()
     {
         Source = new Uri("/WPR;component/Styles/DataGridColumns.xaml", UriKind.Relative)
     };
@@ -50,20 +50,20 @@ partial class DataGrids
     {
         if (Column is DataGridTextColumn textColumn)
         {
-            textColumn.EditingElementStyle = (CellThemes["WPRDataGridTextColumnEditingStyle"] as Style) ?? throw new ArgumentException("Стиль не найден");
-            textColumn.ElementStyle = (CellThemes["WPRDataGridTextColumnStyle"] as Style) ?? throw new ArgumentException("Стиль не найден");
+            textColumn.EditingElementStyle = _CellThemes["WPRDataGridTextColumnEditingStyle"] as Style ?? throw new ArgumentException("Стиль не найден");
+            textColumn.ElementStyle = _CellThemes["WPRDataGridTextColumnStyle"] as Style ?? throw new ArgumentException("Стиль не найден");
         }
         if (Column is DataGridCheckBoxColumn checkColumn)
         {
-            checkColumn.EditingElementStyle = (CellThemes["WPRDataGridCheckBoxColumnEditingStyle"] as Style) ?? throw new ArgumentException("Стиль не найден");
-            checkColumn.ElementStyle = (CellThemes["WPRDataGridCheckBoxColumnStyle"] as Style) ?? throw new ArgumentException("Стиль не найден");
-            checkColumn.CellStyle = (CellThemes["WPRDataGridCheckBoxCellStyle"] as Style) ?? throw new ArgumentException("Стиль не найден");
+            checkColumn.EditingElementStyle = _CellThemes["WPRDataGridCheckBoxColumnEditingStyle"] as Style ?? throw new ArgumentException("Стиль не найден");
+            checkColumn.ElementStyle = _CellThemes["WPRDataGridCheckBoxColumnStyle"] as Style ?? throw new ArgumentException("Стиль не найден");
+            checkColumn.CellStyle = _CellThemes["WPRDataGridCheckBoxCellStyle"] as Style ?? throw new ArgumentException("Стиль не найден");
         }
         if (Column is DataGridComboBoxColumn comboColumn)
         {
-            comboColumn.EditingElementStyle = (CellThemes["WPRDataGridComboBoxColumnEditingStyle"] as Style) ?? throw new ArgumentException("Стиль не найден");
-            comboColumn.ElementStyle = (CellThemes["WPRDataGridComboBoxColumnStyle"] as Style) ?? throw new ArgumentException("Стиль не найден");
-            comboColumn.CellStyle = (CellThemes["WPRDataGridComboBoxCellStyle"] as Style) ?? throw new ArgumentException("Стиль не найден");
+            comboColumn.EditingElementStyle = _CellThemes["WPRDataGridComboBoxColumnEditingStyle"] as Style ?? throw new ArgumentException("Стиль не найден");
+            comboColumn.ElementStyle = _CellThemes["WPRDataGridComboBoxColumnStyle"] as Style ?? throw new ArgumentException("Стиль не найден");
+            comboColumn.CellStyle = _CellThemes["WPRDataGridComboBoxCellStyle"] as Style ?? throw new ArgumentException("Стиль не найден");
         }
     }
 }

@@ -21,7 +21,7 @@
                             SnapsToDevicePixels="True">
                             <ContentPresenter SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" Margin="{TemplateBinding Padding}"/>
                         </Border>
-                        <Border x:Name="NoHitBorder" Background="Transparent" Visibility="Hidden"/>
+                        <Border x:Name="NoHitBorder" Background="{StaticResource TransparentBrush}" Visibility="Hidden"/>
                     </Grid>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsReadOnly" Value="True">
@@ -166,7 +166,7 @@
 
     <Style x:Key="WPRDataGridComboBoxColumnEditingStyle" TargetType="{x:Type ComboBox}" BasedOn="{StaticResource WPRComboBox}">
         <!--<EventSetter Event="SelectionChanged" Handler="WPRDataGridComboBoxColumnCell_SelectionChanged"/>-->
-        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="Background" Value="{DynamicResource SecondaryBackgroundColorBrush}"/>
         <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
         <Setter Property="Template" Value="{StaticResource DataGridComboBoxTemplate}"/>
     </Style>
@@ -175,6 +175,7 @@
     <!--TextColumnStyles-->
 
     <Style x:Key="WPRDataGridTextColumnEditingStyle" TargetType="{x:Type TextBox}" BasedOn="{StaticResource WPRFlatTextBox}">
+        <Setter Property="Background" Value="{DynamicResource SecondaryBackgroundColorBrush}"></Setter>
         <Setter Property="Margin" Value="-1 0 -1,0" />
     </Style>
 
