@@ -126,8 +126,12 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type ToggleButton}">
-                    <Border x:Name="templateRoot" SnapsToDevicePixels="true" Background="Transparent">
-                        <Border x:Name="splitBorder" Width="{DynamicResource {x:Static SystemParameters.VerticalScrollBarWidthKey}}" SnapsToDevicePixels="true" Margin="0" HorizontalAlignment="Right" BorderThickness="1" BorderBrush="Transparent">
+                    <Border x:Name="templateRoot" SnapsToDevicePixels="true" Background="{StaticResource TransparentBrush}"
+                            Cursor="Hand">
+                        <Border x:Name="splitBorder" Width="{DynamicResource {x:Static SystemParameters.VerticalScrollBarWidthKey}}"
+                                SnapsToDevicePixels="true"
+                                Margin="0,0"
+                                HorizontalAlignment="Right" BorderThickness="1" BorderBrush="{StaticResource TransparentBrush}">
                             <Path x:Name="arrow"
                                       Width="8" Height="8"
                                       Margin="0"
@@ -179,7 +183,7 @@
         <Setter Property="SelectionBrush" Value="{DynamicResource PrimaryColorBrush}"></Setter>
         <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
         <Setter Property="ScrollViewer.PanningMode" Value="VerticalFirst"/>
-        <Setter Property="CaretBrush" Value="{Binding Path=BorderBrush, RelativeSource={RelativeSource Mode=TemplatedParent}}"/>
+        <Setter Property="CaretBrush" Value="{DynamicResource TextColorBrush}"/>
         <Setter Property="Stylus.IsFlicksEnabled" Value="False"/>
         <Setter Property="Template">
             <Setter.Value>
@@ -189,6 +193,8 @@
             </Setter.Value>
         </Setter>
     </Style>
+
+
 
     <ControlTemplate x:Key="ComboBoxTemplate" TargetType="{x:Type ComboBox}">
         <ControlTemplate.Resources>
@@ -248,7 +254,7 @@
             <Grid Margin="8,15,8,0">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
-                    <ColumnDefinition MinWidth="{DynamicResource {x:Static SystemParameters.VerticalScrollBarWidthKey}}" Width="0"/>
+                    <ColumnDefinition MinWidth="23" Width="0"/>
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
                     <RowDefinition/>
@@ -408,7 +414,9 @@
                     <BeginStoryboard Storyboard="{StaticResource OutRect}"/>
                     <BeginStoryboard >
                         <Storyboard TargetName="templateRoot" TargetProperty="Background">
-                            <animations:WPRStyleBrushAnimation Duration="0:0:0.3" To="BackgroundColorBrush"/>
+                            <animations:WPRStyleBrushAnimation Duration="0:0:0.3" AnimateToOrigin="True" 
+                                                               From="SecondaryBackgroundColorBrush"
+                                                               To="TransparentBrush"/>
                         </Storyboard>
                     </BeginStoryboard>
                 </Trigger.ExitActions>

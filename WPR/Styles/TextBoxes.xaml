@@ -20,7 +20,7 @@
         <Setter Property="HorizontalContentAlignment" Value="Left"/>
         <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
         <Setter Property="KeyboardNavigation.TabNavigation" Value="Local"/>
-        <Setter Property="CaretBrush" Value="{Binding Path=BorderBrush, RelativeSource={RelativeSource Mode=Self}}"/>
+        <Setter Property="CaretBrush" Value="{DynamicResource TextColorBrush}"/>
         <Setter Property="SelectionBrush" Value="{DynamicResource PrimaryColorBrush}"></Setter>
         <Setter Property="Validation.ErrorTemplate" Value="{x:Null}"/>
         <Setter Property="Stylus.IsFlicksEnabled" Value="False"/>
@@ -179,12 +179,14 @@
         </Setter>
     </Style>
 
+
+
     <Style x:Key="WPRFlatTextBox" TargetType="{x:Type TextBox}" BasedOn="{StaticResource BaseControl}">
         <Setter Property="ContextMenu" Value="{StaticResource WPRDefaultContextMenu}"/>
         <Setter Property="BorderBrush" Value="{DynamicResource DividerColorBrush}"/>
         <Setter Property="HorizontalContentAlignment" Value="Left"/>
         <Setter Property="SelectionBrush" Value="{DynamicResource PrimaryColorBrush}"></Setter>
-        <Setter Property="CaretBrush" Value="{Binding Path=BorderBrush, RelativeSource={RelativeSource Mode=Self}}"/>
+        <Setter Property="CaretBrush" Value="{DynamicResource TextColorBrush}"/>
         <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
         <Setter Property="Stylus.IsFlicksEnabled" Value="False"/>
         <Setter Property="Template">

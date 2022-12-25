@@ -6,6 +6,7 @@
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="Base.xaml"/>
         <ResourceDictionary Source="Buttons.xaml"/>
+        <ResourceDictionary Source="TextBlocks.xaml"/>
         <ResourceDictionary Source="Toggles.xaml"/>
         <ResourceDictionary Source="TextBoxes.xaml"/>
         <ResourceDictionary Source="ComboBox.xaml"/>
@@ -13,12 +14,19 @@
     </ResourceDictionary.MergedDictionaries>
 
     <Style x:Key="WPRToolBarTray" TargetType="{x:Type ToolBarTray}">
-        <Setter Property="Background" Value="{DynamicResource BackgroundColorBrush}"/>
+        <Setter Property="Background" Value="{DynamicResource SecondaryBackgroundColorBrush}"/>
     </Style>
 
     <Style x:Key="WPRToolBar" TargetType="{x:Type ToolBar}" BasedOn="{StaticResource BaseControl}">
         <Setter Property="ClipToBounds" Value="True"/>
-        <Setter Property="ToolBarTray.IsLocked" Value="True"/>
+        <Setter Property="Padding" Value="0,5"></Setter>
+        <Setter Property="HeaderTemplate">
+            <Setter.Value>
+                <DataTemplate>
+                    <TextBlock Text="{Binding}" FontSize="13" FontStyle="Italic" Margin="2"/>
+                </DataTemplate>
+            </Setter.Value>
+        </Setter>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type ToolBar}">
@@ -27,19 +35,19 @@
                             <Setter Property="MinHeight" Value="32" />
                             <Setter Property="MinWidth" Value="32" />
                             <Setter Property="helpers:ButtonHelper.BorderRadius" Value="3"/>
-                            <Setter Property="Margin" Value="2,0"/>
+                            <Setter Property="Margin" Value="2,4"/>
                             <Setter Property="BorderThickness" Value="1"/>
                             <Setter Property="BorderBrush" Value="{DynamicResource DividerColorBrush}"/>
                         </Style>
                         <Style x:Key="{x:Static ToolBar.ComboBoxStyleKey}" TargetType="{x:Type ComboBox}" BasedOn="{StaticResource WPRComboBox}">
-                            <Setter Property="Margin" Value="8 -2 8 0" />
+                            <Setter Property="Margin" Value="8 4 8 0" />
                             <Setter Property="Background" Value="{DynamicResource SecondaryColorBrush}"/>
                         </Style>
                         <Style x:Key="{x:Static ToolBar.RadioButtonStyleKey}" TargetType="{x:Type RadioButton}" BasedOn="{StaticResource WPRRadioButtonButtonStyle}">
                             <Setter Property="helpers:ButtonHelper.BorderRadius" Value="3"/>
                             <Setter Property="MinHeight" Value="32" />
                             <Setter Property="MinWidth" Value="32" />
-                            <Setter Property="Margin" Value="2,0"/>
+                            <Setter Property="Margin" Value="2,4"/>
                             <Setter Property="BorderThickness" Value="1"/>
                             <Setter Property="BorderBrush" Value="{DynamicResource DividerColorBrush}"/>
                             <Setter Property="Effect" Value="{x:Null}"/>
@@ -50,7 +58,7 @@
                             <Setter Property="BorderThickness" Value="0"/>
                             <Setter Property="MinHeight" Value="1"/>
                             <Setter Property="MinWidth" Value="1"/>
-                            <Setter Property="Margin" Value="6 11 6 11"/>
+                            <Setter Property="Margin" Value="5,8"/>
                             <Setter Property="SnapsToDevicePixels" Value="true"/>
                             <Setter Property="Template">
                                 <Setter.Value>
@@ -61,22 +69,27 @@
                             </Setter>
                         </Style>
                         <Style x:Key="{x:Static ToolBar.TextBoxStyleKey}" TargetType="{x:Type TextBox}" BasedOn="{StaticResource WPRFlatTextBox}">
-                            <Setter Property="Margin" Value="8 0 8 0" />
+                            <Setter Property="Margin" Value="8 12,8,2" />
                             <Setter Property="BorderThickness" Value="0,0,0,1"/>
-                            <Setter Property="Background" Value="{DynamicResource SecondaryColorBrush}"/>
                         </Style>
                         <Style x:Key="{x:Static ToolBar.ToggleButtonStyleKey}" TargetType="{x:Type ToggleButton}" BasedOn="{StaticResource WPRToggleButton}">
                             <Setter Property="MinHeight" Value="32" />
                             <Setter Property="MinWidth" Value="32" />
+                            <Setter Property="Margin" Value="2,4"/>
+
                         </Style>
                         <Style x:Key="{x:Static ToolBar.ButtonStyleKey}" TargetType="Button" BasedOn="{StaticResource WPRFlatButton}">
                             <Setter Property="Foreground" Value="{DynamicResource TextColorBrush}"/>
                             <Setter Property="BorderThickness" Value="1"/>
                             <Setter Property="BorderBrush" Value="{DynamicResource DividerColorBrush}"/>
                             <Setter Property="Padding" Value="5,0"/>
-                            <Setter Property="Margin" Value="2,0"/>
+                            <Setter Property="Margin" Value="2,4"/>
                             <Setter Property="MinWidth" Value="32"/>
                             <Setter Property="MinHeight" Value="32"/>
+                        </Style>
+                        <Style TargetType="TextBlock" BasedOn="{StaticResource WPRTextBlock}">
+                            <Setter Property="FontSize" Value="13"></Setter>
+                            <Setter Property="Margin" Value="4"/>
                         </Style>
                     </ControlTemplate.Resources>
 
@@ -105,16 +118,14 @@
                                 <Border x:Name="ToolBarSubMenuBorder"
                                         BorderBrush="{DynamicResource AnimationEnterColorBrush}"
                                         BorderThickness="1" 
-                                        Background="{DynamicResource MenuBodyBrush}"
-                                        TextBlock.FontWeight="ExtraBold"
-                                        CornerRadius="2" Margin="10"
+                                        Background="{DynamicResource SecondaryBackgroundColorBrush}"
+                                        CornerRadius="3" Margin="10"
                                         Effect="{DynamicResource PopupSmallShadow}">
-                                    <Border Background="Transparent">
+                                    <Border Background="{StaticResource TransparentBrush}" Margin="2,6">
                                         <ToolBarOverflowPanel x:Name="PART_ToolBarOverflowPanel" 
                                                               KeyboardNavigation.DirectionalNavigation="Cycle" 
                                                               FocusVisualStyle="{x:Null}"
                                                               Focusable="true" 
-                                                              Margin="2"
                                                               SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
                                                               KeyboardNavigation.TabNavigation="Cycle"
                                                               WrapWidth="200"/>
@@ -135,7 +146,7 @@
                                        Width="10">
                                     <Thumb.Template>
                                         <ControlTemplate TargetType="{x:Type Thumb}">
-                                            <Border Background="Transparent" SnapsToDevicePixels="True" Padding="{TemplateBinding Padding}">
+                                            <Border Background="{StaticResource TransparentBrush}" SnapsToDevicePixels="True" Padding="{TemplateBinding Padding}">
                                                 <Rectangle Margin="0,5,0,5">
                                                     <Rectangle.Fill>
                                                         <DrawingBrush TileMode="Tile" Viewbox="0,0,4,4" Viewport="0,0,4,4" ViewportUnits="Absolute" ViewboxUnits="Absolute">
@@ -159,7 +170,8 @@
                                 <ContentPresenter x:Name="ToolBarHeader" 
                                                   ContentSource="Header" 
                                                   HorizontalAlignment="Center"
-                                                  Margin="4,0,4,0"
+                                                  Margin="4,0"
+                                                  TextBlock.FontSize="12"
                                                   SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
                                                   VerticalAlignment="Center"/>
                                 <ToolBarPanel x:Name="PART_ToolBarPanel"

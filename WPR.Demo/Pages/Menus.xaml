@@ -78,7 +78,7 @@
             <ToolBarTray Margin="0,10">
                 <ToolBar Header="Head">
                     <Button Content="Test"/>
-                    <Button Command="Cut" Foreground="{DynamicResource PrimaryTextColorBrush}">
+                    <Button Command="Cut">
                         <controls:WPRIcon Source="ContentCut"/>
                     </Button>
                     <Separator/>
@@ -93,14 +93,14 @@
                     <RadioButton Content="2"/>
                     <Separator/>
                     <TextBlock Text="Combo" VerticalAlignment="Center" Margin="5"/>
-                    <ComboBox Width="50">
+                    <ComboBox Width="150" helpers:TextHelper.Hint="Hint">
                         <ComboBoxItem Content="10"/>
                         <ComboBoxItem Content="12"/>
                         <ComboBoxItem Content="14"/>
                         <ComboBoxItem Content="16"/>
                     </ComboBox>
                     <Separator/>
-                    <TextBox Width="100" helpers:TextHelper.Hint="Filter"/>
+                    <TextBox Width="100" helpers:TextHelper.Hint="Filter"  helpers:TextHelper.ShowClearButton="True"/>
                 </ToolBar>
                 <ToolBar Header="Header2">
                     <Button Content="Test2"/>

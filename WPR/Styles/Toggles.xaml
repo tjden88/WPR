@@ -10,6 +10,7 @@
 
     <ControlTemplate x:Key="WPRToggleControlTemplate" TargetType="{x:Type ToggleButton}">
         <controls:ClippingBorder ClipToBounds="True"
+                                 Cursor="Hand"
                                     CornerRadius="{Binding Path=(helpers:ButtonHelper.BorderRadius), RelativeSource={RelativeSource TemplatedParent}}"
                                     Background="{TemplateBinding Background}"
                                     BorderBrush="{TemplateBinding BorderBrush}"
@@ -91,6 +92,7 @@
     <Style x:Key="WPRToggleButton" TargetType="{x:Type ToggleButton}"  BasedOn="{StaticResource BaseControl}">
         <Setter Property="FontWeight" Value="Medium"/>
         <Setter Property="Padding" Value="5"/>
+        <Setter Property="Cursor" Value="Hand"/>
         <Setter Property="VerticalContentAlignment" Value="Center"/>
         <Setter Property="HorizontalContentAlignment" Value="Center"/>
         <Setter Property="helpers:RippleHelper.FeedbackBrush" Value="{StaticResource PrimaryColorBrush}"/>

@@ -21,7 +21,7 @@
                      Text="Текст"/>
             <Border CornerRadius="15">
                 <TextBox x:Name="Clearable" Margin="10"
-                         BorderThickness="1"
+                         BorderThickness="0"
                          Style="{StaticResource WPRFlatTextBox}" 
                          helpers:TextHelper.ShowClearButton="True"
                          helpers:TextHelper.Hint="Flat Clearable TextBox"/>

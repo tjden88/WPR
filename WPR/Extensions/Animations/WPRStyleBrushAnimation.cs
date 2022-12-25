@@ -38,11 +38,11 @@ public class WPRStyleBrushAnimation : AnimationTimeline
             {
                 Width = 1,
                 Height = 1,
-                Background = defaultOriginValue,
-                Child = new Border()
+                Background = AnimateToOrigin ? defaultDestinationValue : defaultOriginValue,
+                Child = new Border
                 {
-                    Background = defaultDestinationValue,
-                    Opacity = animationClock.CurrentProgress.Value,
+                    Background = AnimateToOrigin ? defaultOriginValue : defaultDestinationValue,
+                    Opacity = AnimateToOrigin ? 1 - animationClock.CurrentProgress.Value : animationClock.CurrentProgress.Value,
                 }
             })
         };
@@ -93,6 +93,28 @@ public class WPRStyleBrushAnimation : AnimationTimeline
     {
         get => (StyleColors.StyleBrushes)GetValue(FromProperty);
         set => SetValue(FromProperty, value);
+    }
+
+    #endregion
+
+
+    #region AnimateToOrigin : bool - Анимировать от кисти назначения до оригинальной (альтернативный режим для прозрачных кистей назначения)
+
+    /// <summary>Анимировать от кисти назначения до оригинальной (альтернативный режим для прозрачных кистей назначения)</summary>
+    public static readonly DependencyProperty AnimateToOriginProperty =
+        DependencyProperty.Register(
+            nameof(AnimateToOrigin),
+            typeof(bool),
+            typeof(WPRStyleBrushAnimation),
+            new PropertyMetadata(default(bool)));
+
+    /// <summary>Анимировать от кисти назначения до оригинальной (альтернативный режим для прозрачных кистей назначения)</summary>
+    [Category("WPRStyleBrushAnimation")]
+    [Description("Анимировать от кисти назначения до оригинальной (альтернативный режим для прозрачных кистей назначения)")]
+    public bool AnimateToOrigin
+    {
+        get => (bool) GetValue(AnimateToOriginProperty);
+        set => SetValue(AnimateToOriginProperty, value);
     }
 
     #endregion
