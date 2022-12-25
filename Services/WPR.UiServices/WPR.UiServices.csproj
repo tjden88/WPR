@@ -12,8 +12,4 @@
     <ProjectReference Include="..\..\UI\WPR\WPR.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="UI\" />
-  </ItemGroup>
-
 </Project>
