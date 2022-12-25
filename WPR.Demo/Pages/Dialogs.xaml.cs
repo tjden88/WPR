@@ -89,7 +89,7 @@ namespace WPR.Demo.Pages
 
         private void Button3_OnClick(object Sender, RoutedEventArgs E)
         {
-            WPRDialogHelper.InputText(this,
+            WPRDialogHelper.InputText(null, // Модальное
                 "Ввод текста:",
                 (B, S) => {if(B) Debug.WriteLine(S);},
                 "Стартовое значение",
@@ -133,9 +133,10 @@ namespace WPR.Demo.Pages
             Debug.WriteLine(await WPRDialogHelper.ShowCustomDialogAsync(this, new TestCustomDialog(this, 0)));
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private async void Button_Click(object sender, RoutedEventArgs e)
         {
-            WPRDialogHelper.ShowCustomDialog(this, new WprDialog(), b => Debug.WriteLine(b));
+            await WPRDialogHelper.ShowCustomDialogAsync(this, new WprDialog());
+            WPRDialogHelper.ShowCustomDialog(null, new WprDialog(), b => Debug.WriteLine(b));
         }
     }
 }

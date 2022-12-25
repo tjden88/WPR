@@ -6,11 +6,16 @@ namespace WPR.Dialogs.Base;
 public class WPRDialog : IWPRDialog
 {
 
-    public WPRDialog(object Content, Action<bool> OnSetResult, bool StaysOpen = true)
+    public WPRDialog(object Content, bool StaysOpen = true)
     {
         DialogContent = Content;
-        SetDialogResult += OnSetResult;
         this.StaysOpen = StaysOpen;
+    }
+
+    /// <summary> Установить результат диалога </summary>
+    public void SetResult(bool result)
+    {
+        SetDialogResult?.Invoke(result);
     }
 
     public Action<bool> SetDialogResult { get; set; }

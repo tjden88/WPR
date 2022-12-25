@@ -335,7 +335,9 @@ public static class WPRDialogHelper
 
         if (panel is null)
         {
-            var dlg = new WPRDialog(inputBox, null);
+            var dlg = new WPRDialog(inputBox);
+            inputBox.DialogResult += b => dlg.SetResult(b == true);
+
             var result = ShowCustomModal(sender, dlg);
             Callback?.Invoke(result, inputBox.TextValue);
             return;
