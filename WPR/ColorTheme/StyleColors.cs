@@ -29,7 +29,7 @@ public class StyleColors : DependencyObject
         LightWindowBackgroundColorBrush,
         DarkWindowBackgroundColorBrush,
         InactiveWindowBackgroundColor,
-        WindowForegroundColor,
+        WindowForegroundColorBrush,
         AnimationEnterColorBrush,
         DangerColorBrush,
         WhiteBrush,

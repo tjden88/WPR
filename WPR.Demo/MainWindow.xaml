@@ -7,7 +7,7 @@
         Topmost="True"
         DataContext="{Binding Source={StaticResource Locator}, Path=MainWindowViewModel}"
         Style="{StaticResource ChromeWindow}"
-        Title="{Binding Title}" Height="900" Width="1000">
+        Title="{Binding Title}" Height="900" Width="1200">
 
     <helpers:WindowHelper.WindowHeaderContent>
         <StackPanel Margin="3" Orientation="Horizontal" HorizontalAlignment="Left" Width="Auto" >
@@ -18,7 +18,7 @@
     </helpers:WindowHelper.WindowHeaderContent>
     <Grid Background="{DynamicResource BackgroundColorBrush}" >
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="200"/>
+            <ColumnDefinition Width="250"/>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
 
@@ -28,7 +28,7 @@
          SelectedValue="{Binding SelectedPage}">
             <ListBox.ItemTemplate>
                 <DataTemplate>
-                    <TextBlock FontFamily="{StaticResource RobotoFont}" Text="{Binding Title}" />
+                    <TextBlock Text="{Binding Title}" />
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
