@@ -153,22 +153,22 @@ namespace WPR.Demo.Pages
 
             await dlg.InformationAsync(msg, title);
 
-            //Debug.WriteLine(await dlg.QuestionAsync(msg, title));
-            //Debug.WriteLine(await dlg.QuestionAsync(msg, IUserDialog.DialogTypes.YesNo, title));
-            //Debug.WriteLine(await dlg.QuestionAsync(msg, IUserDialog.DialogTypes.OkCancel, title));
-            //Debug.WriteLine(await dlg.QuestionAsync(msg, IUserDialog.DialogTypes.YesNoCancel, title));
+            Debug.WriteLine(await dlg.QuestionAsync(msg, title));
+            Debug.WriteLine(await dlg.QuestionAsync(msg, IUserDialog.DialogTypes.YesNo, title));
+            Debug.WriteLine(await dlg.QuestionAsync(msg, IUserDialog.DialogTypes.OkCancel, title));
+            Debug.WriteLine(await dlg.QuestionAsync(msg, IUserDialog.DialogTypes.YesNoCancel, title));
 
-            //Debug.WriteLine(await dlg.CustomQuestionAsync(msg, title, "true"));
-            //Debug.WriteLine(await dlg.CustomQuestionAsync(msg, title, "true", "false"));
-            //Debug.WriteLine(await dlg.CustomQuestionAsync(msg, title, "true", null, "null"));
-            //Debug.WriteLine(await dlg.CustomQuestionAsync(msg, title, "true", "false", "null"));
+            Debug.WriteLine(await dlg.CustomQuestionAsync(msg, title, "true"));
+            Debug.WriteLine(await dlg.CustomQuestionAsync(msg, title, "true", "false"));
+            Debug.WriteLine(await dlg.CustomQuestionAsync(msg, title, "true", null, "null"));
+            Debug.WriteLine(await dlg.CustomQuestionAsync(msg, title, "true", "false", "null"));
 
-            //await dlg.ErrorMessageAsync(msg, title);
+            await dlg.ErrorMessageAsync(msg, title);
 
-            //Debug.WriteLine(await dlg.CustomDialogAsync(new WprDialog()));
+            Debug.WriteLine(await dlg.CustomDialogAsync(new WprDialog()));
 
-            //Debug.WriteLine(await dlg.InputTextAsync(title));
-            //Debug.WriteLine(await dlg.InputTextAsync(title, "123", msg));
+            Debug.WriteLine(await dlg.InputTextAsync(title));
+            Debug.WriteLine(await dlg.InputTextAsync(title, "123", msg));
 
             var val = new List<(Predicate<string> rule, string errorMessage)>()
             {

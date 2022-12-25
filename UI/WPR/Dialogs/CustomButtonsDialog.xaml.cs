@@ -1,10 +1,8 @@
 ﻿using System;
 using System.ComponentModel;
-using System.Globalization;
 using System.Windows;
 using WPR.Dialogs.Base;
 using WPR.Interfaces.Base.UI;
-using WPR.MVVM.Converters.Base;
 
 namespace WPR.Dialogs;
 
@@ -118,7 +116,7 @@ public class CustomButtonsDialog : DialogBase, IWPRDialog
 
     #endregion
 
-    /// <summary> В этом классе всегда будет возвращать истину! См. DialogBaseResult  </summary>
+    /// <summary> В этом классе всегда будет возвращать истину! Используй DialogBaseResult  </summary>
     [Obsolete]
     public Action<bool> SetDialogResult { get; set; }
 
@@ -126,11 +124,4 @@ public class CustomButtonsDialog : DialogBase, IWPRDialog
     public bool? DialogBaseResult { get; set; }
 
     
-}
-
-/// <summary> Конвертер для скрытия лишних кнопок </summary>
-public class StringToVisibilityValueConverter : Converter
-{
-    public override object Convert(object v, Type t, object p, CultureInfo c) =>
-        v?.ToString() is null ? Visibility.Collapsed : Visibility.Visible;
 }

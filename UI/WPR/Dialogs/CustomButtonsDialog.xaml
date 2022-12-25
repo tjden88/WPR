@@ -32,16 +32,16 @@
                                     HorizontalAlignment="Right" Margin="6">
                             <Button x:Name="Cancel" Content="{TemplateBinding CancelButtonText}" IsCancel="True" Style="{StaticResource WPRFlatButton}"
                                     Command="{TemplateBinding CancelCommand}"
-                                    Visibility="{TemplateBinding CancelButtonText, Converter={dialogs:StringToVisibilityValueConverter}}"
+                                    Visibility="{TemplateBinding CancelButtonText, Converter={StaticResource ValueIsNullToVisibilityConverter}}"
                                     >
                             </Button>
                             <Button x:Name="No" Content="{TemplateBinding DeclineButtonText}" Width="100"  Style="{StaticResource WPRFlatButton}"
                                     Command="{TemplateBinding SetDialogResultCommand}"
-                                    Visibility="{TemplateBinding DeclineButtonText, Converter={dialogs:StringToVisibilityValueConverter}}"
+                                    Visibility="{TemplateBinding DeclineButtonText, Converter={StaticResource ValueIsNullToVisibilityConverter}}"
                                     CommandParameter="{StaticResource False}"></Button>
                             <Button x:Name="Yes" Content="{TemplateBinding AcceptButtonText}" Width="100" IsDefault="True"
                                     Command="{TemplateBinding SetDialogResultCommand}"
-                                    Visibility="{TemplateBinding AcceptButtonText, Converter={dialogs:StringToVisibilityValueConverter}}"
+                                    Visibility="{TemplateBinding AcceptButtonText, Converter={StaticResource ValueIsNullToVisibilityConverter}}"
                                     CommandParameter="{StaticResource True}"></Button>
                         </StackPanel>
                         <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto" Focusable="False">

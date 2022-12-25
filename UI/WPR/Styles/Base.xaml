@@ -73,7 +73,7 @@
                                           LowValue="{StaticResource DarkColorBrush}"/>
     <converters:SignPlusMinusConverter x:Key="SignPlusMinusConverter"/>
     <converters:EnumToBoolConverter x:Key="EnumToBoolConverter"/>
-
+    <converters:ValueIsNullToVisibilityConverter x:Key="ValueIsNullToVisibilityConverter"/>
 
     <!--Стиль для элемента в фокусе-->
     <Style x:Key="BaseFocusVisualStyle" TargetType="{x:Type Control}">
