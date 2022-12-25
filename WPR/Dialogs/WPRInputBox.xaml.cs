@@ -5,6 +5,7 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
+using WPR.Dialogs.Base;
 using WPR.MVVM.Validation;
 
 namespace WPR.Dialogs;

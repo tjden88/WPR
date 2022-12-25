@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using WPR.Controls;
 using WPR.Dialogs;
+using WPR.Dialogs.Base;
 using WPR.MVVM.Validation;
 
 namespace WPR;

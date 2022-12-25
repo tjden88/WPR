@@ -1,5 +1,6 @@
 ﻿using System;
-namespace WPR;
+
+namespace WPR.Dialogs.Base;
 
 /// <summary> Интерфейс для реализации объекта в качестве диалогового окна </summary>
 public interface IWPRDialog

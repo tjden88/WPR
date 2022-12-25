@@ -5,7 +5,7 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using WPR.MVVM.Commands.Base;
 
-namespace WPR.Dialogs;
+namespace WPR.Dialogs.Base;
 
 public abstract class DialogBase : Control
 {
@@ -14,7 +14,7 @@ public abstract class DialogBase : Control
 
     protected DialogBase()
     {
-        SetDialogResultCommand = new Command(obj => DialogResult?.Invoke((bool) obj),_ => CanSetCommandExecuted());
+        SetDialogResultCommand = new Command(obj => DialogResult?.Invoke((bool)obj), _ => CanSetCommandExecuted());
         CancelCommand = new Command(() => DialogResult?.Invoke(null));
     }
 

@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel;
 using System.Windows;
+using WPR.Dialogs.Base;
 
 namespace WPR.Dialogs;
 
