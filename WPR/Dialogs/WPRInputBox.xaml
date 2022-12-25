@@ -18,15 +18,15 @@
                         <StackPanel Orientation="Vertical">
                             <TextBlock TextWrapping="Wrap"
                                        Foreground="{DynamicResource PrimaryColorBrush}" 
-                                       Text="{TemplateBinding Title}" 
-                                       FontSize="14"
+                                       Text="{TemplateBinding Title}"
+                                       FontSize="20"
                                        Margin="10"/>
                             <TextBox Margin="10" x:Name="TextBox" 
                                      Text="{Binding TextValue, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="6">
-                                <Button x:Name="Cancel" Content="ОТМЕНА" Width="85" Margin="3"  IsCancel="True" Style="{StaticResource WPRFlatButton}"
+                                <Button x:Name="Cancel" Content="ОТМЕНА" Width="100" IsCancel="True" Style="{StaticResource WPRFlatButton}"
                                         Command="{TemplateBinding CancelCommand}"/>
-                                <Button x:Name="Ok" Content="OK" Width="85" Margin="3" IsDefault="True"
+                                <Button x:Name="Ok" Content="OK" Width="100" IsDefault="True"
                                         Command="{TemplateBinding SetDialogResultCommand}"
                                         CommandParameter="{StaticResource True}"/>
                             </StackPanel>

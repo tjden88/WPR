@@ -20,10 +20,10 @@
                         <Grid DockPanel.Dock="Top">
                             <DockPanel Margin="5,5" LastChildFill="False">
                                 <controls:WPRIcon Source="{TemplateBinding IconSource}" Margin="5"
-                                                  IconSize="24"
+                                                  IconSize="26"
                                                   Foreground="{TemplateBinding Foreground}"/>
                                 <TextBlock Text="{TemplateBinding Header}"
-                                           FontSize="14"
+                                           FontSize="18"
                                            VerticalAlignment="Center"
                                            Margin="5"
                                            Foreground="{TemplateBinding Foreground}"/>

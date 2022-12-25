@@ -27,7 +27,7 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type TextBox}">
-                    <Grid Margin="{TemplateBinding Padding}">
+                    <Grid Margin="{TemplateBinding Padding}" Background="{StaticResource TransparentBrush}">
                         <Grid.RowDefinitions>
                             <RowDefinition/>
                             <RowDefinition Height="Auto"/>
@@ -73,7 +73,7 @@
                                    Content="{Binding Path=(helpers:TextHelper.Description), RelativeSource={RelativeSource TemplatedParent}}"
                                    HorizontalAlignment="Left"
                                    Foreground="{DynamicResource SecondaryColorBrush}"
-                                   FontSize="11" Margin="0,3,0,0"/>
+                                   FontSize="13" Margin="0,3,0,0"/>
 
                         <ItemsControl Name="ErrorText" Visibility="Hidden" Grid.Row="1" Margin="0,3,0,0"
                                       Focusable="False"
@@ -84,7 +84,7 @@
                                     <TextBlock Foreground="{StaticResource DangerColorBrush}" 
                                                Text="{Binding ErrorContent}"
                                                TextWrapping ="Wrap"
-                                               FontSize="11"/>
+                                               FontSize="13"/>
                                 </DataTemplate>
                             </ItemsControl.ItemTemplate>
                         </ItemsControl>

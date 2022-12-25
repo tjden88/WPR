@@ -31,7 +31,7 @@ partial class Windows
 
     private void ModalWindow_MouseMove(object Sender, MouseEventArgs E)
     {
-        if (E.LeftButton == MouseButtonState.Pressed) (Sender as Window)?.DragMove();
+        if (E.LeftButton == MouseButtonState.Pressed && E.OriginalSource is not TextBox) (Sender as Window)?.DragMove();
     }
 
     private void ModalWindow_Loaded(object Sender, RoutedEventArgs E)

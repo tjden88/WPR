@@ -13,7 +13,7 @@
     <controls:WPRCard Background="{DynamicResource BackgroundColorBrush}">
 
         <StackPanel Orientation="Horizontal">
-            <StackPanel Margin="10" Width="200">
+            <StackPanel Margin="10" Width="400">
                 <Button Content="Show User Dialog" HorizontalAlignment="Center" VerticalAlignment="Center" Click="Button_Click" />
                 <controls:WPRCard HorizontalAlignment="Center" >
                     <dialogs:WPRMsgBox Title="Заголовок"
@@ -27,8 +27,14 @@
                                          x:Name="InputBox"
                                          TextValue="По умолчанию"/>
                 </controls:WPRCard>
+                <controls:WPRTitledCard Name="EditDialog" Header="Кастом диалог" IconSource="Style">
+                    <StackPanel>
+                        <TextBlock Text="Содержание..." HorizontalAlignment="Center" Margin="20"></TextBlock>
+                        <Button Content="Ok" Click="CustomDialog_Click" />
+                    </StackPanel>
+                </controls:WPRTitledCard>
             </StackPanel>
-            <StackPanel Width="200">
+            <StackPanel Width="250">
                 <Button Content="Show Window Dialog" HorizontalAlignment="Center" VerticalAlignment="Center" Command="{Binding ShowWindowDialogCommand}"/>
                 <Button Content="Show Window Dialog Async" HorizontalAlignment="Center" VerticalAlignment="Center" Command="{Binding ShowWindowDialogCommandAsync}"/>
                 <Button Content="Show Modal Dialog" HorizontalAlignment="Center" VerticalAlignment="Center" Command="{Binding ShowModalDialogCommand}"/>
@@ -38,14 +44,6 @@
 
                 <Button Content="Show InputTextBox" HorizontalAlignment="Center" VerticalAlignment="Center" Click="Button3_OnClick"/>
                 <Button Content="Show InputTextBox2" HorizontalAlignment="Center" VerticalAlignment="Center" Click="Button4_OnClick"/>
-            </StackPanel>
-            <StackPanel Width="200" Margin="10">
-                <controls:WPRTitledCard Name="EditDialog" Header="Кастом диалог" IconSource="Style">
-                    <StackPanel>
-                        <TextBlock Text="Содержание..." HorizontalAlignment="Center" Margin="20"></TextBlock>
-                        <Button Content="Ok" Click="CustomDialog_Click" />
-                    </StackPanel>
-                </controls:WPRTitledCard>
             </StackPanel>
         </StackPanel>
 

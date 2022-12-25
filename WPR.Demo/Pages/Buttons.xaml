@@ -11,7 +11,7 @@
     <UserControl>
         <UserControl.Content>
             <StackPanel Orientation="Horizontal">
-                <StackPanel Width="150" >
+                <StackPanel Width="250" >
                     <Button Content="Flat Button" Style="{StaticResource WPRFlatButton}" Margin="10"/>
                     <Button Content="PRIMARY Button" Style="{StaticResource PrimaryWPRButton}"  Margin="10"/>
                     <Button Content="ACCENT Button" Style="{StaticResource AccentWPRButton}"  Margin="10"/>
