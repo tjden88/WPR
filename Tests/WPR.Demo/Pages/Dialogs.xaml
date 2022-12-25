@@ -24,8 +24,7 @@
                 </controls:WPRCard>
                 <controls:WPRCard HorizontalAlignment="Center" >
                     <dialogs:InputDialog Title="Введите что-нибудь"
-                                         x:Name="InputBox"
-                                         TextValue="По умолчанию"/>
+                                         x:Name="InputBox"/>
                 </controls:WPRCard>
                 <controls:WPRTitledCard Name="EditDialog" Header="Кастом диалог" IconSource="Style">
                     <StackPanel>
@@ -44,6 +43,7 @@
 
                 <Button Content="Show InputTextBox" HorizontalAlignment="Center" VerticalAlignment="Center" Click="Button3_OnClick"/>
                 <Button Content="Show InputTextBox2" HorizontalAlignment="Center" VerticalAlignment="Center" Click="Button4_OnClick"/>
+                <Button Content="Сервис Диалогов *долго!" HorizontalAlignment="Center" VerticalAlignment="Center" Click="Dlg_OnClick"/>
             </StackPanel>
         </StackPanel>
 

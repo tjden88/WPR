@@ -10,7 +10,7 @@ public abstract class ValidationBase : ValidationRule
     public string Message { get; set; } = "Неверное значение";
 
     /// <summary>Прошла ли проверка валидности</summary>
-    public bool IsValid { get; private set; }
+    public bool IsValid { get; private set; } = true;
 
     /// <summary>Провести валидацию</summary>
     protected abstract bool Validated(object value, CultureInfo cultureInfo);
@@ -28,7 +28,7 @@ public abstract class ValidationBase<T> : ValidationRule
     public string Message { get; set; } = "Неверное значение";
 
     /// <summary>Прошла ли проверка валидности</summary>
-    public bool IsValid { get; private set; }
+    public bool IsValid { get; private set; } = true;
 
     /// <summary>Провести валидацию</summary>
     protected abstract bool Validated(T value, CultureInfo cultureInfo);

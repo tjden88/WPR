@@ -1,10 +1,10 @@
 ﻿using System;
 using System.ComponentModel;
+using System.Globalization;
 using System.Windows;
-using System.Windows.Data;
 using WPR.Dialogs.Base;
 using WPR.Interfaces.Base.UI;
-using WPR.MVVM.Converters;
+using WPR.MVVM.Converters.Base;
 
 namespace WPR.Dialogs;
 
@@ -21,7 +21,13 @@ public class CustomButtonsDialog : DialogBase, IWPRDialog
 
     public CustomButtonsDialog()
     {
-        DialogResult += B => DialogBaseResult = B;
+        DialogResult += B =>
+        {
+            DialogBaseResult = B;
+#pragma warning disable CS0612
+            SetDialogResult?.Invoke(true);
+#pragma warning restore CS0612
+        };
     }
 
 
@@ -112,13 +118,19 @@ public class CustomButtonsDialog : DialogBase, IWPRDialog
 
     #endregion
 
-
-    /// <summary> Конвертер для скрытия лишних кнопок </summary>
-    public IValueConverter StringToVisibilityValueConverter => new ValueConverter((o, _, p, _) =>
-        o?.ToString() is null ? Visibility.Collapsed : Visibility.Visible);
-
+    /// <summary> В этом классе всегда будет возвращать истину! См. DialogBaseResult  </summary>
+    [Obsolete]
     public Action<bool> SetDialogResult { get; set; }
 
     /// <summary> Результат выполнения базового диалога </summary>
     public bool? DialogBaseResult { get; set; }
+
+    
+}
+
+/// <summary> Конвертер для скрытия лишних кнопок </summary>
+public class StringToVisibilityValueConverter : Converter
+{
+    public override object Convert(object v, Type t, object p, CultureInfo c) =>
+        v?.ToString() is null ? Visibility.Collapsed : Visibility.Visible;
 }

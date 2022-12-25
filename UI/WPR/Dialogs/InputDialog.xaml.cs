@@ -3,42 +3,56 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
 using WPR.Dialogs.Base;
 using WPR.MVVM.Validation;
+using WPR.MVVM.ViewModels;
 
 namespace WPR.Dialogs;
 
 public class InputDialog : DialogBase
 {
-    private readonly IEnumerable<PredicateValidationRule<string>> _TextValidationRules;
 
     static InputDialog()
     {
         DefaultStyleKeyProperty.OverrideMetadata(typeof(InputDialog), new FrameworkPropertyMetadata(typeof(InputDialog)));
     }
 
-    public InputDialog() => _TextValidationRules = Array.Empty<PredicateValidationRule<string>>();
+    public InputDialog() : this(null) { }
 
-    public InputDialog(IEnumerable<PredicateValidationRule<string>> TextValidationRules) => _TextValidationRules = TextValidationRules;
+    public InputDialog(string DefaultValue) : this(Array.Empty<PredicateValidationRule<string>>(), DefaultValue) { }
 
-    public override void OnApplyTemplate()
+    public InputDialog(IEnumerable<PredicateValidationRule<string>> TextValidationRules, string DefaultValue)
     {
-        base.OnApplyTemplate();
-        if (Template.FindName("TextBox", this) is not TextBox t)
-            throw new ArgumentNullException(nameof(t), "Текстбокс не найден");
-
-        var binding = BindingOperations.GetBinding(t, TextBox.TextProperty);
-        if (binding == null) return;
-        binding.ValidationRules.Clear();
-        foreach (var rule in _TextValidationRules)
-            binding.ValidationRules.Add(rule);
-        t.GetBindingExpression(TextBox.TextProperty)?.UpdateSource();
-        t.Focus();
-        t.SelectAll();
+        ViewModel = new ValidationView(TextValidationRules)
+        {
+            Text = DefaultValue
+        };
+        ViewModel.UpdateErrors();
     }
-    protected override bool CanSetCommandExecuted() => _TextValidationRules.All(Rule => Rule.IsValid);
+
+    protected override bool CanSetCommandExecuted() => ViewModel?.HasErrors == false;
+
+    #region ViewModel : ValidationView - Вьюмодель валидации
+
+    /// <summary>Вьюмодель валидации</summary>
+    public static readonly DependencyProperty ViewModelProperty =
+        DependencyProperty.Register(
+            nameof(ViewModel),
+            typeof(ValidationView),
+            typeof(InputDialog),
+            new PropertyMetadata(default(ValidationView)));
+
+    /// <summary>Вьюмодель валидации</summary>
+    [Category("InputDialog")]
+    [Description("Вьюмодель валидации")]
+    public ValidationView ViewModel
+    {
+        get => (ValidationView) GetValue(ViewModelProperty);
+        set => SetValue(ViewModelProperty, value);
+    }
+
+    #endregion
+
 
     #region Caption : string - Описание
 
@@ -61,31 +75,40 @@ public class InputDialog : DialogBase
 
     #endregion
 
-    #region TextValue : string - Текстовое значение
 
-    /// <summary>Текстовое значение</summary>
-    public static readonly DependencyProperty TextValueProperty =
-        DependencyProperty.Register(
-            nameof(TextValue),
-            typeof(string),
-            typeof(InputDialog),
-            new PropertyMetadata(default(string), PropertyChangedCallback));
+    /// <summary> Результат ввода пользователя </summary>
+    public string TextValue => ViewModel.Text;
 
-    private static void PropertyChangedCallback(DependencyObject D, DependencyPropertyChangedEventArgs E)
+
+
+    public class ValidationView : DataValidationViewModel
     {
-        var w = (InputDialog)D;
-        w.TextValue = (string)E.NewValue;
+        public ValidationView(IEnumerable<PredicateValidationRule<string>> TextValidationRules)
+        {
+            ValidationRules = TextValidationRules.Select(tv => new ValidationRule(
+                nameof(Text),
+                () => tv.Predicate.Invoke(Text),
+                tv.Message))
+                .ToList();
+        }
+
+        protected override List<ValidationRule> ValidationRules { get; }
+
+
+        #region Text : string - Текст
+
+        /// <summary>Текст</summary>
+        private string _Text;
+
+        /// <summary>Текст</summary>
+        public string Text
+        {
+            get => _Text;
+            set => Set(ref _Text, value);
+        }
+
+        #endregion
+
+        
     }
-
-    /// <summary>Текстовое значение</summary>
-    //[Category("")]
-    [Description("Текстовое значение")]
-    public string TextValue
-    {
-        get => (string)GetValue(TextValueProperty);
-        set => SetValue(TextValueProperty, value);
-    }
-
-    #endregion
-
 }

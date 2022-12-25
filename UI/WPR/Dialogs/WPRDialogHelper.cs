@@ -337,10 +337,9 @@ public static class WPRDialogHelper
         // Ищем панель
         var panel = FindDialogPanel(sender);
 
-        InputDialog inputDialog = new(ValidationRules)
+        InputDialog inputDialog = new(ValidationRules, DefaultValue)
         {
             Title = Title,
-            TextValue = DefaultValue
         };
 
         if (panel is null)

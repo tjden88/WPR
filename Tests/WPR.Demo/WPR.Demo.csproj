@@ -23,6 +23,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\Services\WPR.UiServices\WPR.UiServices.csproj" />
     <ProjectReference Include="..\..\UI\WPR\WPR.csproj" />
   </ItemGroup>
 

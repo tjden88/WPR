@@ -10,13 +10,13 @@ public abstract class DataValidationViewModel : ViewModel, INotifyDataErrorInfo
 {
 
     /// <summary> Структура ошибки валидации </summary>
-    protected readonly struct ValidationError
+    protected readonly struct ValidationRule
     {
-        public ValidationError(string propertyName, Func<bool> rule, string Message = "Ошибка")
+        public ValidationRule(string propertyName, Func<bool> rule, string ErrorMessage )
         {
             PropertyName = propertyName;
             Rule = rule;
-            ErrorMessage = Message;
+            this.ErrorMessage = ErrorMessage;
         }
 
         public readonly string PropertyName;
@@ -34,7 +34,7 @@ public abstract class DataValidationViewModel : ViewModel, INotifyDataErrorInfo
 
 
     /// <summary> Список правил валидации </summary>
-    protected abstract List<ValidationError> ValidationRules { get; }
+    protected abstract List<ValidationRule> ValidationRules { get; }
 
 
     protected override void OnPropertyChanged(string PropertyName = null)
@@ -45,7 +45,7 @@ public abstract class DataValidationViewModel : ViewModel, INotifyDataErrorInfo
         _ActualErrors.Remove(PropertyName);
 
         var errors = ValidationRules
-            .Where(info => info.PropertyName == PropertyName && info.Rule.Invoke())
+            .Where(info => info.PropertyName == PropertyName && !info.Rule.Invoke())
             .Select(info => info.ErrorMessage)
             .ToArray();
 
@@ -58,7 +58,7 @@ public abstract class DataValidationViewModel : ViewModel, INotifyDataErrorInfo
     }
 
     /// <summary> Проверить все правила валидации </summary>
-    protected virtual bool CheckHasErrors() => ValidationRules.Any(err => err.Rule.Invoke());
+    protected virtual bool CheckHasErrors() => ValidationRules.Any(err => !err.Rule.Invoke());
 
     public IEnumerable GetErrors(string PropertyName)
     {
@@ -74,7 +74,7 @@ public abstract class DataValidationViewModel : ViewModel, INotifyDataErrorInfo
     public void UpdateErrors()
     {
         var errors = ValidationRules
-            .Where(info => info.Rule.Invoke())
+            .Where(info => !info.Rule.Invoke())
             .ToArray();
 
         _ActualErrors.Clear();

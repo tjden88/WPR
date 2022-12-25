@@ -1,11 +1,14 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using WPR.Dialogs;
 using WPR.Interfaces.Base.UI;
+using WPR.Interfaces.UI;
 using WPR.MVVM.Commands.Base;
+using WPR.UiServices.UI;
 
 namespace WPR.Demo.Pages
 {
@@ -104,7 +107,7 @@ namespace WPR.Demo.Pages
                 (B, S) => { Debug.WriteLine(B + S); },
                 "Описание",
                 "12",
-                S => S.Length > 3,
+                S => S?.Length > 3,
                 "Нужно больше 3 символов");
         }
 
@@ -139,6 +142,43 @@ namespace WPR.Demo.Pages
         {
             await WPRDialogHelper.ShowCustomDialogAsync(this, new WprDialog());
             WPRDialogHelper.ShowCustomDialog(null, new WprDialog(), b => Debug.WriteLine(b));
+        }
+
+        private async void Dlg_OnClick(object Sender, RoutedEventArgs E)
+        {
+            var dlg = new UserDialog(new AppNavigationService());
+
+            var msg = "Сообщение";
+            var title = "Заголовок";
+
+            await dlg.InformationAsync(msg, title);
+
+            //Debug.WriteLine(await dlg.QuestionAsync(msg, title));
+            //Debug.WriteLine(await dlg.QuestionAsync(msg, IUserDialog.DialogTypes.YesNo, title));
+            //Debug.WriteLine(await dlg.QuestionAsync(msg, IUserDialog.DialogTypes.OkCancel, title));
+            //Debug.WriteLine(await dlg.QuestionAsync(msg, IUserDialog.DialogTypes.YesNoCancel, title));
+
+            //Debug.WriteLine(await dlg.CustomQuestionAsync(msg, title, "true"));
+            //Debug.WriteLine(await dlg.CustomQuestionAsync(msg, title, "true", "false"));
+            //Debug.WriteLine(await dlg.CustomQuestionAsync(msg, title, "true", null, "null"));
+            //Debug.WriteLine(await dlg.CustomQuestionAsync(msg, title, "true", "false", "null"));
+
+            //await dlg.ErrorMessageAsync(msg, title);
+
+            //Debug.WriteLine(await dlg.CustomDialogAsync(new WprDialog()));
+
+            //Debug.WriteLine(await dlg.InputTextAsync(title));
+            //Debug.WriteLine(await dlg.InputTextAsync(title, "123", msg));
+
+            var val = new List<(Predicate<string> rule, string errorMessage)>()
+            {
+                new(s => !string.IsNullOrEmpty(s), "Обязательно"),
+                new(s => s?.Length > 2, "Больше 2"),
+            };
+
+            Debug.WriteLine(await dlg.InputValidatedTextAsync(title, s => s=="123", "Пиши 123", "def", msg));
+            Debug.WriteLine(await dlg.InputValidatedTextAsync(title, val));
+            
         }
     }
 }
