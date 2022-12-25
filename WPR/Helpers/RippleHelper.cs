@@ -19,24 +19,6 @@ public static class RippleHelper
         DependencyProperty.RegisterAttached("FeedbackBrush", typeof(SolidColorBrush), typeof(RippleHelper), new PropertyMetadata());
     #endregion
 
-    //#region Прозрачность цвета кнопки при наведении
-    ///// <summary>
-    ///// Прозрачность цвета кнопки при наведении
-    ///// </summary>
-    //public static double GetAnimationOpacity(DependencyObject obj)
-    //{
-    //    return (double)obj?.GetValue(AnimationOpacityProperty);
-    //}
-
-    //public static void SetAnimationOpacity(DependencyObject obj, double value)
-    //{
-    //    obj?.SetValue(AnimationOpacityProperty, value);
-    //}
-
-    //public static readonly DependencyProperty AnimationOpacityProperty =
-    //    DependencyProperty.RegisterAttached("AnimationOpacity", typeof(double), typeof(RippleHelper), new PropertyMetadata(0.4));
-    //#endregion
-
     #region StayOnCenter
 
     /// <summary>
