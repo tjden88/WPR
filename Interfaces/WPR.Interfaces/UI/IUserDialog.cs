@@ -1,4 +1,5 @@
 ﻿using WPR.Interfaces.Base.UI;
+using WPR.Models.Dialogs;
 
 namespace WPR.Interfaces.UI;
 
@@ -56,10 +57,6 @@ public interface IUserDialog
 
 
     /// <summary> Текстовое поле для ввода с валидацией введённых данных. Если null - пользователь отменил ввод </summary>
-    Task<string?> InputValidatedTextAsync(string title, Predicate<string> ValidationRule, string ErrorMessage = "Неверное значение", string? DefaultValue = null, string? message = null);
-
-
-    /// <summary> Текстовое поле для ввода с валидацией введённых данных. Если null - пользователь отменил ввод </summary>
-    Task<string?> InputValidatedTextAsync(string title, IEnumerable<(Predicate<string> rule, string errorMessage)> ValidationRules, string? DefaultValue = null, string? message = null);
+    Task<string?> InputValidatedTextAsync(InputDialogFilter DialogFilter);
 
 }

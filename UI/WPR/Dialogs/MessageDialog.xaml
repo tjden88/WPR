@@ -20,13 +20,14 @@
                         <TextBlock x:Name="TitleText"
                                    DockPanel.Dock="Top"
                                    Text="{TemplateBinding Title}" 
-                                   Foreground="{DynamicResource PrimaryColorBrush}" 
-                                   FontSize="20" FontWeight="Medium" 
+                                   FontWeight="Medium" 
                                    TextWrapping="WrapWithOverflow"
                                    Margin="10,10,10,0" 
                                    HorizontalAlignment="Left">
                             <TextBlock.Style>
                                 <Style TargetType="TextBlock" BasedOn="{StaticResource WPRTextBlock}">
+                                    <Setter Property="Foreground" Value="{DynamicResource PrimaryColorBrush}"></Setter>
+                                    <Setter Property="FontSize" Value="20"></Setter>
                                     <Style.Triggers>
                                         <DataTrigger Binding="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=IsErrorMessage}" Value="true">
                                             <Setter Property="Foreground" Value="{DynamicResource DangerColorBrush}"/>

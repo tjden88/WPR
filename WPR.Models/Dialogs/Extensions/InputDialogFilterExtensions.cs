@@ -4,22 +4,22 @@
 public static class InputDialogFilterExtensions
 {
     /// <summary> Значение обязательно </summary>
-    public static InputDialogFilter Required(this InputDialogFilter filter, string ErrorMessage = "Значение обязательно") =>
+    public static InputDialogFilter AddRequired(this InputDialogFilter filter, string ErrorMessage = "Значение обязательно") =>
         AddRule(filter, s => !string.IsNullOrWhiteSpace(s), ErrorMessage);
 
 
     /// <summary> Фильтр минимальной длины </summary>
-    public static InputDialogFilter MinLen(this InputDialogFilter filter, int minLenght) =>
+    public static InputDialogFilter AddMinLen(this InputDialogFilter filter, int minLenght) =>
         AddRule(filter, s => s?.Length >= minLenght, $"Минимальная длина - {minLenght} символа (ов)");
 
 
     /// <summary> Фильтр максимальной длины </summary>
-    public static InputDialogFilter MaxLen(this InputDialogFilter filter, int maxLenght) =>
+    public static InputDialogFilter AddMaxLen(this InputDialogFilter filter, int maxLenght) =>
         AddRule(filter, s => s?.Length <= maxLenght, $"Максимальная длина - {maxLenght} символа (ов)");
 
 
     /// <summary> Значение не должно содержать элементы данной последовательности </summary>
-    public static InputDialogFilter MustNotContains(this InputDialogFilter filter, IEnumerable<string> values, string ErrorMessage = "Это значение уже существует") =>
+    public static InputDialogFilter AddMustNotContains(this InputDialogFilter filter, IEnumerable<string> values, string ErrorMessage = "Это значение уже существует") =>
         AddRule(filter, s => s is null || values.All(v => !string.Equals(v, s, StringComparison.OrdinalIgnoreCase)), ErrorMessage);
 
 
@@ -33,7 +33,7 @@ public static class InputDialogFilterExtensions
 
 
     /// <summary> Установить дополнительное сообщение </summary>
-    public static InputDialogFilter SetMessage(this InputDialogFilter filter, string Message)
+    public static InputDialogFilter AddMessage(this InputDialogFilter filter, string Message)
     {
         filter.Message = Message;
         return filter;
@@ -41,7 +41,7 @@ public static class InputDialogFilterExtensions
 
 
     /// <summary> Установить значение по умолчанию </summary>
-    public static InputDialogFilter SetDefaultValue(this InputDialogFilter filter, string DefaultValue)
+    public static InputDialogFilter AddDefaultValue(this InputDialogFilter filter, string DefaultValue)
     {
         filter.DefaultValue = DefaultValue;
         return filter;

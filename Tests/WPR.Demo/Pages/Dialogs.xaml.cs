@@ -7,6 +7,8 @@ using System.Windows.Input;
 using WPR.Dialogs;
 using WPR.Interfaces.Base.UI;
 using WPR.Interfaces.UI;
+using WPR.Models.Dialogs;
+using WPR.Models.Dialogs.Extensions;
 using WPR.MVVM.Commands.Base;
 using WPR.UiServices.UI;
 
@@ -153,15 +155,15 @@ namespace WPR.Demo.Pages
 
             await dlg.InformationAsync(msg, title);
 
-            Debug.WriteLine(await dlg.QuestionAsync(msg, title));
-            Debug.WriteLine(await dlg.QuestionAsync(msg, IUserDialog.DialogTypes.YesNo, title));
-            Debug.WriteLine(await dlg.QuestionAsync(msg, IUserDialog.DialogTypes.OkCancel, title));
-            Debug.WriteLine(await dlg.QuestionAsync(msg, IUserDialog.DialogTypes.YesNoCancel, title));
+            //Debug.WriteLine(await dlg.QuestionAsync(msg, title));
+            //Debug.WriteLine(await dlg.QuestionAsync(msg, IUserDialog.DialogTypes.YesNo, title));
+            //Debug.WriteLine(await dlg.QuestionAsync(msg, IUserDialog.DialogTypes.OkCancel, title));
+            //Debug.WriteLine(await dlg.QuestionAsync(msg, IUserDialog.DialogTypes.YesNoCancel, title));
 
-            Debug.WriteLine(await dlg.CustomQuestionAsync(msg, title, "true"));
-            Debug.WriteLine(await dlg.CustomQuestionAsync(msg, title, "true", "false"));
-            Debug.WriteLine(await dlg.CustomQuestionAsync(msg, title, "true", null, "null"));
-            Debug.WriteLine(await dlg.CustomQuestionAsync(msg, title, "true", "false", "null"));
+            //Debug.WriteLine(await dlg.CustomQuestionAsync(msg, title, "true"));
+            //Debug.WriteLine(await dlg.CustomQuestionAsync(msg, title, "true", "false"));
+            //Debug.WriteLine(await dlg.CustomQuestionAsync(msg, title, "true", null, "null"));
+            //Debug.WriteLine(await dlg.CustomQuestionAsync(msg, title, "true", "false", "null"));
 
             await dlg.ErrorMessageAsync(msg, title);
 
@@ -176,9 +178,16 @@ namespace WPR.Demo.Pages
                 new(s => s?.Length > 2, "Больше 2"),
             };
 
-            Debug.WriteLine(await dlg.InputValidatedTextAsync(title, s => s=="123", "Пиши 123", "def", msg));
-            Debug.WriteLine(await dlg.InputValidatedTextAsync(title, val));
-            
+            var coolFilter = new InputDialogFilter("Тест офигенного фильтра")
+                    .AddRequired()
+                    .AddDefaultValue("123")
+                    .AddMessage("Это сообщение")
+                    .AddMinLen(3)
+                    .AddMaxLen(10)
+                    .AddMustNotContains(new []{ "123", "456" })
+                    .AddRule(s => s?.StartsWith("789") ?? true, "Должно начинаться с 789")
+                ;
+            await dlg.InputValidatedTextAsync(coolFilter);
         }
     }
 }

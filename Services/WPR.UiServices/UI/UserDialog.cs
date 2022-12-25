@@ -2,6 +2,7 @@
 using WPR.Dialogs;
 using WPR.Interfaces.Base.UI;
 using WPR.Interfaces.UI;
+using WPR.Models.Dialogs;
 using WPR.MVVM.Validation;
 using WPR.UiServices.Interfaces;
 
@@ -18,11 +19,11 @@ public class UserDialog : IUserDialog
         _AppNavigation = AppNavigation;
     }
 
-    public async Task InformationAsync(string message, string? Title = null) => 
+    public async Task InformationAsync(string message, string? Title = null) =>
         await WPRDialogHelper.InformationAsync(Active, message, Title);
 
 
-    public async Task<bool> QuestionAsync(string message, string? Title = null) => 
+    public async Task<bool> QuestionAsync(string message, string? Title = null) =>
         await WPRDialogHelper.QuestionAsync(Active, message, Title);
 
 
@@ -50,7 +51,7 @@ public class UserDialog : IUserDialog
 
 
 
-    public async Task ErrorMessageAsync(string message, string? Title = "Ошибка") 
+    public async Task ErrorMessageAsync(string message, string? Title = "Ошибка")
         => await WPRDialogHelper.ErrorAsync(Active, message, Title);
 
 
@@ -58,24 +59,14 @@ public class UserDialog : IUserDialog
         => await WPRDialogHelper.ShowCustomDialogAsync(Active, Dialog);
 
 
-    public async Task<string?> InputTextAsync(string title, string? DefaultValue = null, string? message = null) => 
+    public async Task<string?> InputTextAsync(string title, string? DefaultValue = null, string? message = null) =>
         await WPRDialogHelper.InputTextAsync(Active, title, null, DefaultValue);
 
+    public async Task<string?> InputValidatedTextAsync(InputDialogFilter DialogFilter) =>
+        await WPRDialogHelper.InputTextAsync(Active,
+            DialogFilter.Title,
+            DialogFilter.Message,
+            DialogFilter.DefaultValue,
+            DialogFilter.ValidationRules.Select(f => new PredicateValidationRule<string>(f.Rule, f.ErrorMessage)));
 
-    public async Task<string?> InputValidatedTextAsync(string title, Predicate<string> ValidationRule, string ErrorMessage = "Неверное значение",
-        string? DefaultValue = null, string? message = null) =>
-        await WPRDialogHelper.InputTextAsync(Active, title, message, DefaultValue, ValidationRule, ErrorMessage);
-
-
-
-    public async Task<string?> InputValidatedTextAsync(string title, IEnumerable<(Predicate<string> rule, string errorMessage)> ValidationRules, string? DefaultValue = null,
-        string? message = null)
-    {
-        var predicates = ValidationRules
-            .Select(rule =>
-            new PredicateValidationRule<string>(rule.rule, rule.errorMessage)
-        );
-
-        return await WPRDialogHelper.InputTextAsync(Active, title, message, DefaultValue, predicates);
-    }
 }
