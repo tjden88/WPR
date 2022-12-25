@@ -5,6 +5,7 @@ using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using WPR.ColorTheme;
+using WPR.Models.Themes;
 
 namespace WPR.Extensions.Animations;
 
@@ -60,16 +61,16 @@ public class WPRStyleBrushAnimation : AnimationTimeline
     public static readonly DependencyProperty ToProperty =
         DependencyProperty.Register(
             nameof(To),
-            typeof(StyleColors.StyleBrushes),
+            typeof(StyleBrushes),
             typeof(WPRStyleBrushAnimation),
-            new PropertyMetadata(default(StyleColors.StyleBrushes)));
+            new PropertyMetadata(default(StyleBrushes)));
 
     /// <summary>Кисть назанчения</summary>
     [Category("WPRStyleBrushAnimation")]
     [Description("Кисть назанчения")]
-    public StyleColors.StyleBrushes To
+    public StyleBrushes To
     {
-        get => (StyleColors.StyleBrushes)GetValue(ToProperty);
+        get => (StyleBrushes)GetValue(ToProperty);
         set => SetValue(ToProperty, value);
     }
 
@@ -82,16 +83,16 @@ public class WPRStyleBrushAnimation : AnimationTimeline
     public static readonly DependencyProperty FromProperty =
         DependencyProperty.Register(
             nameof(From),
-            typeof(StyleColors.StyleBrushes),
+            typeof(StyleBrushes),
             typeof(WPRStyleBrushAnimation),
-            new PropertyMetadata(default(StyleColors.StyleBrushes)));
+            new PropertyMetadata(default(StyleBrushes)));
 
     /// <summary>Начальная кисть</summary>
     [Category("WPRStyleBrushAnimation")]
     [Description("Начальная кисть")]
-    public StyleColors.StyleBrushes From
+    public StyleBrushes From
     {
-        get => (StyleColors.StyleBrushes)GetValue(FromProperty);
+        get => (StyleBrushes)GetValue(FromProperty);
         set => SetValue(FromProperty, value);
     }
 

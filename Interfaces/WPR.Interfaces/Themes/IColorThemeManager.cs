@@ -1,4 +1,5 @@
 ﻿using System.Drawing;
+using WPR.Models.Themes;
 
 namespace WPR.Interfaces.Themes;
 

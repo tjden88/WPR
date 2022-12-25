@@ -9,34 +9,7 @@ namespace WPR.ColorTheme;
 /// </summary>
 public class StyleColors : DependencyObject
 {
-    /// <summary>
-    /// Коллекция кистей цветовой темы
-    /// </summary>
-    public enum StyleBrushes
-    {
-        None,
-        TransparentBrush,
-        PrimaryColorBrush,
-        DarkPrimaryColorBrush,
-        LightPrimaryColorBrush,
-        AccentColorBrush,
-        TextColorBrush,
-        SecondaryColorBrush,
-        DividerColorBrush,
-        BackgroundColorBrush,
-        SecondaryBackgroundColorBrush,
-        WindowBackgroundColorBrush,
-        LightWindowBackgroundColorBrush,
-        DarkWindowBackgroundColorBrush,
-        InactiveWindowBackgroundColor,
-        WindowForegroundColorBrush,
-        AnimationEnterColorBrush,
-        DangerColorBrush,
-        WhiteBrush,
-        DarkBrush,
-        ContrastColorBrush
-    }
-
+ 
 
     // Цвета по умолчанию для светлой темы
     private static readonly Color _LightColor = Colors.White;

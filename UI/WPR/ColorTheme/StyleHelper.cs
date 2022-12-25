@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Windows;
 using System.Windows.Media;
+using WPR.Models.Themes;
 using WPR.MVVM.Converters;
 using WPR.MVVM.Converters.Base;
 
@@ -62,7 +63,7 @@ public static class StyleHelper
 
     /// <summary>Найти кисть в ресурсах</summary>
     /// <param name="BrushName">Имя кисти</param>
-    public static SolidColorBrush GetBrushFromResource(StyleColors.StyleBrushes BrushName)
+    public static SolidColorBrush GetBrushFromResource(StyleBrushes BrushName)
     {
         var br = (SolidColorBrush)Application.Current.Resources[BrushName.ToString()];
         return br;

@@ -1,4 +1,4 @@
-﻿namespace WPR.Interfaces.Themes;
+﻿namespace WPR.Models.Themes;
 
 /// <summary>
 /// Типы цветовой темы
