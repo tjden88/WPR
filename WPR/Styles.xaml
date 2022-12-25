@@ -24,6 +24,7 @@
         <ResourceDictionary Source="Styles\DataGrids.xaml"/>
         <ResourceDictionary Source="Styles\RichTextBoxes.xaml"/>
         <ResourceDictionary Source="Styles\TreeViews.xaml"/>
+        <ResourceDictionary Source="Styles\Separators.xaml"/>
     </ResourceDictionary.MergedDictionaries>
 
     <!--Стили по умолчанию-->
@@ -54,4 +55,5 @@
     <Style TargetType="RichTextBox" BasedOn="{StaticResource WPRRichTextBox}"/>
     <Style TargetType="TreeView" BasedOn="{StaticResource WPRTreeView}"/>
     <Style TargetType="TreeViewItem" BasedOn="{StaticResource WPRTreeViewItem}"/>
+    <Style TargetType="Separator" BasedOn="{StaticResource WPRSeparator}"/>
 </ResourceDictionary>

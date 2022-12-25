@@ -11,7 +11,7 @@
 
 <StackPanel Orientation="Horizontal">
     <controls:WPRCard Width="200"  Margin="20">
-        <TreeView>
+        <TreeView Margin="10">
             <TreeViewItem Header="Item1">
                 <TreeViewItem Header="Child1"></TreeViewItem>
                 <TreeViewItem Header="Child2">
@@ -25,8 +25,9 @@
             <TreeViewItem Header="Item3"></TreeViewItem>
         </TreeView>
     </controls:WPRCard>
+    <Separator Style="{StaticResource WPRVerticalSeparator}"></Separator>
     <controls:WPRCard Width="200"  Margin="20">
-        <ListBox>
+            <ListBox  Margin="10">
             <ListBoxItem Content="Item1"></ListBoxItem>
             <ListBoxItem Content="Item2"></ListBoxItem>
             <ListBoxItem Content="Item3"></ListBoxItem>
