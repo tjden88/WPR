@@ -51,15 +51,15 @@ public interface IUserDialog
     Task<bool> CustomDialogAsync(IWPRDialog Dialog);
 
 
-    /// <summary> Текстовое поле для ввода </summary>
-    Task<(bool Result, string Text)> InputTextAsync(string message, string? DefaultValue = null, string? Title = null);
+    /// <summary> Текстовое поле для ввода. Если null - пользователь отменил ввод </summary>
+    Task<string?> InputTextAsync(string title, string? DefaultValue = null, string? message = null);
 
 
-    /// <summary> Текстовое поле для ввода с валидацией введённых данных</summary>
-    Task<(bool Result, string Text)> InputValidatedTextAsync(Predicate<string> ValidationRule, string message, string? DefaultValue = null, string? Title = null);
+    /// <summary> Текстовое поле для ввода с валидацией введённых данных. Если null - пользователь отменил ввод </summary>
+    Task<string?> InputValidatedTextAsync(string title, Predicate<string> ValidationRule, string ErrorMessage = "Неверное значение", string? DefaultValue = null, string? message = null);
 
 
-    /// <summary> Текстовое поле для ввода с валидацией введённых данных</summary>
-    Task<(bool Result, string Text)> InputValidatedTextAsync(IEnumerable<Predicate<string>> ValidationRules, string message, string? DefaultValue = null, string? Title = null);
+    /// <summary> Текстовое поле для ввода с валидацией введённых данных. Если null - пользователь отменил ввод </summary>
+    Task<string?> InputValidatedTextAsync(string title, IEnumerable<(Predicate<string> rule, string errorMessage)> ValidationRules, string? DefaultValue = null, string? message = null);
 
 }

@@ -6,6 +6,7 @@
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="../Styles/Base.xaml"/>
         <ResourceDictionary Source="../Styles/Buttons.xaml"/>
+        <ResourceDictionary Source="../Styles/TextBlocks.xaml"/>
     </ResourceDictionary.MergedDictionaries>
 
         <s:Boolean x:Key="True">True</s:Boolean>
@@ -23,7 +24,18 @@
                                    FontSize="20" FontWeight="Medium" 
                                    TextWrapping="WrapWithOverflow"
                                    Margin="10,10,10,0" 
-                                   HorizontalAlignment="Left"/>
+                                   HorizontalAlignment="Left">
+                            <TextBlock.Style>
+                                <Style TargetType="TextBlock" BasedOn="{StaticResource WPRTextBlock}">
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=IsErrorMessage}" Value="true">
+                                            <Setter Property="Foreground" Value="{DynamicResource DangerColorBrush}"/>
+                                            <Setter Property="FontSize" Value="24"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </TextBlock.Style>
+                        </TextBlock>
                         <StackPanel Orientation="Horizontal"
                                     DockPanel.Dock="Bottom"
                                     HorizontalAlignment="Right" Margin="6">

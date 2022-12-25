@@ -29,7 +29,7 @@ public static class WPRDialogHelper
         return uIElement.FindVisualParent<WPRDialogPanel>();
     }
 
-    private static void Show(DependencyObject sender, string Caption, string Title, Action<bool?> Callback, bool CancelButton, bool YesNoButtons)
+    private static void Show(DependencyObject sender, string Caption, string Title, Action<bool?> Callback, bool CancelButton, bool YesNoButtons, bool isError = false)
     {
         // Ищем панель
         var panel = FindDialogPanel(sender);
@@ -46,7 +46,8 @@ public static class WPRDialogHelper
             Title = Title,
             Caption = Caption,
             CancelButtonVisible = CancelButton,
-            YesNoButtonsVisible = YesNoButtons
+            YesNoButtonsVisible = YesNoButtons,
+            IsErrorMessage = isError,
         };
         // При клике по кнопке мессаджа закрыть окно и вернуть прозрачность как была
         messageBox.DialogResult += (b) =>
@@ -276,20 +277,20 @@ public static class WPRDialogHelper
     #region Error
 
     /// <summary>Показать информационное окно с сообщением об ошибке</summary>
-    public static void Error(DependencyObject sender, Exception e, Action Callback = null)
+    public static void Error(DependencyObject sender, string ErrorMessage, string Title = "Ошибка", Action Callback = null)
     {
-        Show(sender, e.Message, "Ошибка!", B => Callback?.Invoke(), false, false);
+        Show(sender, ErrorMessage, Title, B => Callback?.Invoke(), false, false, true);
     }
     #endregion
 
     #region ErrorAsync
 
     /// <summary>Показать информационное окно с сообщением об ошибке</summary>
-    public static async Task ErrorAsync(DependencyObject sender, Exception e)
+    public static async Task ErrorAsync(DependencyObject sender, string ErrorMessage, string Title = "Ошибка")
     {
         TaskCompletionSource complete = new();
 
-        Error(sender, e, () => complete.TrySetResult());
+        Error(sender, ErrorMessage, Title, () => complete.TrySetResult());
         await complete.Task.ConfigureAwait(false);
     }
     #endregion
@@ -319,19 +320,19 @@ public static class WPRDialogHelper
 
     #region InputBoxes
 
-    public static void InputText(DependencyObject sender, string Title, Action<bool, string> Callback, string DefaultValue = "")
+    public static void InputText(DependencyObject sender, string Title, Action<bool, string> Callback, string Caption, string DefaultValue = "")
     {
-        InputText(sender, Title, Callback, DefaultValue, S => true);
+        InputText(sender, Title, Callback, Caption, DefaultValue, S => true);
     }
 
-    public static void InputText(DependencyObject sender, string Title, Action<bool, string> Callback, string DefaultValue , Predicate<string> ValidationRule , string ValidationErrorMessage = "Неверное значение")
+    public static void InputText(DependencyObject sender, string Title, Action<bool, string> Callback, string Caption, string DefaultValue , Predicate<string> ValidationRule , string ValidationErrorMessage = "Неверное значение")
     {
         var rule = new PredicateValidationRule<string>(ValidationRule, ValidationErrorMessage);
 
-        InputText(sender, Title, Callback, DefaultValue, new[] {rule});
+        InputText(sender, Title, Callback, Caption, DefaultValue, new[] {rule});
     }
 
-    public static void InputText(DependencyObject sender, string Title, Action<bool, string> Callback, string DefaultValue, IEnumerable<PredicateValidationRule<string>> ValidationRules)
+    public static void InputText(DependencyObject sender, string Title, Action<bool, string> Callback, string Caption, string DefaultValue, IEnumerable<PredicateValidationRule<string>> ValidationRules)
     {
         // Ищем панель
         var panel = FindDialogPanel(sender);
@@ -363,20 +364,20 @@ public static class WPRDialogHelper
 
 
     /// <summary> Поле ввода текста </summary>
-    public static Task<string> InputTextAsync(DependencyObject sender, string Title, string DefaultValue = "") => 
-        InputTextAsync(sender, Title, DefaultValue, S => true);
+    public static Task<string> InputTextAsync(DependencyObject sender, string Title, string Caption, string DefaultValue = "") => 
+        InputTextAsync(sender, Title, Caption, DefaultValue, S => true);
 
 
     /// <summary> Поле ввода текста с валидацией </summary>
-    public static Task<string> InputTextAsync(DependencyObject sender, string Title, string DefaultValue, Predicate<string> ValidationRule, string ValidationErrorMessage = "Неверное значение") => 
-        InputTextAsync(sender, Title, DefaultValue, new []{new PredicateValidationRule<string>(ValidationRule, ValidationErrorMessage) });
+    public static Task<string> InputTextAsync(DependencyObject sender, string Title, string Caption, string DefaultValue, Predicate<string> ValidationRule, string ValidationErrorMessage = "Неверное значение") => 
+        InputTextAsync(sender, Title, Caption , DefaultValue, new []{new PredicateValidationRule<string>(ValidationRule, ValidationErrorMessage) });
 
 
     /// <summary> Поле ввода текста с коллекцией валидаций </summary>
-    public static async Task<string> InputTextAsync(DependencyObject sender, string Title, string DefaultValue, IEnumerable<PredicateValidationRule<string>> ValidationRules)
+    public static async Task<string> InputTextAsync(DependencyObject sender, string Title, string Caption, string DefaultValue, IEnumerable<PredicateValidationRule<string>> ValidationRules)
     {
         TaskCompletionSource<string> complete = new();
-        InputText(sender, Title, (B, S) => { complete.TrySetResult(B ? S : null); }, DefaultValue, ValidationRules);
+        InputText(sender, Title, (B, S) => { complete.TrySetResult(B ? S : null); }, Caption, DefaultValue, ValidationRules);
         return await complete.Task.ConfigureAwait(false);
     }
 

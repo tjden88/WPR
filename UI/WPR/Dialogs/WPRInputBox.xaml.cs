@@ -40,6 +40,26 @@ public class WPRInputBox : DialogBase
     }
     protected override bool CanSetCommandExecuted() => _TextValidationRules.All(Rule => Rule.IsValid);
 
+    #region Caption : string - Описание
+
+    /// <summary>Описание</summary>
+    public static readonly DependencyProperty CaptionProperty =
+        DependencyProperty.Register(
+            nameof(Caption),
+            typeof(string),
+            typeof(WPRInputBox),
+            new PropertyMetadata(default(string)));
+
+    /// <summary>Описание</summary>
+    [Category("WPRInputBox")]
+    [Description("Описание")]
+    public string Caption
+    {
+        get => (string) GetValue(CaptionProperty);
+        set => SetValue(CaptionProperty, value);
+    }
+
+    #endregion
 
     #region TextValue : string - Текстовое значение
 

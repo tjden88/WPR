@@ -74,4 +74,24 @@ public class WPRMsgBox : DialogBase
 
     #endregion
 
+    #region IsErrorMessage : bool - Истино, если это сообщение об ошибке
+
+    /// <summary>Истино, если это сообщение об ошибке</summary>
+    public static readonly DependencyProperty IsErrorMessageProperty =
+        DependencyProperty.Register(
+            nameof(IsErrorMessage),
+            typeof(bool),
+            typeof(WPRMsgBox),
+            new PropertyMetadata(default(bool)));
+
+    /// <summary>Истино, если это сообщение об ошибке</summary>
+    [Category("WPRMsgBox")]
+    [Description("Истино, если это сообщение об ошибке")]
+    public bool IsErrorMessage
+    {
+        get => (bool) GetValue(IsErrorMessageProperty);
+        set => SetValue(IsErrorMessageProperty, value);
+    }
+
+    #endregion
 }
