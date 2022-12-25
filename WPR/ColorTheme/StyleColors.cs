@@ -51,7 +51,7 @@ public class StyleColors : DependencyObject
 
     private static readonly Color _BackgroundColor = _LightColor;
     private static readonly Color _WindowBackgroundColor = _PrimaryColor;
-    private static readonly Color _InactiveWindowBackgroundColor = _LightPrimaryColor;
+    private static readonly Color _InactiveWindowBackgroundColor = (Color)ColorConverter.ConvertFromString("#FF9FA8DA")!;
     private static readonly Color _WindowForegroundColor = _BackgroundColor;
 
     private static readonly Color _SecondaryBackgroundColor = _LightColor;

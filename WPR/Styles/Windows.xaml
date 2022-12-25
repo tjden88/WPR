@@ -201,7 +201,7 @@
         </AdornerDecorator>
         <ControlTemplate.Triggers>
             <Trigger Property="IsActive" Value="False">
-                <Setter Property="BorderBrush" Value="{DynamicResource InactiveWindowColorBrush}"/>
+                <Setter Property="Background" Value="{DynamicResource InactiveWindowBackgroundColorBrush}"/>
             </Trigger>
         </ControlTemplate.Triggers>
     </ControlTemplate>

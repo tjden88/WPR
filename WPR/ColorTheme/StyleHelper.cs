@@ -113,7 +113,7 @@ public static class StyleHelper
         : _StyleColors.LightWindowBackgroundColor;
 
         _StyleColors.WindowBackgroundColor = windowBackgroundColor;
-        _StyleColors.InactiveWindowBackgroundColor = Lighten(windowBackgroundColor, 15);
+        _StyleColors.InactiveWindowBackgroundColor = Lighten(windowBackgroundColor, isDarkTheme ? 5 : 2);
 
         var foregroungBrush = _BrushLightOrDarkConverter.Convert(new(windowBackgroundColor));
         _StyleColors.WindowForegroundColor = foregroungBrush.Color;

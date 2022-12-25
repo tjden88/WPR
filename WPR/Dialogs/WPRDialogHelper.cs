@@ -110,6 +110,14 @@ public static class WPRDialogHelper
         return result;
     }
 
+
+    /// <summary>
+    /// Показать кастомный диалог в модальном окне
+    /// </summary>
+    /// <param name="sender">Объект, окно которого будет розительским по отношению к диалогу.
+    /// Если null, диалог будет поверх всех окон</param>
+    /// <param name="Content">Диалог</param>
+    /// <returns></returns>
     public static bool ShowCustomModal(DependencyObject sender, IWPRDialog Content)
     {
         var result = false;
