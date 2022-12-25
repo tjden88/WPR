@@ -19,4 +19,15 @@ public interface IColorThemeManager
     /// <summary> Установить основной цвет </summary>
     void SetPrimaryColor(Color PrimaryColor);
 
+
+    /// <summary> Установить цвет акцента </summary>
+    void SetAccentColor(Color AccentColor);
+
+
+    /// <summary> Получить текущую цветовую схему </summary>
+    ColorTheme GetCurrentTheme();
+
+
+    /// <summary> Установить новую цветовую схему </summary>
+    void SetColorTheme(ColorTheme theme);
 }
