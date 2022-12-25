@@ -29,6 +29,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WPR.Interfaces", "Interface
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WPR.UiServices", "Services\WPR.UiServices\WPR.UiServices.csproj", "{E14B277D-8FD9-4006-9F82-4AD82FC7A367}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WPR.Interfaces.Base", "WPR.Interfaces.Base\WPR.Interfaces.Base.csproj", "{F8CBB95F-4BDC-45E9-9374-FF7A5FB9E0F4}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -63,6 +65,10 @@ Global
 		{E14B277D-8FD9-4006-9F82-4AD82FC7A367}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E14B277D-8FD9-4006-9F82-4AD82FC7A367}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E14B277D-8FD9-4006-9F82-4AD82FC7A367}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F8CBB95F-4BDC-45E9-9374-FF7A5FB9E0F4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F8CBB95F-4BDC-45E9-9374-FF7A5FB9E0F4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F8CBB95F-4BDC-45E9-9374-FF7A5FB9E0F4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F8CBB95F-4BDC-45E9-9374-FF7A5FB9E0F4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -75,6 +81,7 @@ Global
 		{D68D5B00-A7DF-427B-86C5-1CE39C9BABF8} = {84D588F2-8F69-4470-8CA2-C6F459256295}
 		{CA21B236-F066-4246-9965-D335D06DB734} = {360E239D-8204-49E7-85F7-8398FAA30B26}
 		{E14B277D-8FD9-4006-9F82-4AD82FC7A367} = {3E2F195B-8120-4F90-AF9B-EA72A81B2413}
+		{F8CBB95F-4BDC-45E9-9374-FF7A5FB9E0F4} = {360E239D-8204-49E7-85F7-8398FAA30B26}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {21D38088-0661-4EBA-A466-782D8252D50C}
