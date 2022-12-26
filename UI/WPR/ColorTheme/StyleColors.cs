@@ -39,6 +39,13 @@ public class StyleColors : DependencyObject
     internal static readonly Color _DarkSecondaryBackgroundColor = (Color)ColorConverter.ConvertFromString("#FF323232")!;
     internal static readonly Color _DarkWindowBackgroundColor = _DarkColor;
 
+    /// <summary> Основной цвет тёмной темы </summary>
+    public Color DarkColor => _DarkColor;
+
+
+    /// <summary> Основной цвет светлой темы </summary>
+    public Color LightColor => _LightColor;
+
 
     #region ShadowColor : Color - Цвет тени
 
