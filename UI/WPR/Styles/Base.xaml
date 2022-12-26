@@ -9,6 +9,7 @@
     <FontFamily x:Key="RobotoFontLight">pack://application:,,,/WPR;component/Fonts/#Roboto Thin</FontFamily>
     <FontFamily x:Key="Montserrat">pack://application:,,,/WPR;component/Fonts/#Montserrat</FontFamily>
 
+    <converters:ColorContrastConverter x:Key="ColorContrastConverter"/>
 
     <!--Кисти и цвета-->
     <colorTheme:StyleColors x:Key="StyleColors"/>
@@ -24,10 +25,10 @@
     <SolidColorBrush x:Key="DangerColorBrush" Color="{Binding DangerColor, Source={StaticResource StyleColors}}" p:Freeze="True"/>
     <SolidColorBrush x:Key="WindowBackgroundColorBrush" Color="{Binding WindowBackgroundColor, Source={StaticResource StyleColors}}" p:Freeze="True"/>
     <SolidColorBrush x:Key="InactiveWindowBackgroundColorBrush" Color="{Binding InactiveWindowBackgroundColor, Source={StaticResource StyleColors}}" p:Freeze="True"/>
-    <SolidColorBrush x:Key="BackgroundContrastColorBrush" Color="{Binding BackgroundContrastColor, Source={StaticResource StyleColors}}" p:Freeze="True"/>
-    <SolidColorBrush x:Key="WindowBackgroundContrastColorBrush" Color="{Binding WindowBackgroundContrastColor, Source={StaticResource StyleColors}}" p:Freeze="True"/>
-    <SolidColorBrush x:Key="PrimaryContrastColorBrush" Color="{Binding PrimaryContrastColor, Source={StaticResource StyleColors}}" p:Freeze="True"/>
-    <SolidColorBrush x:Key="AccentContrastColorBrush" Color="{Binding AccentContrastColor, Source={StaticResource StyleColors}}" p:Freeze="True"/>
+    <SolidColorBrush x:Key="BackgroundContrastColorBrush" Color="{Binding BackgroundColor, Source={StaticResource StyleColors}, Converter={StaticResource ColorContrastConverter}}" p:Freeze="True"/>
+    <SolidColorBrush x:Key="WindowBackgroundContrastColorBrush" Color="{Binding WindowBackgroundColor, Source={StaticResource StyleColors}, Converter={StaticResource ColorContrastConverter}}" p:Freeze="True"/>
+    <SolidColorBrush x:Key="PrimaryContrastColorBrush" Color="{Binding PrimaryColor, Source={StaticResource StyleColors}, Converter={StaticResource ColorContrastConverter}}" p:Freeze="True"/>
+    <SolidColorBrush x:Key="AccentContrastColorBrush" Color="{Binding AccentColor, Source={StaticResource StyleColors}, Converter={StaticResource ColorContrastConverter}}" p:Freeze="True"/>
 
     <SolidColorBrush x:Key="AnimationEnterColorBrush" Color="#99858585" p:Freeze="True"/>
     <SolidColorBrush x:Key="TransparentBrush" Color="Transparent" p:Freeze="True"/>
@@ -63,7 +64,7 @@
     <converters:ValueIsNotNullConverter x:Key="ValueIsNotNullConverter"/>
     <converters:ValueIsNullConverter x:Key="ValueIsNullConverter"/>
     <converters:BoolNotConverter x:Key="BoolNotConverter"/>
-    <converters:BrushLightOrDarkConverter x:Key="BrushLightOrDarkConverter"/>
+    <converters:BrushContrastConverter x:Key="BrushLightOrDarkConverter"/>
     <converters:SignPlusMinusConverter x:Key="SignPlusMinusConverter"/>
     <converters:EnumToBoolConverter x:Key="EnumToBoolConverter"/>
     <converters:ValueIsNullToVisibilityConverter x:Key="ValueIsNullToVisibilityConverter"/>

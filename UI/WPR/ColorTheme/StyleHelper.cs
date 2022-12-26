@@ -2,8 +2,6 @@
 using System.Windows;
 using System.Windows.Media;
 using WPR.Models.Themes;
-using WPR.MVVM.Converters;
-using WPR.MVVM.Converters.Base;
 
 namespace WPR.ColorTheme;
 
@@ -12,8 +10,6 @@ namespace WPR.ColorTheme;
 /// </summary>
 public static class StyleHelper
 {
-    private static readonly TypeConverter<SolidColorBrush> _BrushLightOrDarkConverter = new(new BrushLightOrDarkConverter());
-
     /// <summary> Цвета текущей сессии </summary>
     public static readonly StyleColors StyleColors = (StyleColors)Application.Current.Resources["StyleColors"];
 
@@ -76,7 +72,6 @@ public static class StyleHelper
         StyleColors.TextColor = StyleColors._DarkTextColor;
         StyleColors.ShadowColor = StyleColors._DarkShadowColor;
         StyleColors.DividerColor = StyleColors._DarkDividerColor;
-        //StyleColors.ContrastColor = StyleColors._DarkContrastColor;
 
         SetWindowColors(true);
         StyleChanged?.Invoke(null, EventArgs.Empty);
@@ -92,7 +87,6 @@ public static class StyleHelper
         StyleColors.TextColor = StyleColors._LightTextColor;
         StyleColors.ShadowColor = StyleColors._LightShadowColor;
         StyleColors.DividerColor = StyleColors._LightDividerColor;
-        //StyleColors.ContrastColor = StyleColors._LightContrastColor;
 
         SetWindowColors(false);
         StyleChanged?.Invoke(null, EventArgs.Empty);
@@ -111,9 +105,6 @@ public static class StyleHelper
 
         StyleColors.WindowBackgroundColor = windowBackgroundColor;
         StyleColors.InactiveWindowBackgroundColor = Lighten(windowBackgroundColor, isDarkTheme ? 5 : 2);
-
-        var foregroungBrush = _BrushLightOrDarkConverter.Convert(new(windowBackgroundColor));
-        //StyleColors.WindowForegroundColor = foregroungBrush.Color;
     }
 
 

@@ -10,18 +10,19 @@ namespace WPR.MVVM.Converters;
 /// Пример: вернуть светлый цвет текста если фон тёмный
 /// </summary>
 [ValueConversion(typeof(SolidColorBrush), typeof(SolidColorBrush))]
-public class BrushLightOrDarkConverter : Converter
+public class BrushContrastConverter : Converter
 {
-    public SolidColorBrush HighValue { get; set; } = new(Colors.White);
+    private static readonly ColorContrastConverter _ColorContrastConverter = new();
 
+    public SolidColorBrush HighValue { get; set; } = new(Colors.White);
     public SolidColorBrush LowValue { get; set; } = new(Colors.Black);
 
     public override object Convert(object v, Type t, object p, CultureInfo c)
     {
         if (v is not SolidColorBrush solidColorBrush) return null;
-        var color = solidColorBrush.Color;
-        var brightness = 0.3 * color.R + 0.59 * color.G + 0.11 * color.B;
-        return brightness > 123 ? LowValue : HighValue;
+        return _ColorContrastConverter.IsContrastLow(solidColorBrush.Color)
+            ? LowValue
+            : HighValue;
     }
 
     public override object ConvertBack(object v, Type t, object p, CultureInfo c) => Convert(v, t, p, c);

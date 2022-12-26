@@ -119,12 +119,13 @@
 
     <Style x:Key="PrimaryWPRButton" TargetType="{x:Type ButtonBase}" BasedOn="{StaticResource WPRFlatButton}">
         <Setter Property="Background" Value="{DynamicResource PrimaryColorBrush}"/>
-        <Setter Property="Foreground" Value="{DynamicResource WindowForegroundColorBrush}" />
+        <Setter Property="Foreground" Value="{DynamicResource PrimaryContrastColorBrush}" />
         <Setter Property="helpers:ButtonHelper.ButtonShadow" Value="{DynamicResource ButtonShadow}"/>
     </Style>
 
     <Style x:Key="AccentWPRButton" TargetType="{x:Type ButtonBase}" BasedOn="{StaticResource PrimaryWPRButton }">
         <Setter Property="Background" Value="{DynamicResource AccentColorBrush}"/>
+        <Setter Property="Foreground" Value="{DynamicResource AccentContrastColorBrush}" />
     </Style>
 
     <Style x:Key="WPRToolButton" TargetType="{x:Type ButtonBase}" BasedOn="{StaticResource WPRFlatButton}">
