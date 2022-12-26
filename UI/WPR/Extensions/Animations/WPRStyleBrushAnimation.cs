@@ -26,8 +26,6 @@ public class WPRStyleBrushAnimation : AnimationTimeline
         if (animationClock?.CurrentProgress == null)
             return Brushes.Transparent;
 
-        //use the standard values if From and To are not set 
-        //(it is the value of the given property)
         defaultOriginValue = FromBrush ?? defaultOriginValue;
         defaultDestinationValue = ToBrush ?? defaultDestinationValue;
 

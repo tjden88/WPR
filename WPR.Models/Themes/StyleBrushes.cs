@@ -5,6 +5,7 @@
 /// </summary>
 public enum StyleBrushes
 {
+    None,
     TransparentBrush,
     PrimaryColorBrush,
     DarkPrimaryColorBrush,
