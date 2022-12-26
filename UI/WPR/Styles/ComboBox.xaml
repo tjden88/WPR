@@ -214,7 +214,7 @@
         </ControlTemplate.Resources>
 
         <Grid x:Name="templateRoot" Margin="-8,-10,-8,0" SnapsToDevicePixels="true">
-            <Border Name="PopupPlacement" VerticalAlignment="Top" HorizontalAlignment="Left"/>
+            <Border Name="PopupPlacement" VerticalAlignment="Top"/>
             <Popup x:Name="PART_Popup" AllowsTransparency="true"
                    Grid.ColumnSpan="2" 
                    MaxHeight="{TemplateBinding MaxDropDownHeight}"
