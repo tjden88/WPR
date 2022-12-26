@@ -19,7 +19,9 @@ public enum StyleBrushes
     SecondaryBackgroundColorBrush,
     WindowBackgroundColorBrush,
     InactiveWindowBackgroundColor,
-    WindowForegroundColorBrush,
     AnimationEnterColorBrush,
-    ContrastColorBrush
+    BackgroundContrastColorBrush,
+    WindowBackgroundContrastColorBrush,
+    PrimaryContrastColorBrush,
+    AccentContrastColorBrush,
 }

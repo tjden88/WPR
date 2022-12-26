@@ -24,7 +24,6 @@ public class StyleColors : DependencyObject
 
     // Цвета по умолчанию для светлой темы
     internal static readonly Color _LightTextColor = _DarkColor;
-    internal static readonly Color _LightContrastColor = _DarkColor;
     internal static readonly Color _LightDividerColor = (Color)ColorConverter.ConvertFromString("#FFE0E0E0")!;
     internal static readonly Color _LightShadowColor = Colors.DimGray;
     internal static readonly Color _LightBackgroundColor = _LightColor;
@@ -34,7 +33,6 @@ public class StyleColors : DependencyObject
 
     // Цвета по умолчанию для тёмной темы
     internal static readonly Color _DarkTextColor = _LightColor;
-    internal static readonly Color _DarkContrastColor = _LightColor;
     internal static readonly Color _DarkDividerColor = (Color)ColorConverter.ConvertFromString("#FF494949")!;
     internal static readonly Color _DarkShadowColor = Colors.Black;
     internal static readonly Color _DarkBackgroundColor = _DarkColor;
@@ -328,45 +326,89 @@ public class StyleColors : DependencyObject
     #endregion
 
 
-    #region WindowForegroundColor : Color - Цвет текста заголовка окна
+    #region BackgroundContrastColor : Color - Контрастный к основному фону заливки
 
-    /// <summary>Цвет текста заголовка окна</summary>
-    public static readonly DependencyProperty WindowForegroundColorProperty =
+    /// <summary>Контрастный к основному фону цвет</summary>
+    public static readonly DependencyProperty BackgroundContrastColorProperty =
         DependencyProperty.Register(
-            nameof(WindowForegroundColor),
+            nameof(BackgroundContrastColor),
             typeof(Color),
             typeof(StyleColors),
-            new PropertyMetadata(_LightColor));
+            new PropertyMetadata(_DarkColor));
 
-    /// <summary>Цвет текста заголовка окна</summary>
+    /// <summary>Контрастный к основному фону цвет</summary>
     [Category("StyleColors")]
-    [Description("Цвет текста заголовка окна")]
-    public Color WindowForegroundColor
+    [Description("Контрастный к основному фону цвет")]
+    public Color BackgroundContrastColor
     {
-        get => (Color)GetValue(WindowForegroundColorProperty);
-        set => SetValue(WindowForegroundColorProperty, value);
+        get => (Color)GetValue(BackgroundContrastColorProperty);
+        set => SetValue(BackgroundContrastColorProperty, value);
     }
 
     #endregion
 
 
-    #region ContrastColor : Color - Контрастный к основному фону цвет (например для всплывающиз сообщений)
+    #region WindowBackgroundContrastColor : Color - Цвет, контрастный к фону окна
 
-    /// <summary>Контрастный к основному фону цвет (например для всплывающиз сообщений)</summary>
-    public static readonly DependencyProperty ContrastColorProperty =
+    /// <summary>Цвет, контрастный к фону окна</summary>
+    public static readonly DependencyProperty WindowBackgroundContrastColorProperty =
         DependencyProperty.Register(
-            nameof(ContrastColor),
+            nameof(WindowBackgroundContrastColor),
             typeof(Color),
             typeof(StyleColors),
-            new PropertyMetadata(_LightContrastColor));
+            new PropertyMetadata(_LightColor));
 
-    /// <summary>Контрастный к основному фону цвет (например для всплывающиз сообщений)</summary>
+    /// <summary>Цвет, контрастный к фону окна</summary>
     [Category("StyleColors")]
-    [Description("Контрастный к основному фону цвет (например для всплывающиз сообщений)")]
-    public Color ContrastColor
+    [Description("Цвет, контрастный к фону окна")]
+    public Color WindowBackgroundContrastColor
     {
-        get => (Color)GetValue(ContrastColorProperty);
-        set => SetValue(ContrastColorProperty, value);
+        get => (Color) GetValue(WindowBackgroundContrastColorProperty);
+        set => SetValue(WindowBackgroundContrastColorProperty, value);
+    }
+
+    #endregion
+
+
+    #region PrimaryContrastColor : Color - Цвет, контрастный к основному
+
+    /// <summary>Цвет, контрастный к основному</summary>
+    public static readonly DependencyProperty PrimaryContrastColorProperty =
+        DependencyProperty.Register(
+            nameof(PrimaryContrastColor),
+            typeof(Color),
+            typeof(StyleColors),
+            new PropertyMetadata(_LightColor));
+
+    /// <summary>Цвет, контрастный к основному</summary>
+    [Category("StyleColors")]
+    [Description("Цвет, контрастный к основному")]
+    public Color PrimaryContrastColor
+    {
+        get => (Color) GetValue(PrimaryContrastColorProperty);
+        set => SetValue(PrimaryContrastColorProperty, value);
+    }
+
+    #endregion
+
+
+    #region AccentContrastColor : Color - Цвет, контрастный к цвету акцента
+
+    /// <summary>Цвет, контрастный к цвету акцента</summary>
+    public static readonly DependencyProperty AccentContrastColorProperty =
+        DependencyProperty.Register(
+            nameof(AccentContrastColor),
+            typeof(Color),
+            typeof(StyleColors),
+            new PropertyMetadata(_LightColor));
+
+    /// <summary>Цвет, контрастный к цвету акцента</summary>
+    [Category("StyleColors")]
+    [Description("Цвет, контрастный к цвету акцента")]
+    public Color AccentContrastColor
+    {
+        get => (Color) GetValue(AccentContrastColorProperty);
+        set => SetValue(AccentContrastColorProperty, value);
     }
 
     #endregion

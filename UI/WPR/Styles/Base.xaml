@@ -9,11 +9,9 @@
     <FontFamily x:Key="RobotoFontLight">pack://application:,,,/WPR;component/Fonts/#Roboto Thin</FontFamily>
     <FontFamily x:Key="Montserrat">pack://application:,,,/WPR;component/Fonts/#Montserrat</FontFamily>
 
+
     <!--Кисти и цвета-->
-
     <colorTheme:StyleColors x:Key="StyleColors"/>
-
-
     <SolidColorBrush x:Key="PrimaryColorBrush" Color="{Binding PrimaryColor, Source={StaticResource StyleColors}}" p:Freeze="True"/>
     <SolidColorBrush x:Key="DarkPrimaryColorBrush"  Color="{Binding DarkPrimaryColor, Source={StaticResource StyleColors}}" p:Freeze="True"/>
     <SolidColorBrush x:Key="LightPrimaryColorBrush" Color="{Binding LightPrimaryColor, Source={StaticResource StyleColors}}" p:Freeze="True"/>
@@ -26,11 +24,12 @@
     <SolidColorBrush x:Key="DangerColorBrush" Color="{Binding DangerColor, Source={StaticResource StyleColors}}" p:Freeze="True"/>
     <SolidColorBrush x:Key="WindowBackgroundColorBrush" Color="{Binding WindowBackgroundColor, Source={StaticResource StyleColors}}" p:Freeze="True"/>
     <SolidColorBrush x:Key="InactiveWindowBackgroundColorBrush" Color="{Binding InactiveWindowBackgroundColor, Source={StaticResource StyleColors}}" p:Freeze="True"/>
-    <SolidColorBrush x:Key="WindowForegroundColorBrush" Color="{Binding WindowForegroundColor, Source={StaticResource StyleColors}}" p:Freeze="True"/>
-    <SolidColorBrush x:Key="ContrastColorBrush" Color="{Binding ContrastColor, Source={StaticResource StyleColors}}" p:Freeze="True"/>
+    <SolidColorBrush x:Key="BackgroundContrastColorBrush" Color="{Binding BackgroundContrastColor, Source={StaticResource StyleColors}}" p:Freeze="True"/>
+    <SolidColorBrush x:Key="WindowBackgroundContrastColorBrush" Color="{Binding WindowBackgroundContrastColor, Source={StaticResource StyleColors}}" p:Freeze="True"/>
+    <SolidColorBrush x:Key="PrimaryContrastColorBrush" Color="{Binding PrimaryContrastColor, Source={StaticResource StyleColors}}" p:Freeze="True"/>
+    <SolidColorBrush x:Key="AccentContrastColorBrush" Color="{Binding AccentContrastColor, Source={StaticResource StyleColors}}" p:Freeze="True"/>
 
     <SolidColorBrush x:Key="AnimationEnterColorBrush" Color="#99858585" p:Freeze="True"/>
-
     <SolidColorBrush x:Key="TransparentBrush" Color="Transparent" p:Freeze="True"/>
 
     <!--Тени-->

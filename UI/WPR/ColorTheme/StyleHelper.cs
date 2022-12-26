@@ -76,7 +76,7 @@ public static class StyleHelper
         StyleColors.TextColor = StyleColors._DarkTextColor;
         StyleColors.ShadowColor = StyleColors._DarkShadowColor;
         StyleColors.DividerColor = StyleColors._DarkDividerColor;
-        StyleColors.ContrastColor = StyleColors._DarkContrastColor;
+        //StyleColors.ContrastColor = StyleColors._DarkContrastColor;
 
         SetWindowColors(true);
         StyleChanged?.Invoke(null, EventArgs.Empty);
@@ -92,7 +92,7 @@ public static class StyleHelper
         StyleColors.TextColor = StyleColors._LightTextColor;
         StyleColors.ShadowColor = StyleColors._LightShadowColor;
         StyleColors.DividerColor = StyleColors._LightDividerColor;
-        StyleColors.ContrastColor = StyleColors._LightContrastColor;
+        //StyleColors.ContrastColor = StyleColors._LightContrastColor;
 
         SetWindowColors(false);
         StyleChanged?.Invoke(null, EventArgs.Empty);
@@ -113,7 +113,7 @@ public static class StyleHelper
         StyleColors.InactiveWindowBackgroundColor = Lighten(windowBackgroundColor, isDarkTheme ? 5 : 2);
 
         var foregroungBrush = _BrushLightOrDarkConverter.Convert(new(windowBackgroundColor));
-        StyleColors.WindowForegroundColor = foregroungBrush.Color;
+        //StyleColors.WindowForegroundColor = foregroungBrush.Color;
     }
 
 

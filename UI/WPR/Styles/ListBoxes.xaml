@@ -106,7 +106,7 @@
                                              Storyboard.TargetProperty="ScaleX"
                                              Storyboard.TargetName="ScaleSelected" />
                             <animations:WPRStyleBrushAnimation Storyboard.TargetProperty="Foreground" 
-                                                                   To="WindowForegroundColorBrush"
+                                                                   To="PrimaryContrastColorBrush"
                                                                    Duration="0:0:0.3"/>
 
                         </Storyboard>

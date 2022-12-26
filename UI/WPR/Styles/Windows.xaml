@@ -16,7 +16,7 @@
         <Setter Property="WindowChrome.IsHitTestVisibleInChrome" Value="True" />
         <Setter Property="Focusable" Value="False"/>
         <Setter Property="Background" Value="{StaticResource TransparentBrush}"></Setter>
-        <Setter Property="Foreground" Value="{DynamicResource WindowForegroundColorBrush}" />
+        <Setter Property="Foreground" Value="{DynamicResource WindowBackgroundContrastColorBrush}" />
         <Setter Property="wh:ButtonHelper.BorderRadius" Value="0"/>
     </Style>
 
@@ -127,13 +127,13 @@
                                     </Image.Style>
                                 </Image>
                                 <ContentControl Name="HeaderControl"
-                                                Foreground="{DynamicResource WindowForegroundColorBrush}"
+                                                Foreground="{DynamicResource WindowBackgroundContrastColorBrush}"
                                                 Content="{Binding Path=(wh:WindowHelper.WindowHeaderContent), RelativeSource={RelativeSource TemplatedParent}}"/>
                             </StackPanel>
 
                             <TextBlock Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center" 
                                        FontSize="14"
-                                       Foreground="{DynamicResource WindowForegroundColorBrush}"
+                                       Foreground="{DynamicResource WindowBackgroundContrastColorBrush}"
                                        Text="{TemplateBinding Title}"/>
                         </Grid>
 
