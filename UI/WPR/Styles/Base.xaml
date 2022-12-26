@@ -9,7 +9,18 @@
     <FontFamily x:Key="RobotoFontLight">pack://application:,,,/WPR;component/Fonts/#Roboto Thin</FontFamily>
     <FontFamily x:Key="Montserrat">pack://application:,,,/WPR;component/Fonts/#Montserrat</FontFamily>
 
-    <converters:ColorContrastConverter x:Key="ColorContrastConverter"/>
+    <!--Конвертеры-->
+    <converters:BoolToVisibilityConverter x:Key="Bool2VisibilityConverter"/>
+    <converters:TextIsNotNullConverter x:Key="TextIsNotNullConverter"/>
+    <converters:ValueIsNotNullConverter x:Key="ValueIsNotNullConverter"/>
+    <converters:ValueIsNullConverter x:Key="ValueIsNullConverter"/>
+    <converters:BoolNotConverter x:Key="BoolNotConverter"/>
+    <converters:ColorContrastConverter LowValue="#1C1C1C" x:Key="ColorContrastConverter"/>
+    <converters:BrushContrastConverter LowValue="#1C1C1C" x:Key="BrushLightOrDarkConverter"/>
+    <converters:SignPlusMinusConverter x:Key="SignPlusMinusConverter"/>
+    <converters:EnumToBoolConverter x:Key="EnumToBoolConverter"/>
+    <converters:ValueIsNullToVisibilityConverter x:Key="ValueIsNullToVisibilityConverter"/>
+
 
     <!--Кисти и цвета-->
     <colorTheme:StyleColors x:Key="StyleColors"/>
@@ -57,17 +68,6 @@
     <ExponentialEase EasingMode="EaseIn" x:Key="ExponentialEaseIn" p:Freeze="True"/>
     <ExponentialEase EasingMode="EaseOut" x:Key="ExponentialEaseOut" p:Freeze="True"/>
     <ExponentialEase EasingMode="EaseInOut" x:Key="ExponentialEaseInOut" p:Freeze="True"/>
-
-    <!--Конвертеры-->
-    <converters:BoolToVisibilityConverter x:Key="Bool2VisibilityConverter"/>
-    <converters:TextIsNotNullConverter x:Key="TextIsNotNullConverter"/>
-    <converters:ValueIsNotNullConverter x:Key="ValueIsNotNullConverter"/>
-    <converters:ValueIsNullConverter x:Key="ValueIsNullConverter"/>
-    <converters:BoolNotConverter x:Key="BoolNotConverter"/>
-    <converters:BrushContrastConverter x:Key="BrushLightOrDarkConverter"/>
-    <converters:SignPlusMinusConverter x:Key="SignPlusMinusConverter"/>
-    <converters:EnumToBoolConverter x:Key="EnumToBoolConverter"/>
-    <converters:ValueIsNullToVisibilityConverter x:Key="ValueIsNullToVisibilityConverter"/>
 
     <!--Стиль для элемента в фокусе-->
     <Style x:Key="BaseFocusVisualStyle" TargetType="{x:Type Control}">
