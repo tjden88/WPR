@@ -17,13 +17,15 @@ public class ColorContrastConverter : Converter
 
     internal bool IsContrastLow(Color color)
     {
-        var brightness = 0.3 * color.R + 0.59 * color.G + 0.11 * color.B;
-        return brightness > 123;
+        var brightness = 0.2126 * color.ScR + 0.7152 * color.ScG + 0.0722 * color.ScB;
+        return brightness > 0.4;
     }
 
     public override object Convert(object v, Type t, object p, CultureInfo c)
     {
-        if (v is not Color color) return default(Color);
+        if (v is not Color color)
+            return v;
+
         return IsContrastLow(color) ? LowValue : HighValue;
     }
 
