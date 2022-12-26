@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel;
 using System.Windows;
 using System.Windows.Media;
+// ReSharper disable InconsistentNaming
 
 namespace WPR.ColorTheme;
 
@@ -9,30 +10,36 @@ namespace WPR.ColorTheme;
 /// </summary>
 public class StyleColors : DependencyObject
 {
- 
+    // Цвета по умолчанию
+    internal static readonly Color _LightColor = Colors.White;
+    internal static readonly Color _DarkColor = (Color)ColorConverter.ConvertFromString("#1C1C1C")!;
+
+    internal static readonly Color _PrimaryColor = (Color)ColorConverter.ConvertFromString("#3F51B5")!;
+    internal static readonly Color _DarkPrimaryColor = (Color)ColorConverter.ConvertFromString("#FF212E80")!;
+    internal static readonly Color _LightPrimaryColor = (Color)ColorConverter.ConvertFromString("#FF9FA8DA")!;
+    internal static readonly Color _SecondaryColor = (Color)ColorConverter.ConvertFromString("#FF8B8B8B")!;
+    internal static readonly Color _AccentColor = (Color)ColorConverter.ConvertFromString("#FF5722")!;
+    internal static readonly Color _DangerColor = (Color)ColorConverter.ConvertFromString("#CA0B00")!;
+
 
     // Цвета по умолчанию для светлой темы
-    private static readonly Color _LightColor = Colors.White;
-    private static readonly Color _DarkColor = (Color)ColorConverter.ConvertFromString("#1C1C1C")!;
-    private static readonly Color _PrimaryColor = (Color)ColorConverter.ConvertFromString("#3F51B5")!;
-    private static readonly Color _DarkPrimaryColor = (Color)ColorConverter.ConvertFromString("#FF212E80")!;
-    private static readonly Color _LightPrimaryColor = (Color)ColorConverter.ConvertFromString("#C5CAE9")!;
-    private static readonly Color _SecondaryColor = (Color)ColorConverter.ConvertFromString("#FF8B8B8B")!;
-    private static readonly Color _AccentColor = (Color)ColorConverter.ConvertFromString("#FF5722")!;
-    private static readonly Color _DangerColor = (Color)ColorConverter.ConvertFromString("#CA0B00")!;
-    private static readonly Color _TextColor = (Color)ColorConverter.ConvertFromString("#FF383838")!;
-    private static readonly Color _DividerColor = (Color)ColorConverter.ConvertFromString("#FFE0E0E0")!;
-    private static readonly Color _ShadowColor = Colors.DimGray;
+    internal static readonly Color _LightTextColor = _DarkColor;
+    internal static readonly Color _LightContrastColor = _DarkColor;
+    internal static readonly Color _LightDividerColor = (Color)ColorConverter.ConvertFromString("#FFE0E0E0")!;
+    internal static readonly Color _LightShadowColor = Colors.DimGray;
+    internal static readonly Color _LightBackgroundColor = _LightColor;
+    internal static readonly Color _LightSecondaryBackgroundColor = Colors.WhiteSmoke;
+    internal static readonly Color _LightWindowBackgroundColor = _PrimaryColor;
 
-    private static readonly Color _BackgroundColor = _LightColor;
-    private static readonly Color _WindowBackgroundColor = _PrimaryColor;
-    private static readonly Color _InactiveWindowBackgroundColor = (Color)ColorConverter.ConvertFromString("#FF9FA8DA")!;
-    private static readonly Color _WindowForegroundColor = _BackgroundColor;
 
-    private static readonly Color _SecondaryBackgroundColor = _LightColor;
-    private static readonly Color _LightWindowBackgroundColor = _PrimaryColor;
-    private static readonly Color _DarkWindowBackgroundColor = _DarkColor;
-    private static readonly Color _ContrastColor = _DarkColor;
+    // Цвета по умолчанию для тёмной темы
+    internal static readonly Color _DarkTextColor = _LightColor;
+    internal static readonly Color _DarkContrastColor = _LightColor;
+    internal static readonly Color _DarkDividerColor = (Color)ColorConverter.ConvertFromString("#FF494949")!;
+    internal static readonly Color _DarkShadowColor = Colors.Black;
+    internal static readonly Color _DarkBackgroundColor = _DarkColor;
+    internal static readonly Color _DarkSecondaryBackgroundColor = (Color)ColorConverter.ConvertFromString("#FF323232")!;
+    internal static readonly Color _DarkWindowBackgroundColor = _DarkColor;
 
 
     #region ShadowColor : Color - Цвет тени
@@ -43,7 +50,7 @@ public class StyleColors : DependencyObject
             nameof(ShadowColor),
             typeof(Color),
             typeof(StyleColors),
-            new PropertyMetadata(_ShadowColor));
+            new PropertyMetadata(_LightShadowColor));
 
     /// <summary>Цвет тени</summary>
     [Category("StyleColors")]
@@ -241,7 +248,7 @@ public class StyleColors : DependencyObject
             nameof(TextColor),
             typeof(Color),
             typeof(StyleColors),
-            new PropertyMetadata(_TextColor));
+            new PropertyMetadata(_LightTextColor));
 
     /// <summary>Цвет текста</summary>
     [Category("StyleColors")]
@@ -263,7 +270,7 @@ public class StyleColors : DependencyObject
             nameof(DividerColor),
             typeof(Color),
             typeof(StyleColors),
-            new PropertyMetadata(_DividerColor));
+            new PropertyMetadata(_LightDividerColor));
 
     /// <summary>Цвет разделителей</summary>
     [Category("StyleColors")]
@@ -285,7 +292,7 @@ public class StyleColors : DependencyObject
             nameof(BackgroundColor),
             typeof(Color),
             typeof(StyleColors),
-            new PropertyMetadata(_BackgroundColor));
+            new PropertyMetadata(_LightBackgroundColor));
 
     /// <summary>Цвет фона</summary>
     [Category("StyleColors")]
@@ -307,7 +314,7 @@ public class StyleColors : DependencyObject
             nameof(SecondaryBackgroundColor),
             typeof(Color),
             typeof(StyleColors),
-            new PropertyMetadata(_SecondaryBackgroundColor));
+            new PropertyMetadata(_LightSecondaryBackgroundColor));
 
     /// <summary>Вторичный фон (например, для карточек)</summary>
     [Category("StyleColors")]
@@ -329,14 +336,14 @@ public class StyleColors : DependencyObject
             nameof(WindowBackgroundColor),
             typeof(Color),
             typeof(StyleColors),
-            new PropertyMetadata(_WindowBackgroundColor));
+            new PropertyMetadata(_LightWindowBackgroundColor));
 
     /// <summary>Текущий фон окна</summary>
     [Category("StyleColors")]
     [Description("Текущий фон окна")]
     public Color WindowBackgroundColor
     {
-        get => (Color) GetValue(WindowBackgroundColorProperty);
+        get => (Color)GetValue(WindowBackgroundColorProperty);
         set => SetValue(WindowBackgroundColorProperty, value);
     }
 
@@ -395,7 +402,7 @@ public class StyleColors : DependencyObject
             nameof(InactiveWindowBackgroundColor),
             typeof(Color),
             typeof(StyleColors),
-            new PropertyMetadata(_InactiveWindowBackgroundColor));
+            new PropertyMetadata(_LightPrimaryColor));
 
     /// <summary>Цвет фона неактивного окна</summary>
     [Category("StyleColors")]
@@ -417,14 +424,14 @@ public class StyleColors : DependencyObject
             nameof(WindowForegroundColor),
             typeof(Color),
             typeof(StyleColors),
-            new PropertyMetadata(_WindowForegroundColor));
+            new PropertyMetadata(_LightColor));
 
     /// <summary>Цвет текста заголовка окна</summary>
     [Category("StyleColors")]
     [Description("Цвет текста заголовка окна")]
     public Color WindowForegroundColor
     {
-        get => (Color) GetValue(WindowForegroundColorProperty);
+        get => (Color)GetValue(WindowForegroundColorProperty);
         set => SetValue(WindowForegroundColorProperty, value);
     }
 
@@ -439,14 +446,14 @@ public class StyleColors : DependencyObject
             nameof(ContrastColor),
             typeof(Color),
             typeof(StyleColors),
-            new PropertyMetadata(_ContrastColor));
+            new PropertyMetadata(_LightContrastColor));
 
     /// <summary>Контрастный к основному фону цвет (например для всплывающиз сообщений)</summary>
     [Category("StyleColors")]
     [Description("Контрастный к основному фону цвет (например для всплывающиз сообщений)")]
     public Color ContrastColor
     {
-        get => (Color) GetValue(ContrastColorProperty);
+        get => (Color)GetValue(ContrastColorProperty);
         set => SetValue(ContrastColorProperty, value);
     }
 

@@ -16,13 +16,9 @@ public static class StyleHelper
 
     /// <summary> Цвета текущей сессии </summary>
     public static readonly StyleColors StyleColors = (StyleColors)Application.Current.Resources["StyleColors"];
-    private static Color DarkColor => StyleColors.DarkColor; // Кисть тёмной темы
-    private static Color WhiteColor => StyleColors.LightColor; // Кисть светлой темы
-
 
     /// <summary> Происходит при любом изменении цветовой схемы</summary>
     public static event EventHandler StyleChanged;
-
 
     /// <summary>Установлена ли тёмная тема</summary>
     public static bool IsDarkTheme => StyleColors.DarkColor == StyleColors.BackgroundColor;
@@ -66,7 +62,7 @@ public static class StyleHelper
     /// <param name="BrushName">Имя кисти</param>
     public static SolidColorBrush GetBrushFromResource(StyleBrushes BrushName)
     {
-        var br = (SolidColorBrush)Application.Current.Resources[BrushName.ToString()];
+        var br = Application.Current.Resources[BrushName.ToString()] as SolidColorBrush;
         return br;
     }
 
@@ -78,12 +74,12 @@ public static class StyleHelper
     /// </summary>
     public static void SetDarkColorTheme()
     {
-        StyleColors.BackgroundColor = DarkColor;
-        StyleColors.SecondaryBackgroundColor = Lighten(DarkColor, 10);
-        StyleColors.TextColor = WhiteColor;
-        StyleColors.ShadowColor = Colors.Black;
-        StyleColors.DividerColor = Lighten(StyleColors.DarkColor, 5);
-        StyleColors.ContrastColor = (Color)ColorConverter.ConvertFromString("#c8c8c8")!;
+        StyleColors.BackgroundColor = StyleColors._DarkBackgroundColor;
+        StyleColors.SecondaryBackgroundColor = StyleColors._DarkSecondaryBackgroundColor;
+        StyleColors.TextColor = StyleColors._DarkTextColor;
+        StyleColors.ShadowColor = StyleColors._DarkShadowColor;
+        StyleColors.DividerColor = StyleColors._DarkDividerColor;
+        StyleColors.ContrastColor = StyleColors._DarkContrastColor;
 
         SetWindowColors(true);
         StyleChanged?.Invoke(null, EventArgs.Empty);
@@ -94,13 +90,12 @@ public static class StyleHelper
     /// </summary>
     public static void SetLightColorTheme()
     {
-        StyleColors.BackgroundColor = WhiteColor;
-        StyleColors.SecondaryBackgroundColor = WhiteColor;
-        StyleColors.TextColor = DarkColor;
-        StyleColors.ShadowColor = Colors.DimGray;
-        StyleColors.DividerColor = (Color)ColorConverter.ConvertFromString("#FFE0E0E0")!;
-        StyleColors.ContrastColor = DarkColor;
-
+        StyleColors.BackgroundColor = StyleColors._LightBackgroundColor;
+        StyleColors.SecondaryBackgroundColor = StyleColors._LightSecondaryBackgroundColor;
+        StyleColors.TextColor = StyleColors._LightTextColor;
+        StyleColors.ShadowColor = StyleColors._LightShadowColor;
+        StyleColors.DividerColor = StyleColors._LightDividerColor;
+        StyleColors.ContrastColor = StyleColors._LightContrastColor;
 
         SetWindowColors(false);
         StyleChanged?.Invoke(null, EventArgs.Empty);
