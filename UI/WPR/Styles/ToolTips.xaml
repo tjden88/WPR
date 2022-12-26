@@ -6,7 +6,7 @@
     </ResourceDictionary.MergedDictionaries>
 
     <Style TargetType="{x:Type ToolTip}" x:Key="WPRToolTip">
-        <Setter Property="Background" Value="{DynamicResource ContrastColorBrush}"/>
+        <Setter Property="Background" Value="{DynamicResource BackgroundContrastColorBrush}"/>
         <Setter Property="Foreground" Value="{DynamicResource BackgroundColorBrush}"/>
         <Setter Property="Padding" Value="6"></Setter>
         <Setter Property="Template">
