@@ -59,4 +59,17 @@ public interface IUserDialog
     /// <summary> Текстовое поле для ввода с валидацией введённых данных. Если null - пользователь отменил ввод </summary>
     Task<string?> InputValidatedTextAsync(InputDialogFilter DialogFilter);
 
+
+    /// <summary> Показать всплывающее уведомление </summary>
+    Task ShowNotificationAsync(string message, int delay = 2000);
+
+
+    /// <summary>
+    /// Показать всплывающее уведомление с ожиданием реакции пользователя
+    /// </summary>
+    /// <param name="message">Сообщение пользователю</param>
+    /// <param name="AcceptCaption">Подпись кнопки подтверждения</param>
+    /// <param name="delay">Время показа уведомления</param>
+    /// <returns></returns>
+    Task<bool> ShowQuestionNotificationAsync(string message, string AcceptCaption, int delay = 3000);
 }

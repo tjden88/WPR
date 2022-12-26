@@ -69,4 +69,17 @@ public class UserDialog : IUserDialog
             DialogFilter.DefaultValue,
             DialogFilter.ValidationRules.Select(f => new PredicateValidationRule<string>(f.Rule, f.ErrorMessage)));
 
+    public Task ShowNotificationAsync(string message, int delay = 2000)
+    {
+        WPRDialogHelper.Bubble(Active, message, delay);
+        return Task.CompletedTask;
+    }
+
+    public Task<bool> ShowQuestionNotificationAsync(string message, string AcceptCaption, int delay = 3000)
+    {
+        var source = new TaskCompletionSource<bool>();
+        WPRDialogHelper.Bubble(Active, message, AcceptCaption, b => source.TrySetResult(b), delay);
+
+        return source.Task;
+    }
 }
