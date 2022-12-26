@@ -49,7 +49,7 @@ public abstract partial class ViewModel : INotifyPropertyChanged
         return true;
     }
 
-    protected ValueResult<T> IfSet<T>(ref T field, ref T value, [CallerMemberName] string PropertyName = null)
+    protected ValueResult<T> IfSet<T>(ref T field, T value, [CallerMemberName] string PropertyName = null)
     {
         var res = Set(ref field, value, PropertyName);
         return new ValueResult<T>(res, value, field, this);

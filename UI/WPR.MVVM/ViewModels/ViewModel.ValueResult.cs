@@ -2,7 +2,7 @@
 
 partial class ViewModel
 {
-    public readonly ref struct ValueResult<T>
+    public readonly struct ValueResult<T>
     {
         private readonly bool _Result;
         private readonly T _NewValue;
