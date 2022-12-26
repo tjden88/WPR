@@ -16,7 +16,7 @@
         <Setter Property="WindowChrome.IsHitTestVisibleInChrome" Value="True" />
         <Setter Property="Focusable" Value="False"/>
         <Setter Property="Background" Value="{StaticResource TransparentBrush}"></Setter>
-        <Setter Property="Foreground" Value="{DynamicResource WindowBackgroundContrastColorBrush}" />
+        <Setter Property="Foreground" Value="{DynamicResource WindowTitleBackgroundContrastColorBrush}" />
         <Setter Property="wh:ButtonHelper.BorderRadius" Value="0"/>
     </Style>
 
@@ -105,7 +105,7 @@
                     <Grid>
                         <Grid x:Name="TitlePanel"
                                Height="35"
-                               Background="{TemplateBinding Background}"
+                               Background="{DynamicResource WindowTitleBackgroundColorBrush}"
                                VerticalAlignment="Top">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition MinWidth="{Binding ActualWidth, ElementName=HeaderControl}"/>
@@ -127,13 +127,13 @@
                                     </Image.Style>
                                 </Image>
                                 <ContentControl Name="HeaderControl"
-                                                Foreground="{DynamicResource WindowBackgroundContrastColorBrush}"
+                                                Foreground="{DynamicResource WindowTitleBackgroundContrastColorBrush}"
                                                 Content="{Binding Path=(wh:WindowHelper.WindowHeaderContent), RelativeSource={RelativeSource TemplatedParent}}"/>
                             </StackPanel>
 
                             <TextBlock Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center" 
                                        FontSize="14"
-                                       Foreground="{DynamicResource WindowBackgroundContrastColorBrush}"
+                                       Foreground="{DynamicResource WindowTitleBackgroundContrastColorBrush}"
                                        Text="{TemplateBinding Title}"/>
                         </Grid>
 
@@ -142,7 +142,7 @@
 
                         <DockPanel x:Name="PART_Buttons" Height="35" 
                                VerticalAlignment="Top"
-                               Background="{TemplateBinding Background}"
+                               Background="{DynamicResource WindowTitleBackgroundColorBrush}"
                                HorizontalAlignment="Right"
                                LastChildFill="False">
                             <Button x:Name="btnClose" Style="{StaticResource  WindowHeaderCloseButton}"
@@ -201,7 +201,7 @@
         </AdornerDecorator>
         <ControlTemplate.Triggers>
             <Trigger Property="IsActive" Value="False">
-                <Setter Property="Background" Value="{DynamicResource InactiveWindowBackgroundColorBrush}"/>
+                <Setter Property="Background" Value="{DynamicResource InactiveWindowTitleBackgroundColorBrush}"/>
             </Trigger>
         </ControlTemplate.Triggers>
     </ControlTemplate>
@@ -219,7 +219,7 @@
             </Setter.Value>
         </Setter>
         <Setter Property="BorderBrush" Value="{DynamicResource PrimaryColorBrush}" />
-        <Setter Property="Background" Value="{DynamicResource WindowBackgroundColorBrush}"/>
+        <Setter Property="Background" Value="{DynamicResource BackgroundColorBrush}"/>
         <!--<Setter Property="UseLayoutRounding" Value="True"/>-->
         <Setter Property="Template" Value="{StaticResource ChromeWindowTemplate}"/>
     </Style>

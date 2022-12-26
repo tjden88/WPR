@@ -28,7 +28,7 @@ public class StyleColors : DependencyObject
     internal static readonly Color _LightShadowColor = Colors.DimGray;
     internal static readonly Color _LightBackgroundColor = _LightColor;
     internal static readonly Color _LightSecondaryBackgroundColor = Colors.WhiteSmoke;
-    internal static readonly Color _LightWindowBackgroundColor = _PrimaryColor;
+    internal static readonly Color _LightWindowTitleBackgroundColor = _PrimaryColor;
 
 
     // Цвета по умолчанию для тёмной темы
@@ -37,7 +37,7 @@ public class StyleColors : DependencyObject
     internal static readonly Color _DarkShadowColor = Colors.Black;
     internal static readonly Color _DarkBackgroundColor = _DarkColor;
     internal static readonly Color _DarkSecondaryBackgroundColor = (Color)ColorConverter.ConvertFromString("#FF323232")!;
-    internal static readonly Color _DarkWindowBackgroundColor = _DarkColor;
+    internal static readonly Color _DarkWindowTitleBackgroundColor = _DarkColor;
 
 
     #region ShadowColor : Color - Цвет тени
@@ -282,34 +282,34 @@ public class StyleColors : DependencyObject
     #endregion
 
 
-    #region WindowBackgroundColor : Color - Текущий фон окна
+    #region WindowTitleBackgroundColor : Color - Текущий фон окна
 
     /// <summary>Текущий фон окна</summary>
-    public static readonly DependencyProperty WindowBackgroundColorProperty =
+    public static readonly DependencyProperty WindowTitleBackgroundColorProperty =
         DependencyProperty.Register(
-            nameof(WindowBackgroundColor),
+            nameof(WindowTitleBackgroundColor),
             typeof(Color),
             typeof(StyleColors),
-            new PropertyMetadata(_LightWindowBackgroundColor));
+            new PropertyMetadata(_LightWindowTitleBackgroundColor));
 
     /// <summary>Текущий фон окна</summary>
     [Category("StyleColors")]
     [Description("Текущий фон окна")]
-    public Color WindowBackgroundColor
+    public Color WindowTitleBackgroundColor
     {
-        get => (Color)GetValue(WindowBackgroundColorProperty);
-        set => SetValue(WindowBackgroundColorProperty, value);
+        get => (Color)GetValue(WindowTitleBackgroundColorProperty);
+        set => SetValue(WindowTitleBackgroundColorProperty, value);
     }
 
     #endregion
 
 
-    #region InactiveWindowBackgroundColor : Color - Цвет фона неактивного окна
+    #region InactiveWindowTitleBackgroundColor : Color - Цвет фона неактивного окна
 
     /// <summary>Цвет фона неактивного окна</summary>
-    public static readonly DependencyProperty InactiveWindowBackgroundColorProperty =
+    public static readonly DependencyProperty InactiveWindowTitleBackgroundColorProperty =
         DependencyProperty.Register(
-            nameof(InactiveWindowBackgroundColor),
+            nameof(InactiveWindowTitleBackgroundColor),
             typeof(Color),
             typeof(StyleColors),
             new PropertyMetadata(_LightPrimaryColor));
@@ -317,10 +317,10 @@ public class StyleColors : DependencyObject
     /// <summary>Цвет фона неактивного окна</summary>
     [Category("StyleColors")]
     [Description("Цвет фона неактивного окна")]
-    public Color InactiveWindowBackgroundColor
+    public Color InactiveWindowTitleBackgroundColor
     {
-        get => (Color)GetValue(InactiveWindowBackgroundColorProperty);
-        set => SetValue(InactiveWindowBackgroundColorProperty, value);
+        get => (Color)GetValue(InactiveWindowTitleBackgroundColorProperty);
+        set => SetValue(InactiveWindowTitleBackgroundColorProperty, value);
     }
 
     #endregion

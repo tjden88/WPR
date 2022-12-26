@@ -17,11 +17,10 @@ public enum StyleBrushes
     DividerColorBrush,
     BackgroundColorBrush,
     SecondaryBackgroundColorBrush,
-    WindowBackgroundColorBrush,
-    InactiveWindowBackgroundColor,
+    WindowTitleBackgroundColorBrush,
+    InactiveWindowTitleBackgroundColor,
     AnimationEnterColorBrush,
     BackgroundContrastColorBrush,
-    WindowBackgroundContrastColorBrush,
     PrimaryContrastColorBrush,
     AccentContrastColorBrush,
 }

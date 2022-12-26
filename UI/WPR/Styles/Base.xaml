@@ -34,10 +34,10 @@
     <SolidColorBrush x:Key="BackgroundColorBrush" Color="{Binding BackgroundColor, Source={StaticResource StyleColors}}" p:Freeze="True"/>
     <SolidColorBrush x:Key="SecondaryBackgroundColorBrush" Color="{Binding SecondaryBackgroundColor, Source={StaticResource StyleColors}}" p:Freeze="True"/>
     <SolidColorBrush x:Key="DangerColorBrush" Color="{Binding DangerColor, Source={StaticResource StyleColors}}" p:Freeze="True"/>
-    <SolidColorBrush x:Key="WindowBackgroundColorBrush" Color="{Binding WindowBackgroundColor, Source={StaticResource StyleColors}}" p:Freeze="True"/>
-    <SolidColorBrush x:Key="InactiveWindowBackgroundColorBrush" Color="{Binding InactiveWindowBackgroundColor, Source={StaticResource StyleColors}}" p:Freeze="True"/>
+    <SolidColorBrush x:Key="WindowTitleBackgroundColorBrush" Color="{Binding WindowTitleBackgroundColor, Source={StaticResource StyleColors}}" p:Freeze="True"/>
+    <SolidColorBrush x:Key="InactiveWindowTitleBackgroundColorBrush" Color="{Binding InactiveWindowTitleBackgroundColor, Source={StaticResource StyleColors}}" p:Freeze="True"/>
     <SolidColorBrush x:Key="BackgroundContrastColorBrush" Color="{Binding BackgroundColor, Source={StaticResource StyleColors}, Converter={StaticResource ColorContrastConverter}}" p:Freeze="True"/>
-    <SolidColorBrush x:Key="WindowBackgroundContrastColorBrush" Color="{Binding WindowBackgroundColor, Source={StaticResource StyleColors}, Converter={StaticResource ColorContrastConverter}}" p:Freeze="True"/>
+    <SolidColorBrush x:Key="WindowTitleBackgroundContrastColorBrush" Color="{Binding WindowTitleBackgroundColor, Source={StaticResource StyleColors}, Converter={StaticResource ColorContrastConverter}}" p:Freeze="True"/>
     <SolidColorBrush x:Key="PrimaryContrastColorBrush" Color="{Binding PrimaryColor, Source={StaticResource StyleColors}, Converter={StaticResource ColorContrastConverter}}" p:Freeze="True"/>
     <SolidColorBrush x:Key="AccentContrastColorBrush" Color="{Binding AccentColor, Source={StaticResource StyleColors}, Converter={StaticResource ColorContrastConverter}}" p:Freeze="True"/>
 

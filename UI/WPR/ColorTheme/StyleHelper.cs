@@ -100,11 +100,11 @@ public static class StyleHelper
     private static void SetWindowColors(bool isDarkTheme)
     {
         var windowBackgroundColor = isDarkTheme
-        ? StyleColors._DarkWindowBackgroundColor
+        ? StyleColors._DarkWindowTitleBackgroundColor
         : StyleColors.PrimaryColor;
 
-        StyleColors.WindowBackgroundColor = windowBackgroundColor;
-        StyleColors.InactiveWindowBackgroundColor = Lighten(windowBackgroundColor, isDarkTheme ? 5 : 2);
+        StyleColors.WindowTitleBackgroundColor = windowBackgroundColor;
+        StyleColors.InactiveWindowTitleBackgroundColor = Lighten(windowBackgroundColor, isDarkTheme ? 5 : 2);
     }
 
 
