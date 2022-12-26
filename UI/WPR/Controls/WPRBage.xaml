@@ -8,7 +8,7 @@
     <Style TargetType="{x:Type local:WPRBage}" BasedOn="{StaticResource BaseControl}">
         <Setter Property="Margin" Value="0"/>
         <Setter Property="Background" Value="{DynamicResource AccentColorBrush}"/>
-        <Setter Property="Foreground" Value="{DynamicResource LightColorBrush}"/>
+        <Setter Property="Foreground" Value="{DynamicResource AccentContrastColorBrush}"/>
         <Setter Property="Padding" Value="-8"/>
         <Setter Property="Focusable" Value="False"/>
         <Setter Property="Template">

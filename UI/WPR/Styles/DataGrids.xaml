@@ -100,7 +100,7 @@
                     <!--<Condition Property="IsReadOnly" Value="False"/>-->
                 </MultiTrigger.Conditions>
                 <MultiTrigger.Setters>
-                    <Setter Property="BorderBrush" Value="{DynamicResource DarkColorBrush}"/>
+                    <Setter Property="BorderBrush" Value="{DynamicResource PrimaryColorBrush}"/>
                     <Setter Property="Background" Value="{DynamicResource SecondaryBackgroundColorBrush}"/>
                 </MultiTrigger.Setters>
             </MultiTrigger>
