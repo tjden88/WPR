@@ -201,7 +201,8 @@
         </AdornerDecorator>
         <ControlTemplate.Triggers>
             <Trigger Property="IsActive" Value="False">
-                <Setter Property="Background" Value="{DynamicResource InactiveWindowTitleBackgroundColorBrush}"/>
+                <Setter Property="Background" TargetName="TitlePanel" Value="{DynamicResource InactiveWindowTitleBackgroundColorBrush}"/>
+                <Setter Property="Background" TargetName="PART_Buttons" Value="{DynamicResource InactiveWindowTitleBackgroundColorBrush}"/>
             </Trigger>
         </ControlTemplate.Triggers>
     </ControlTemplate>
