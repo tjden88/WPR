@@ -14,8 +14,6 @@
     <colorTheme:StyleColors x:Key="StyleColors"/>
 
 
-    <SolidColorBrush x:Key="LightColorBrush" Color="{Binding LightColor, Source={StaticResource StyleColors}}" p:Freeze="True"/>
-    <SolidColorBrush x:Key="DarkColorBrush" Color="{Binding DarkColor, Source={StaticResource StyleColors}}" p:Freeze="True"/>
     <SolidColorBrush x:Key="PrimaryColorBrush" Color="{Binding PrimaryColor, Source={StaticResource StyleColors}}" p:Freeze="True"/>
     <SolidColorBrush x:Key="DarkPrimaryColorBrush"  Color="{Binding DarkPrimaryColor, Source={StaticResource StyleColors}}" p:Freeze="True"/>
     <SolidColorBrush x:Key="LightPrimaryColorBrush" Color="{Binding LightPrimaryColor, Source={StaticResource StyleColors}}" p:Freeze="True"/>
@@ -27,8 +25,6 @@
     <SolidColorBrush x:Key="SecondaryBackgroundColorBrush" Color="{Binding SecondaryBackgroundColor, Source={StaticResource StyleColors}}" p:Freeze="True"/>
     <SolidColorBrush x:Key="DangerColorBrush" Color="{Binding DangerColor, Source={StaticResource StyleColors}}" p:Freeze="True"/>
     <SolidColorBrush x:Key="WindowBackgroundColorBrush" Color="{Binding WindowBackgroundColor, Source={StaticResource StyleColors}}" p:Freeze="True"/>
-    <SolidColorBrush x:Key="LightWindowBackgroundColorBrush" Color="{Binding LightWindowBackgroundColor, Source={StaticResource StyleColors}}" p:Freeze="True"/>
-    <SolidColorBrush x:Key="DarkWindowBackgroundColorBrush" Color="{Binding DarkWindowBackgroundColor, Source={StaticResource StyleColors}}" p:Freeze="True"/>
     <SolidColorBrush x:Key="InactiveWindowBackgroundColorBrush" Color="{Binding InactiveWindowBackgroundColor, Source={StaticResource StyleColors}}" p:Freeze="True"/>
     <SolidColorBrush x:Key="WindowForegroundColorBrush" Color="{Binding WindowForegroundColor, Source={StaticResource StyleColors}}" p:Freeze="True"/>
     <SolidColorBrush x:Key="ContrastColorBrush" Color="{Binding ContrastColor, Source={StaticResource StyleColors}}" p:Freeze="True"/>
@@ -68,9 +64,7 @@
     <converters:ValueIsNotNullConverter x:Key="ValueIsNotNullConverter"/>
     <converters:ValueIsNullConverter x:Key="ValueIsNullConverter"/>
     <converters:BoolNotConverter x:Key="BoolNotConverter"/>
-    <converters:BrushLightOrDarkConverter x:Key="BrushLightOrDarkConverter" 
-                                          HighValue="{StaticResource LightColorBrush}"
-                                          LowValue="{StaticResource DarkColorBrush}"/>
+    <converters:BrushLightOrDarkConverter x:Key="BrushLightOrDarkConverter"/>
     <converters:SignPlusMinusConverter x:Key="SignPlusMinusConverter"/>
     <converters:EnumToBoolConverter x:Key="EnumToBoolConverter"/>
     <converters:ValueIsNullToVisibilityConverter x:Key="ValueIsNullToVisibilityConverter"/>

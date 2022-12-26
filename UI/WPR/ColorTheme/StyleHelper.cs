@@ -21,7 +21,7 @@ public static class StyleHelper
     public static event EventHandler StyleChanged;
 
     /// <summary>Установлена ли тёмная тема</summary>
-    public static bool IsDarkTheme => StyleColors.DarkColor == StyleColors.BackgroundColor;
+    public static bool IsDarkTheme => StyleColors._DarkColor == StyleColors.BackgroundColor;
 
 
     /// <summary>Задать новый рандомный стиль (цветовую палитру) элементам управления</summary>
@@ -37,9 +37,6 @@ public static class StyleHelper
     /// <summary>Установить главный цвет (включая тёмный и светлый)</summary>
     public static void SetPrimaryColor(Color color)
     {
-        if (StyleColors.LightWindowBackgroundColor == StyleColors.PrimaryColor)
-            StyleColors.LightWindowBackgroundColor = color;
-
         StyleColors.PrimaryColor = color;
         StyleColors.DarkPrimaryColor = Darken(color, 1.2);
         StyleColors.LightPrimaryColor = Lighten(color, 1.5);
@@ -109,8 +106,8 @@ public static class StyleHelper
     private static void SetWindowColors(bool isDarkTheme)
     {
         var windowBackgroundColor = isDarkTheme
-        ? StyleColors.DarkWindowBackgroundColor
-        : StyleColors.LightWindowBackgroundColor;
+        ? StyleColors._DarkWindowBackgroundColor
+        : StyleColors.PrimaryColor;
 
         StyleColors.WindowBackgroundColor = windowBackgroundColor;
         StyleColors.InactiveWindowBackgroundColor = Lighten(windowBackgroundColor, isDarkTheme ? 5 : 2);

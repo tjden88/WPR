@@ -64,50 +64,6 @@ public class StyleColors : DependencyObject
     #endregion
 
 
-    #region LightColor : Color - Цвет светлой схемы
-
-    /// <summary>Цвет светлой схемы</summary>
-    public static readonly DependencyProperty LightColorProperty =
-        DependencyProperty.Register(
-            nameof(LightColor),
-            typeof(Color),
-            typeof(StyleColors),
-            new PropertyMetadata(_LightColor));
-
-    /// <summary>Цвет светлой схемы</summary>
-    [Category("StyleColors")]
-    [Description("Цвет светлой схемы")]
-    public Color LightColor
-    {
-        get => (Color)GetValue(LightColorProperty);
-        set => SetValue(LightColorProperty, value);
-    }
-
-    #endregion
-
-
-    #region DarkColor : Color - Цвет тёмной темы
-
-    /// <summary>Цвет тёмной темы</summary>
-    public static readonly DependencyProperty DarkColorProperty =
-        DependencyProperty.Register(
-            nameof(DarkColor),
-            typeof(Color),
-            typeof(StyleColors),
-            new PropertyMetadata(_DarkColor));
-
-    /// <summary>Цвет тёмной темы</summary>
-    [Category("StyleColors")]
-    [Description("Цвет тёмной темы")]
-    public Color DarkColor
-    {
-        get => (Color)GetValue(DarkColorProperty);
-        set => SetValue(DarkColorProperty, value);
-    }
-
-    #endregion
-
-
     #region PrimaryColor : Color - Основной цвет
 
     /// <summary>Основной цвет</summary>
@@ -345,50 +301,6 @@ public class StyleColors : DependencyObject
     {
         get => (Color)GetValue(WindowBackgroundColorProperty);
         set => SetValue(WindowBackgroundColorProperty, value);
-    }
-
-    #endregion
-
-
-    #region LightWindowBackgroundColor : Color - Фон окна светлой темы
-
-    /// <summary>Фон окна светлой темы</summary>
-    public static readonly DependencyProperty LightWindowBackgroundColorProperty =
-        DependencyProperty.Register(
-            nameof(LightWindowBackgroundColor),
-            typeof(Color),
-            typeof(StyleColors),
-            new PropertyMetadata(_LightWindowBackgroundColor));
-
-    /// <summary>Фон окна светлой темы</summary>
-    [Category("StyleColors")]
-    [Description("Фон окна светлой темы")]
-    public Color LightWindowBackgroundColor
-    {
-        get => (Color)GetValue(LightWindowBackgroundColorProperty);
-        set => SetValue(LightWindowBackgroundColorProperty, value);
-    }
-
-    #endregion
-
-
-    #region DarkWindowBackgroundColor : Color - Фон окна тёмной темы
-
-    /// <summary>Фон окна тёмной темы</summary>
-    public static readonly DependencyProperty DarkWindowBackgroundColorProperty =
-        DependencyProperty.Register(
-            nameof(DarkWindowBackgroundColor),
-            typeof(Color),
-            typeof(StyleColors),
-            new PropertyMetadata(_DarkWindowBackgroundColor));
-
-    /// <summary>Фон окна тёмной темы</summary>
-    [Category("StyleColors")]
-    [Description("Фон окна тёмной темы")]
-    public Color DarkWindowBackgroundColor
-    {
-        get => (Color)GetValue(DarkWindowBackgroundColorProperty);
-        set => SetValue(DarkWindowBackgroundColorProperty, value);
     }
 
     #endregion
