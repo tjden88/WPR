@@ -1,6 +1,4 @@
-﻿using System.Drawing;
-
-namespace WPR.Models.Themes
+﻿namespace WPR.Models.Themes
 {
     /// <summary>
     /// Описание цветовой темы приложения
@@ -12,10 +10,10 @@ namespace WPR.Models.Themes
 
 
         /// <summary> Основной цвет </summary>
-        public Color PrimaryColor { get; set; }
+        public string PrimaryColor { get; set; } = null!;
 
 
         /// <summary> Цвет акцента </summary>
-        public Color AccentColor { get; set; }
+        public string AccentColor { get; set; } = null!;
     }
 }

@@ -1,8 +1,7 @@
-﻿using System.Drawing;
+﻿using System.Windows.Media;
 using WPR.ColorTheme;
 using WPR.Interfaces.Themes;
 using WPR.Models.Themes;
-using MColor = System.Windows.Media.Color;
 
 namespace WPR.UiServices.Themes;
 
@@ -14,7 +13,7 @@ public class WPRColorThemeManager : IColorThemeManager
     public ColorThemeTypes CurrentColorTheme => StyleHelper.IsDarkTheme ? ColorThemeTypes.Dark : ColorThemeTypes.Light;
 
 
-    public void SetColorTheme(ColorThemeTypes themeType)
+    public void SetThemeType(ColorThemeTypes themeType)
     {
         if (themeType == ColorThemeTypes.Dark)
             StyleHelper.SetDarkColorTheme();
@@ -22,15 +21,18 @@ public class WPRColorThemeManager : IColorThemeManager
             StyleHelper.SetLightColorTheme();
     }
 
-    public void SetPrimaryColor(Color PrimaryColor) => StyleHelper.SetPrimaryColor(GetMColor(PrimaryColor));
+    public void SetPrimaryColor(string PrimaryColor) => 
+        StyleHelper.SetPrimaryColor((Color)ColorConverter.ConvertFromString(PrimaryColor));
 
-    public void SetAccentColor(Color AccentColor) => StyleHelper.SetAccentColor(GetMColor(AccentColor));
+    public void SetAccentColor(string AccentColor) => 
+        StyleHelper.SetAccentColor((Color)ColorConverter.ConvertFromString(AccentColor));
+
 
     public Models.Themes.ColorTheme GetCurrentTheme() =>
         new()
         {
-            PrimaryColor = GetDColor(StyleHelper.StyleColors.PrimaryColor),
-            AccentColor = GetDColor(StyleHelper.StyleColors.AccentColor),
+            PrimaryColor = StyleHelper.StyleColors.PrimaryColor.ToString(),
+            AccentColor = StyleHelper.StyleColors.AccentColor.ToString(),
             ThemeType = CurrentColorTheme
         };
 
@@ -39,10 +41,6 @@ public class WPRColorThemeManager : IColorThemeManager
     {
         SetPrimaryColor(theme.PrimaryColor);
         SetAccentColor(theme.AccentColor);
-        SetColorTheme(theme.ThemeType);
+        SetThemeType(theme.ThemeType);
     }
-
-    /// <summary> Преобразование цвета </summary>
-    private static MColor GetMColor(Color color) => MColor.FromArgb(color.A, color.R, color.G, color.B);
-    private static Color GetDColor(MColor color) => Color.FromArgb(color.A, color.R, color.G, color.B);
 }

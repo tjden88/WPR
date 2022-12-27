@@ -1,5 +1,4 @@
-﻿using System.Drawing;
-using WPR.Models.Themes;
+﻿using WPR.Models.Themes;
 
 namespace WPR.Interfaces.Themes;
 
@@ -13,15 +12,15 @@ public interface IColorThemeManager
 
 
     /// <summary> Установить тёмную или светлую тему </summary>
-    void SetColorTheme(ColorThemeTypes themeType);
+    void SetThemeType(ColorThemeTypes themeType);
 
 
     /// <summary> Установить основной цвет </summary>
-    void SetPrimaryColor(Color PrimaryColor);
+    void SetPrimaryColor(string PrimaryColor);
 
 
     /// <summary> Установить цвет акцента </summary>
-    void SetAccentColor(Color AccentColor);
+    void SetAccentColor(string AccentColor);
 
 
     /// <summary> Получить текущую цветовую схему </summary>
