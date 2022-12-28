@@ -93,7 +93,16 @@
                     <RadioButton Content="2"/>
                     <Separator/>
                     <TextBlock Text="Combo" VerticalAlignment="Center" Margin="5"/>
-                    <ComboBox Width="150" helpers:TextHelper.Hint="Hint">
+                    <controls:WPRIcon Source="Twitter"/>
+
+                    <ComboBox Width="120" helpers:TextHelper.Hint="Hint">
+                        <ComboBoxItem Content="10"/>
+                        <ComboBoxItem Content="12"/>
+                        <ComboBoxItem Content="14"/>
+                        <ComboBoxItem Content="16"/>
+                    </ComboBox>
+                    <controls:WPRIcon Source="Twitter"/>
+                    <ComboBox Width="120">
                         <ComboBoxItem Content="10"/>
                         <ComboBoxItem Content="12"/>
                         <ComboBoxItem Content="14"/>

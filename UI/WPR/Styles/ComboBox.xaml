@@ -292,7 +292,7 @@
                                   ContentStringFormat="{TemplateBinding SelectionBoxItemStringFormat}" 
                                   HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" 
                                   IsHitTestVisible="False" 
-                                  Margin="{TemplateBinding Padding}"
+                                  Margin="0,3"
                                   SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
                                   VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
 
@@ -314,6 +314,7 @@
                         <ScaleTransform x:Name="AnimatedTransform" ScaleX="0"/>
                     </Rectangle.RenderTransform>
                 </Rectangle>
+
                 <ContentControl IsTabStop="False"
                                 Name="Description"
                                             Grid.Row="1" Grid.Column="0"
