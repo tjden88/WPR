@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFrameworks>net6.0;net7.0</TargetFrameworks>
-	  <Description>Библиотека инструментов WPF</Description>
+	  <Description>Библиотека инструментов .NET Core</Description>
 	  <FileVersion>1.0</FileVersion>
 	  <AssemblyVersion>1.0</AssemblyVersion>
 	  <PackageLicenseExpression>MIT</PackageLicenseExpression>
