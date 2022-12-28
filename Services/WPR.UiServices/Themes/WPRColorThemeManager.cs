@@ -1,7 +1,7 @@
 ﻿using System.Windows.Media;
 using WPR.ColorTheme;
-using WPR.Domain.Themes;
-using WPR.Interfaces.Themes;
+using WPR.Domain.Interfaces;
+using WPR.Domain.Models.Themes;
 
 namespace WPR.UiServices.Themes;
 
@@ -28,7 +28,7 @@ public class WPRColorThemeManager : IColorThemeManager
         StyleHelper.SetAccentColor((Color)ColorConverter.ConvertFromString(AccentColor));
 
 
-    public Domain.Themes.ColorTheme GetCurrentTheme() =>
+    public Domain.Models.Themes.ColorTheme GetCurrentTheme() =>
         new()
         {
             PrimaryColor = StyleHelper.StyleColors.PrimaryColor.ToString(),
@@ -37,7 +37,7 @@ public class WPRColorThemeManager : IColorThemeManager
         };
 
 
-    public void SetColorTheme(Domain.Themes.ColorTheme theme)
+    public void SetColorTheme(Domain.Models.Themes.ColorTheme theme)
     {
         SetPrimaryColor(theme.PrimaryColor);
         SetAccentColor(theme.AccentColor);

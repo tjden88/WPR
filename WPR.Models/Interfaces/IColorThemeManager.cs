@@ -1,6 +1,6 @@
-﻿using WPR.Domain.Themes;
+﻿using WPR.Domain.Models.Themes;
 
-namespace WPR.Interfaces.Themes;
+namespace WPR.Domain.Interfaces;
 
 /// <summary>
 /// Управление цветовыми схемами приложения

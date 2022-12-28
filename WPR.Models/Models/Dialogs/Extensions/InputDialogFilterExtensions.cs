@@ -1,26 +1,26 @@
-﻿namespace WPR.Domain.Dialogs.Extensions;
+﻿namespace WPR.Domain.Models.Dialogs.Extensions;
 
 /// <summary> Методы расширения для фильтра пользовательского диалога </summary>
 public static class InputDialogFilterExtensions
 {
     /// <summary> Значение обязательно </summary>
     public static InputDialogFilter AddRequired(this InputDialogFilter filter, string ErrorMessage = "Значение обязательно") =>
-        AddRule(filter, s => !string.IsNullOrWhiteSpace(s), ErrorMessage);
+        filter.AddRule(s => !string.IsNullOrWhiteSpace(s), ErrorMessage);
 
 
     /// <summary> Фильтр минимальной длины </summary>
     public static InputDialogFilter AddMinLen(this InputDialogFilter filter, int minLenght) =>
-        AddRule(filter, s => s?.Length >= minLenght, $"Минимальная длина - {minLenght} символа (ов)");
+        filter.AddRule(s => s?.Length >= minLenght, $"Минимальная длина - {minLenght} символа (ов)");
 
 
     /// <summary> Фильтр максимальной длины </summary>
     public static InputDialogFilter AddMaxLen(this InputDialogFilter filter, int maxLenght) =>
-        AddRule(filter, s => s?.Length <= maxLenght, $"Максимальная длина - {maxLenght} символа (ов)");
+        filter.AddRule(s => s?.Length <= maxLenght, $"Максимальная длина - {maxLenght} символа (ов)");
 
 
     /// <summary> Значение не должно содержать элементы данной последовательности </summary>
     public static InputDialogFilter AddMustNotContains(this InputDialogFilter filter, IEnumerable<string> values, string ErrorMessage = "Это значение уже существует") =>
-        AddRule(filter, s => s is null || values.All(v => !string.Equals(v, s, StringComparison.OrdinalIgnoreCase)), ErrorMessage);
+        filter.AddRule(s => s is null || values.All(v => !string.Equals(v, s, StringComparison.OrdinalIgnoreCase)), ErrorMessage);
 
 
 

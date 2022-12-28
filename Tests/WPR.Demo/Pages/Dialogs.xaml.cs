@@ -1,12 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using WPR.Dialogs;
-using WPR.Interfaces.Base.UI;
-using WPR.Interfaces.UI;
+using WPR.Domain.Interfaces;
 using WPR.MVVM.Commands.Base;
 using WPR.UiServices.UI;
 

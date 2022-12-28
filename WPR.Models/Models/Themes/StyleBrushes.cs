@@ -1,4 +1,4 @@
-﻿namespace WPR.Domain.Themes;
+﻿namespace WPR.Domain.Models.Themes;
 
 /// <summary>
 /// Коллекция кистей цветовой темы

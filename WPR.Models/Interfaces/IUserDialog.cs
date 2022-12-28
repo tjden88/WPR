@@ -1,7 +1,6 @@
-﻿using WPR.Domain.Dialogs;
-using WPR.Interfaces.Base.UI;
+﻿using WPR.Domain.Models.Dialogs;
 
-namespace WPR.Interfaces.UI;
+namespace WPR.Domain.Interfaces;
 
 /// <summary>
 /// Сервис диалоговых окон с пользователем

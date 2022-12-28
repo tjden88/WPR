@@ -1,6 +1,6 @@
-﻿using WPR.Interfaces.Base.UI;
+﻿using IWPRDialog = WPR.Domain.Interfaces.IWPRDialog;
 
-namespace WPR.Domain.Dialogs;
+namespace WPR.Domain.Models.Dialogs;
 
 /// <summary>
 /// Базовая реализация диалога

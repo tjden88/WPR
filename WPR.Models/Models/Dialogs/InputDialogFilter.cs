@@ -1,4 +1,4 @@
-﻿namespace WPR.Domain.Dialogs;
+﻿namespace WPR.Domain.Models.Dialogs;
 
 /// <summary>
 /// Настройка валидации и свойств диалога ввода пользователя
@@ -31,9 +31,9 @@ public class InputDialogFilter
 
     #region FluentFactory
 
-   
 
-    
+
+
 
 
     #endregion

@@ -2,7 +2,7 @@
 using System.ComponentModel;
 using System.Windows;
 using WPR.Dialogs.Base;
-using WPR.Interfaces.Base.UI;
+using WPR.Domain.Interfaces;
 
 namespace WPR.Dialogs;
 
