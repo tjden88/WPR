@@ -23,13 +23,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WPR", "UI\WPR\WPR.csproj", 
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Common", "Common", "{84D588F2-8F69-4470-8CA2-C6F459256295}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WPR.Models", "WPR.Models\WPR.Models.csproj", "{D68D5B00-A7DF-427B-86C5-1CE39C9BABF8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WPR.Domain", "WPR.Models\WPR.Domain.csproj", "{D68D5B00-A7DF-427B-86C5-1CE39C9BABF8}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WPR.Interfaces", "Interfaces\WPR.Interfaces\WPR.Interfaces.csproj", "{CA21B236-F066-4246-9965-D335D06DB734}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WPR.UiServices", "Services\WPR.UiServices\WPR.UiServices.csproj", "{E14B277D-8FD9-4006-9F82-4AD82FC7A367}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WPR.UiServices", "Services\WPR.UiServices\WPR.UiServices.csproj", "{E14B277D-8FD9-4006-9F82-4AD82FC7A367}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WPR.Interfaces.Base", "WPR.Interfaces.Base\WPR.Interfaces.Base.csproj", "{F8CBB95F-4BDC-45E9-9374-FF7A5FB9E0F4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WPR.Interfaces.Base", "WPR.Interfaces.Base\WPR.Interfaces.Base.csproj", "{F8CBB95F-4BDC-45E9-9374-FF7A5FB9E0F4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -1,4 +1,4 @@
-﻿namespace WPR.Models.Dialogs.Extensions;
+﻿namespace WPR.Domain.Dialogs.Extensions;
 
 /// <summary> Методы расширения для фильтра пользовательского диалога </summary>
 public static class InputDialogFilterExtensions

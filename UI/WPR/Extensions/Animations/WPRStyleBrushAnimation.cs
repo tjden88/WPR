@@ -5,7 +5,7 @@ using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using WPR.ColorTheme;
-using WPR.Models.Themes;
+using WPR.Domain.Themes;
 
 namespace WPR.Extensions.Animations;
 

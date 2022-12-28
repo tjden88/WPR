@@ -1,4 +1,4 @@
-﻿namespace WPR.Models.Themes
+﻿namespace WPR.Domain.Themes
 {
     /// <summary>
     /// Описание цветовой темы приложения

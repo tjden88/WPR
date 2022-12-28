@@ -7,8 +7,6 @@ using System.Windows.Input;
 using WPR.Dialogs;
 using WPR.Interfaces.Base.UI;
 using WPR.Interfaces.UI;
-using WPR.Models.Dialogs;
-using WPR.Models.Dialogs.Extensions;
 using WPR.MVVM.Commands.Base;
 using WPR.UiServices.UI;
 

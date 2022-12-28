@@ -4,8 +4,8 @@ using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
 using System.Windows;
 using WPR.Controls;
+using WPR.Domain.Dialogs;
 using WPR.Interfaces.Base.UI;
-using WPR.Models.Dialogs;
 using WPR.MVVM.Validation;
 
 namespace WPR.Dialogs;

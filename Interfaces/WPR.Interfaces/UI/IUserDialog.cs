@@ -1,5 +1,5 @@
-﻿using WPR.Interfaces.Base.UI;
-using WPR.Models.Dialogs;
+﻿using WPR.Domain.Dialogs;
+using WPR.Interfaces.Base.UI;
 
 namespace WPR.Interfaces.UI;
 

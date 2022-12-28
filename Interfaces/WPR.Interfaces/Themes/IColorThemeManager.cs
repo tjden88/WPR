@@ -1,4 +1,4 @@
-﻿using WPR.Models.Themes;
+﻿using WPR.Domain.Themes;
 
 namespace WPR.Interfaces.Themes;
 

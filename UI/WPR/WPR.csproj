@@ -48,7 +48,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\WPR.Models\WPR.Models.csproj" />
+    <ProjectReference Include="..\..\WPR.Models\WPR.Domain.csproj" />
     <ProjectReference Include="..\WPR.MVVM\WPR.MVVM.csproj" />
   </ItemGroup>
 

@@ -1,4 +1,4 @@
-﻿namespace WPR.Models.Dialogs;
+﻿namespace WPR.Domain.Dialogs;
 
 /// <summary>
 /// Настройка валидации и свойств диалога ввода пользователя
