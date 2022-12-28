@@ -128,6 +128,8 @@
                                 </Image>
                                 <ContentControl Name="HeaderControl"
                                                 Foreground="{DynamicResource WindowTitleBackgroundContrastColorBrush}"
+                                                WindowChrome.IsHitTestVisibleInChrome="True"
+                                                TextBlock.Foreground="{DynamicResource WindowTitleBackgroundContrastColorBrush}"
                                                 Content="{Binding Path=(wh:WindowHelper.WindowHeaderContent), RelativeSource={RelativeSource TemplatedParent}}"/>
                             </StackPanel>
 

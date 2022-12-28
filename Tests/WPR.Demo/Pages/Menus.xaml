@@ -20,48 +20,12 @@
                         <MenuItem Header="Create" IsCheckable="True" IsChecked="True"/>
                         <MenuItem Header="Create" IsCheckable="True" IsChecked="True"/>
                         <MenuItem Header="Create" IsCheckable="True" IsChecked="True"/>
+                        <MenuItem Header="Create" IsCheckable="True" IsChecked="False"/>
                         <MenuItem Header="Create" IsCheckable="True" IsChecked="True"/>
+                        <MenuItem Header="Create" IsCheckable="True" IsChecked="False"/>
                         <MenuItem Header="Create" IsCheckable="True" IsChecked="True"/>
-                        <MenuItem Header="Create" IsCheckable="True" IsChecked="True"/>
-                        <MenuItem Header="Create" IsCheckable="True" IsChecked="True"/>
-                        <MenuItem Header="Create" IsCheckable="True" IsChecked="True"/>
-                        <MenuItem Header="Create" IsCheckable="True" IsChecked="True"/>
-                        <MenuItem Header="Create" IsCheckable="True" IsChecked="True"/>
-                        <MenuItem Header="Create" IsCheckable="True" IsChecked="True"/>
-                        <MenuItem Header="Create" IsCheckable="True" IsChecked="True"/>
-                        <MenuItem Header="Create" IsCheckable="True" IsChecked="True"/>
-                        <MenuItem Header="Create" IsCheckable="True" IsChecked="True"/>
-                        <MenuItem Header="Create" IsCheckable="True" IsChecked="True"/>
-                        <MenuItem Header="Create" IsCheckable="True" IsChecked="True"/>
-                        <MenuItem Header="Create" IsCheckable="True" IsChecked="True"/>
-                        <MenuItem Header="Create" IsCheckable="True" IsChecked="True"/>
-                        <MenuItem Header="Create" IsCheckable="True" IsChecked="True"/>
-                        <MenuItem Header="Create" IsCheckable="True" IsChecked="True"/>
-                        <MenuItem Header="Create" IsCheckable="True" IsChecked="True"/>
-                        <MenuItem Header="Create" IsCheckable="True" IsChecked="True"/>
-                        <MenuItem Header="Create" IsCheckable="True" IsChecked="True"/>
-                        <MenuItem Header="Create" IsCheckable="True" IsChecked="True"/>
-                        <MenuItem Header="Create" IsCheckable="True" IsChecked="True"/>
-                        <MenuItem Header="Create" IsCheckable="True" IsChecked="True"/>
-                        <MenuItem Header="Create" IsCheckable="True" IsChecked="True"/>
-                        <MenuItem Header="Create" IsCheckable="True" IsChecked="True"/>
-                        <MenuItem Header="Create" IsCheckable="True" IsChecked="True"/>
-                        <MenuItem Header="Create" IsCheckable="True" IsChecked="True"/>
-                        <MenuItem Header="Create" IsCheckable="True" IsChecked="True"/>
-                        <MenuItem Header="Create" IsCheckable="True" IsChecked="True"/>
-                        <MenuItem Header="Create" IsCheckable="True" IsChecked="True"/>
-                        <MenuItem Header="Create" IsCheckable="True" IsChecked="True"/>
-                        <MenuItem Header="Create" IsCheckable="True" IsChecked="True"/>
-                        <MenuItem Header="Create" IsCheckable="True" IsChecked="True"/>
-                        <MenuItem Header="Create" IsCheckable="True" IsChecked="True"/>
-                        <MenuItem Header="Create" IsCheckable="True" IsChecked="True"/>
-                        <MenuItem Header="Create" IsCheckable="True" IsChecked="True"/>
-                        <MenuItem Header="Create" IsCheckable="True" IsChecked="True"/>
-                        <MenuItem Header="Create" IsCheckable="True" IsChecked="True"/>
-                        <MenuItem Header="Create" IsCheckable="True" IsChecked="True"/>
-                        <MenuItem Header="Create" IsCheckable="True" IsChecked="True"/>
-                        <MenuItem Header="Create" IsCheckable="True" IsChecked="True"/>
-                        <MenuItem Header="Create" IsCheckable="True" IsChecked="True"/>
+                        <MenuItem Header="Create" IsCheckable="True" IsChecked="False"/>
+                        <MenuItem Header="Create" IsCheckable="True" IsChecked="False"/>
                         <MenuItem Header="Create" IsCheckable="True" IsChecked="True"/>
                         <Separator/>
                         <MenuItem Header="Close" InputGestureText="Ctrl+E"/>
@@ -93,7 +57,6 @@
                     <RadioButton Content="2"/>
                     <Separator/>
                     <TextBlock Text="Combo" VerticalAlignment="Center" Margin="5"/>
-                    <controls:WPRIcon Source="Twitter"/>
 
                     <ComboBox Width="120" helpers:TextHelper.Hint="Hint">
                         <ComboBoxItem Content="10"/>

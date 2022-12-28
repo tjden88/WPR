@@ -95,7 +95,7 @@
         <Setter Property="Cursor" Value="Hand"/>
         <Setter Property="VerticalContentAlignment" Value="Center"/>
         <Setter Property="HorizontalContentAlignment" Value="Center"/>
-        <Setter Property="helpers:RippleHelper.FeedbackBrush" Value="{StaticResource PrimaryColorBrush}"/>
+        <Setter Property="helpers:RippleHelper.FeedbackBrush" Value="{DynamicResource PrimaryColorBrush}"/>
         <EventSetter Event="PreviewMouseLeftButtonUp" Handler="WPRToggleButton_MouseUp"/>
         <Setter Property="Template" Value="{StaticResource WPRToggleControlTemplate}"/>
     </Style>
@@ -103,7 +103,6 @@
 
     <!--Material Switcher-->
   <Style x:Key="WPRSwitchToggleButton" TargetType="{x:Type ToggleButton}"  BasedOn="{StaticResource WPRToggleButton}">
-        <Setter Property="helpers:RippleHelper.FeedbackBrush" Value="{StaticResource PrimaryColorBrush}"/>
         <EventSetter Event="PreviewMouseLeftButtonUp" Handler="WPRSwither_MouseUp"/>
         <Setter Property="Template">
     <Setter.Value>

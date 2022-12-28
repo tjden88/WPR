@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:helpers="clr-namespace:WPR.Helpers;assembly=WPR"
+        xmlns:controls="clr-namespace:WPR.Controls;assembly=WPR"
         Topmost="{Binding IsChecked, ElementName=TopMost}"
         DataContext="{Binding Source={StaticResource Locator}, Path=MainWindowViewModel}"
         Style="{StaticResource ChromeWindow}"
@@ -14,7 +15,13 @@
             <Button Content="Новый стиль" Command="{Binding SetNewStyleCommand}"  Style="{StaticResource WindowTitleButton}"/>
             <Button Content="Переключить тему" Command="{Binding SetDarkThemeCommand}"  Style="{StaticResource WindowTitleButton}"/>
             <Button Content="Тестовое окно" Command="{Binding ShowTestWindowCommand}"  Style="{StaticResource WindowTitleButton}"/>
-            <CheckBox Name="TopMost" Style="{StaticResource WPRToggleButton}" WindowChrome.IsHitTestVisibleInChrome="True">TopMost</CheckBox>
+            <ToggleButton Name="TopMost" helpers:RippleHelper.FeedbackBrush ="{DynamicResource AccentColorBrush}"
+                          ToolTip="Поверх всех окон">
+                <ToggleButton.Content>
+                    <controls:WPRIcon Source="ProjectorScreen"
+                                      Foreground="{DynamicResource WindowTitleBackgroundContrastColorBrush}"/>
+                </ToggleButton.Content>
+            </ToggleButton>
         </StackPanel>
     </helpers:WindowHelper.WindowHeaderContent>
     <Grid>
