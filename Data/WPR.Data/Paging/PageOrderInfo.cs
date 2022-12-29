@@ -6,22 +6,7 @@ namespace WPR.Data.Paging;
 /// <summary>
 /// Сведения о сортировке при формировании страницы
 /// </summary>
-public class PageOrderInfo<T> : IPageOrderInfo<T>
-{
-    public PageOrderInfo(Expression<Func<T, object>> OrderExpression, bool Ascending = true)
-    {
-        this.OrderExpression = OrderExpression;
-        this.Ascending = Ascending;
-    }
-
-    /// <summary>
-    /// Выражение сортировки объекта
-    /// </summary>
-    public Expression<Func<T, object>> OrderExpression { get; set; }
-
-
-    /// <summary>
-    /// Порядок сортировки по возрастанию (по умолчанию - true)
-    /// </summary>
-    public bool Ascending { get; set; }
-}
+/// <typeparam name="T">Тип сущности</typeparam>
+/// <param name="OrderExpression">Выражение сортировки объекта</param>
+/// <param name="Ascending">орядок сортировки по возрастанию (по умолчанию - true)</param>
+public record PageOrderInfo<T>(Expression<Func<T, object>> OrderExpression, bool Ascending = true) : IPageOrderInfo<T>;

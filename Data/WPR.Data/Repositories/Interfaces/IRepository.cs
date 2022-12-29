@@ -35,7 +35,7 @@ public interface IRepository<TEntity> where TEntity : IEntity
     /// <param name="OrderExpression">Выражение сортировки изначальной выборки. При отсутствии выполняется сортировка по Id</param>
     /// <param name="Ascending">Порядок сортировки (по умолчанию - по возрастанию)</param>
     /// <param name="Cancel">Токен отмены</param>
-    Task<IPage<TEntity>> GetPage(int PageIndex, int PageSize, Expression<Func<TEntity, object>> OrderExpression = null, bool Ascending = true, CancellationToken Cancel = default);
+    Task<IPage<TEntity>> GetPage(int PageIndex, int PageSize, Expression<Func<TEntity, object>>? OrderExpression = null, bool Ascending = true, CancellationToken Cancel = default);
 
 
     /// <summary>
@@ -65,7 +65,7 @@ public interface IRepository<TEntity> where TEntity : IEntity
     /// <param name="id">Id сущности</param>
     /// <param name="Cancel">Токен отмены</param>
     /// <returns>null, если сущность не найдена</returns>
-    Task<TEntity> GetByIdAsync(int id, CancellationToken Cancel = default);
+    Task<TEntity?> GetByIdAsync(int id, CancellationToken Cancel = default);
 
 
     /// <summary>
@@ -73,7 +73,7 @@ public interface IRepository<TEntity> where TEntity : IEntity
     /// </summary>
     /// <param name="item">Добавляемая сущность</param>
     /// <param name="Cancel">Токен отмены</param>
-    Task<TEntity> AddAsync(TEntity item, CancellationToken Cancel = default);
+    Task<TEntity?> AddAsync(TEntity item, CancellationToken Cancel = default);
 
     /// <summary>
     /// Добавить несколько сущностей

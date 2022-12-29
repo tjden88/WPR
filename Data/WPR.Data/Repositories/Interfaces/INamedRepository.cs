@@ -19,7 +19,7 @@ public interface INamedRepository<TEntity> : IRepository<TEntity> where TEntity 
     /// <param name="Name">Имя сущности</param>
     /// <param name="Cancel">Токен отмены</param>
     /// <returns>null, если сущность не найдена</returns>
-    Task<TEntity> GetByNameAsync(string Name, CancellationToken Cancel = default);
+    Task<TEntity?> GetByNameAsync(string Name, CancellationToken Cancel = default);
 
 
     /// <summary>

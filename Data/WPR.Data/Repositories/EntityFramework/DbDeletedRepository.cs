@@ -5,7 +5,11 @@ using WPR.Data.Repositories.Interfaces;
 
 namespace WPR.Data.Repositories.EntityFramework;
 
-internal class DbDeletedRepository<T> : DbRepository<T>, IDeletedRepository<T> where T : Entity, IDeletedEntity, new()
+/// <summary>
+/// Репозиторий удалённых сущностей БД
+/// </summary>
+/// <typeparam name="T">IDeletedEntity</typeparam>
+public class DbDeletedRepository<T> : DbRepository<T>, IDeletedRepository<T> where T : Entity, IDeletedEntity, new()
 {
     public DbDeletedRepository(DbContext Db) : base(Db) { }
 
@@ -13,7 +17,7 @@ internal class DbDeletedRepository<T> : DbRepository<T>, IDeletedRepository<T> w
     public override IQueryable<T> Items => Set.Where(item => item.IsDeleted);
 
 
-    public override Task<T> AddAsync(T item, CancellationToken Cancel = default)
+    public override Task<T?> AddAsync(T item, CancellationToken Cancel = default)
     {
         item.IsDeleted = true;
         return base.AddAsync(item, Cancel);
@@ -30,10 +34,11 @@ internal class DbDeletedRepository<T> : DbRepository<T>, IDeletedRepository<T> w
     }
 
 
-    protected override void MarkDeletedOrDelete(IEnumerable<T> items) => Set.RemoveRange(items);
+    protected override void MarkDeletedOrDelete(IEnumerable<T> items) =>
+        Set.RemoveRange(items);
 
 
-    public async Task<T> RestoreAsync(int id, CancellationToken Cancel = default)
+    public async Task<T?> RestoreAsync(int id, CancellationToken Cancel = default)
     {
         var entity = await GetByIdAsync(id, Cancel).ConfigureAwait(false);
 
@@ -41,7 +46,6 @@ internal class DbDeletedRepository<T> : DbRepository<T>, IDeletedRepository<T> w
             return null;
 
         entity.IsDeleted = false;
-
         var restored = await UpdatePropertyAsync(entity, item => item.IsDeleted, Cancel);
 
         return restored

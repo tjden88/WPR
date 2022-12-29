@@ -3,6 +3,9 @@ using Microsoft.Extensions.Logging;
 
 namespace WPR.Data.Repositories.Web.Base;
 
+/// <summary>
+/// Клиент доступа к Web-Api
+/// </summary>
 public abstract class WebClient
 {
     protected readonly ILogger Logger;

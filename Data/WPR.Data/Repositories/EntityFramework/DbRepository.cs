@@ -12,7 +12,7 @@ namespace WPR.Data.Repositories.EntityFramework;
 /// Репозиторий сущностей БД
 /// </summary>
 /// <typeparam name="T">Сущность БД</typeparam>
-internal class DbRepository<T> : IRepository<T> where T : Entity, new()
+public class DbRepository<T> : IRepository<T> where T : Entity, new()
 {
     private readonly DbContext _Db; // Контекст БД
 
@@ -20,12 +20,11 @@ internal class DbRepository<T> : IRepository<T> where T : Entity, new()
 
 
     /// <summary> Набор данных БД </summary>
-    protected DbSet<T> Set { get; }
+    protected DbSet<T> Set => _Db.Set<T>();
 
     public DbRepository(DbContext Db)
     {
         _Db = Db;
-        Set = _Db.Set<T>();
     }
 
     #region IRepository
@@ -49,27 +48,20 @@ internal class DbRepository<T> : IRepository<T> where T : Entity, new()
     public async Task<IEnumerable<T>> GetAsync(Expression<Func<T, bool>> Filter, CancellationToken Cancel = default) => await Get(Filter).ToArrayAsync(Cancel);
 
 
-    public virtual async Task<IPage<T>> GetPage(int PageIndex, int PageSize, Expression<Func<T, object>> OrderExpression = null, bool Ascending = true, CancellationToken Cancel = default) =>
+    public virtual async Task<IPage<T>> GetPage(int PageIndex, int PageSize, Expression<Func<T, object>>? OrderExpression = null, bool Ascending = true, CancellationToken Cancel = default) =>
         await GetPage(new PageFilter<T>
         {
             PageIndex = PageIndex,
             PageSize = PageSize,
             OrderBy = OrderExpression is null
                 ? null
-                : new PageOrderInfo<T>
-                {
-                    Ascending = Ascending,
-                    OrderExpression = OrderExpression,
-                }
+                : new PageOrderInfo<T>(OrderExpression, Ascending),
         }, Cancel)
             .ConfigureAwait(false);
 
 
     public virtual async Task<IPage<T>> GetPage(IPageFilter<T> Filter, CancellationToken Cancel = default)
     {
-        if (Filter == null)
-            throw new ArgumentNullException(nameof(Filter));
-
         var pageIndex = Filter.PageIndex;
         var pageSize = Filter.PageSize;
 
@@ -117,11 +109,11 @@ internal class DbRepository<T> : IRepository<T> where T : Entity, new()
         await Items.AnyAsync(item => item.Id == id, Cancel).ConfigureAwait(false);
 
 
-    public virtual async Task<T> GetByIdAsync(int id, CancellationToken Cancel = default) =>
+    public virtual async Task<T?> GetByIdAsync(int id, CancellationToken Cancel = default) =>
         await Items.FirstOrDefaultAsync(item => item.Id == id, Cancel).ConfigureAwait(false);
 
 
-    public virtual async Task<T> AddAsync(T item, CancellationToken Cancel = default)
+    public virtual async Task<T?> AddAsync(T item, CancellationToken Cancel = default)
     {
         if (item == null) throw new ArgumentNullException(nameof(item));
 
