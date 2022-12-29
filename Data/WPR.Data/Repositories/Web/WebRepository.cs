@@ -193,9 +193,8 @@ public class WebRepository<T> : WebClient, IRepository<T> where T : IEntity
         if(properties == null)
             throw new ArgumentNullException(nameof(properties));
 
-        var dto = new EntityExpressionDto<T>
+        var dto = new EntityExpressionDto<T>(item)
         {
-            Item = item,
             Expressions = properties.Select(p => new QueryExpressionDto(p)),
         };
 

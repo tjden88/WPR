@@ -8,10 +8,6 @@ namespace WPR.Data.Paging;
 /// </summary>
 public class PageOrderInfo<T> : IPageOrderInfo<T>
 {
-    public PageOrderInfo()
-    {
-    }
-
     public PageOrderInfo(Expression<Func<T, object>> OrderExpression, bool Ascending = true)
     {
         this.OrderExpression = OrderExpression;
@@ -27,5 +23,5 @@ public class PageOrderInfo<T> : IPageOrderInfo<T>
     /// <summary>
     /// Порядок сортировки по возрастанию (по умолчанию - true)
     /// </summary>
-    public bool Ascending { get; set; } = true;
+    public bool Ascending { get; set; }
 }

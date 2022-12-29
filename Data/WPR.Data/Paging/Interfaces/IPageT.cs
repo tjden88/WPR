@@ -1,12 +1,16 @@
 ﻿namespace WPR.Data.Paging.Interfaces;
 
+/// <summary>
+/// Страница данных с коллекцией элементов
+/// </summary>
+/// <typeparam name="T">Тип данных элемента</typeparam>
 public interface IPage<out T> : IPage
 {
     /// <summary> Сущности страницы </summary>
     IEnumerable<T> Items { get; }
 
     /// <summary>
-    /// Общее количество сущностей
+    /// Общее количество сущностей в выборке
     /// </summary>
     int TotalCount { get; }
 

@@ -23,18 +23,18 @@ public class PageFilter<T> : IPageFilter<T>
     /// <summary>
     /// Фильтр выборки элементов
     /// </summary>
-    public Expression<Func<T, bool>> Filter { get; set; }
+    public Expression<Func<T, bool>>? Filter { get; set; }
 
 
     /// <summary>
     /// Первичная сортировка элементов
     /// </summary>
-    public IPageOrderInfo<T> OrderBy { get; set; }
+    public IPageOrderInfo<T>? OrderBy { get; set; }
 
 
     /// <summary>
     /// Список дополнительной сортировки элементов
     /// </summary>
-    public ICollection<IPageOrderInfo<T>> ThenOrderBy { get; } = new List<IPageOrderInfo<T>>();
+    public ICollection<IPageOrderInfo<T>>? ThenOrderBy { get; set; }
 
 }

@@ -22,17 +22,17 @@ public interface IPageFilter<T>
     /// <summary>
     /// Фильтр выборки элементов
     /// </summary>
-    Expression<Func<T, bool>> Filter { get; }
+    Expression<Func<T, bool>>? Filter { get; }
 
 
     /// <summary>
     /// Первичная сортировка элементов
     /// </summary>
-    IPageOrderInfo<T> OrderBy { get; }
+    IPageOrderInfo<T>? OrderBy { get; }
 
 
     /// <summary>
     /// Список дополнительной сортировки элементов
     /// </summary>
-    ICollection<IPageOrderInfo<T>> ThenOrderBy { get; }
+    ICollection<IPageOrderInfo<T>>? ThenOrderBy { get; }
 }

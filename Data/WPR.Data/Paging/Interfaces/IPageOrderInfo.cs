@@ -14,7 +14,7 @@ public interface IPageOrderInfo<T>
 
 
     /// <summary>
-    /// Порядок сортировки по возрастанию
+    /// Порядок сортировки по возрастанию или убыванию
     /// </summary>
     bool Ascending { get; }
 }

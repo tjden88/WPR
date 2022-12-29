@@ -1,9 +1,12 @@
 ﻿namespace WPR.Data.Paging.Interfaces;
 
+/// <summary>
+/// Страница выборки данных
+/// </summary>
 public interface IPage
 {
     /// <summary>
-    /// Номер страницы
+    /// Номер страницы (начиная с нуля)
     /// </summary>
     int PageIndex { get; }
 
