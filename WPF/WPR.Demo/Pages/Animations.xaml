@@ -9,6 +9,8 @@
       Title="Анимации">
 
     <Grid>
-        
+        <Rectangle Name="Rect" HorizontalAlignment="Left" Height="165" Margin="130,60,0,0" Stroke="Black" VerticalAlignment="Top" Width="220" Fill="Red"/>
+        <Button Content="Button" HorizontalAlignment="Left" Height="35" Margin="192,290,0,0" VerticalAlignment="Top" Width="96" Click="Button_Click"/>
+
     </Grid>
 </Page>

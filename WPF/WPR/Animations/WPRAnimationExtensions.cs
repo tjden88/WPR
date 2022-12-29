@@ -33,7 +33,7 @@ namespace WPR.Animations
 
 
         /// <summary> Действие при завершении анимации </summary>
-        public static WPRAnimation OnCompleted(this WPRAnimation a, Action Action)
+        public static WPRAnimation OnComplete(this WPRAnimation a, Action Action)
         {
             a.OnCompleted += Action;
             return a;
