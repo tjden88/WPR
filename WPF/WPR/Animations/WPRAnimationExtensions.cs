@@ -1,50 +1,60 @@
 ﻿using System;
 using System.Windows;
-using System.Windows.Media;
 using System.Windows.Media.Animation;
 
-namespace WPR.Animations
+namespace WPR.Animations;
+
+/// <summary>
+/// Методы расширения для управления анимациями WPF
+/// </summary>
+public static class WPRAnimationExtensions
 {
-    /// <summary>
-    /// Методы расширения для управления анимациями WPF
-    /// </summary>
-    public static class WPRAnimationExtensions
+    /// <summary> Добавить анимацию в коллекцию </summary>
+    public static WPRAnimation AddAnimationTimeline(this WPRAnimation a, string PropertyPath, AnimationTimeline animation)
     {
-        ///// <summary> Добавить анимацию в коллекцию </summary>
-        //public static WPRAnimation<T> AddChildren<T>(this WPRAnimation<T> a, AnimationTimeline animation) where T : DependencyObject
-        //{ 
-        //    a.Storyboard.Children.Add(animation);
-        //    return a;
-        //}
+        Storyboard.SetTarget(animation, a.Target);
+        Storyboard.SetTargetProperty(animation, new PropertyPath(PropertyPath));
 
-
-        /// <summary> Добавить анимацию в коллекцию </summary>
-        public static WPRAnimation AddAnimationTimeline(this WPRAnimation a, AnimationTimeline animation, string PropertyPath)
-        {
-            Storyboard.SetTarget(animation, a.Target);
-            Storyboard.SetTargetProperty(animation, new PropertyPath(PropertyPath));
-
-            a.Animation.Children.Add(animation);
-            return a;
-        }
-
-
-        /// <summary> Добавить Double анимацию в коллекцию </summary>
-        public static WPRAnimation AddDoubleAnimation(this WPRAnimation a, double From, double To, TimeSpan Duration, EasingFunctions EasingFunction,
-            string PropertyPath) => AddAnimationTimeline(a, new DoubleAnimation(From, To, Duration) {EasingFunction = GetEasingFunction(EasingFunction)}, PropertyPath);
-
-
-        /// <summary> Действие при завершении анимации </summary>
-        public static WPRAnimation OnComplete(this WPRAnimation a, Action Action)
-        {
-            a.OnCompleted += Action;
-            return a;
-        }
-
-
-        /// <summary> Запустить анимацию </summary>
-        public static void Begin(this WPRAnimation a) => a.Animation.Begin();
-
-        private static IEasingFunction GetEasingFunction(EasingFunctions easingFunctions) => Application.Current.Resources[easingFunctions.ToString()] as IEasingFunction;
+        a.Animation.Children.Add(animation);
+        return a;
     }
+
+
+    /// <summary> Добавить Double анимацию в коллекцию </summary>
+    public static WPRAnimation AddDoubleAnimation(this WPRAnimation a, string PropertyPath,
+        double From=0,
+        double To=1,
+        double MsDuration=300,
+        EasingFunctions EasingFunction= EasingFunctions.None)
+        => AddAnimationTimeline(a, PropertyPath, 
+            new DoubleAnimation(From, To, TimeSpan.FromMilliseconds(MsDuration))
+            {
+                EasingFunction = GetEasingFunction(EasingFunction)
+            });
+
+
+
+    /// <summary> Действие при завершении анимации </summary>
+    public static WPRAnimation OnComplete(this WPRAnimation a, Action Action)
+    {
+        a.Animation.Completed += (s, _) => Action?.Invoke();
+        return a;
+    }
+
+
+    /// <summary> Освободить свойства анимированных элементов при завершениии </summary>
+    public static WPRAnimation ClearOnComplete(this WPRAnimation a)
+    {
+        a.Animation.FillBehavior = FillBehavior.Stop;
+        return a;
+    }
+
+
+    /// <summary> Запустить анимацию </summary>
+    public static void Begin(this WPRAnimation a) => a.Animation.Begin();
+
+
+    /// <summary> Найти функцию плавности в ресурсах </summary>
+    private static IEasingFunction GetEasingFunction(EasingFunctions easingFunctions) =>
+        Application.Current.Resources[easingFunctions.ToString()] as IEasingFunction;
 }

@@ -1,28 +1,23 @@
-﻿using System;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Media.Animation;
 
-namespace WPR.Animations
+namespace WPR.Animations;
+
+/// <summary>
+/// Создание и управление анимациями WPF
+/// </summary>
+public class WPRAnimation//<T> where T : DependencyObject
 {
-    /// <summary>
-    /// Создание и управление анимациями WPF
-    /// </summary>
-    public class WPRAnimation//<T> where T : DependencyObject
+    /// <summary> Целевой объект анимации </summary>
+    public readonly FrameworkElement Target;
+
+    public WPRAnimation(FrameworkElement Target)
     {
-        public readonly DependencyObject Target;
-
-        public WPRAnimation(DependencyObject Target)
-        {
-            this.Target = Target;
-            Animation.Completed += (_, _) => OnCompleted?.Invoke();
-        }
-
-
-        public Storyboard Animation { get; set; } = new();
-
-
-        public Action OnCompleted { get; set; }
-
-
+        this.Target = Target;
+        Animation = new();
     }
+
+    /// <summary> Объект анимации </summary>
+    public Storyboard Animation { get; set; }
+
 }
