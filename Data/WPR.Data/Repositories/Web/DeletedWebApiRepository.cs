@@ -9,11 +9,12 @@ namespace WPR.Data.Repositories.Web;
 /// Репозиторий Web-Api для удалённых сущностей
 /// </summary>
 /// <typeparam name="T"></typeparam>
-public class DeletedWebApiRepository<T> : WebApiRepository<T>, IDeletedRepository<T> where T : Entity, IDeletedEntity, new()
+/// <typeparam name="TKey">Тип идентификатора сущности</typeparam>
+public class DeletedWebApiRepository<T, TKey> : WebApiRepository<T, TKey>, IDeletedRepository<T, TKey> where T : Entity<TKey>, IDeletedEntity<TKey>, new() where TKey : notnull
 {
-    public DeletedWebApiRepository(HttpClient Client, ILogger<WebApiRepository<T>> Logger) : base(Client, $"api/Deleted{typeof(T).Name}", Logger) { }
+    public DeletedWebApiRepository(HttpClient Client, ILogger<WebApiRepository<T, TKey>> Logger) : base(Client, $"api/Deleted{typeof(T).Name}", Logger) { }
 
 
-    public virtual async Task<T?> RestoreAsync(int id, CancellationToken Cancel = default) =>
+    public virtual async Task<T?> RestoreAsync(TKey id, CancellationToken Cancel = default) =>
         await GetAsync<T>($"{Address}/restore/{id}", Cancel).ConfigureAwait(false);
 }

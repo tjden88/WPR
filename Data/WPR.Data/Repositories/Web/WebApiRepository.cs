@@ -10,16 +10,16 @@ using WPR.Data.Repositories.Web.Base;
 
 namespace WPR.Data.Repositories.Web;
 
-
 /// <summary>
 /// Репозиторий Web-Api
 /// </summary>
 /// <typeparam name="T">Сущность репозитория</typeparam>
-public class WebApiRepository<T> : WebApiClient, IRepository<T> where T : IEntity
+/// <typeparam name="TKey">Тип идентификатора сущности</typeparam>
+public class WebApiRepository<T, TKey> : WebApiClient, IRepository<T, TKey> where T : IEntity<TKey> where TKey : notnull
 {
-    public WebApiRepository(HttpClient Client, ILogger<WebApiRepository<T>> Logger) : base(Client, $"api/{typeof(T).Name}", Logger) { }
+    public WebApiRepository(HttpClient Client, ILogger<WebApiRepository<T, TKey>> Logger) : base(Client, $"api/{typeof(T).Name}", Logger) { }
 
-    protected WebApiRepository(HttpClient Client, string Address, ILogger<WebApiRepository<T>> Logger) : base(Client, Address, Logger) { }
+    protected WebApiRepository(HttpClient Client, string Address, ILogger<WebApiRepository<T, TKey>> Logger) : base(Client, Address, Logger) { }
 
 
     public virtual IQueryable<T> Items
@@ -143,11 +143,11 @@ public class WebApiRepository<T> : WebApiClient, IRepository<T> where T : IEntit
         await GetAsync<int>($"{Address}/count", Cancel).ConfigureAwait(false);
 
 
-    public virtual async Task<bool> ExistAsync(int id, CancellationToken Cancel = default) =>
+    public virtual async Task<bool> ExistAsync(TKey id, CancellationToken Cancel = default) =>
         await GetAsync<bool>($"{Address}/exist/{id}", Cancel).ConfigureAwait(false);
 
 
-    public virtual async Task<T?> GetByIdAsync(int id, CancellationToken Cancel = default) =>
+    public virtual async Task<T?> GetByIdAsync(TKey id, CancellationToken Cancel = default) =>
         await GetAsync<T>($"{Address}/{id}", Cancel).ConfigureAwait(false);
 
 
@@ -212,14 +212,14 @@ public class WebApiRepository<T> : WebApiClient, IRepository<T> where T : IEntit
     }
 
 
-    public virtual async Task<bool> DeleteAsync(int id, CancellationToken Cancel = default)
+    public virtual async Task<bool> DeleteAsync(TKey id, CancellationToken Cancel = default)
     {
         var response = await DeleteAsync($"{Address}/{id}", Cancel).ConfigureAwait(false);
         return response?.IsSuccessStatusCode == true;
     }
 
 
-    public virtual async Task<int> DeleteRangeAsync(IEnumerable<int> ids, CancellationToken Cancel = default)
+    public virtual async Task<int> DeleteRangeAsync(IEnumerable<TKey> ids, CancellationToken Cancel = default)
     {
         var response = await PostAsync($"{Address}/deleterange", ids, Cancel).ConfigureAwait(false);
         return response?.IsSuccessStatusCode == true
