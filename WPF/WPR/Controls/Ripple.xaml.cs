@@ -4,13 +4,14 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
+using WPR.Animations;
 
 namespace WPR.Controls;
 
 /// <summary> Анимация кнопок и прочих контролов </summary>
 public class Ripple : ContentControl
 {
-    private readonly Storyboard _RippleAnimation = new() { DecelerationRatio = 0.5 };
+    private Storyboard _RippleAnimation;
     private Ellipse _Ellipse;
 
     private const double OverSize = 2.0;
@@ -18,20 +19,6 @@ public class Ripple : ContentControl
     {
         DefaultStyleKeyProperty.OverrideMetadata(typeof(Ripple), new FrameworkPropertyMetadata(typeof(Ripple)));
     }
-    public Ripple()
-    {
-        // Подготовка анимации
-        _RippleAnimation.Children.Add(new DoubleAnimation(0, 0, TimeSpan.FromSeconds(0.3)));
-        _RippleAnimation.Children.Add(new DoubleAnimation(1, 0.0, TimeSpan.FromSeconds(0.3)));
-        _RippleAnimation.Children.Add(new DoubleAnimation(0, TimeSpan.Zero) { BeginTime = TimeSpan.FromSeconds(0.3) });
-
-        Storyboard.SetTargetProperty(_RippleAnimation.Children[0], new PropertyPath("RenderTransform.ScaleX"));
-        Storyboard.SetTargetProperty(_RippleAnimation.Children[1], new PropertyPath(OpacityProperty));
-        Storyboard.SetTargetProperty(_RippleAnimation.Children[2], new PropertyPath("RenderTransform.ScaleX"));
-
-        _RippleAnimation.Completed += (_,_) => IsAnimationActive = false;
-    }
-        
 
     #region Prop
     /// <summary>
@@ -112,6 +99,18 @@ public class Ripple : ContentControl
         base.OnApplyTemplate();
         _Ellipse = Template.FindName("PART_ellipse", this) as Ellipse;
         if (_Ellipse == null) throw new NullReferenceException("Эллипс в шаблоне не найден!");
+
+        var animation = new WPRAnimation(_Ellipse)
+            .AddDoubleAnimation("RenderTransform.ScaleX")
+            .AddDoubleAnimation("Opacity", 1, 0)
+            .ClearOnComplete()
+            .OnComplete(() => IsAnimationActive = false)
+            .Animation;
+
+        animation.DecelerationRatio = 0.5;
+        _RippleAnimation = animation;
+
+
         MouseDown += (_, _) => _RippleAnimation.SetSpeedRatio(_Ellipse, RippleMouseDownSpeed);
         MouseUp += (_, _) => _RippleAnimation.SetSpeedRatio(_Ellipse, RippleSpeed);
         MouseLeave += (_, _) => _RippleAnimation.SetSpeedRatio(_Ellipse, RippleSpeed);
