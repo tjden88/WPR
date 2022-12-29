@@ -9,15 +9,10 @@ namespace WPR.Animations;
 public class WPRAnimation//<T> where T : DependencyObject
 {
     /// <summary> Целевой объект анимации </summary>
-    public readonly FrameworkElement Target;
+    public FrameworkElement Target { get; set; }
 
-    public WPRAnimation(FrameworkElement Target)
-    {
-        this.Target = Target;
-        Animation = new();
-    }
 
     /// <summary> Объект анимации </summary>
-    public Storyboard Animation { get; set; }
+    public Storyboard Animation { get; set; } = new();
 
 }

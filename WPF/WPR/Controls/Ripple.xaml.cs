@@ -11,13 +11,27 @@ namespace WPR.Controls;
 /// <summary> Анимация кнопок и прочих контролов </summary>
 public class Ripple : ContentControl
 {
-    private Storyboard _RippleAnimation;
+    private readonly Storyboard _RippleAnimation;
     private Ellipse _Ellipse;
 
     private const double OverSize = 2.0;
     static Ripple()
     {
         DefaultStyleKeyProperty.OverrideMetadata(typeof(Ripple), new FrameworkPropertyMetadata(typeof(Ripple)));
+    }
+
+    public Ripple()
+    {
+        // Подготовка анимации
+        var animation = new WPRAnimation()
+            .AddDoubleAnimation("RenderTransform.ScaleX")
+            .AddDoubleAnimation("Opacity", 1, 0)
+            .ClearOnComplete()
+            .OnComplete(() => IsAnimationActive = false)
+            .Animation;
+
+        animation.DecelerationRatio = 0.5;
+        _RippleAnimation = animation;
     }
 
     #region Prop
@@ -99,17 +113,7 @@ public class Ripple : ContentControl
         base.OnApplyTemplate();
         _Ellipse = Template.FindName("PART_ellipse", this) as Ellipse;
         if (_Ellipse == null) throw new NullReferenceException("Эллипс в шаблоне не найден!");
-
-        var animation = new WPRAnimation(_Ellipse)
-            .AddDoubleAnimation("RenderTransform.ScaleX")
-            .AddDoubleAnimation("Opacity", 1, 0)
-            .ClearOnComplete()
-            .OnComplete(() => IsAnimationActive = false)
-            .Animation;
-
-        animation.DecelerationRatio = 0.5;
-        _RippleAnimation = animation;
-
+        
 
         MouseDown += (_, _) => _RippleAnimation.SetSpeedRatio(_Ellipse, RippleMouseDownSpeed);
         MouseUp += (_, _) => _RippleAnimation.SetSpeedRatio(_Ellipse, RippleSpeed);

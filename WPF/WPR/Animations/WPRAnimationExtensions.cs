@@ -9,10 +9,18 @@ namespace WPR.Animations;
 /// </summary>
 public static class WPRAnimationExtensions
 {
+
+    public static WPRAnimation SetTarget(this WPRAnimation a, FrameworkElement Target)
+    {
+        a.Target = Target;
+        return a;
+    }
+
+
     /// <summary> Добавить анимацию в коллекцию </summary>
     public static WPRAnimation AddAnimationTimeline(this WPRAnimation a, string PropertyPath, AnimationTimeline animation)
     {
-        Storyboard.SetTarget(animation, a.Target);
+        //Storyboard.SetTarget(animation, a.Target);
         Storyboard.SetTargetProperty(animation, new PropertyPath(PropertyPath));
 
         a.Animation.Children.Add(animation);
@@ -51,7 +59,7 @@ public static class WPRAnimationExtensions
 
 
     /// <summary> Запустить анимацию </summary>
-    public static void Begin(this WPRAnimation a) => a.Animation.Begin();
+    public static void Begin(this WPRAnimation a) => a.Animation.Begin(a.Target);
 
 
     /// <summary> Найти функцию плавности в ресурсах </summary>
