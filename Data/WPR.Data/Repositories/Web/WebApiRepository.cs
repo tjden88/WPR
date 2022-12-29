@@ -10,11 +10,16 @@ using WPR.Data.Repositories.Web.Base;
 
 namespace WPR.Data.Repositories.Web;
 
-public class WebRepository<T> : WebClient, IRepository<T> where T : IEntity
-{
-    public WebRepository(HttpClient Client, ILogger<WebRepository<T>> Logger) : base(Client, $"api/{typeof(T).Name}", Logger) { }
 
-    protected WebRepository(HttpClient Client, string Address, ILogger<WebRepository<T>> Logger) : base(Client, Address, Logger) { }
+/// <summary>
+/// Репозиторий Web-Api
+/// </summary>
+/// <typeparam name="T">Сущность репозитория</typeparam>
+public class WebApiRepository<T> : WebApiClient, IRepository<T> where T : IEntity
+{
+    public WebApiRepository(HttpClient Client, ILogger<WebApiRepository<T>> Logger) : base(Client, $"api/{typeof(T).Name}", Logger) { }
+
+    protected WebApiRepository(HttpClient Client, string Address, ILogger<WebApiRepository<T>> Logger) : base(Client, Address, Logger) { }
 
 
     public virtual IQueryable<T> Items
@@ -61,10 +66,12 @@ public class WebRepository<T> : WebClient, IRepository<T> where T : IEntity
         try
         {
             var response = await PostAsync($"{Address}/get", queryFilter, Cancel);
+            if(response is null)
+                return Enumerable.Empty<T>();
 
             var entities = await response.Content.ReadFromJsonAsync<T[]>(cancellationToken: Cancel)
-
                 .ConfigureAwait(false);
+
             return entities ?? Enumerable.Empty<T>();
         }
         catch (Exception e)
@@ -75,18 +82,14 @@ public class WebRepository<T> : WebClient, IRepository<T> where T : IEntity
     }
 
 
-    public async Task<IPage<T>> GetPage(int PageIndex, int PageSize, Expression<Func<T, object>> OrderExpression = null, bool Ascending = true, CancellationToken Cancel = default) =>
+    public async Task<IPage<T>> GetPage(int PageIndex, int PageSize, Expression<Func<T, object>>? OrderExpression = null, bool Ascending = true, CancellationToken Cancel = default) =>
         await GetPage(new PageFilter<T>
         {
             PageIndex = PageIndex,
             PageSize = PageSize,
             OrderBy = OrderExpression is null
                 ? null
-                : new PageOrderInfo<T>
-                {
-                    Ascending = Ascending,
-                    OrderExpression = OrderExpression,
-                }
+                : new PageOrderInfo<T>(OrderExpression, Ascending),
         }, Cancel)
             .ConfigureAwait(false);
 
@@ -123,8 +126,11 @@ public class WebRepository<T> : WebClient, IRepository<T> where T : IEntity
         try
         {
             var response = await PostAsync($"{Address}/page", pageQuery, Cancel).ConfigureAwait(false);
+            if(response is null)
+                return new Page<T>(Enumerable.Empty<T>(), 0, Filter.PageIndex, Filter.PageSize);
+
             var page = await response.Content.ReadFromJsonAsync<Page<T>>(cancellationToken: Cancel).ConfigureAwait(false);
-            return page;
+            return page ?? new Page<T>(Enumerable.Empty<T>(), 0, Filter.PageIndex, Filter.PageSize);
         }
         catch (Exception e)
         {
@@ -133,21 +139,24 @@ public class WebRepository<T> : WebClient, IRepository<T> where T : IEntity
         }
     }
 
-    public virtual async Task<int> CountAsync(CancellationToken Cancel = default) => await GetAsync<int>($"{Address}/count", Cancel).ConfigureAwait(false);
+    public virtual async Task<int> CountAsync(CancellationToken Cancel = default) =>
+        await GetAsync<int>($"{Address}/count", Cancel).ConfigureAwait(false);
 
 
-    public virtual async Task<bool> ExistAsync(int id, CancellationToken Cancel = default) => await GetAsync<bool>($"{Address}/exist/{id}", Cancel).ConfigureAwait(false);
+    public virtual async Task<bool> ExistAsync(int id, CancellationToken Cancel = default) =>
+        await GetAsync<bool>($"{Address}/exist/{id}", Cancel).ConfigureAwait(false);
 
 
-    public virtual async Task<T> GetByIdAsync(int id, CancellationToken Cancel = default) => await GetAsync<T>($"{Address}/{id}", Cancel).ConfigureAwait(false);
+    public virtual async Task<T?> GetByIdAsync(int id, CancellationToken Cancel = default) =>
+        await GetAsync<T>($"{Address}/{id}", Cancel).ConfigureAwait(false);
 
 
-    public virtual async Task<T> AddAsync(T item, CancellationToken Cancel = default)
+    public virtual async Task<T?> AddAsync(T item, CancellationToken Cancel = default)
     {
         var response = await PostAsync($"{Address}", item, Cancel).ConfigureAwait(false);
         return response?.IsSuccessStatusCode == true
             ? await response.Content
-                .ReadFromJsonAsync<T>(cancellationToken: Cancel)
+                .ReadFromJsonAsync<T?>(cancellationToken: Cancel)
                 .ConfigureAwait(false)
             : default;
     }

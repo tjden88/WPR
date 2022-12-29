@@ -6,7 +6,7 @@ namespace WPR.Data.Repositories.Web.Base;
 /// <summary>
 /// Клиент доступа к Web-Api
 /// </summary>
-public abstract class WebClient
+public abstract class WebApiClient
 {
     protected readonly ILogger Logger;
 
@@ -16,7 +16,7 @@ public abstract class WebClient
     /// <summary> Базовый адрес Http-клиента </summary>
     protected string Address { get; }
 
-    protected WebClient(HttpClient Client, string Address, ILogger Logger)
+    protected WebApiClient(HttpClient Client, string Address, ILogger Logger)
     {
         this.Logger = Logger;
         Http = Client;
@@ -44,10 +44,10 @@ public abstract class WebClient
     }
 
     /// <summary> Отправить GET запрос </summary>
-    protected T Get<T>(string url) => GetAsync<T>(url).Result;
+    protected T? Get<T>(string url) => GetAsync<T>(url).Result;
 
     /// <summary> Отправить GET запрос </summary>
-    protected async Task<T> GetAsync<T>(string url, CancellationToken Cancel = default)
+    protected async Task<T?> GetAsync<T>(string url, CancellationToken Cancel = default)
     {
         try
         {
@@ -67,10 +67,10 @@ public abstract class WebClient
 
 
     /// <summary> Отправить POST запрос </summary>
-    protected HttpResponseMessage Post<T>(string url, T value) => PostAsync(url, value).Result;
+    protected HttpResponseMessage? Post<T>(string url, T value) => PostAsync(url, value).Result;
 
     /// <summary> Отправить POST запрос </summary>
-    protected async Task<HttpResponseMessage> PostAsync<T>(string url, T value, CancellationToken Cancel = default)
+    protected async Task<HttpResponseMessage?> PostAsync<T>(string url, T value, CancellationToken Cancel = default)
     {
         try
         {
@@ -86,10 +86,10 @@ public abstract class WebClient
 
 
     /// <summary> Отправить PUT запрос </summary>
-    protected HttpResponseMessage Put<T>(string url, T value) => PutAsync(url, value).Result;
+    protected HttpResponseMessage? Put<T>(string url, T value) => PutAsync(url, value).Result;
 
     /// <summary> Отправить PUT запрос </summary>
-    protected async Task<HttpResponseMessage> PutAsync<T>(string url, T value, CancellationToken Cancel = default)
+    protected async Task<HttpResponseMessage?> PutAsync<T>(string url, T value, CancellationToken Cancel = default)
     {
         try
         {
@@ -105,10 +105,10 @@ public abstract class WebClient
 
 
     /// <summary> Отправить DELETE запрос </summary>
-    protected HttpResponseMessage Delete(string url) => DeleteAsync(url).Result;
+    protected HttpResponseMessage? Delete(string url) => DeleteAsync(url).Result;
 
     /// <summary> Отправить DELETE запрос </summary>
-    protected async Task<HttpResponseMessage> DeleteAsync(string url, CancellationToken Cancel = default)
+    protected async Task<HttpResponseMessage?> DeleteAsync(string url, CancellationToken Cancel = default)
     {
         try
         {
