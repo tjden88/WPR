@@ -1,35 +1,29 @@
 ﻿using System;
 using System.Windows;
 using System.Windows.Media.Animation;
+using System.Windows.Threading;
 
 namespace WPR.Animations;
 
 /// <summary>
 /// Методы расширения для управления анимациями WPF
 /// </summary>
-public static class WPRAnimationExtensions
+public static class StoryboardExtensions
 {
 
-    public static WPRAnimation SetTarget(this WPRAnimation a, FrameworkElement Target)
-    {
-        a.Target = Target;
-        return a;
-    }
-
-
     /// <summary> Добавить анимацию в коллекцию </summary>
-    public static WPRAnimation AddAnimationTimeline(this WPRAnimation a, string PropertyPath, AnimationTimeline animation)
+    public static Storyboard AddAnimationTimeline(this Storyboard a, string PropertyPath, AnimationTimeline animation)
     {
         //Storyboard.SetTarget(animation, a.Target);
         Storyboard.SetTargetProperty(animation, new PropertyPath(PropertyPath));
 
-        a.Animation.Children.Add(animation);
+        a.Children.Add(animation);
         return a;
     }
 
 
     /// <summary> Добавить Double анимацию в коллекцию </summary>
-    public static WPRAnimation AddDoubleAnimation(this WPRAnimation a, string PropertyPath,
+    public static Storyboard AddDoubleAnimation(this Storyboard a, string PropertyPath,
         double From=0,
         double To=1,
         double MsDuration=300,
@@ -43,23 +37,30 @@ public static class WPRAnimationExtensions
 
 
     /// <summary> Действие при завершении анимации </summary>
-    public static WPRAnimation OnComplete(this WPRAnimation a, Action Action)
+    public static Storyboard OnComplete(this Storyboard a, Action Action)
     {
-        a.Animation.Completed += (s, _) => Action?.Invoke();
+        a.Completed += (s, _) => Action?.Invoke();
         return a;
     }
 
 
     /// <summary> Освободить свойства анимированных элементов при завершениии </summary>
-    public static WPRAnimation ClearOnComplete(this WPRAnimation a)
+    public static Storyboard ClearOnComplete(this Storyboard a)
     {
-        a.Animation.FillBehavior = FillBehavior.Stop;
+        a.FillBehavior = FillBehavior.Stop;
         return a;
     }
 
 
-    /// <summary> Запустить анимацию </summary>
-    public static void Begin(this WPRAnimation a) => a.Animation.Begin(a.Target);
+    /// <summary> Запустить анимацию для выбранного объекта</summary>
+    public static void Begin(this Storyboard a, FrameworkElement Target, DispatcherPriority Priority = DispatcherPriority.Normal)
+    {
+        Application.Current.Dispatcher.Invoke(Priority, () =>
+        {
+            a.Begin(Target);
+        });
+        
+    }
 
 
     /// <summary> Найти функцию плавности в ресурсах </summary>

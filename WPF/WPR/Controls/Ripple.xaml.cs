@@ -23,15 +23,13 @@ public class Ripple : ContentControl
     public Ripple()
     {
         // Подготовка анимации
-        var animation = new WPRAnimation()
+
+        _RippleAnimation = new Storyboard()
             .AddDoubleAnimation("RenderTransform.ScaleX")
             .AddDoubleAnimation("Opacity", 1, 0)
             .ClearOnComplete()
-            .OnComplete(() => IsAnimationActive = false)
-            .Animation;
-
-        animation.DecelerationRatio = 0.5;
-        _RippleAnimation = animation;
+            .OnComplete(() => IsAnimationActive = false);
+        _RippleAnimation.DecelerationRatio = 0.5;
     }
 
     #region Prop

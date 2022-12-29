@@ -1,5 +1,5 @@
-﻿using System;
-using System.Windows.Controls;
+﻿using System.Windows.Controls;
+using System.Windows.Media.Animation;
 using WPR.Animations;
 using WPR.Dialogs;
 
@@ -17,13 +17,12 @@ namespace WPR.Demo.Pages
 
         private void Button_Click(object sender, System.Windows.RoutedEventArgs e)
         {
-            new WPRAnimation()
-                .SetTarget(Rect)
+            new Storyboard()
                 .AddDoubleAnimation("Opacity", 1,0.2,500)
                 .OnComplete(() => WPRDialogHelper.Bubble(this, "Anim completed"))
                 .OnComplete(() => Rect.Opacity = 0.5)
                 .ClearOnComplete()
-                .Begin();
+                .Begin(Rect);
         }
     }
 }
