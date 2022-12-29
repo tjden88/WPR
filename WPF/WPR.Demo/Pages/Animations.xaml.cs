@@ -18,7 +18,7 @@ namespace WPR.Demo.Pages
         private void Button_Click(object sender, System.Windows.RoutedEventArgs e)
         {
             new WPRAnimation(Rect)
-                .AddDoubleAnimation(1, 0, TimeSpan.FromSeconds(0.3), "Opacity")
+                .AddDoubleAnimation(1, 0, TimeSpan.FromSeconds(0.3), EasingFunctions.None, "Opacity")
                 .OnComplete(() => WPRDialogHelper.Bubble(this, "Anim completed"))
                 .Begin();
         }
