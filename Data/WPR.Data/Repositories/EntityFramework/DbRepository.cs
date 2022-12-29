@@ -12,11 +12,12 @@ namespace WPR.Data.Repositories.EntityFramework;
 /// Репозиторий сущностей БД
 /// </summary>
 /// <typeparam name="T">Сущность БД</typeparam>
-public class DbRepository<T> : IRepository<T> where T : Entity, new()
+/// <typeparam name="TKey">Тип идентификатора сущности</typeparam>
+public class DbRepository<T, TKey> : IRepository<T, TKey> where T : Entity<TKey>, new() where TKey : notnull
 {
     private readonly DbContext _Db; // Контекст БД
 
-    private static bool IsDeletedEntity => typeof(IDeletedEntity).IsAssignableFrom(typeof(T));
+    private static bool IsDeletedEntity => typeof(IDeletedEntity<TKey>).IsAssignableFrom(typeof(T));
 
 
     /// <summary> Набор данных БД </summary>
@@ -36,7 +37,7 @@ public class DbRepository<T> : IRepository<T> where T : Entity, new()
             IQueryable<T> itemsQuery = Set;
 
             if (IsDeletedEntity)
-                itemsQuery = itemsQuery.Where(item => !((IDeletedEntity)item).IsDeleted);
+                itemsQuery = itemsQuery.Where(item => !((IDeletedEntity<TKey>)item).IsDeleted);
 
             return itemsQuery;
         }
@@ -105,12 +106,12 @@ public class DbRepository<T> : IRepository<T> where T : Entity, new()
     public virtual async Task<int> CountAsync(CancellationToken Cancel = default) => await Items.CountAsync(Cancel).ConfigureAwait(false);
 
 
-    public virtual async Task<bool> ExistAsync(int id, CancellationToken Cancel = default) =>
-        await Items.AnyAsync(item => item.Id == id, Cancel).ConfigureAwait(false);
+    public virtual async Task<bool> ExistAsync(TKey id, CancellationToken Cancel = default) =>
+        await Items.AnyAsync(item => Equals(id, item.Id), Cancel).ConfigureAwait(false);
 
 
-    public virtual async Task<T?> GetByIdAsync(int id, CancellationToken Cancel = default) =>
-        await Items.FirstOrDefaultAsync(item => item.Id == id, Cancel).ConfigureAwait(false);
+    public virtual async Task<T?> GetByIdAsync(TKey id, CancellationToken Cancel = default) =>
+        await Items.FirstOrDefaultAsync(item => Equals(id, item.Id), Cancel).ConfigureAwait(false);
 
 
     public virtual async Task<T?> AddAsync(T item, CancellationToken Cancel = default)
@@ -181,12 +182,12 @@ public class DbRepository<T> : IRepository<T> where T : Entity, new()
     }
 
 
-    public virtual async Task<bool> DeleteAsync(int id, CancellationToken Cancel = default)
+    public virtual async Task<bool> DeleteAsync(TKey id, CancellationToken Cancel = default)
     {
         if (!await ExistAsync(id, Cancel))
             return false;
 
-        var item = Set.Local.FirstOrDefault(i => i.Id == id) ?? new T { Id = id };
+        var item = Set.Local.FirstOrDefault(i => Equals(id, i.Id)) ?? new T { Id = id };
 
         _Db.Attach(item);
 
@@ -196,7 +197,7 @@ public class DbRepository<T> : IRepository<T> where T : Entity, new()
     }
 
 
-    public virtual async Task<int> DeleteRangeAsync(IEnumerable<int> ids, CancellationToken Cancel = default)
+    public virtual async Task<int> DeleteRangeAsync(IEnumerable<TKey> ids, CancellationToken Cancel = default)
     {
         var existing = await Items.Select(item => item.Id)
             .Where(id => ids.Contains(id))
@@ -204,7 +205,7 @@ public class DbRepository<T> : IRepository<T> where T : Entity, new()
             .ConfigureAwait(false);
 
         var itemsToDelete = existing
-            .Select(id => Set.Local.FirstOrDefault(i => i.Id == id) ?? new T { Id = id });
+            .Select(id => Set.Local.FirstOrDefault(i => Equals(id, i.Id)) ?? new T { Id = id });
 
         MarkDeletedOrDelete(itemsToDelete);
 
@@ -221,7 +222,7 @@ public class DbRepository<T> : IRepository<T> where T : Entity, new()
         {
             foreach (var item in items)
             {
-                var deletedEntity = (IDeletedEntity)item;
+                var deletedEntity = (IDeletedEntity<TKey>)item;
                 _Db.Entry(deletedEntity).State = EntityState.Unchanged;
                 deletedEntity.IsDeleted = true;
                 _Db.Entry(deletedEntity)

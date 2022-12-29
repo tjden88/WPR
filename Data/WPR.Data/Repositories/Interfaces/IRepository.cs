@@ -8,7 +8,8 @@ namespace WPR.Data.Repositories.Interfaces;
 /// Интерфейс репозитория сущностей
 /// </summary>
 /// <typeparam name="TEntity">Сущность</typeparam>
-public interface IRepository<TEntity> where TEntity : IEntity
+/// <typeparam name="TKey">Тип идентификатора сущности</typeparam>
+public interface IRepository<TEntity, in TKey> where TEntity : IEntity<TKey> where TKey : notnull
 {
     /// <summary> Коллекция сущностей </summary>
     IQueryable<TEntity> Items { get; }
@@ -56,7 +57,7 @@ public interface IRepository<TEntity> where TEntity : IEntity
     /// <param name="id">идентификатор сущности</param>
     /// <param name="Cancel">Токен отмены</param>
     /// <returns>Истина, если сущность есть в репозитории</returns>
-    Task<bool> ExistAsync(int id, CancellationToken Cancel = default);
+    Task<bool> ExistAsync(TKey id, CancellationToken Cancel = default);
 
 
     /// <summary>
@@ -65,7 +66,7 @@ public interface IRepository<TEntity> where TEntity : IEntity
     /// <param name="id">Id сущности</param>
     /// <param name="Cancel">Токен отмены</param>
     /// <returns>null, если сущность не найдена</returns>
-    Task<TEntity?> GetByIdAsync(int id, CancellationToken Cancel = default);
+    Task<TEntity?> GetByIdAsync(TKey id, CancellationToken Cancel = default);
 
 
     /// <summary>
@@ -120,13 +121,13 @@ public interface IRepository<TEntity> where TEntity : IEntity
     /// </summary>
     /// <param name="id">Id удаляемой сущности</param>
     /// <param name="Cancel">Токен отмены</param>
-    Task<bool> DeleteAsync(int id, CancellationToken Cancel = default);
+    Task<bool> DeleteAsync(TKey id, CancellationToken Cancel = default);
 
     /// <summary>
     /// Удалить несколько сущностей
     /// </summary>
     /// <param name="ids">Коллекция идентификаторов удаляемых сущностей</param>
     /// <param name="Cancel">Токен отмены</param>
-    Task<int> DeleteRangeAsync(IEnumerable<int> ids, CancellationToken Cancel = default);
+    Task<int> DeleteRangeAsync(IEnumerable<TKey> ids, CancellationToken Cancel = default);
 
 }

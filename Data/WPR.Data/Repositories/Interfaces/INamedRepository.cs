@@ -2,7 +2,7 @@
 
 namespace WPR.Data.Repositories.Interfaces;
 
-public interface INamedRepository<TEntity> : IRepository<TEntity> where TEntity : INamedEntity
+public interface INamedRepository<TEntity, in TKey> : IRepository<TEntity, TKey> where TEntity : INamedEntity<TKey> where TKey : notnull
 {
     /// <summary>
     /// Существует ли сущность в репозитории
@@ -28,5 +28,5 @@ public interface INamedRepository<TEntity> : IRepository<TEntity> where TEntity 
     /// <param name="newName">Новое имя сущности</param>
     /// <param name="Cancel">Токен отмены</param>
     /// <param name="id">Идентификатор</param>
-    Task<bool> UpdateNameAsync(int id, string newName, CancellationToken Cancel = default);
+    Task<bool> UpdateNameAsync(TKey id, string newName, CancellationToken Cancel = default);
 }

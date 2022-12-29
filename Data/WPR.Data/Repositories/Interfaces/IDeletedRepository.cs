@@ -10,12 +10,13 @@ namespace WPR.Data.Repositories.Interfaces;
 /// Методы удаления - удаляют сущность окончательно
 /// </summary>
 /// <typeparam name="TDeletedEntity">Тип, реализующий IDeletedEntity</typeparam>
-public interface IDeletedRepository<TDeletedEntity> : IRepository<TDeletedEntity> where TDeletedEntity : IEntity, IDeletedEntity
+/// <typeparam name="TKey">Тип идентификатора сущности</typeparam>
+public interface IDeletedRepository<TDeletedEntity, in TKey> : IRepository<TDeletedEntity, TKey> where TDeletedEntity : IEntity<TKey>, IDeletedEntity<TKey> where TKey : notnull
 {
 
     /// <summary>
     /// Восстановить удалённую сущность
     /// </summary>
     /// <returns>null, если не удалось</returns>
-    Task<TDeletedEntity?> RestoreAsync(int id, CancellationToken Cancel = default);
+    Task<TDeletedEntity?> RestoreAsync(TKey id, CancellationToken Cancel = default);
 }

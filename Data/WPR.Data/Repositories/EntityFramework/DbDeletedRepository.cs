@@ -9,7 +9,8 @@ namespace WPR.Data.Repositories.EntityFramework;
 /// Репозиторий удалённых сущностей БД
 /// </summary>
 /// <typeparam name="T">IDeletedEntity</typeparam>
-public class DbDeletedRepository<T> : DbRepository<T>, IDeletedRepository<T> where T : Entity, IDeletedEntity, new()
+/// <typeparam name="TKey">Тип идентификатора сущности</typeparam>
+public class DbDeletedRepository<T, TKey> : DbRepository<T, TKey>, IDeletedRepository<T, TKey> where T : Entity<TKey>, IDeletedEntity<TKey>, new() where TKey : notnull
 {
     public DbDeletedRepository(DbContext Db) : base(Db) { }
 
@@ -38,7 +39,7 @@ public class DbDeletedRepository<T> : DbRepository<T>, IDeletedRepository<T> whe
         Set.RemoveRange(items);
 
 
-    public async Task<T?> RestoreAsync(int id, CancellationToken Cancel = default)
+    public async Task<T?> RestoreAsync(TKey id, CancellationToken Cancel = default)
     {
         var entity = await GetByIdAsync(id, Cancel).ConfigureAwait(false);
 
