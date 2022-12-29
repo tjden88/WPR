@@ -1,5 +1,5 @@
 ﻿using System.Linq.Expressions;
-using WPR.Data.Entities.Interfaces;
+using WPR.Data.Base.Entities.Interfaces;
 using WPR.Data.Paging.Interfaces;
 
 namespace WPR.Data.Repositories.Interfaces;

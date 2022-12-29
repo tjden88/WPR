@@ -1,7 +1,7 @@
 ﻿using System.Linq.Expressions;
 using Microsoft.EntityFrameworkCore;
-using WPR.Data.Entities;
-using WPR.Data.Entities.Interfaces;
+using WPR.Data.Base.Entities;
+using WPR.Data.Base.Entities.Interfaces;
 using WPR.Data.Paging;
 using WPR.Data.Paging.Interfaces;
 using WPR.Data.Repositories.Interfaces;

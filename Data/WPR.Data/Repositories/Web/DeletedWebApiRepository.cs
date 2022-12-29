@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.Logging;
-using WPR.Data.Entities;
-using WPR.Data.Entities.Interfaces;
+using WPR.Data.Base.Entities;
+using WPR.Data.Base.Entities.Interfaces;
 using WPR.Data.Repositories.Interfaces;
 
 namespace WPR.Data.Repositories.Web;

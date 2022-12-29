@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using WPR.Data.Entities.Interfaces;
+using WPR.Data.Base.Entities.Interfaces;
 
-namespace WPR.Data.Entities;
+namespace WPR.Data.Base.Entities;
 
 public abstract class Entity<TKey> : IEntity<TKey> where TKey : notnull
 {

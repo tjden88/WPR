@@ -1,4 +1,4 @@
-﻿using WPR.Data.Entities.Interfaces;
+﻿using WPR.Data.Base.Entities.Interfaces;
 
 namespace WPR.Data.Repositories.Interfaces;
 

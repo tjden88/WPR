@@ -1,4 +1,4 @@
-﻿namespace WPR.Data.Entities.Interfaces;
+﻿namespace WPR.Data.Base.Entities.Interfaces;
 
 /// <summary>
 /// Именованная сущность

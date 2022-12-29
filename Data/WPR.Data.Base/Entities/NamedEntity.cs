@@ -1,6 +1,6 @@
-﻿using WPR.Data.Entities.Interfaces;
+﻿using WPR.Data.Base.Entities.Interfaces;
 
-namespace WPR.Data.Entities;
+namespace WPR.Data.Base.Entities;
 
 public abstract class NamedEntity<TKey> : Entity<TKey>, INamedEntity<TKey> where TKey : notnull
 {

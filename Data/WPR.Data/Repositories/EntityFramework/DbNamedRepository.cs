@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using WPR.Data.Entities;
+using WPR.Data.Base.Entities;
 using WPR.Data.Repositories.Interfaces;
 
 namespace WPR.Data.Repositories.EntityFramework;
