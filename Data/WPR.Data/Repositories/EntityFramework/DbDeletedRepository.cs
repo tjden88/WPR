@@ -1,4 +1,4 @@
-﻿using MebelSite.DAL.Context;
+﻿using Microsoft.EntityFrameworkCore;
 using WPR.Data.Entities;
 using WPR.Data.Entities.Interfaces;
 using WPR.Data.Repositories.Interfaces;
@@ -7,7 +7,7 @@ namespace WPR.Data.Repositories.EntityFramework;
 
 internal class DbDeletedRepository<T> : DbRepository<T>, IDeletedRepository<T> where T : Entity, IDeletedEntity, new()
 {
-    public DbDeletedRepository(MebelSiteDb Db) : base(Db) { }
+    public DbDeletedRepository(DbContext Db) : base(Db) { }
 
 
     public override IQueryable<T> Items => Set.Where(item => item.IsDeleted);

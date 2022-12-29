@@ -1,6 +1,6 @@
 ﻿using System.Linq.Expressions;
 using System.Text.Json.Serialization;
-
+using Serialize.Linq.Serializers;
 namespace WPR.Data.Dto;
 
 /// <summary> Класс - DTO для передачи выражений в контроллер в текстовом виде </summary>

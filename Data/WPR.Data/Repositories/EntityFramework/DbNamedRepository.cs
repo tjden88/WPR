@@ -1,5 +1,4 @@
-﻿using MebelSite.DAL.Context;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using WPR.Data.Entities;
 using WPR.Data.Repositories.Interfaces;
 
@@ -7,7 +6,7 @@ namespace WPR.Data.Repositories.EntityFramework;
 
 internal class DbNamedRepository<T> : DbRepository<T>, INamedRepository<T> where T : NamedEntity, new()
 {
-    public DbNamedRepository(MebelSiteDb Db) : base(Db) { }
+    public DbNamedRepository(DbContext Db) : base(Db) { }
 
     public virtual async Task<bool> ExistNameAsync(string Name, CancellationToken Cancel = default) =>
         await Items.AnyAsync(item => item.Name == Name, Cancel).ConfigureAwait(false);

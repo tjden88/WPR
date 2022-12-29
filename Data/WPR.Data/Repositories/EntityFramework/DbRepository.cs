@@ -1,5 +1,4 @@
 ﻿using System.Linq.Expressions;
-using MebelSite.DAL.Context;
 using Microsoft.EntityFrameworkCore;
 using WPR.Data.Entities;
 using WPR.Data.Entities.Interfaces;
@@ -15,7 +14,7 @@ namespace WPR.Data.Repositories.EntityFramework;
 /// <typeparam name="T">Сущность БД</typeparam>
 internal class DbRepository<T> : IRepository<T> where T : Entity, new()
 {
-    private readonly MebelSiteDb _Db; // Контекст БД
+    private readonly DbContext _Db; // Контекст БД
 
     private static bool IsDeletedEntity => typeof(IDeletedEntity).IsAssignableFrom(typeof(T));
 
@@ -23,7 +22,7 @@ internal class DbRepository<T> : IRepository<T> where T : Entity, new()
     /// <summary> Набор данных БД </summary>
     protected DbSet<T> Set { get; }
 
-    public DbRepository(MebelSiteDb Db)
+    public DbRepository(DbContext Db)
     {
         _Db = Db;
         Set = _Db.Set<T>();
