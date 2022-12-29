@@ -1,10 +1,10 @@
 ﻿namespace WPR.Data.Entities.Interfaces;
 
 /// <summary> Интерфейс сущности </summary>
-public interface IEntity
+public interface IEntity<TKey> where TKey: notnull
 {
     /// <summary>
     /// Уникальный идентификатор
     /// </summary>
-    int Id { get; set; }
+    TKey Id { get; set; }
 }

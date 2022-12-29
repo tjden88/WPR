@@ -3,7 +3,7 @@
 /// <summary>
 /// Сущность с пометкой удаления
 /// </summary>
-public interface IDeletedEntity : IEntity
+public interface IDeletedEntity<TKey> : IEntity<TKey> where TKey : notnull
 {
     /// <summary>
     /// Удалена ли сущность

@@ -3,7 +3,7 @@
 /// <summary>
 /// Именованная сущность
 /// </summary>
-public interface INamedEntity : IEntity
+public interface INamedEntity<TKey> : IEntity<TKey> where TKey : notnull
 {
     /// <summary> Имя сущности. Обязательное свойство </summary>
     string Name { get; set; }

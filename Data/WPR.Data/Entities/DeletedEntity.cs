@@ -2,7 +2,7 @@
 
 namespace WPR.Data.Entities;
 
-public class DeletedEntity : Entity, IDeletedEntity
+public abstract class DeletedEntity<TKey> : Entity<TKey>, IDeletedEntity<TKey> where TKey : notnull
 {
     public bool IsDeleted { get; set; }
 }

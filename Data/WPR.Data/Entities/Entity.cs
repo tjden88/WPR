@@ -1,8 +1,10 @@
-﻿using WPR.Data.Entities.Interfaces;
+﻿using System.ComponentModel.DataAnnotations;
+using WPR.Data.Entities.Interfaces;
 
 namespace WPR.Data.Entities;
 
-public class Entity : IEntity
+public abstract class Entity<TKey> : IEntity<TKey> where TKey : notnull
 {
-    public int Id { get; set; }
+    [Key]
+    public TKey Id { get; set; } = default!;
 }
