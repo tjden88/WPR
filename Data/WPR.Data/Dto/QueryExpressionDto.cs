@@ -6,25 +6,26 @@ namespace WPR.Data.Dto;
 /// <summary> Класс - DTO для передачи выражений в контроллер в текстовом виде </summary>
 public class QueryExpressionDto
 {
+    private static readonly ExpressionSerializer _Serializer = new(new JsonSerializer());
+
     [JsonConstructor]
     public QueryExpressionDto()
     {
     }
-
-    public string JsonString { get; set; }
-
-
     public QueryExpressionDto(Expression Expression) => SetExpression(Expression);
 
-    public void SetExpression(Expression Expression)
-    {
-        var serializer = new ExpressionSerializer(new JsonSerializer());
-        JsonString = serializer.SerializeText(Expression);
-    }
 
-    public Expression GetExpression()
-    {
-        var serializer = new ExpressionSerializer(new JsonSerializer());
-        return serializer.DeserializeText(JsonString);
-    }
+    /// <summary> Сериализованная строка запроса </summary>
+    [JsonInclude]
+    public string? JsonString { get; private set; }
+
+    /// <summary> Сериализовать выражение LINQ </summary>
+    public void SetExpression(Expression Expression) => 
+        JsonString = _Serializer.SerializeText(Expression);
+
+    /// <summary> Получить выражение LINQ этого экземпляра </summary>
+    public Expression? GetExpression() =>
+        string.IsNullOrEmpty(JsonString) 
+            ? null
+            : _Serializer.DeserializeText(JsonString);
 }

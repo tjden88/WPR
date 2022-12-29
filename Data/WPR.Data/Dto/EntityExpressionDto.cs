@@ -1,12 +1,12 @@
 ﻿namespace WPR.Data.Dto;
 
 /// <summary>
-/// Dto для передачи сущностей с выражениями
+/// Dto для передачи сущности с LINQ выражениями
 /// </summary>
-/// <typeparam name="T"></typeparam>
-public class EntityExpressionDto<T>
+/// <typeparam name="T">Тип сущности</typeparam>
+/// <param name="Item">Экземпляр сущности</param>
+public record EntityExpressionDto<T>(T Item)
 {
-    public T Item { get; set; }
-
-    public IEnumerable<QueryExpressionDto> Expressions { get; set; }
+    /// <summary> Выражения LINQ для экземпляра сущности </summary>
+    public IEnumerable<QueryExpressionDto> Expressions { get; set; } = Enumerable.Empty<QueryExpressionDto>();
 }
