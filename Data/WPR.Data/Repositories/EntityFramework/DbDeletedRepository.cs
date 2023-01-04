@@ -1,6 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using WPR.Data.Base.Entities;
-using WPR.Data.Base.Entities.Interfaces;
+using WPR.Data.Base.Entities.EntityFramework;
 using WPR.Data.Repositories.Interfaces;
 
 namespace WPR.Data.Repositories.EntityFramework;
@@ -9,8 +8,7 @@ namespace WPR.Data.Repositories.EntityFramework;
 /// Репозиторий удалённых сущностей БД
 /// </summary>
 /// <typeparam name="T">IDeletedEntity</typeparam>
-/// <typeparam name="TKey">Тип идентификатора сущности</typeparam>
-public class DbDeletedRepository<T, TKey> : DbRepository<T, TKey>, IDeletedRepository<T, TKey> where T : Entity<TKey>, IDeletedEntity<TKey>, new() where TKey : notnull
+public class DbDeletedRepository<T> : DbRepository<T>, IDeletedRepository<T, int> where T : DeletedDbEntity, new()
 {
     public DbDeletedRepository(DbContext Db) : base(Db) { }
 
@@ -39,7 +37,7 @@ public class DbDeletedRepository<T, TKey> : DbRepository<T, TKey>, IDeletedRepos
         Set.RemoveRange(items);
 
 
-    public async Task<T?> RestoreAsync(TKey id, CancellationToken Cancel = default)
+    public async Task<T?> RestoreAsync(int id, CancellationToken Cancel = default)
     {
         var entity = await GetByIdAsync(id, Cancel).ConfigureAwait(false);
 

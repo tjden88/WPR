@@ -1,5 +1,5 @@
 ﻿using Microsoft.Extensions.Logging;
-using WPR.Data.Base.Entities;
+using WPR.Data.Base.Entities.Interfaces;
 using WPR.Data.Repositories.Interfaces;
 
 namespace WPR.Data.Repositories.Web;
@@ -9,7 +9,7 @@ namespace WPR.Data.Repositories.Web;
 /// </summary>
 /// <typeparam name="T"></typeparam>
 /// <typeparam name="TKey">Тип идентификатора сущности</typeparam>
-public class NamedWebApiRepository<T, TKey> : WebApiRepository<T, TKey>, INamedRepository<T, TKey> where T : NamedEntity<TKey>, new() where TKey : notnull
+public class NamedWebApiRepository<T, TKey> : WebApiRepository<T, TKey>, INamedRepository<T, TKey> where T : INamedEntity<TKey>, new() where TKey : notnull
 {
     public NamedWebApiRepository(HttpClient Client, ILogger<WebApiRepository<T, TKey>> Logger) : base(Client, Logger) { }
 
