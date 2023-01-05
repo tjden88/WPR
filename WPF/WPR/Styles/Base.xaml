@@ -16,7 +16,7 @@
     <converters:ValueIsNullConverter x:Key="ValueIsNullConverter"/>
     <converters:BoolNotConverter x:Key="BoolNotConverter"/>
     <converters:ColorContrastConverter LowValue="#1C1C1C" x:Key="ColorContrastConverter"/>
-    <converters:BrushContrastConverter LowValue="#1C1C1C" x:Key="BrushLightOrDarkConverter"/>
+    <converters:BrushContrastConverter LowValue="#1C1C1C" x:Key="BrushContrastConverter"/>
     <converters:SignPlusMinusConverter x:Key="SignPlusMinusConverter"/>
     <converters:EnumToBoolConverter x:Key="EnumToBoolConverter"/>
     <converters:ValueIsNullToVisibilityConverter x:Key="ValueIsNullToVisibilityConverter"/>
