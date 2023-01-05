@@ -27,7 +27,7 @@
                             SnapsToDevicePixels="true">
                         <ScrollViewer Focusable="false">
                             <ItemsPresenter SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
-                                            Margin="0,10,0,10"/>
+                                            Margin="0"/>
                         </ScrollViewer>
                     </Border>
                     <ControlTemplate.Triggers>

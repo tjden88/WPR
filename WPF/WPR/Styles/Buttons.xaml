@@ -109,7 +109,7 @@
         <Setter Property="FontWeight" Value="Medium"/>
         <Setter Property="VerticalContentAlignment" Value="Center"/>
         <Setter Property="HorizontalContentAlignment" Value="Center"/>
-        <Setter Property="helpers:ButtonHelper.BorderRadius" Value="3"/>
+        <Setter Property="helpers:ButtonHelper.BorderRadius" Value="6"/>
         <Setter Property="helpers:ButtonHelper.MouseOverButtonBrush" Value="{DynamicResource AnimationEnterColorBrush}"/>
         <Setter Property="Cursor" Value="Hand"/>
         <Setter Property="helpers:RippleHelper.FeedbackBrush" Value="{DynamicResource LightPrimaryColorBrush}"/>
