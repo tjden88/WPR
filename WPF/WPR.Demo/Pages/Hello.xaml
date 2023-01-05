@@ -43,13 +43,9 @@
                    Background="{DynamicResource SecondaryBackgroundColorBrush}" />
         <TextBlock Text="DangerColorBrush"
                    Background="{DynamicResource DangerColorBrush}" />
-        <TextBlock Text="InactiveWindowTitleBackgroundColorBrush"
-                   Background="{DynamicResource InactiveWindowTitleBackgroundColorBrush}" />
         <TextBlock Text="WindowTitleBackgroundColorBrush"
                    Background="{DynamicResource WindowTitleBackgroundColorBrush}" />
         <TextBlock Text="WindowTitleBackgroundContrastColorBrush"
                    Background="{DynamicResource WindowTitleBackgroundContrastColorBrush}" />
-        <TextBlock Text="InactiveWindowTitleBackgroundColorBrush"
-                   Background="{DynamicResource InactiveWindowTitleBackgroundColorBrush}" />
     </StackPanel>
 </Page>

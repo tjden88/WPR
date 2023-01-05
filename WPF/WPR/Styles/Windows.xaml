@@ -139,7 +139,6 @@
                                        Text="{TemplateBinding Title}"/>
                         </Grid>
 
-
                         <ContentPresenter Margin="0,35,0,0"/>
 
                         <DockPanel x:Name="PART_Buttons" Height="35" 
@@ -197,14 +196,15 @@
                             </Button>
                         </DockPanel>
 
+                        <Border Background="#667D7D7D" Visibility="Hidden" VerticalAlignment="Top" Height="35" IsHitTestVisible="False" Name="InactiveBorder"></Border>
+
                     </Grid>
                 </Border>
             </controls:WPRDialogPanel>
         </AdornerDecorator>
         <ControlTemplate.Triggers>
             <Trigger Property="IsActive" Value="False">
-                <Setter Property="Background" TargetName="TitlePanel" Value="{DynamicResource InactiveWindowTitleBackgroundColorBrush}"/>
-                <Setter Property="Background" TargetName="PART_Buttons" Value="{DynamicResource InactiveWindowTitleBackgroundColorBrush}"/>
+                <Setter Property="Visibility" TargetName="InactiveBorder" Value="Visible"></Setter>
             </Trigger>
         </ControlTemplate.Triggers>
     </ControlTemplate>

@@ -104,7 +104,6 @@ public static class StyleHelper
         : StyleColors.PrimaryColor;
 
         StyleColors.WindowTitleBackgroundColor = windowBackgroundColor;
-        StyleColors.InactiveWindowTitleBackgroundColor = Lighten(windowBackgroundColor, isDarkTheme ? 5 : 2);
     }
 
 

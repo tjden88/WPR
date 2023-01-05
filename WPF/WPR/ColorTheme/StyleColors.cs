@@ -302,26 +302,4 @@ public class StyleColors : DependencyObject
     }
 
     #endregion
-
-
-    #region InactiveWindowTitleBackgroundColor : Color - Цвет фона неактивного окна
-
-    /// <summary>Цвет фона неактивного окна</summary>
-    public static readonly DependencyProperty InactiveWindowTitleBackgroundColorProperty =
-        DependencyProperty.Register(
-            nameof(InactiveWindowTitleBackgroundColor),
-            typeof(Color),
-            typeof(StyleColors),
-            new PropertyMetadata(_LightPrimaryColor));
-
-    /// <summary>Цвет фона неактивного окна</summary>
-    [Category("StyleColors")]
-    [Description("Цвет фона неактивного окна")]
-    public Color InactiveWindowTitleBackgroundColor
-    {
-        get => (Color)GetValue(InactiveWindowTitleBackgroundColorProperty);
-        set => SetValue(InactiveWindowTitleBackgroundColorProperty, value);
-    }
-
-    #endregion
 }
