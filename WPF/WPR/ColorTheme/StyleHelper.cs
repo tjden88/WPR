@@ -34,7 +34,7 @@ public static class StyleHelper
     public static void SetPrimaryColor(Color color)
     {
         StyleColors.PrimaryColor = color;
-        StyleColors.DarkPrimaryColor = Darken(color, 1.2);
+        StyleColors.DarkPrimaryColor = Darken(color, 1.5);
         StyleColors.LightPrimaryColor = Lighten(color, 1.5);
 
         SetWindowColors(IsDarkTheme);
