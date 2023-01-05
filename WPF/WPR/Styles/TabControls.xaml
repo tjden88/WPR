@@ -16,7 +16,6 @@
                                                 Background="{TemplateBinding Background}">
                         <controls:Ripple RippleSpeed="0.7"
                                          Foreground="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=TabControl}, Path=Foreground}"
-                                         HorizontalContentAlignment="{Binding HorizontalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}"
                                                 RippleMouseDownSpeed="0.1">
                             <controls:Ripple.Content>
                                 <Grid>
@@ -26,7 +25,7 @@
                                                       HorizontalAlignment="{Binding HorizontalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}"
                                                       Margin="{TemplateBinding Padding}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
                                                       VerticalAlignment="{Binding VerticalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}"/>
-                                    <Rectangle x:Name="Rect" Fill="{TemplateBinding BorderBrush}" Height="2" Margin="0,0,0,1"
+                                    <Rectangle x:Name="Rect" Fill="{TemplateBinding BorderBrush}" Height="2" Margin="0"
                                                VerticalAlignment="Bottom" 
                                                RenderTransformOrigin="0.5,0.5">
                                         <Rectangle.RenderTransform>
@@ -87,10 +86,10 @@
                                 <RowDefinition Height="Auto"/>
                                 <RowDefinition Height="Auto"/>
                             </Grid.RowDefinitions>
-                            <TabPanel Cursor="Hand" IsItemsHost="true" Grid.RowSpan="2" KeyboardNavigation.TabIndex="1" Panel.ZIndex="0"/>
+                            <TabPanel Cursor="Hand" IsItemsHost="true" Grid.RowSpan="2" Margin="{TemplateBinding Padding}" KeyboardNavigation.TabIndex="1" Panel.ZIndex="0"/>
                         </Grid>
                         <Border x:Name="contentPanel" Grid.Column="0" KeyboardNavigation.DirectionalNavigation="Contained" Grid.Row="1" KeyboardNavigation.TabIndex="2" KeyboardNavigation.TabNavigation="Local">
-                            <ContentPresenter x:Name="PART_SelectedContentHost" ContentSource="SelectedContent" Margin="{TemplateBinding Padding}" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                            <ContentPresenter x:Name="PART_SelectedContentHost" ContentSource="SelectedContent"  SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
                                               RenderTransformOrigin="0,0">
                                 <ContentPresenter.RenderTransform>
                                     <TranslateTransform/>
