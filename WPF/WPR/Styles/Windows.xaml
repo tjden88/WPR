@@ -16,7 +16,7 @@
         <Setter Property="WindowChrome.IsHitTestVisibleInChrome" Value="True" />
         <Setter Property="Focusable" Value="False"/>
         <Setter Property="Background" Value="{StaticResource TransparentBrush}"></Setter>
-        <Setter Property="Foreground" Value="{DynamicResource WindowTitleBackgroundContrastColorBrush}" />
+        <Setter Property="Foreground" Value="{Binding Foreground, RelativeSource={RelativeSource AncestorType=Window}}" />
         <Setter Property="wh:ButtonHelper.BorderRadius" Value="0"/>
     </Style>
 
@@ -209,6 +209,95 @@
         </ControlTemplate.Triggers>
     </ControlTemplate>
 
+
+    <!--Шаблон стиля окна с полной клиентской областью-->
+    <ControlTemplate TargetType="{x:Type Window}" x:Key="NoTitledWindowTemplate">
+        <AdornerDecorator>
+            <controls:WPRDialogPanel x:Name="WindowDialogPanel">
+                <Border Background="{TemplateBinding Background }"
+                        BorderThickness="1"
+                    BorderBrush="{TemplateBinding BorderBrush }">
+                    <Border.Style>
+                        <Style TargetType="{x:Type Border}">
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding Path=WindowState, RelativeSource={RelativeSource TemplatedParent}}" Value="Maximized">
+                                    <Setter Property="Margin" Value="7"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Border.Style>
+                    <Grid>
+
+                        <Border Background="#667D7D7D" Visibility="Hidden" VerticalAlignment="Top" Height="35" IsHitTestVisible="False" Name="InactiveBorder"></Border>
+
+                        <ContentPresenter Margin="0"/>
+
+                        <DockPanel x:Name="PART_Buttons" Height="35" 
+                               VerticalAlignment="Top"
+                               HorizontalAlignment="Right"
+                               LastChildFill="False">
+                            <Button x:Name="btnClose" Style="{StaticResource  WindowHeaderCloseButton}"
+                                    DockPanel.Dock="Right"
+                                    Click="Close_Click"
+                                    Content="&#xe106;" 
+                                    ToolTip="Закрыть"/>
+                            <Button x:Name="btnRestore"
+                                    Click="MaximizeRestoreClick"
+                                    DockPanel.Dock="Right">
+                                <Button.Style>
+                                    <Style TargetType="{x:Type Button }" BasedOn="{StaticResource WindowHeaderMaxNormButton}">
+                                        <Setter Property="Content" Value="&#xe739;"/>
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding WindowState, RelativeSource={RelativeSource AncestorType=Window}}" 
+                                                 Value="Maximized">
+                                                <Setter Property="Content"  Value="&#xe923;"/>
+                                                <Setter Property="ToolTip" Value="Восстановить"/>
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding WindowState, RelativeSource={RelativeSource AncestorType=Window}}" 
+                                                 Value="Normal">
+                                                <Setter Property="Content"  Value="&#xe739;"/>
+                                                <Setter Property="ToolTip" Value="Развернуть"/>
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding ResizeMode, RelativeSource={RelativeSource AncestorType=Window}}" Value="CanMinimize" >
+                                                <Setter Property="Visibility" Value="Collapsed"/>
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding ResizeMode, RelativeSource={RelativeSource AncestorType=Window}}" Value="NoResize" >
+                                                <Setter Property="Visibility" Value="Collapsed"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Button.Style>
+                            </Button>
+                            <Button x:Name="btnMinimize"
+                                    DockPanel.Dock="Right"
+                                    Click="MinimizeClick"
+                                    Content="&#xe949;" ToolTip="Свернуть">
+                                <Button.Style>
+                                    <Style TargetType="{x:Type Button }" BasedOn="{StaticResource WindowHeaderMaxNormButton}">
+
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding ResizeMode, RelativeSource={RelativeSource AncestorType=Window}}" Value="NoResize" >
+                                                <Setter Property="Visibility" Value="Collapsed"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+
+                                </Button.Style>
+                            </Button>
+                        </DockPanel>
+
+                    </Grid>
+                </Border>
+            </controls:WPRDialogPanel>
+        </AdornerDecorator>
+        <ControlTemplate.Triggers>
+            <Trigger Property="IsActive" Value="False">
+                <Setter Property="Visibility" TargetName="InactiveBorder" Value="Visible"></Setter>
+            </Trigger>
+        </ControlTemplate.Triggers>
+    </ControlTemplate>
+
+
     <!--Окно с заголовком-->
     <Style x:Key="ChromeWindow" TargetType="{x:Type Window}" BasedOn="{StaticResource BaseControl}">
         <Setter Property="WindowChrome.WindowChrome">
@@ -223,8 +312,16 @@
         </Setter>
         <Setter Property="BorderBrush" Value="{DynamicResource PrimaryColorBrush}" />
         <Setter Property="Background" Value="{DynamicResource BackgroundColorBrush}"/>
+        <Setter Property="Foreground" Value="{DynamicResource WindowTitleBackgroundContrastColorBrush}"></Setter>
         <!--<Setter Property="UseLayoutRounding" Value="True"/>-->
         <Setter Property="Template" Value="{StaticResource ChromeWindowTemplate}"/>
+    </Style>
+
+    <!--Окно с полной клиентской областью-->
+    <Style x:Key="NoTitledWindow" TargetType="{x:Type Window}" BasedOn="{StaticResource ChromeWindow}">
+        <Setter Property="Template" Value="{StaticResource NoTitledWindowTemplate}"/>
+        <Setter Property="Foreground" Value="{DynamicResource TextColorBrush}"></Setter>
+
     </Style>
 
 
