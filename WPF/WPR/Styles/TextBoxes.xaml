@@ -7,7 +7,6 @@
         <ResourceDictionary Source="Base.xaml"/>
         <ResourceDictionary Source="Buttons.xaml"/>
         <ResourceDictionary Source="Menus.xaml"/>
-        <!--<ResourceDictionary Source="Menus.xaml"/>-->
     </ResourceDictionary.MergedDictionaries>
 
     <commands:ClearTextBoxCommand x:Key="ClearCommand"/>
@@ -281,6 +280,7 @@
         <Setter Property="HorizontalContentAlignment" Value="Left"/>
         <Setter Property="SelectionBrush" Value="{DynamicResource PrimaryColorBrush}"></Setter>
         <Setter Property="CaretBrush" Value="{DynamicResource TextColorBrush}"/>
+        <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
         <Setter Property="Stylus.IsFlicksEnabled" Value="False"/>
         <Setter Property="Padding" Value="10,5"></Setter>
         <Setter Property="Template">
@@ -360,7 +360,7 @@
                             <Setter Property="Opacity" Value="0.5"/>
                         </Trigger>
 
-                        <Trigger Property="IsMouseOver" Value="True">
+                        <Trigger Property="IsMouseOver" SourceName="TextBorder" Value="True">
                             <Setter Property="BorderBrush"  TargetName="TextBorder"
                                     Value="{Binding (helpers:ButtonHelper.MouseOverButtonBrush), RelativeSource={RelativeSource AncestorType=TextBox}}"/>
                         </Trigger>

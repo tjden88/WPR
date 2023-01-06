@@ -25,7 +25,7 @@
                                                       HorizontalAlignment="{Binding HorizontalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}"
                                                       Margin="{TemplateBinding Padding}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
                                                       VerticalAlignment="{Binding VerticalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}"/>
-                                    <Rectangle x:Name="Rect" Fill="{TemplateBinding BorderBrush}" Height="2" Margin="0"
+                                    <Rectangle x:Name="Rect" Fill="{TemplateBinding BorderBrush}" Height="2" Margin="5,0"
                                                VerticalAlignment="Bottom" 
                                                RenderTransformOrigin="0.5,0.5">
                                         <Rectangle.RenderTransform>
@@ -64,7 +64,7 @@
 
     <Style x:Key="WPRTabControl" TargetType="{x:Type TabControl}" BasedOn="{StaticResource BaseControl}">
         <Setter Property="Padding" Value="0"/>
-        <Setter Property="BorderBrush" Value="{DynamicResource AccentColorBrush}"/>
+        <Setter Property="BorderBrush" Value="{DynamicResource PrimaryColorBrush}"/>
         <Setter Property="HorizontalContentAlignment" Value="Center"/>
         <Setter Property="VerticalContentAlignment" Value="Center"/>
         <Setter Property="ItemContainerStyle" Value="{StaticResource WPRTabItem}"/>
