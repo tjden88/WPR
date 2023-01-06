@@ -99,6 +99,13 @@ public abstract partial class ViewModel : INotifyPropertyChanged
 
     private void OnPropertyChangedWhenWatching(object Sender, PropertyChangedEventArgs E)
     {
+        var propName = E.PropertyName;
+        if (propName == null) return;
+
+        var prop = GetType().GetProperty(propName);
+        if (prop == null) return;
+        if(!prop.CanRead || !prop.CanWrite) return;
+
         PropertyWasChanged = true;
         PropertyChanged -= OnPropertyChangedWhenWatching;
     }

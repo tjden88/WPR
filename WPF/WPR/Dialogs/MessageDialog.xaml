@@ -23,6 +23,7 @@
                                    FontWeight="Medium" 
                                    TextWrapping="WrapWithOverflow"
                                    Margin="10,10,10,0" 
+                                   Visibility="{Binding Title, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource ValueIsNullToVisibilityConverter}}"
                                    HorizontalAlignment="Left">
                             <TextBlock.Style>
                                 <Style TargetType="TextBlock" BasedOn="{StaticResource WPRTextBlock}">
