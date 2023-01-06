@@ -6,6 +6,7 @@ namespace WPR.MVVM.ViewModels;
 
 public abstract partial class ViewModel : INotifyPropertyChanged
 {
+
     /// <summary>Признак того, что мы находимся в режиме разработки под Visual Studio</summary>
     public static bool IsDesignMode => DesignerProperties.GetIsInDesignMode(new DependencyObject());
 
@@ -68,4 +69,39 @@ public abstract partial class ViewModel : INotifyPropertyChanged
         foreach (var propertyInfo in GetType().GetProperties()) 
             OnPropertyChanged(propertyInfo.Name);
     }
+
+    #region WatchChanges
+
+
+    /// <summary> Было ли изменено хотя бы одно свойство после вызова StartWatchPropertyChanged() </summary>
+    protected bool PropertyWasChanged { get; private set; }
+
+    /// <summary>
+    /// Начать отслеживать изменения свойств
+    /// При изменении любого свойства PropertyWasChanged будет установлен
+    /// </summary>
+    protected void StartWatchPropertyChanged()
+    {
+        PropertyChanged -= OnPropertyChangedWhenWatching;
+        PropertyWasChanged = false;
+        PropertyChanged += OnPropertyChangedWhenWatching;
+    }
+
+    /// <summary>
+    /// Завершить отслеживание изменения свойств
+    /// PropertyWasChanged не будет сброшен
+    /// </summary>
+    protected void StopWatchPropertyChanged()
+    {
+        PropertyChanged -= OnPropertyChangedWhenWatching;
+    }
+
+
+    private void OnPropertyChangedWhenWatching(object Sender, PropertyChangedEventArgs E)
+    {
+        PropertyWasChanged = true;
+        PropertyChanged -= OnPropertyChangedWhenWatching;
+    }
+
+    #endregion
 }
