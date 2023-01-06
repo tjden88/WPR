@@ -13,7 +13,7 @@ public class ClearTextBoxCommand: BaseCommand
     protected override void ExecuteCommand(object p)
     {
         if (p is not TextBox tbox) return;
-        tbox.Text = string.Empty;
+        tbox.Text = null!;
         Keyboard.ClearFocus();
     }
 

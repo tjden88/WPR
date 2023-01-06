@@ -14,7 +14,7 @@ public abstract class ValidationViewModel : ViewModel, INotifyDataErrorInfo
     /// <summary> Структура ошибки валидации </summary>
     protected readonly struct ValidationRule
     {
-        public ValidationRule(string propertyName, Func<bool> rule, string ErrorMessage )
+        public ValidationRule(string propertyName, Func<bool> rule, string ErrorMessage)
         {
             PropertyName = propertyName;
             Rule = rule;
@@ -32,87 +32,110 @@ public abstract class ValidationViewModel : ViewModel, INotifyDataErrorInfo
     }
 
 
-    private readonly Dictionary<string, string[]> _ActualErrors = new(); // Текущие ошибки
+    private readonly Dictionary<string, List<string>> _Errors = new(); // Текущие ошибки
 
 
     /// <summary> Список правил валидации </summary>
-    protected abstract List<ValidationRule> ValidationRules { get; }
+    protected List<ValidationRule> ValidationRules { get; } = new();
+
+
 
     protected override bool Set<T>(ref T field, T value, [CallerMemberName] string PropertyName = null)
     {
         var result = base.Set(ref field, value, PropertyName);
 
         if (result)
+        {
             Validate(value, PropertyName);
+            base.OnPropertyChanged(nameof(HasErrors));
+        }
+
+        return result;
+    }
+
+    protected override bool SetRef<T>(ref T field, ref T value, [CallerMemberName] string PropertyName = null)
+    {
+        var result = base.SetRef(ref field, ref value, PropertyName);
+
+        if (result)
+        {
+            Validate(value, PropertyName);
+            base.OnPropertyChanged(nameof(HasErrors));
+        }
 
         return result;
     }
 
 
-    protected override void OnPropertyChanged(string PropertyName = null)
+    /// <summary> Проверить все свойства модели </summary>
+    public void ValidateAll()
     {
-        base.OnPropertyChanged(PropertyName);
+        _Errors.Clear();
 
-        if (PropertyName == null) return;
-        _ActualErrors.Remove(PropertyName);
-
-        var errors = ValidationRules
-            .Where(info => info.PropertyName == PropertyName && !info.Rule.Invoke())
-            .Select(info => info.ErrorMessage)
-            .ToArray();
-
-        if(errors.Any())
-            _ActualErrors[PropertyName] = errors.ToArray();
-
-        ErrorsChanged?.Invoke(this, new DataErrorsChangedEventArgs(PropertyName));
-
-        base.OnPropertyChanged(nameof(HasErrors));
-
-    }
-
-    /// <summary> Проверить все правила валидации </summary>
-    protected virtual bool CheckHasErrors() => ValidationRules.Any(err => !err.Rule.Invoke());
-
-
-    public void UpdateErrors()
-    {
+        // Проверить правила
         var errors = ValidationRules
             .Where(info => !info.Rule.Invoke())
             .ToArray();
 
-        _ActualErrors.Clear();
-
         foreach (var error in errors)
         {
-            _ActualErrors[error.PropertyName] = errors
+            _Errors[error.PropertyName] = errors
                 .Where(e => e.PropertyName == error.PropertyName)
                 .Select(e => e.ErrorMessage)
-                .ToArray();
+                .ToList();
         }
 
-        foreach (var prop in errors.Select(e => e.PropertyName).Distinct())
+        // Проверить атрибуты
+        var context = new ValidationContext(this);
+        var results = new List<ValidationResult>();
+        var validateObject = Validator.TryValidateObject(this, context, results, true);
+
+        if (!validateObject)
+            foreach (var validationResult in results)
+                foreach (var member in validationResult.MemberNames)
+                    if (_Errors.ContainsKey(member))
+                        _Errors[member].Add(validationResult.ErrorMessage);
+                    else
+                        _Errors[member] = new List<string>
+                        {
+                            validationResult.ErrorMessage
+                        };
+
+
+        foreach (var prop in _Errors.Keys)
             ErrorsChanged?.Invoke(this, new DataErrorsChangedEventArgs(prop));
 
         base.OnPropertyChanged(nameof(HasErrors));
     }
 
 
-    private readonly IDictionary<string, List<string>> _Errors = new Dictionary<string, List<string>>();
-
+    // Проверить ошибки изменённого свойства
     private void Validate(object val, string propertyName)
     {
-        if (propertyName == null)
-            return;
+        if (string.IsNullOrEmpty(propertyName)) return;
 
-        if (_Errors.ContainsKey(propertyName)) _Errors.Remove(propertyName);
+        _Errors.Remove(propertyName);
 
+        var errorsMessages = new List<string>();
+
+        // Проверить атрибуты
         var context = new ValidationContext(this) { MemberName = propertyName };
-        List<ValidationResult> results = new();
+        var results = new List<ValidationResult>();
+        var validateProperty = Validator.TryValidateProperty(val, context, results);
 
-        if (!Validator.TryValidateProperty(val, context, results))
-        {
-            _Errors[propertyName] = results.Select(x => x.ErrorMessage).ToList();
-        }
+        if (!validateProperty)
+            errorsMessages.AddRange(results.Select(x => x.ErrorMessage));
+
+        // Проверить правила
+        var errors = ValidationRules
+            .Where(info => info.PropertyName == propertyName && !info.Rule.Invoke())
+            .Select(info => info.ErrorMessage);
+
+        errorsMessages.AddRange(errors);
+
+        // Добавить все ошибки в словарь
+        if (errorsMessages.Any())
+            _Errors[propertyName] = errorsMessages;
 
         ErrorsChanged?.Invoke(this, new DataErrorsChangedEventArgs(propertyName));
     }
@@ -121,13 +144,11 @@ public abstract class ValidationViewModel : ViewModel, INotifyDataErrorInfo
 
     public IEnumerable GetErrors(string PropertyName)
     {
+        if (string.IsNullOrEmpty(PropertyName)) return null;
         return _Errors.ContainsKey(PropertyName) ? _Errors[PropertyName] : null;
-        //if (PropertyName == null) return null;
-        //var hasErrors = _ActualErrors.TryGetValue(PropertyName, out var errors);
-        //return hasErrors ? errors : null;
     }
 
-    public bool HasErrors => _ActualErrors.Any();
+    public bool HasErrors => _Errors.Any();
 
     public event EventHandler<DataErrorsChangedEventArgs> ErrorsChanged;
 

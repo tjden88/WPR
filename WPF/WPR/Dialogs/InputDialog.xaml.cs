@@ -27,7 +27,7 @@ public class InputDialog : DialogBase
         {
             Text = DefaultValue
         };
-        ViewModel.UpdateErrors();
+        ViewModel.ValidateAll();
     }
 
     protected override bool CanSetCommandExecuted() => ViewModel?.HasErrors == false;
@@ -85,14 +85,9 @@ public class InputDialog : DialogBase
     {
         public ValidationView(IEnumerable<PredicateValidationRule<string>> TextValidationRules)
         {
-            ValidationRules = TextValidationRules.Select(tv => new ValidationRule(
-                nameof(Text),
-                () => tv.Predicate.Invoke(Text),
-                tv.Message))
-                .ToList();
+            ValidationRules.AddRange(TextValidationRules
+                .Select(tv => new ValidationRule(nameof(Text), () => tv.Predicate.Invoke(Text), tv.Message)));
         }
-
-        protected override List<ValidationRule> ValidationRules { get; }
 
 
         #region Text : string - Текст
