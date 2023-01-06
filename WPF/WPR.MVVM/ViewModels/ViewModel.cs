@@ -89,10 +89,11 @@ public abstract partial class ViewModel : INotifyPropertyChanged
 
     /// <summary>
     /// Завершить отслеживание изменения свойств
-    /// PropertyWasChanged не будет сброшен
+    /// PropertyWasChanged будет сброшен
     /// </summary>
     protected void StopWatchPropertyChanged()
     {
+        PropertyWasChanged = false;
         PropertyChanged -= OnPropertyChangedWhenWatching;
     }
 
