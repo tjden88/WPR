@@ -81,7 +81,7 @@ public class InputDialog : DialogBase
 
 
 
-    public class ValidationView : DataValidationViewModel
+    public class ValidationView : ValidationViewModel
     {
         public ValidationView(IEnumerable<PredicateValidationRule<string>> TextValidationRules)
         {
