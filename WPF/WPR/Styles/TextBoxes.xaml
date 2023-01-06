@@ -180,7 +180,6 @@
     </Style>
 
 
-
     <Style x:Key="WPRFlatTextBox" TargetType="{x:Type TextBox}" BasedOn="{StaticResource BaseControl}">
         <Setter Property="ContextMenu" Value="{StaticResource WPRDefaultContextMenu}"/>
         <Setter Property="BorderBrush" Value="{DynamicResource DividerColorBrush}"/>
@@ -270,4 +269,141 @@
             </Setter.Value>
         </Setter>
     </Style>
+
+
+    <Style x:Key="WPRBorderedTextBox" TargetType="{x:Type TextBox}" BasedOn="{StaticResource BaseControl}">
+        <Setter Property="ContextMenu" Value="{StaticResource WPRDefaultContextMenu}"/>
+        <Setter Property="BorderBrush" Value="{DynamicResource DividerColorBrush}"/>
+        <Setter Property="Background" Value="{StaticResource TransparentBrush}"></Setter>
+        <Setter Property="BorderThickness" Value="1"></Setter>
+        <Setter Property="helpers:ButtonHelper.BorderRadius" Value="6"></Setter>
+        <Setter Property="helpers:ButtonHelper.MouseOverButtonBrush" Value="{DynamicResource PrimaryColorBrush}"/>
+        <Setter Property="HorizontalContentAlignment" Value="Left"/>
+        <Setter Property="SelectionBrush" Value="{DynamicResource PrimaryColorBrush}"></Setter>
+        <Setter Property="CaretBrush" Value="{DynamicResource TextColorBrush}"/>
+        <Setter Property="Stylus.IsFlicksEnabled" Value="False"/>
+        <Setter Property="Padding" Value="10,5"></Setter>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type TextBox}">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+
+                        <ContentControl Foreground="{DynamicResource SecondaryColorBrush}"
+                                        Content="{Binding Path=(helpers:TextHelper.Description), RelativeSource={RelativeSource TemplatedParent}}"
+                                        Margin="0,0,0,6"
+                                        Visibility="{Binding Content, RelativeSource={RelativeSource Self}, Converter={StaticResource ValueIsNullToVisibilityConverter}}"/>
+
+                        <Border Grid.Row="1"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                Name="TextBorder"
+                                Background="{TemplateBinding Background}"
+                                CornerRadius="{Binding (helpers:ButtonHelper.BorderRadius), RelativeSource={RelativeSource TemplatedParent}}"
+                                BorderThickness="{TemplateBinding BorderThickness}">
+
+                            <Grid Margin="{TemplateBinding Padding}">
+                                <ContentControl Content="{Binding Path=(helpers:TextHelper.Hint), RelativeSource={RelativeSource TemplatedParent}}"
+                                       x:Name="Hint"
+                                       Opacity="0"
+                                       HorizontalAlignment="Left"
+                                       IsHitTestVisible="False"
+                                       VerticalAlignment="Center"
+                                       FontSize="{TemplateBinding FontSize}"
+                                       Foreground="{DynamicResource SecondaryColorBrush}">
+                                    <ContentControl.RenderTransform>
+                                        <TranslateTransform x:Name="Trans" Y="{Binding Path=ActualHeight, ElementName=Hint, Converter={StaticResource SignPlusMinusConverter}}"/>
+                                    </ContentControl.RenderTransform>
+                                </ContentControl>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+                                    <ScrollViewer Margin="-11,0" x:Name="PART_ContentHost" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Hidden" VerticalAlignment="Center"/>
+                                    <Button x:Name="ClearButton" Grid.Column="1"
+                                            Style="{StaticResource WPRToolHiddenButton}"
+                                            VerticalAlignment="Center"
+                                            Command="{StaticResource ClearCommand}"
+                                            CommandParameter="{Binding RelativeSource={RelativeSource TemplatedParent}}"
+                                            Visibility="{Binding Path=(helpers:TextHelper.ShowClearButton), RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource Bool2VisibilityConverter}}">
+                                        <controls:WPRIcon Source="CloseCircle"/>
+                                    </Button>
+                                </Grid>
+                            </Grid>
+                        </Border>
+
+                        <ItemsControl Name="ErrorText" Visibility="Hidden" Grid.Row="2" Margin="0,3,0,0"
+                                      Focusable="False"
+                                      ItemsSource="{Binding (Validation.Errors) , RelativeSource={RelativeSource TemplatedParent}}">
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock Foreground="{StaticResource DangerColorBrush}" 
+                                               Text="{Binding ErrorContent}"
+                                               TextWrapping ="Wrap"
+                                               FontSize="13"/>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </Grid>
+
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="Validation.HasError" Value="True">
+                            <Setter Property="BorderBrush" Value="{StaticResource DangerColorBrush}"/>
+                            <Setter TargetName="ErrorText" Property="Visibility" Value="Visible"/>
+                        </Trigger>
+
+                        <Trigger Property="IsEnabled" Value="false">
+                            <Setter Property="Opacity" Value="0.5"/>
+                        </Trigger>
+
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="BorderBrush"  TargetName="TextBorder"
+                                    Value="{Binding (helpers:ButtonHelper.MouseOverButtonBrush), RelativeSource={RelativeSource AncestorType=TextBox}}"/>
+                        </Trigger>
+
+                        <Trigger Property="IsKeyboardFocused" Value="True">
+                            <Setter Property="BorderBrush"  TargetName="TextBorder"
+                                    Value="{Binding (helpers:ButtonHelper.MouseOverButtonBrush), RelativeSource={RelativeSource AncestorType=TextBox}}"/>
+                        </Trigger>
+
+                        <Trigger Property="Text" Value="">
+                            <Setter TargetName="ClearButton" Property="IsEnabled" Value="False"/>
+                            <Trigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation Duration="0:0:0.25"
+                                                         To="1"
+                                                         Storyboard.TargetProperty="Opacity"
+                                                         Storyboard.TargetName="Hint"/>
+                                        <DoubleAnimation Duration="0:0:0.25"
+                                                         To="0"
+                                                         Storyboard.TargetProperty="Y"
+                                                         Storyboard.TargetName="Trans"
+                                                         EasingFunction="{StaticResource CircleEaseOut}" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.EnterActions>
+                            <Trigger.ExitActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation Duration="0:0:0.25"
+                                                         Storyboard.TargetProperty="Opacity"
+                                                         Storyboard.TargetName="Hint"/>
+                                        <DoubleAnimation Duration="0:0:0.25"
+                                                         Storyboard.TargetProperty="Y"
+                                                         Storyboard.TargetName="Trans"/>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.ExitActions>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
 </ResourceDictionary>

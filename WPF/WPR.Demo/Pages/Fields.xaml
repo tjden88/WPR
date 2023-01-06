@@ -70,5 +70,22 @@
             <TextBlock Text="{Binding ElementName=N2, Path=Value, StringFormat=Value: {0}}" />
 
         </StackPanel>
+        <StackPanel Width="200" Margin="10">
+            <TextBox Style="{StaticResource WPRBorderedTextBox}" 
+                     helpers:TextHelper.Hint="Bordered"
+                     helpers:TextHelper.Description="Description"
+                     helpers:TextHelper.ShowClearButton="True"></TextBox>
+
+            <TextBox Style="{StaticResource WPRBorderedTextBox}" 
+                     helpers:TextHelper.Hint="Bordered no Descr"
+                     helpers:TextHelper.ShowClearButton="False"></TextBox>
+
+            <TextBox Style="{StaticResource WPRBorderedTextBox}" 
+                     BorderBrush="{DynamicResource AccentColorBrush}"
+                     helpers:ButtonHelper.MouseOverButtonBrush="{DynamicResource SecondaryColorBrush}"
+                     helpers:TextHelper.Hint="Bordered Custom Border"
+                     helpers:TextHelper.ShowClearButton="False"></TextBox>
+        </StackPanel>
+
     </DockPanel>
 </Page>
