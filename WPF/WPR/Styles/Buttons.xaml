@@ -106,14 +106,12 @@
         <Setter Property="Foreground" Value="{DynamicResource PrimaryColorBrush }"/>
         <Setter Property="Padding" Value="12,6"/>
         <Setter Property="Margin" Value="5"/>
-        <Setter Property="FontWeight" Value="Medium"/>
         <Setter Property="VerticalContentAlignment" Value="Center"/>
         <Setter Property="HorizontalContentAlignment" Value="Center"/>
         <Setter Property="helpers:ButtonHelper.BorderRadius" Value="6"/>
         <Setter Property="helpers:ButtonHelper.MouseOverButtonBrush" Value="{DynamicResource AnimationEnterColorBrush}"/>
         <Setter Property="Cursor" Value="Hand"/>
         <Setter Property="helpers:RippleHelper.FeedbackBrush" Value="{DynamicResource LightPrimaryColorBrush}"/>
-        <!--<Setter Property="helpers:ButtonHelper.AnimationColor" Value="{StaticResource AnimationEnterColorBrush}"/>-->
         <Setter Property="Template" Value="{StaticResource WPRButtonTemplate}"/>
     </Style>
 

@@ -140,7 +140,6 @@
 
     <Style TargetType="{x:Type DataGridColumnHeader}" BasedOn="{StaticResource BaseControl}">
         <Setter Property="VerticalContentAlignment" Value="Center"/>
-        <Setter Property="TextBlock.FontWeight" Value="Medium" />
         <Setter Property="TextBlock.TextWrapping" Value="Wrap"/>
         <Setter Property="Padding" Value="16,10,5,10"/>
         <Setter Property="Foreground" Value="{DynamicResource SecondaryColorBrush}"/>

@@ -81,6 +81,7 @@
                         <Style x:Key="{x:Static ToolBar.ButtonStyleKey}" TargetType="Button" BasedOn="{StaticResource WPRFlatButton}">
                             <Setter Property="Foreground" Value="{DynamicResource TextColorBrush}"/>
                             <Setter Property="BorderThickness" Value="1"/>
+                            <Setter Property="helpers:ButtonHelper.BorderRadius" Value="3"/>
                             <Setter Property="BorderBrush" Value="{DynamicResource DividerColorBrush}"/>
                             <Setter Property="Padding" Value="5,0"/>
                             <Setter Property="Margin" Value="2,4"/>

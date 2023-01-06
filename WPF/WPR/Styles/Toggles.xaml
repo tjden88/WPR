@@ -90,7 +90,6 @@
 
     <!--Переключатель-->
     <Style x:Key="WPRToggleButton" TargetType="{x:Type ToggleButton}"  BasedOn="{StaticResource BaseControl}">
-        <Setter Property="FontWeight" Value="Medium"/>
         <Setter Property="Padding" Value="5"/>
         <Setter Property="Cursor" Value="Hand"/>
         <Setter Property="VerticalContentAlignment" Value="Center"/>
