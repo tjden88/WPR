@@ -309,9 +309,10 @@
                                 <ContentControl Content="{Binding Path=(helpers:TextHelper.Hint), RelativeSource={RelativeSource TemplatedParent}}"
                                        x:Name="Hint"
                                        Opacity="0"
+                                       Margin="0,5,0,0"
                                        HorizontalAlignment="Left"
                                        IsHitTestVisible="False"
-                                       VerticalAlignment="Center"
+                                       VerticalAlignment="Top"
                                        FontSize="{TemplateBinding FontSize}"
                                        Foreground="{DynamicResource SecondaryColorBrush}">
                                     <ContentControl.RenderTransform>
@@ -323,10 +324,14 @@
                                         <ColumnDefinition/>
                                         <ColumnDefinition Width="Auto"/>
                                     </Grid.ColumnDefinitions>
-                                    <ScrollViewer Margin="-11,0" x:Name="PART_ContentHost" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Hidden" VerticalAlignment="Center"/>
+                                    <ScrollViewer Margin="-11,0" x:Name="PART_ContentHost" 
+                                                  HorizontalScrollBarVisibility="Hidden" 
+                                                  VerticalScrollBarVisibility="Hidden"
+                                                  VerticalAlignment="Stretch"/>
                                     <Button x:Name="ClearButton" Grid.Column="1"
+                                            Margin="0,5,0,0"
                                             Style="{StaticResource WPRToolHiddenButton}"
-                                            VerticalAlignment="Center"
+                                            VerticalAlignment="Top"
                                             Command="{StaticResource ClearCommand}"
                                             CommandParameter="{Binding RelativeSource={RelativeSource TemplatedParent}}"
                                             Visibility="{Binding Path=(helpers:TextHelper.ShowClearButton), RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource Bool2VisibilityConverter}}">
