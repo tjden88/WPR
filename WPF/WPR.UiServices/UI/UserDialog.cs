@@ -91,7 +91,7 @@ public class UserDialog : IUserDialog
         if (Filters != null)
         {
             var ofdFilter = Filters
-                .Select(f => $"{f.Description}|{string.Concat(f.Extensions.Select(e => $"*.{e};"))}");
+                .Select(f => $"{f.Description}|{string.Concat(f.FileMathPattrerns.Select(e => $"{e};"))}");
             ofd.Filter = string.Join("|", ofdFilter);
         }
 

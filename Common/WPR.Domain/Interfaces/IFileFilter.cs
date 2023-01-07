@@ -1,15 +1,18 @@
-﻿namespace WPR.Domain.Interfaces
+﻿namespace WPR.Domain.Interfaces;
+
+/// <summary>
+/// Интерфейс фильтра файлов
+/// </summary>
+public interface IFileFilter
 {
     /// <summary>
-    /// Интерфейс фильтра файлов
+    /// Список паттернов поиска совпадений файлов
+    /// Пример паттерна: *.jpg
     /// </summary>
-    public interface IFileFilter
-    {
-        /// <summary> Расширение файла </summary>
-        IEnumerable<string> Extensions { get; }
+    IEnumerable<string> FileMathPattrerns { get; }
 
-        /// <summary> Описание типа файла </summary>
-        string Description { get; }
 
-    }
+    /// <summary> Описание фильтра </summary>
+    string Description { get; }
+        
 }
