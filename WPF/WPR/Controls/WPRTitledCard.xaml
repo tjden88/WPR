@@ -9,7 +9,6 @@
 
     <Style TargetType="{x:Type controls:WPRTitledCard}" BasedOn="{StaticResource BaseControl}">
         <Setter Property="Foreground" Value="{DynamicResource SecondaryColorBrush}"/>
-        <Setter Property="Background" Value="{DynamicResource BackgroundColorBrush}"/>
         <Setter Property="Focusable" Value="False"/>
         <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
         <Setter Property="VerticalContentAlignment" Value="Stretch"/>
