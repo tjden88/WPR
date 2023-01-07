@@ -228,8 +228,6 @@
                     </Border.Style>
                     <Grid>
 
-                        <Border Background="#667D7D7D" Visibility="Hidden" VerticalAlignment="Top" Height="35" IsHitTestVisible="False" Name="InactiveBorder"></Border>
-
                         <ContentPresenter Margin="0"/>
 
                         <DockPanel x:Name="PART_Buttons" Height="35" 
@@ -285,6 +283,8 @@
                                 </Button.Style>
                             </Button>
                         </DockPanel>
+
+                        <Border Background="#667D7D7D" Visibility="Hidden" VerticalAlignment="Top" Height="35" IsHitTestVisible="False" Name="InactiveBorder"></Border>
 
                     </Grid>
                 </Border>
