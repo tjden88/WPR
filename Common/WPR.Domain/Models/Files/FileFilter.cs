@@ -49,6 +49,10 @@ public class FileFilter : IFileFilter
     /// <summary> Объединить с другим фильтром </summary>
     public List<FileFilter> Union(FileFilter other) => new() {other, this};
 
+    /// <summary> Превратить в список </summary>
+    public List<FileFilter> ToList() => new() { this };
+
+
     #endregion
 
 
@@ -59,9 +63,11 @@ public class FileFilter : IFileFilter
         new(Description, new[] { FileMathPattrern });
 
     /// <summary> Создать фильтр для поиска всех файлов </summary>
-    public static FileFilter AllFilesFilter() => new("Все файлы", new[] {"*.*"});
+    public static FileFilter CreateAllFilesFilter() => new("Все файлы", new[] {"*.*"});
 
-    public static FileFilter ImagesFilter() => new("Изображения", _ImagePatterns);
+
+    /// <summary> Создать фильтр для поиска изображений </summary>
+    public static FileFilter CreateImagesFilter() => new("Изображения", _ImagePatterns);
 
 
     #endregion
