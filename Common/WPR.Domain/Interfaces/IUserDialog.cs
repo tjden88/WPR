@@ -39,10 +39,6 @@ public interface IUserDialog
     Task<bool?> CustomQuestionAsync(string message, string? Title, string TrueCaption, string? FalseCaption = null, string? NullCaption = null);
 
 
-    /// <summary> Показать индикатор загрузки </summary>
-    Task LoadingAsync(CancellationToken cancel = default);
-
-
     /// <summary> Предупреждение об ошибке </summary>
     Task ErrorMessageAsync(string message, string? Title = "Ошибка");
 
@@ -71,4 +67,39 @@ public interface IUserDialog
     /// <param name="delay">Время показа уведомления</param>
     /// <returns></returns>
     Task<bool> ShowQuestionNotificationAsync(string message, string AcceptCaption, int delay = 3000);
+
+
+    /// <summary>
+    /// Показать диалог выбора файла
+    /// </summary>
+    /// <param name="Title">Заголовок</param>
+    /// <param name="Filters">Список фильтров файлов, доступных для выбора</param>
+    /// <param name="InitFileName">Начальное имя файла</param>
+    /// <returns>
+    /// null - пользователь отказался
+    /// </returns>
+    Task<string?> ShowOpenFileDialogAsync(string Title, IEnumerable<IFileFilter>? Filters = null, string InitFileName = "");
+
+
+    /// <summary>
+    /// Показать диалог сохранения файла
+    /// </summary>
+    /// <param name="Title">Заголовок</param>
+    /// <param name="Filters">Список фильтров файлов, доступных для выбора</param>
+    /// <param name="InitFileName">Начальное имя файла</param>
+    /// <returns>
+    /// null - пользователь отказался
+    /// </returns>
+    Task<string?> ShowSaveFileDialogAsync(string Title, IEnumerable<IFileFilter>? Filters = null, string InitFileName = "");
+
+
+    /// <summary>
+    /// Показать диалог выбора директории
+    /// </summary>
+    /// <param name="Title">Заголовок</param>
+    /// <param name="InitPathName">Начальное имя директории</param>
+    /// <returns>
+    /// null - пользователь отказался
+    /// </returns>
+    Task<string?> ShowFolderSelectDialogAsync(string Title, string InitPathName = "");
 }

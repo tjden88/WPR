@@ -1,4 +1,6 @@
-﻿using System.Windows;
+﻿using Microsoft.Win32;
+using System.Windows;
+using System.Windows.Threading;
 using WPR.Dialogs;
 using WPR.Domain.Interfaces;
 using WPR.Domain.Models.Dialogs;
@@ -19,66 +21,108 @@ public class UserDialog : IUserDialog
     }
 
     public async Task InformationAsync(string message, string? Title = null) =>
-        await WPRDialogHelper.InformationAsync(Active, message, Title);
+        await DoDispatcheredAction(WPRDialogHelper.InformationAsync(Active, message, Title));
 
 
     public async Task<bool> QuestionAsync(string message, string? Title = null) =>
-        await WPRDialogHelper.QuestionAsync(Active, message, Title);
+        await GetDispatcheredResult(() => WPRDialogHelper.QuestionAsync(Active, message, Title));
 
 
     public async Task<bool?> QuestionAsync(string message, IUserDialog.DialogTypes DilaogType, string? Title = null) =>
         DilaogType switch
         {
-            IUserDialog.DialogTypes.YesNo => await WPRDialogHelper.QuestionAsync(Active, message, Title),
-            IUserDialog.DialogTypes.YesNoCancel => await WPRDialogHelper.QuestionCancelAsync(Active, message, Title),
-            IUserDialog.DialogTypes.OkCancel => await WPRDialogHelper.InformationCancelAsync(Active, message, Title),
-            _ => throw new ArgumentOutOfRangeException(nameof(DilaogType), DilaogType, null)
+            IUserDialog.DialogTypes.YesNo => await GetDispatcheredResult(() => WPRDialogHelper.QuestionAsync(Active, message, Title)),
+            IUserDialog.DialogTypes.YesNoCancel => await GetDispatcheredResult(() => WPRDialogHelper.QuestionCancelAsync(Active, message, Title)),
+            IUserDialog.DialogTypes.OkCancel => await GetDispatcheredResult(() => WPRDialogHelper.InformationCancelAsync(Active, message, Title)),
+            _ => throw new ArgumentOutOfRangeException(nameof(DilaogType), DilaogType, "Неверный тип диалога")
         };
 
 
 
     public async Task<bool?> CustomQuestionAsync(string message, string? Title, string TrueCaption, string? FalseCaption = null,
         string? NullCaption = null) =>
-        await WPRDialogHelper.ShowCustomButtonsDialog(Active, message, Title, TrueCaption, FalseCaption,
-            NullCaption);
+        await GetDispatcheredResult(() => WPRDialogHelper
+            .ShowCustomButtonsDialog(Active, message, Title, TrueCaption, FalseCaption, NullCaption));
 
 
-    public async Task LoadingAsync(CancellationToken cancel = default)
+
+    public async Task ErrorMessageAsync(string message, string? Title = "Ошибка")
+        => await DoDispatcheredAction(WPRDialogHelper.ErrorAsync(Active, message, Title));
+
+
+    public async Task<bool> CustomDialogAsync(IWPRDialog Dialog)
+        => await GetDispatcheredResult(() => WPRDialogHelper.ShowCustomDialogAsync(Active, Dialog));
+
+
+    public async Task<string?> InputTextAsync(string title, string? DefaultValue = null, string? message = null) =>
+        await GetDispatcheredResult(() => WPRDialogHelper.InputTextAsync(Active, title, null, DefaultValue));
+
+    public async Task<string?> InputValidatedTextAsync(InputDialogFilter DialogFilter) =>
+        await GetDispatcheredResult(() => WPRDialogHelper.InputTextAsync(Active,
+            DialogFilter.Title,
+            DialogFilter.Message,
+            DialogFilter.DefaultValue,
+            DialogFilter.ValidationRules.Select(f => new PredicateValidationRule<string>(f.Rule, f.ErrorMessage))));
+
+    public Task ShowNotificationAsync(string message, int delay = 2000)
+    {
+        Application.Current.Dispatcher.Invoke(() => WPRDialogHelper.Bubble(Active, message, delay));
+        return Task.CompletedTask;
+    }
+
+    public async Task<bool> ShowQuestionNotificationAsync(string message, string AcceptCaption, int delay = 3000)
+    {
+        return await GetDispatcheredResult(() =>
+        {
+            var result = new TaskCompletionSource<bool>();
+            WPRDialogHelper.Bubble(Active, message, AcceptCaption, b => result.TrySetResult(b), delay);
+            return result.Task;
+        });
+    }
+
+    public Task<string?> ShowOpenFileDialogAsync(string Title, IEnumerable<IFileFilter>? Filters = null, string InitFileName = "")
+    {
+        var ofd = new OpenFileDialog()
+        {
+            FileName = InitFileName,
+            Title = Title
+        };
+
+        if (Filters != null)
+        {
+            var ofdFilter = Filters
+                .Select(f => $"{f.Description}|{string.Concat(f.Extensions.Select(e => $"*.{e};"))}");
+            ofd.Filter = string.Join("|", ofdFilter);
+        }
+
+        Window? window = null;
+        Application.Current.Dispatcher.Invoke(() => window = Active);
+
+        var dialogResult = ofd.ShowDialog(window);
+
+        return Task.FromResult(dialogResult == true ? ofd.FileName : null);
+    }
+
+    public Task<string?> ShowSaveFileDialogAsync(string Title, IEnumerable<IFileFilter>? Filters = null, string InitFileName = "")
+    {
+        throw new NotImplementedException();
+    }
+
+    public Task<string?> ShowFolderSelectDialogAsync(string Title, string InitPathName = "")
     {
         throw new NotImplementedException();
     }
 
 
-
-    public async Task ErrorMessageAsync(string message, string? Title = "Ошибка")
-        => await WPRDialogHelper.ErrorAsync(Active, message, Title);
+    private static async Task DoDispatcheredAction(Task action) => await Application.Current.Dispatcher.Invoke(async () => await action, DispatcherPriority.Normal);
 
 
-    public async Task<bool> CustomDialogAsync(IWPRDialog Dialog)
-        => await WPRDialogHelper.ShowCustomDialogAsync(Active, Dialog);
-
-
-    public async Task<string?> InputTextAsync(string title, string? DefaultValue = null, string? message = null) =>
-        await WPRDialogHelper.InputTextAsync(Active, title, null, DefaultValue);
-
-    public async Task<string?> InputValidatedTextAsync(InputDialogFilter DialogFilter) =>
-        await WPRDialogHelper.InputTextAsync(Active,
-            DialogFilter.Title,
-            DialogFilter.Message,
-            DialogFilter.DefaultValue,
-            DialogFilter.ValidationRules.Select(f => new PredicateValidationRule<string>(f.Rule, f.ErrorMessage)));
-
-    public Task ShowNotificationAsync(string message, int delay = 2000)
+    private static async Task<T?> GetDispatcheredResult<T>(Func<Task<T>> action)
     {
-        WPRDialogHelper.Bubble(Active, message, delay);
-        return Task.CompletedTask;
-    }
+        T? result = default;
 
-    public Task<bool> ShowQuestionNotificationAsync(string message, string AcceptCaption, int delay = 3000)
-    {
-        var source = new TaskCompletionSource<bool>();
-        WPRDialogHelper.Bubble(Active, message, AcceptCaption, b => source.TrySetResult(b), delay);
+        await Application.Current.Dispatcher.Invoke(async () => result = await action.Invoke(), DispatcherPriority.Normal);
 
-        return source.Task;
+        return result;
     }
 }
