@@ -46,16 +46,22 @@ public abstract class EditEntityViewModel<TModel> : ValidationViewModel
 
 
     /// <summary> Получить свойство вьюмодели </summary>
-    protected virtual object GetValue([CallerMemberName] string Property = "") => _Properties
-        .TryGetValue(Property, out var value) 
-        ? value 
-        : _ModelType.GetProperty(Property)?.GetValue(Model);
+    protected virtual T Get<T>([CallerMemberName] string Property = null)
+    {
+        if (Property is null) throw new ArgumentNullException(nameof(Property));
 
+        return (T) (_Properties
+            .TryGetValue(Property, out var value)
+            ? value
+            : _ModelType.GetProperty(Property)?.GetValue(Model));
+    }
 
 
     /// <summary> Установить свойство вьюмодели </summary>
-    protected virtual bool SetValue(object Value, [CallerMemberName] string Property = "")
+    protected virtual bool Set<T>(T Value, [CallerMemberName] string Property = null)
     {
+        if (Property is null) throw new ArgumentNullException(nameof(Property));
+
         if (_Properties.TryGetValue(Property, out var oldValue) && Equals(oldValue, Value))
             return false;
 
