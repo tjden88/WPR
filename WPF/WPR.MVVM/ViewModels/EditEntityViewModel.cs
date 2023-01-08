@@ -103,10 +103,10 @@ public abstract class EditEntityViewModel<TModel> : ValidationViewModel
     /// <summary>Логика выполнения - Подтвердить изменения и записать их в редактируемую модель </summary>
     private void OnCommitCommandExecuted()
     {
-        OnCommit();
         ValidateAll();
         if(HasErrors) return;
 
+        OnCommit();
         Completed?.Invoke(true);
     }
 

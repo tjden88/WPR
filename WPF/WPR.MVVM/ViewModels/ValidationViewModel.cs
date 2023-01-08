@@ -39,31 +39,19 @@ public abstract class ValidationViewModel : ViewModel, INotifyDataErrorInfo
     protected List<ValidationRule> ValidationRules { get; } = new();
 
 
-
-    protected override bool Set<T>(ref T field, T value, [CallerMemberName] string PropertyName = null)
+    protected override void OnPropertyChanged(string PropertyName = null)
     {
-        var result = base.Set(ref field, value, PropertyName);
+        base.OnPropertyChanged(PropertyName);
 
-        if (result)
-        {
-            Validate(value, PropertyName);
-            base.OnPropertyChanged(nameof(HasErrors));
-        }
+        if(PropertyName is null or nameof(HasErrors))
+            return;
 
-        return result;
-    }
+        var prop = GetType().GetProperty(PropertyName);
+        if(prop is null || !prop.CanRead)
+            return;
 
-    protected override bool SetRef<T>(ref T field, ref T value, [CallerMemberName] string PropertyName = null)
-    {
-        var result = base.SetRef(ref field, ref value, PropertyName);
-
-        if (result)
-        {
-            Validate(value, PropertyName);
-            base.OnPropertyChanged(nameof(HasErrors));
-        }
-
-        return result;
+        Validate(prop.GetValue(this), PropertyName);
+        base.OnPropertyChanged(nameof(HasErrors));
     }
 
 
