@@ -38,6 +38,13 @@ public abstract class ValidationViewModel : ViewModel, INotifyDataErrorInfo
     protected List<ValidationRule> ValidationRules { get; } = new();
 
 
+    /// <summary> Добавить правило валидации в коллекцию </summary>
+    protected ValidationViewModel AddValidationRule(string propertyName, Func<bool> rule, string ErrorMessage)
+    {
+        ValidationRules.Add(new(propertyName, rule, ErrorMessage));
+        return this;
+    }
+
     protected override void OnPropertyChanged(string PropertyName = null)
     {
         base.OnPropertyChanged(PropertyName);
