@@ -9,7 +9,7 @@
         <ResourceDictionary Source="TextBlocks.xaml"/>
         <ResourceDictionary Source="Toggles.xaml"/>
         <ResourceDictionary Source="TextBoxes.xaml"/>
-        <ResourceDictionary Source="ComboBox.xaml"/>
+        <ResourceDictionary Source="ComboBoxes.xaml"/>
         <ResourceDictionary Source="RadioButtons.xaml"/>
     </ResourceDictionary.MergedDictionaries>
 

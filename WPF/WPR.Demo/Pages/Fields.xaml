@@ -78,13 +78,26 @@
 
             <TextBox Style="{StaticResource WPRBorderedTextBox}" 
                      helpers:TextHelper.Hint="Bordered no Descr"
-                     helpers:TextHelper.ShowClearButton="False"></TextBox>
+                     helpers:TextHelper.ShowClearButton="False"/>
 
             <TextBox Style="{StaticResource WPRBorderedTextBox}" 
                      BorderBrush="{DynamicResource AccentColorBrush}"
                      helpers:ButtonHelper.MouseOverButtonBrush="{DynamicResource SecondaryColorBrush}"
                      helpers:TextHelper.Hint="Bordered Custom Border"
                      helpers:TextHelper.ShowClearButton="False"></TextBox>
+            <ComboBox helpers:TextHelper.Hint="Bordered Combo"
+                      Style="{StaticResource WPRBorderedComboBox}"
+                      helpers:TextHelper.Description="Description">
+                <ComboBoxItem Content="Item1"/>
+                <ComboBoxItem Content="Item2"/>
+                <ComboBoxItem Content="Item3"/>
+            </ComboBox>
+            <ComboBox helpers:TextHelper.Hint="Combo no descr"
+                      Style="{StaticResource WPRBorderedComboBox}">
+                <ComboBoxItem Content="Item1"/>
+                <ComboBoxItem Content="Item2"/>
+                <ComboBoxItem Content="Item3"/>
+            </ComboBox>
         </StackPanel>
 
     </DockPanel>

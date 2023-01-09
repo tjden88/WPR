@@ -13,7 +13,7 @@
         <ResourceDictionary Source="Styles\RadioButtons.xaml"/>
         <ResourceDictionary Source="Styles\ListBoxes.xaml"/>
         <ResourceDictionary Source="Styles\TextBoxes.xaml"/>
-        <ResourceDictionary Source="Styles\ComboBox.xaml"/>
+        <ResourceDictionary Source="Styles\ComboBoxes.xaml"/>
         <ResourceDictionary Source="Styles\TabControls.xaml"/>
         <ResourceDictionary Source="Styles\Expanders.xaml"/>
         <ResourceDictionary Source="Styles\Menus.xaml"/>

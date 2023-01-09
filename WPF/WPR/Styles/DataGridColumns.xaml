@@ -5,7 +5,7 @@
         <ResourceDictionary Source="Base.xaml"/>
         <ResourceDictionary Source="DataGrids.xaml"/>
         <ResourceDictionary Source="CheckBoxes.xaml"/>
-        <ResourceDictionary Source="ComboBox.xaml"/>
+        <ResourceDictionary Source="ComboBoxes.xaml"/>
         <ResourceDictionary Source="TextBoxes.xaml"/>
     </ResourceDictionary.MergedDictionaries>
 
