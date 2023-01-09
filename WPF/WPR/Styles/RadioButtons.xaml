@@ -14,15 +14,17 @@
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            <Border Margin="{TemplateBinding Padding}">
+            <Border Margin="{TemplateBinding Padding}"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center">
+
                 <controls:Ripple x:Name="Ripple"
                                  Background="{Binding RelativeSource={RelativeSource TemplatedParent},Path=(helpers:RippleHelper.FeedbackBrush)}" 
                                  RippleInCenter="True"
                                  StartRippleOnClick="False">
                     <Border x:Name="radioButtonBorder" Height="16" Width ="16"
                             BorderBrush="{TemplateBinding BorderBrush}"
-                            HorizontalAlignment="Center"
-                            VerticalAlignment="Center"
+                            
                             BorderThickness="{TemplateBinding BorderThickness}"
                             Background="{TemplateBinding Background}" 
                             CornerRadius="16">
