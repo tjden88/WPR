@@ -37,7 +37,7 @@
                     </Grid>
                 </Border>
             </controls:Ripple>
-            <ContentPresenter Grid.Column="1" Margin="3,0,3,0"
+            <ContentPresenter Grid.Column="1" Margin="5,0,5,0"
                               HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" 
                               VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
                               RecognizesAccessKey="True" />

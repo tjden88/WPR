@@ -14,24 +14,27 @@
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            <controls:Ripple x:Name="Ripple"
-                             Background="{Binding RelativeSource={RelativeSource TemplatedParent},Path=(helpers:RippleHelper.FeedbackBrush)}" 
-                             RippleInCenter="True"
-                             StartRippleOnClick="False">
-                <Border x:Name="radioButtonBorder" Height="16" Width ="16"
-                        BorderBrush="{TemplateBinding BorderBrush}"
-                        BorderThickness="{TemplateBinding BorderThickness}"
-                        Background="{TemplateBinding Background}" 
-                        CornerRadius="16" 
-                        HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" 
-                        VerticalAlignment="{TemplateBinding VerticalContentAlignment}">
+            <Border Margin="{TemplateBinding Padding}">
+                <controls:Ripple x:Name="Ripple"
+                                 Background="{Binding RelativeSource={RelativeSource TemplatedParent},Path=(helpers:RippleHelper.FeedbackBrush)}" 
+                                 RippleInCenter="True"
+                                 StartRippleOnClick="False">
+                    <Border x:Name="radioButtonBorder" Height="16" Width ="16"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            Background="{TemplateBinding Background}" 
+                            CornerRadius="16">
 
-                    <Ellipse x:Name="optionMark" Fill="{DynamicResource AccentColorBrush}" Width="0"
-                             Height="{Binding RelativeSource={RelativeSource Self}, Path=Width}" 
-                             Margin="2" />
-                </Border>
-            </controls:Ripple>
-            <ContentPresenter Grid.Column="1" Margin="3,0,0,0" Focusable="False" 
+                        <Ellipse x:Name="optionMark" Fill="{DynamicResource AccentColorBrush}" Width="0"
+                                 Height="{Binding RelativeSource={RelativeSource Self}, Path=Width}" 
+                                 Margin="2" />
+                    </Border>
+                </controls:Ripple>
+            </Border>
+
+            <ContentPresenter Grid.Column="1" Margin="5,0,0,0" Focusable="False" 
                               HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                               RecognizesAccessKey="True" 
                               VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
@@ -68,6 +71,7 @@
     <Style x:Key="WPRRadioButton" TargetType="{x:Type RadioButton}" BasedOn="{StaticResource BaseControl}">
         <EventSetter  Event="Checked" Handler="WPRRadioButton_MouseDown"/>
         <Setter Property="BorderThickness" Value="2"/>
+        <Setter Property="Padding" Value="0,2"></Setter>
         <Setter Property="BorderBrush" Value="{DynamicResource PrimaryColorBrush}"/>
         <Setter Property="helpers:RippleHelper.FeedbackBrush" Value="{DynamicResource PrimaryColorBrush}"/>
         <Setter Property="VerticalContentAlignment" Value="Center" />
