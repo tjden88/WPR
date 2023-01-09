@@ -107,9 +107,21 @@ public abstract partial class ViewModel : INotifyPropertyChanged
         if (prop == null) return;
         if(!prop.CanRead || !prop.CanWrite) return;
 
+       var attr= prop.GetCustomAttributes(typeof(SkipWatchAttribute), true);
+       if (attr.Length > 0) return;
+
         PropertyWasChanged = true;
         PropertyChanged -= OnPropertyChangedWhenWatching;
     }
 
     #endregion
+
+
+    /// <summary>
+    /// Указывает, что это свойство нужно игнорировать при отслеживании изменений
+    /// </summary>
+    [AttributeUsage(AttributeTargets.Property)]
+    protected class SkipWatchAttribute : Attribute
+    {
+    }
 }
