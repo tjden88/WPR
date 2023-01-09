@@ -25,6 +25,7 @@
         <ResourceDictionary Source="Styles\RichTextBoxes.xaml"/>
         <ResourceDictionary Source="Styles\TreeViews.xaml"/>
         <ResourceDictionary Source="Styles\Separators.xaml"/>
+        <ResourceDictionary Source="Styles\GroupBoxes.xaml"/>
     </ResourceDictionary.MergedDictionaries>
 
     <!--Стили по умолчанию-->
@@ -56,4 +57,5 @@
     <Style TargetType="TreeView" BasedOn="{StaticResource WPRTreeView}"/>
     <Style TargetType="TreeViewItem" BasedOn="{StaticResource WPRTreeViewItem}"/>
     <Style TargetType="Separator" BasedOn="{StaticResource WPRSeparator}"/>
+    <Style TargetType="GroupBox" BasedOn="{StaticResource WPRGroupBox}"/>
 </ResourceDictionary>
