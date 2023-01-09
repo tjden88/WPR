@@ -93,6 +93,7 @@
                 <ComboBoxItem Content="Item3"/>
             </ComboBox>
             <ComboBox helpers:TextHelper.Hint="Combo no descr"
+                      IsEditable="True"
                       Style="{StaticResource WPRBorderedComboBox}">
                 <ComboBoxItem Content="Item1"/>
                 <ComboBoxItem Content="Item2"/>

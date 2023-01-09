@@ -455,7 +455,7 @@
 
     <ControlTemplate x:Key="ComboBoxBorderedTemplate" TargetType="{x:Type ComboBox}">
 
-        <Grid x:Name="templateRoot" Margin="0" SnapsToDevicePixels="true">
+        <Grid x:Name="templateRoot" Margin="0">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition/>
@@ -491,11 +491,14 @@
                 </Popup>
 
                 <Border Background="{TemplateBinding Background}"
+                        Name="Border"
                         BorderBrush="{TemplateBinding BorderBrush}"
                         BorderThickness="{TemplateBinding BorderThickness}"
+                        UseLayoutRounding="False"
+                        SnapsToDevicePixels="False"
                         CornerRadius="{Binding (helpers:ButtonHelper.BorderRadius), RelativeSource={RelativeSource TemplatedParent}}">
 
-                    <Grid Margin="10,6">
+                    <Grid Margin="{TemplateBinding Padding}">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition MinWidth="23" Width="0"/>
@@ -505,12 +508,10 @@
                             <RowDefinition Height="Auto"/>
                         </Grid.RowDefinitions>
 
-                        <ToggleButton x:Name="toggleButton" BorderBrush="{TemplateBinding BorderBrush}"
-                          BorderThickness="{TemplateBinding BorderThickness}"
-                          Background="{TemplateBinding Background}" 
-                          Grid.ColumnSpan="2"
-                          IsChecked="{Binding IsDropDownOpen, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}" 
-                          Style="{StaticResource ComboBoxToggleButton}"/>
+                        <ToggleButton x:Name="toggleButton" BorderBrush="{Binding BorderBrush, ElementName=Border}" 
+                                      Grid.ColumnSpan="2"
+                                      IsChecked="{Binding IsDropDownOpen, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}" 
+                                      Style="{StaticResource ComboBoxToggleButton}"/>
 
                         <!--Hint-->
                         <ContentControl Grid.Row="0" Grid.Column="0" IsTabStop="False" x:Name="FloatingHint"
@@ -518,10 +519,10 @@
                                 VerticalAlignment="Bottom"
                                 Content="{Binding Path=(helpers:TextHelper.Hint), RelativeSource={RelativeSource TemplatedParent}}"
                                 HorizontalAlignment="Left"
-                                Foreground="{TemplateBinding Background}"
+                                Foreground="{StaticResource TransparentBrush}"
                                 FontSize="{TemplateBinding FontSize}"
                                 RenderTransformOrigin="0,1"
-                                Margin="0,3">
+                                Margin="1,5">
                         </ContentControl>
 
                         <ContentPresenter Grid.Row="0" Grid.Column="0" x:Name="contentPresenter" 
@@ -531,14 +532,14 @@
                                   ContentStringFormat="{TemplateBinding SelectionBoxItemStringFormat}" 
                                   HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" 
                                   IsHitTestVisible="False" 
-                                  Margin="0,3"
+                                  Margin="0,4"
                                   SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
                                   VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
 
                         <TextBox Grid.Row="0" Grid.Column="0" x:Name="PART_EditableTextBox"
+                                 Margin="0,4,0,0"
                                  HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
                                  IsReadOnly="{Binding IsReadOnly, RelativeSource={RelativeSource TemplatedParent}}"
-                                 Margin="{TemplateBinding Padding}" 
                                  Style="{StaticResource ComboBoxEditableTextBox}" 
                                  Visibility="Hidden"
                                  VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"/>
@@ -576,17 +577,17 @@
             </Trigger>
 
             <Trigger Property="IsMouseOver" Value="True">
-                <Setter Property="BorderBrush"
+                <Setter Property="BorderBrush" TargetName="Border"
                         Value="{Binding (helpers:ButtonHelper.MouseOverButtonBrush), RelativeSource={RelativeSource AncestorType=ComboBox}}"/>
             </Trigger>
 
             <Trigger Property="IsDropDownOpen" Value="True">
-                <Setter Property="BorderBrush"
+                <Setter Property="BorderBrush" TargetName="Border"
                         Value="{Binding (helpers:ButtonHelper.MouseOverButtonBrush), RelativeSource={RelativeSource AncestorType=ComboBox}}"/>
             </Trigger>
 
-            <Trigger Property="IsKeyboardFocused" Value="True">
-                <Setter Property="BorderBrush" 
+            <Trigger Property="IsKeyboardFocused" SourceName="PART_EditableTextBox" Value="True">
+                <Setter Property="BorderBrush" TargetName="Border"
                         Value="{Binding (helpers:ButtonHelper.MouseOverButtonBrush), RelativeSource={RelativeSource AncestorType=ComboBox}}"/>
             </Trigger>
 
@@ -638,7 +639,7 @@
 
     <Style x:Key="WPRBorderedComboBox" TargetType="{x:Type ComboBox}" BasedOn="{StaticResource WPRComboBox}">
         <Setter Property="Template" Value="{StaticResource ComboBoxBorderedTemplate}"/>
-        <Setter Property="BorderBrush" Value="{DynamicResource SecondaryColorBrush}"/>
+        <Setter Property="Padding" Value="10,5"/>
         <Setter Property="Background" Value="{DynamicResource BackgroundColorBrush}"/>
         <Setter Property="BorderThickness" Value="1"></Setter>
         <Setter Property="helpers:ButtonHelper.MouseOverButtonBrush" Value="{DynamicResource PrimaryColorBrush}"/>
