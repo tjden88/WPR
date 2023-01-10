@@ -1,31 +1,33 @@
-﻿using System.Windows.Input;
+﻿using System.Collections.ObjectModel;
+using System.Windows.Input;
 
 namespace WPR.MVVM.Commands.Base;
 
 /// <summary>
-/// Последовательное выполнение двух команд
+/// Последовательное выполнение нескольких команд
 /// </summary>
-public class MultiCommand : BaseCommand
+public class MultiCommand : Collection<ICommand>, ICommand
 {
-    private readonly ICommand _First;
-    private readonly ICommand _Second;
 
-    /// <summary> Параметр первой команды </summary>
-    public object FirstParameter { get; set; }
-
-    /// <summary> Параметр второй команды </summary>
-    public object SecondParameter { get; set; }
-
-
-    public MultiCommand(ICommand First, ICommand Second)
+    public bool CanExecute(object parameter)
     {
-        _First = First;
-        _Second = Second;
+        foreach (var cmd in this)
+            if (!cmd.CanExecute(parameter))
+                return false;
+
+        return true;
     }
 
-    protected override void ExecuteCommand(object p)
+    public event EventHandler CanExecuteChanged;
+
+    protected virtual void OnCanExecuteChanged()
     {
-        _First.Execute(FirstParameter);
-        _Second.Execute(SecondParameter);
+        CanExecuteChanged?.Invoke(this, EventArgs.Empty);
+    }
+
+    public void Execute(object parameter)
+    {
+        foreach (var cmd in this)
+            cmd.Execute(parameter);
     }
 }
