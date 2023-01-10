@@ -3,10 +3,11 @@ using System.Globalization;
 using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Input;
+using System.Windows.Markup;
 
 namespace WPR.MVVM.Commands.Base;
 
-public abstract class BaseCommand : ICommand, INotifyPropertyChanged
+public abstract class BaseCommand : MarkupExtension, ICommand, INotifyPropertyChanged
 {
 
     #region Executable: bool
@@ -116,4 +117,7 @@ public abstract class BaseCommand : ICommand, INotifyPropertyChanged
     protected abstract void ExecuteCommand(object p);
 
     public override string ToString() => Text;
+
+
+    public override object ProvideValue(IServiceProvider serviceProvider) => this;
 }
