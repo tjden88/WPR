@@ -87,6 +87,7 @@
                      helpers:TextHelper.ShowClearButton="False"></TextBox>
             <ComboBox helpers:TextHelper.Hint="Bordered Combo"
                       Style="{StaticResource WPRBorderedComboBox}"
+                      helpers:TextHelper.ShowClearButton="True"
                       helpers:TextHelper.Description="Description">
                 <ComboBoxItem Content="Item1"/>
                 <ComboBoxItem Content="Item2"/>
@@ -94,6 +95,7 @@
             </ComboBox>
             <ComboBox helpers:TextHelper.Hint="Combo no descr"
                       IsEditable="True"
+                      helpers:TextHelper.ShowClearButton="True"
                       Style="{StaticResource WPRBorderedComboBox}">
                 <ComboBoxItem Content="Item1"/>
                 <ComboBoxItem Content="Item2"/>

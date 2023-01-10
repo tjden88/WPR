@@ -2,11 +2,15 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:helpers="clr-namespace:WPR.Helpers"
                     xmlns:controls="clr-namespace:WPR.Controls"
-                    xmlns:animations="clr-namespace:WPR.Extensions.Animations">
+                    xmlns:animations="clr-namespace:WPR.Extensions.Animations"
+                    xmlns:commands="clr-namespace:WPR.MVVM.Commands;assembly=WPR.MVVM">
 
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="Base.xaml"/>
+        <ResourceDictionary Source="Buttons.xaml"/>
     </ResourceDictionary.MergedDictionaries>
+
+    <commands:ClearComboBoxCommand x:Key="ClearCommand"/>
 
     <Style x:Key="WPRComboBoxItemStyle" TargetType="{x:Type ComboBoxItem}" BasedOn="{StaticResource BaseControl}">
         <Setter Property="SnapsToDevicePixels" Value="True" />
@@ -544,6 +548,17 @@
                                  Visibility="Hidden"
                                  VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"/>
 
+                        <Button x:Name="ClearButton" Grid.Row="0" Grid.Column="0"
+                                HorizontalAlignment="Right"
+                                ToolTip="Очистить выбор"
+                                Margin="0,0,0,0"
+                                Command="{StaticResource ClearCommand}"
+                                CommandParameter="{Binding RelativeSource={RelativeSource TemplatedParent}}"
+                                Style="{StaticResource WPRToolHiddenButton}"
+                                VerticalAlignment="Center"
+                                Visibility="{Binding Path=(helpers:TextHelper.ShowClearButton), RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource Bool2VisibilityConverter}}">
+                            <controls:WPRIcon Source="CloseCircle"/>
+                        </Button>
                     </Grid>
                 </Border>
             </Grid>
@@ -641,7 +656,8 @@
         <Setter Property="Template" Value="{StaticResource ComboBoxBorderedTemplate}"/>
         <Setter Property="Padding" Value="10,5"/>
         <Setter Property="Background" Value="{DynamicResource BackgroundColorBrush}"/>
-        <Setter Property="BorderThickness" Value="1"></Setter>
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
         <Setter Property="helpers:ButtonHelper.MouseOverButtonBrush" Value="{DynamicResource PrimaryColorBrush}"/>
         <Setter Property="helpers:ButtonHelper.BorderRadius" Value="6"/>
     </Style>
