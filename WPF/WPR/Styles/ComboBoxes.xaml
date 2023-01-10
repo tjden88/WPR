@@ -215,7 +215,10 @@
             </Storyboard>
         </ControlTemplate.Resources>
 
-        <Grid x:Name="templateRoot" Margin="-8,-10,-8,0" SnapsToDevicePixels="true">
+        <Grid x:Name="templateRoot" 
+              Margin="-8,-10,-8,0"
+              SnapsToDevicePixels="true">
+
             <Border Name="PopupPlacement" VerticalAlignment="Top"/>
             <Popup x:Name="PART_Popup" AllowsTransparency="true"
                    Grid.ColumnSpan="2" 
@@ -253,6 +256,7 @@
                 </Grid>
 
             </Popup>
+
             <Grid Margin="8,15,8,0">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
@@ -305,6 +309,18 @@
                          Style="{StaticResource ComboBoxEditableTextBox}" 
                          Visibility="Hidden"
                          VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"/>
+
+                <Button x:Name="ClearButton" Grid.Row="0" Grid.Column="0"
+                        HorizontalAlignment="Right"
+                        ToolTip="Очистить выбор"
+                        Margin="0,0,0,0"
+                        Command="{StaticResource ClearCommand}"
+                        CommandParameter="{Binding RelativeSource={RelativeSource TemplatedParent}}"
+                        Style="{StaticResource WPRToolHiddenButton}"
+                        VerticalAlignment="Center"
+                        Visibility="{Binding Path=(helpers:TextHelper.ShowClearButton), RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource Bool2VisibilityConverter}}">
+                    <controls:WPRIcon Source="CloseCircle"/>
+                </Button>
 
                 <Rectangle Margin="{TemplateBinding Padding}" x:Name="BottomRect" Grid.Row="0" Grid.ColumnSpan="2"
                            Grid.Column="0" Fill="{TemplateBinding BorderBrush}" Height="1" VerticalAlignment="Bottom"/>

@@ -40,6 +40,7 @@
         <StackPanel Width="200">
             <ComboBox helpers:TextHelper.Description="Описание"  SelectedIndex="-1"
           helpers:TextHelper.Hint="Not Editable"
+          helpers:TextHelper.ShowClearButton="True"
           Margin="0,30"
           Name="Box">
                 <ComboBoxItem>
