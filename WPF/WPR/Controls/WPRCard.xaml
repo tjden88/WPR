@@ -9,7 +9,7 @@
 
     <Style TargetType="{x:Type controls:WPRCard}" BasedOn="{StaticResource BaseControl}">
 
-        <Setter Property="helpers:ButtonHelper.BorderRadius" Value="3"/>
+        <Setter Property="helpers:ButtonHelper.BorderRadius" Value="4"/>
         <Setter Property="Margin" Value="10"/>
         <Setter Property="Background" Value="{DynamicResource SecondaryBackgroundColorBrush}" />
         <Setter Property="Focusable" Value="False"/>

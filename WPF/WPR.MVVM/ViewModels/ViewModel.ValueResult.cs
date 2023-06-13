@@ -23,6 +23,12 @@ partial class ViewModel
             return this;
         }
 
+        public ValueResult<T> ThenRunTask(Func<Task> task)
+        {
+            if (_Result) Task.Run(task);
+            return this;
+        }
+
         public ValueResult<T> Then(Action<T> Action)
         {
             if (_Result) Action(_NewValue);

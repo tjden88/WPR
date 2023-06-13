@@ -27,7 +27,7 @@ public class StyleColors : DependencyObject
     internal static readonly Color _LightDividerColor = (Color)ColorConverter.ConvertFromString("#FFE0E0E0")!;
     internal static readonly Color _LightShadowColor = Colors.DimGray;
     internal static readonly Color _LightBackgroundColor = _LightColor;
-    internal static readonly Color _LightSecondaryBackgroundColor = Colors.WhiteSmoke;
+    internal static readonly Color _LightSecondaryBackgroundColor = (Color)ColorConverter.ConvertFromString("#FAFAFA")!;
     internal static readonly Color _LightWindowTitleBackgroundColor = _PrimaryColor;
 
 
