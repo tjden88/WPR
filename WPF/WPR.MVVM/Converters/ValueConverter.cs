@@ -22,6 +22,6 @@ public class ValueConverter : Converter
 
     public override object ConvertBack(object v, Type t, object p, CultureInfo c)
     {
-        return _ConvertFunction?.Invoke(v, t, p, c) ?? base.ConvertBack(v, t, p, c);
+        return _ConvertBackFunction?.Invoke(v, t, p, c) ?? base.ConvertBack(v, t, p, c);
     }
 }
