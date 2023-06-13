@@ -15,10 +15,12 @@ public class ValueConverter : Converter
         _ConvertBackFunction = ConvertBackFunction;
     }
 
+
     public override object Convert(object v, Type t, object p, CultureInfo c)
     {
         return _ConvertFunction?.Invoke(v, t, p, c);
     }
+
 
     public override object ConvertBack(object v, Type t, object p, CultureInfo c)
     {
