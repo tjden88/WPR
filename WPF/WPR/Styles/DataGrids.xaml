@@ -48,7 +48,8 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Thumb}">
-                    <Border Background="{TemplateBinding Background}" Padding="{TemplateBinding Padding}"/>
+                    <Border Background="{TemplateBinding Background}" Padding="{TemplateBinding Padding}">
+                    </Border>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
@@ -163,12 +164,23 @@
                                         <RotateTransform x:Name="RotateArrowSort"/>
                                     </controls:WPRIcon.RenderTransform>
                                 </controls:WPRIcon>
-                                <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" 
+                                <ContentPresenter HorizontalAlignment="Stretch" 
                                               RecognizesAccessKey="True"
                                               SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" 
-                                              VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                                              VerticalAlignment="Stretch"/>
                             </Grid>
                         </Border>
+                        <Rectangle Margin="0,10" HorizontalAlignment="Right" Width="2">
+                            <Rectangle.Fill>
+                                <DrawingBrush TileMode="Tile" Viewbox="0,0,4,4" Viewport="0,0,4,4" ViewportUnits="Absolute" ViewboxUnits="Absolute">
+                                    <DrawingBrush.Drawing>
+                                        <DrawingGroup>
+                                            <GeometryDrawing Brush="{DynamicResource DividerColorBrush}" Geometry="M 0 0 L 0 2 L 2 2 L 2 0 z"/>
+                                        </DrawingGroup>
+                                    </DrawingBrush.Drawing>
+                                </DrawingBrush>
+                            </Rectangle.Fill>
+                        </Rectangle>
                         <Thumb x:Name="PART_LeftHeaderGripper" HorizontalAlignment="Left" Style="{StaticResource ColumnHeaderGripperStyle}"/>
                         <Thumb x:Name="PART_RightHeaderGripper" HorizontalAlignment="Right" Style="{StaticResource ColumnHeaderGripperStyle}"/>
                     </Grid>
