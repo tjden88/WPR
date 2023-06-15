@@ -8,29 +8,35 @@
     </ResourceDictionary.MergedDictionaries>
 
     <Style TargetType="{x:Type local:NumericTextBox}" BasedOn="{StaticResource BaseControl}">
-        <Setter Property="Background" Value="{DynamicResource PrimaryColorBrush}"/>
+        <Setter Property="Padding" Value="0,10,10,0"></Setter>
         <Setter Property="Focusable" Value="False"/>
-        <Setter Property="BorderBrush" Value="{DynamicResource SecondaryColorBrush}"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type local:NumericTextBox}">
-                    <Grid Background="Transparent" FocusManager.FocusedElement="{Binding ElementName=PART_TextBox}">
-                        <TextBox helpers:TextHelper.Hint ="{TemplateBinding Hint}"
+                    <Grid Background="{StaticResource TransparentBrush}" FocusManager.FocusedElement="{Binding ElementName=PART_TextBox}">
+                        <TextBox helpers:TextHelper.Hint ="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(helpers:TextHelper.Hint)}"
+                                 helpers:TextHelper.Description ="{Binding RelativeSource={RelativeSource TemplatedParent}, Path= (helpers:TextHelper.Description)}"
                                  Foreground="{TemplateBinding Foreground}"
-                             Background="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Background, Mode=TwoWay}"
-                             x:Name="PART_TextBox"
-                             Text="{Binding RelativeSource={RelativeSource TemplatedParent},Path= TextExpression, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                             Style="{ Binding RelativeSource={RelativeSource TemplatedParent},Path=TextBoxStyle, TargetNullValue={StaticResource WPRTextBox}}">
-                            <helpers:TextHelper.Description>
-                                <TextBlock Foreground="{DynamicResource DangerColorBrush}"
-                                           TextWrapping="WrapWithOverflow"
-                                           Text="{TemplateBinding DescriptionText}"/>
-                            </helpers:TextHelper.Description>
+                                 Background="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Background, Mode=TwoWay}"
+                                 BorderBrush="{TemplateBinding BorderBrush}"
+                                 BorderThickness="{TemplateBinding BorderThickness}"
+                                 x:Name="PART_TextBox"
+                                 Style="{ Binding RelativeSource={RelativeSource TemplatedParent},Path=TextBoxStyle, TargetNullValue={StaticResource WPRTextBox}}">
+                            <TextBox.Text>
+                                <Binding Path="TextExpression"
+                                         RelativeSource="{RelativeSource TemplatedParent}"
+                                         UpdateSourceTrigger="PropertyChanged"
+                                         Mode="TwoWay">
+                                    <Binding.ValidationRules>
+                                        <DataErrorValidationRule/>
+                                    </Binding.ValidationRules>
+                                </Binding>
+                            </TextBox.Text>
                         </TextBox>
                         <StackPanel  Orientation="Horizontal"
                                      HorizontalAlignment="Right"
-                                     VerticalAlignment="Top"
-                                     Margin="0,10,0,0"
+                                     VerticalAlignment="Center"
+                                     Margin="{TemplateBinding Padding}"
                                      ClipToBounds="True"
                                      Visibility="{TemplateBinding PlusMinusButtonsShowing, Converter={StaticResource Bool2VisibilityConverter}}">
 
@@ -39,10 +45,9 @@
                                     Margin="0"
                                     Focusable="False"
                                     ToolTip="Увеличить значение"
-                                    Height="{Binding RelativeSource={RelativeSource Self}, Path=ActualWidth}"
                                     Foreground="{DynamicResource AccentColorBrush}"
                                     Padding="0">
-                                <local:WPRIcon Source="PlusCircle" IconSize="18" Margin="1"/>
+                                <local:WPRIcon Source="ArrowDropUp" IconSize="22" Margin="1"/>
                                 <Button.RenderTransform>
                                     <TranslateTransform x:Name="AnimatedTranslateTransformPlus" Y="{Binding Path=ActualHeight, RelativeSource={RelativeSource TemplatedParent}}" />
                                 </Button.RenderTransform>
@@ -50,12 +55,11 @@
                             <Button Command="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=MinusButtonCommand}"
                                     Style="{StaticResource WPRToolButtonNoRipple}" 
                                     Focusable="False" 
-                                    Height="{Binding RelativeSource={RelativeSource Self}, Path=ActualWidth}"
                                     Margin="0"
                                     ToolTip="Уменьшить значение"
                                     Foreground="{DynamicResource AccentColorBrush}"
                                     Padding="0">
-                                <local:WPRIcon Source="MinusCircle" IconSize="18" Margin="1"/>
+                                <local:WPRIcon Source="ArrowDropDown" IconSize="22" Margin="1"/>
                                 <Button.RenderTransform>
                                     <TranslateTransform x:Name="AnimatedTranslateTransformMinus" Y="{Binding Path=ActualHeight, RelativeSource={RelativeSource TemplatedParent}}" />
                                 </Button.RenderTransform>

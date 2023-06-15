@@ -9,7 +9,7 @@ using WPR.MVVM.Commands.Base;
 namespace WPR.Controls;
 
 /// <summary> Контрол с текстбоксом для ввода числовых данных </summary>
-public class NumericTextBox : Control
+public class NumericTextBox : Control, IDataErrorInfo
 {
     private bool _IsValidNow; // При обновлении Value не обновлять Text, если True
 
@@ -452,4 +452,8 @@ public class NumericTextBox : Control
         TextBox.Dispatcher.BeginInvoke(new Action(() => TextBox.SelectAll()));
 
     #endregion
+
+    public string Error => DescriptionText;
+
+    public string this[string columnName] => DescriptionText;
 }
