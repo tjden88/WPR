@@ -91,7 +91,6 @@
         </Setter>
         <Style.Triggers>
             <Trigger Property="IsKeyboardFocused" Value="True">
-                <Setter Property="Background" Value="{DynamicResource PrimaryColorBrush}"/>
                 <Setter Property="Foreground" Value="{DynamicResource TextColorBrush}"/>
                 <Setter Property="BorderBrush" Value="{DynamicResource SecondaryColorBrush}"/>
             </Trigger>
@@ -107,9 +106,6 @@
             </MultiTrigger>
             <Trigger Property="IsEnabled" Value="False">
                 <Setter Property="Opacity" Value=".56"/>
-            </Trigger>
-            <Trigger Property="IsReadOnly" Value="True">
-                <Setter Property="Focusable" Value="False"/>
             </Trigger>
         </Style.Triggers>
     </Style>

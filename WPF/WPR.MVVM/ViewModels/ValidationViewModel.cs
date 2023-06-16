@@ -60,6 +60,16 @@ public abstract class ValidationViewModel : ViewModel, INotifyDataErrorInfo
         base.OnPropertyChanged(nameof(HasErrors));
     }
 
+    /// <summary> Сбросить все ошибки </summary>
+    public void ClearErrors()
+    {
+        var props = _Errors.Keys.ToList();
+        _Errors.Clear();
+        foreach( var prop in props)
+            ErrorsChanged?.Invoke(this, new DataErrorsChangedEventArgs(prop));
+
+        base.OnPropertyChanged(nameof(HasErrors));
+    }
 
     /// <summary> Проверить все свойства модели </summary>
     public void ValidateAll()
@@ -87,8 +97,8 @@ public abstract class ValidationViewModel : ViewModel, INotifyDataErrorInfo
         if (!validateObject)
             foreach (var validationResult in results)
                 foreach (var member in validationResult.MemberNames)
-                    if (_Errors.ContainsKey(member))
-                        _Errors[member].Add(validationResult.ErrorMessage);
+                    if (_Errors.TryGetValue(member, out var error))
+                        error.Add(validationResult.ErrorMessage);
                     else
                         _Errors[member] = new List<string>
                         {
@@ -139,7 +149,7 @@ public abstract class ValidationViewModel : ViewModel, INotifyDataErrorInfo
     public IEnumerable GetErrors(string PropertyName)
     {
         if (string.IsNullOrEmpty(PropertyName)) return null;
-        return _Errors.ContainsKey(PropertyName) ? _Errors[PropertyName] : null;
+        return _Errors.TryGetValue(PropertyName, out var error) ? error : null;
     }
 
     public bool HasErrors => _Errors.Any();
