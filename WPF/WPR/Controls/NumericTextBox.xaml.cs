@@ -198,27 +198,6 @@ public class NumericTextBox : Control, IDataErrorInfo
 
     #endregion
 
-    #region Hint : string - Подсказка текстбокса
-
-    /// <summary>Подсказка текстбокса</summary>
-    public static readonly DependencyProperty HintProperty =
-        DependencyProperty.Register(
-            nameof(Hint),
-            typeof(string),
-            typeof(NumericTextBox),
-            new PropertyMetadata(default(string)));
-
-    /// <summary>Подсказка текстбокса</summary>
-    [Category("Настройки")]
-    [Description("Подсказка текстбокса")]
-    public string Hint
-    {
-        get => (string)GetValue(HintProperty);
-        set => SetValue(HintProperty, value);
-    }
-
-    #endregion
-
     #region Increment : double - Шаг изменения значения при использовании кнопок управления или колеса мыши
 
     /// <summary>Шаг изменения значения при использовании кнопок управления или колеса мыши</summary>
@@ -303,6 +282,27 @@ public class NumericTextBox : Control, IDataErrorInfo
 
     #endregion
 
+    #region SelectAllOnFocus : bool - При получении фокуса выбрать весь текст
+
+    /// <summary>При получении фокуса выбрать весь текст</summary>
+    public static readonly DependencyProperty SelectAllOnFocusProperty =
+        DependencyProperty.Register(
+            nameof(SelectAllOnFocus),
+            typeof(bool),
+            typeof(NumericTextBox),
+            new PropertyMetadata(default(bool)));
+
+    /// <summary>При получении фокуса выбрать весь текст</summary>
+    [Category("NumericTextBox")]
+    [Description("При получении фокуса выбрать весь текст")]
+    public bool SelectAllOnFocus
+    {
+        get => (bool) GetValue(SelectAllOnFocusProperty);
+        set => SetValue(SelectAllOnFocusProperty, value);
+    }
+
+    #endregion
+
     #region DecimalPlaces : int - Количество десятичных знаков
 
     /// <summary>Количество десятичных знаков</summary>
@@ -311,7 +311,8 @@ public class NumericTextBox : Control, IDataErrorInfo
             nameof(DecimalPlaces),
             typeof(int),
             typeof(NumericTextBox),
-            new PropertyMetadata(0));
+            new PropertyMetadata(15, null, (d, BaseValue) =>
+                Math.Max(0, Math.Min(15, (int) BaseValue))));
 
     /// <summary>Количество десятичных знаков</summary>
     [Category("Настройки")]
@@ -448,8 +449,10 @@ public class NumericTextBox : Control, IDataErrorInfo
     }
 
 
-    private void TextBoxOnGotKeyboardFocus(object Sender, KeyboardFocusChangedEventArgs E) =>
-        TextBox.Dispatcher.BeginInvoke(new Action(() => TextBox.SelectAll()));
+    private void TextBoxOnGotKeyboardFocus(object Sender, KeyboardFocusChangedEventArgs E)
+    {
+        if(SelectAllOnFocus) TextBox.Dispatcher.BeginInvoke(new Action(() => TextBox.SelectAll()));
+    }
 
     #endregion
 
