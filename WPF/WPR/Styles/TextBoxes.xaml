@@ -58,6 +58,7 @@
                                    VerticalAlignment="Top"/>
 
                         <Rectangle Grid.Row="1" Fill="{TemplateBinding BorderBrush}"
+                                   x:Name="Rectangle"
                                    Height="2" VerticalAlignment="Top"
                                    SnapsToDevicePixels="True"
                                    RenderTransformOrigin="0.5,0.5">
@@ -142,12 +143,14 @@
                             </MultiTrigger.ExitActions>
                         </MultiTrigger>
                         <Trigger Property="IsMouseOver" Value="True" SourceName="ContentGrid">
-                            <Setter Property="BorderBrush" 
-                                        Value="{Binding Background, RelativeSource={RelativeSource Self}}"/>
+                            <Setter Property="BorderBrush" TargetName="BottomRect"
+                                        Value="{Binding Background, RelativeSource={RelativeSource AncestorType=TextBox}}"/>
                         </Trigger>
                         <Trigger Property="IsKeyboardFocused" Value="True">
-                            <Setter Property="BorderBrush" 
-                                    Value="{Binding Background, RelativeSource={RelativeSource Self}}"/>
+                            <Setter Property="BorderBrush" TargetName="BottomRect"
+                                    Value="{Binding Background, RelativeSource={RelativeSource AncestorType=TextBox}}"/>
+                            <Setter Property="Fill" TargetName="Rectangle"
+                                    Value="{Binding Background, RelativeSource={RelativeSource AncestorType=TextBox}}"/>
 
                             <Trigger.EnterActions>
                                 <BeginStoryboard>

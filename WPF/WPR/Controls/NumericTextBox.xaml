@@ -9,6 +9,9 @@
 
     <Style TargetType="{x:Type local:NumericTextBox}" BasedOn="{StaticResource BaseControl}">
         <Setter Property="Padding" Value="0,10,10,0"></Setter>
+        <Setter Property="BorderThickness" Value="1"></Setter>
+        <Setter Property="Background" Value="{DynamicResource PrimaryColorBrush}"></Setter>
+        <Setter Property="BorderBrush" Value="{DynamicResource DividerColorBrush}"></Setter>
         <Setter Property="Focusable" Value="False"/>
         <Setter Property="Template">
             <Setter.Value>
@@ -18,7 +21,7 @@
                                  helpers:TextHelper.Description ="{Binding RelativeSource={RelativeSource TemplatedParent}, Path= (helpers:TextHelper.Description)}"
                                  Foreground="{TemplateBinding Foreground}"
                                  Background="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Background, Mode=TwoWay}"
-                                 BorderBrush="{TemplateBinding BorderBrush}"
+                                 BorderBrush="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=BorderBrush, Mode=TwoWay}"
                                  BorderThickness="{TemplateBinding BorderThickness}"
                                  x:Name="PART_TextBox"
                                  Style="{ Binding RelativeSource={RelativeSource TemplatedParent},Path=TextBoxStyle, TargetNullValue={StaticResource WPRTextBox}}">
@@ -111,4 +114,12 @@
             </Setter.Value>
         </Setter>
     </Style>
+
+
+    <Style x:Key="NumericBorderedTextBox" TargetType="{x:Type local:NumericTextBox}" BasedOn="{StaticResource {x:Type local:NumericTextBox}}">
+        <Setter Property="Background" Value="{StaticResource TransparentBrush}"/>
+        <Setter Property="Padding" Value="0,20,10,0"/>
+        <Setter Property="TextBoxStyle" Value="{StaticResource WPRBorderedTextBox}"/>
+    </Style>
+
 </ResourceDictionary>
