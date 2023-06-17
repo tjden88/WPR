@@ -14,7 +14,7 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type dialogs:InputDialog}">
-                    <Grid>
+                    <Grid FocusManager.FocusedElement="{Binding ElementName=TextBox}">
                         <StackPanel Orientation="Vertical">
                             <TextBlock TextWrapping="Wrap"
                                        Foreground="{DynamicResource PrimaryColorBrush}" 

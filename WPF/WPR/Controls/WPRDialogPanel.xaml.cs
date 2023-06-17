@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -22,7 +23,7 @@ internal class WPRDialogPanel : HeaderedContentControl
 
     private IWPRDialog _WPRDialog;
     private bool _StaysOpen;
-
+    private ContentPresenter _Header;
     private WPRPopup _HeaderPopup;
 
     static WPRDialogPanel()
@@ -38,6 +39,7 @@ internal class WPRDialogPanel : HeaderedContentControl
         if (GetTemplateChild("PART_Rect") is Rectangle r) r.MouseDown += Rect_MouseDown;
 
         _HeaderPopup = GetTemplateChild("PART_Popup") as WPRPopup;
+        _Header = GetTemplateChild("PART_HeaderContent") as ContentPresenter;
 
         if (_HeaderPopup == null)
             throw new ArgumentNullException(nameof(_HeaderPopup), "Попап не найден в шаблоне!");
@@ -136,7 +138,7 @@ internal class WPRDialogPanel : HeaderedContentControl
             _WPRDialog = null;
             Header = nextContent.content;
         }
-
+        _Header.Focus();
     }
 
     #endregion

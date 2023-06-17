@@ -50,7 +50,7 @@ public class WPRPopup : Popup
     [Description("Контент Попапа")]
 
     public static readonly DependencyProperty ContentProperty =
-        DependencyProperty.Register("Content", typeof(object), typeof(WPRPopup), new PropertyMetadata(null));
+        DependencyProperty.Register(nameof(Content), typeof(object), typeof(WPRPopup), new PropertyMetadata(null));
 
 
 
@@ -64,7 +64,7 @@ public class WPRPopup : Popup
     [Category("WPRPopup")]
     [Description("Разрешить перетаскивание мышкой")]
     public static readonly DependencyProperty AllowMouseMoveProperty =
-        DependencyProperty.Register("AllowMouseMove", typeof(bool), typeof(WPRPopup), new PropertyMetadata(false));
+        DependencyProperty.Register(nameof(AllowMouseMove), typeof(bool), typeof(WPRPopup), new PropertyMetadata(false));
 
     #region CloseOnMouseButtonUp : bool - Закрывать при клике внутри области попапа
 
