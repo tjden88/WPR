@@ -11,6 +11,9 @@ namespace WPR.Controls;
 /// <summary> Контрол с текстбоксом для ввода числовых данных </summary>
 public class NumericTextBox : Control, IDataErrorInfo
 {
+    /// <summary> Происходит при изменении значения </summary>
+    public event EventHandler ValueChanged;
+
     private bool _IsValidNow; // При обновлении Value не обновлять Text, если True
 
     protected TextBox TextBox { get; set; }
@@ -99,7 +102,10 @@ public class NumericTextBox : Control, IDataErrorInfo
             typeof(double),
             typeof(NumericTextBox),
             new FrameworkPropertyMetadata(default(double), FrameworkPropertyMetadataOptions.BindsTwoWayByDefault,
-                null, (d, BaseValue) =>
+                (d, e) =>
+                {
+                    ((NumericTextBox)d).ValueChanged?.Invoke(d, EventArgs.Empty);
+                }, (d, BaseValue) =>
                 {
                     var nt = (NumericTextBox)d;
 
