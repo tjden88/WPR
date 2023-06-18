@@ -52,6 +52,7 @@
 
                         <Border x:Name="BottomRect" Grid.Row="1"
                                    SnapsToDevicePixels="True"
+                                   UseLayoutRounding="True"
                                    BorderBrush="{TemplateBinding BorderBrush}" 
                                    BorderThickness="{TemplateBinding BorderThickness}"
                                    Height="1"
@@ -59,6 +60,7 @@
 
                         <Rectangle Grid.Row="1" Fill="{TemplateBinding BorderBrush}"
                                    x:Name="Rectangle"
+                                   UseLayoutRounding="True"
                                    Height="2" VerticalAlignment="Top"
                                    SnapsToDevicePixels="True"
                                    RenderTransformOrigin="0.5,0.5">

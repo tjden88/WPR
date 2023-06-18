@@ -50,6 +50,7 @@ public class NumericTextBox : Control, IDataErrorInfo
     {
         Value = Math.Min(MaxValue, Value + Increment);
         TextBox.SelectionStart = TextBox.Text.Length;
+        TextBox.Focus();
     }
 
     #endregion
@@ -68,6 +69,7 @@ public class NumericTextBox : Control, IDataErrorInfo
     {
         Value = Math.Max(MinValue, Value - Increment);
         TextBox.SelectionStart = TextBox.Text.Length;
+        TextBox.Focus();
     }
 
     #endregion
@@ -448,10 +450,15 @@ public class NumericTextBox : Control, IDataErrorInfo
 
     private void TextBox_MouseWheel(object sender, MouseWheelEventArgs e)
     {
+        
+        if(!Equals(Keyboard.FocusedElement, TextBox))
+            return;
+
         if (e.Delta > 0)
             PlusButtonCommand.Execute();
         else
             MinusButtonCommand.Execute();
+        e.Handled = true;
     }
 
 

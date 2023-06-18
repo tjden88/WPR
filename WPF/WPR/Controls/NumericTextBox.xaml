@@ -71,7 +71,6 @@
                     </Grid>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Setter Property="BorderBrush" Value="{Binding Background, RelativeSource={RelativeSource Self}}"/>
                             <Trigger.EnterActions>
                                 <BeginStoryboard>
                                     <Storyboard>
@@ -105,16 +104,13 @@
                                 </BeginStoryboard>
                             </Trigger.ExitActions>
                         </Trigger>
-                        <Trigger Property="IsKeyboardFocused" SourceName="PART_TextBox" Value="True">
-                            <Setter Property="BorderBrush" 
-                                    Value="{Binding Background, RelativeSource={RelativeSource Self}}"/>
-                            </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
     </Style>
 
+    <Style x:Key="NumericTextBox" TargetType="{x:Type local:NumericTextBox}" BasedOn="{StaticResource {x:Type local:NumericTextBox}}"/>
 
     <Style x:Key="NumericBorderedTextBox" TargetType="{x:Type local:NumericTextBox}" BasedOn="{StaticResource {x:Type local:NumericTextBox}}">
         <Setter Property="Background" Value="{StaticResource TransparentBrush}"/>
