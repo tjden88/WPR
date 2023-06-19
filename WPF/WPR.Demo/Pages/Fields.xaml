@@ -75,9 +75,7 @@
                                              MaxValue="50"
                                              Increment="2"
                                              Value="{Binding ElementName=N2, Path=Value, Mode=TwoWay}">
-                <controls:WPRNumericIntDecorator.TextBox>
-                    <TextBox Style="{StaticResource WPRBorderedTextBox}"/>
-                </controls:WPRNumericIntDecorator.TextBox>
+                <TextBox Style="{StaticResource WPRBorderedTextBox}"/>
             </controls:WPRNumericIntDecorator>
 
             <TextBlock Text="{Binding ElementName=IntDecorator, Path=Value, StringFormat=IntValue: {0}}" />

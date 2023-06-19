@@ -4,6 +4,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Markup;
 
 namespace WPR.Controls.Base;
 
@@ -11,6 +12,7 @@ namespace WPR.Controls.Base;
 /// Базовый шаблон декоратора текстбокса для отображения числовых значений
 /// </summary>
 /// <typeparam name="T"></typeparam>
+[ContentProperty(nameof(TextBox))]
 public abstract class NumericDecorator<T>: Control
 {
 
