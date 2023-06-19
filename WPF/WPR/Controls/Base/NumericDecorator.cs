@@ -1,8 +1,12 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Markup;
 
@@ -13,7 +17,7 @@ namespace WPR.Controls.Base;
 /// </summary>
 /// <typeparam name="T"></typeparam>
 [ContentProperty(nameof(TextBox))]
-public abstract class NumericDecorator<T>: Control
+public abstract class NumericDecorator<T> : Control, IDataErrorInfo, INotifyDataErrorInfo
 {
 
     /// <summary> Происходит при изменении значения </summary>
@@ -38,7 +42,7 @@ public abstract class NumericDecorator<T>: Control
             typeof(NumericDecorator<T>),
             new PropertyMetadata(default(TextBox), (o, e) =>
             {
-                ((NumericDecorator<T>)o).SetTextBox((TextBox) e.OldValue, (TextBox) e.NewValue);
+                ((NumericDecorator<T>)o).SetTextBox((TextBox)e.OldValue, (TextBox)e.NewValue);
             }));
 
     /// <summary>Текстбокс декоратора</summary>
@@ -48,7 +52,7 @@ public abstract class NumericDecorator<T>: Control
     [MaybeNull]
     public TextBox TextBox
     {
-        get => (TextBox) GetValue(TextBoxProperty);
+        get => (TextBox)GetValue(TextBoxProperty);
         set => SetValue(TextBoxProperty, value);
     }
 
@@ -64,10 +68,10 @@ public abstract class NumericDecorator<T>: Control
             typeof(NumericDecorator<T>),
             new PropertyMetadata(default(T), (o, e) =>
             {
-                ((NumericDecorator<T>)o).SetStringValue((T) e.NewValue);
+                ((NumericDecorator<T>)o).SetStringValue((T)e.NewValue);
             }, (o, BaseValue) =>
             {
-                return ((NumericDecorator<T>) o).CoerseValue((T) BaseValue);
+                return ((NumericDecorator<T>)o).CoerseValue((T)BaseValue);
             }));
 
     /// <summary>Значение</summary>
@@ -207,6 +211,28 @@ public abstract class NumericDecorator<T>: Control
 
     #endregion
 
+
+    #region Text : string - Текстовое значение
+
+    /// <summary>Текстовое значение</summary>
+    public static readonly DependencyProperty TextProperty =
+        DependencyProperty.Register(
+            nameof(Text),
+            typeof(string),
+            typeof(NumericDecorator<T>),
+            new PropertyMetadata(default(string)));
+
+    /// <summary>Текстовое значение</summary>
+    [Category("NumericDecorator")]
+    [Description("Текстовое значение")]
+    public string Text
+    {
+        get => (string)GetValue(TextProperty);
+        set => SetValue(TextProperty, value);
+    }
+
+    #endregion
+
     #endregion
 
     private void SetTextBox(TextBox oldValue, TextBox newValue)
@@ -215,18 +241,31 @@ public abstract class NumericDecorator<T>: Control
         {
             oldValue.LostFocus -= TextBox_LostFocus;
             oldValue.GotKeyboardFocus -= TextBoxOnGotKeyboardFocus;
+            BindingOperations.ClearBinding(oldValue, TextBox.TextProperty);
         }
 
         if (newValue != null)
         {
             newValue.LostFocus += TextBox_LostFocus;
             newValue.GotKeyboardFocus += TextBoxOnGotKeyboardFocus;
+
+            var textBinding = new Binding()
+            {
+                Path = new PropertyPath(nameof(Text)),
+                UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged,
+                Source = this,
+                ValidationRules =
+                {
+                    new DataErrorValidationRule()
+                }
+            };
+            newValue.SetBinding(TextBox.TextProperty, textBinding);
         }
     }
 
     private void SetStringValue(T value)
     {
-        if(TextBox == null)
+        if (TextBox == null)
             throw new ArgumentNullException(nameof(TextBox));
 
         TextBox.Text = SetText(value);
@@ -258,4 +297,37 @@ public abstract class NumericDecorator<T>: Control
     }
 
     #endregion
+
+    public string Error
+    {
+        get
+        {
+            Debug.WriteLine("error prop");
+            return "Error!";
+        }
+    }
+
+    public string this[string columnName]
+    {
+        get
+        {
+            Debug.WriteLine(columnName);
+
+            return $"Column: {columnName}";
+        }
+    }
+
+    private readonly List<string> _Errors = new();
+
+    public IEnumerable GetErrors(string propertyName)
+    {
+        if (!_Errors.Contains(propertyName))
+            _Errors.Add(propertyName);
+
+        return _Errors;
+    }
+
+    public bool HasErrors => true;
+
+    public event EventHandler<DataErrorsChangedEventArgs> ErrorsChanged;
 }
