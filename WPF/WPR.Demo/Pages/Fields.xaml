@@ -70,6 +70,9 @@
                                      DecimalPlaces="3"/>
             <TextBlock Text="{Binding ElementName=N2, Path=Value, StringFormat=Value: {0}}" />
 
+            <controls:WPRNumericIntDecorator Value="{Binding ElementName=N2, Path=Value}"/>
+            <controls:WPRNumericDoubleDecorator Value="{Binding ElementName=N2, Path=Value}"/>
+
         </StackPanel>
         <StackPanel Width="200" Margin="10">
             <TextBox Style="{StaticResource WPRBorderedTextBox}" 

@@ -16,13 +16,14 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type local:NumericTextBox}">
-                    <Grid Background="{StaticResource TransparentBrush}" FocusManager.FocusedElement="{Binding ElementName=PART_TextBox}">
+                    <Grid Background="{StaticResource TransparentBrush}">
                         <TextBox helpers:TextHelper.Hint ="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(helpers:TextHelper.Hint)}"
                                  helpers:TextHelper.Description ="{Binding RelativeSource={RelativeSource TemplatedParent}, Path= (helpers:TextHelper.Description)}"
                                  Foreground="{TemplateBinding Foreground}"
                                  Background="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Background, Mode=TwoWay}"
                                  BorderBrush="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=BorderBrush, Mode=TwoWay}"
                                  BorderThickness="{TemplateBinding BorderThickness}"
+                                 Focusable="True"
                                  x:Name="PART_TextBox"
                                  Style="{ Binding RelativeSource={RelativeSource TemplatedParent},Path=TextBoxStyle, TargetNullValue={StaticResource WPRTextBox}}">
                             <TextBox.Text>
