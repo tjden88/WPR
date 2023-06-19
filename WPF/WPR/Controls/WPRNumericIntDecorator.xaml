@@ -9,10 +9,8 @@
 
     <Style TargetType="{x:Type local:WPRNumericIntDecorator}" BasedOn="{StaticResource BaseControl}">
         <Setter Property="Padding" Value="0,10,0,0"></Setter>
-        <Setter Property="BorderThickness" Value="1"></Setter>
-        <Setter Property="Background" Value="{DynamicResource PrimaryColorBrush}"></Setter>
-        <Setter Property="BorderBrush" Value="{DynamicResource DividerColorBrush}"></Setter>
         <Setter Property="Focusable" Value="False"/>
+
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type local:WPRNumericIntDecorator}">

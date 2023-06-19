@@ -71,6 +71,7 @@
             <TextBlock Text="{Binding ElementName=N2, Path=Value, StringFormat=Value: {0}}" />
 
             <controls:WPRNumericIntDecorator Name="IntDecorator" 
+                                             Margin="5"
                                              MinValue="-50"
                                              MaxValue="50"
                                              Increment="2"

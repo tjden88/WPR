@@ -17,7 +17,7 @@ namespace WPR.Controls.Base;
 /// </summary>
 /// <typeparam name="T"></typeparam>
 [ContentProperty(nameof(TextBox))]
-public abstract class NumericDecorator<T> : Control, IDataErrorInfo, INotifyDataErrorInfo
+public abstract class NumericDecorator<T> : Control, IDataErrorInfo
 {
 
     /// <summary> Происходит при изменении значения </summary>
@@ -210,7 +210,6 @@ public abstract class NumericDecorator<T> : Control, IDataErrorInfo, INotifyData
     }
 
     #endregion
-
 
     #region Text : string - Текстовое значение
 
