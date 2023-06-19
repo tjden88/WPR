@@ -76,12 +76,7 @@ public static class SystemExtensions
     /// </summary>
     /// <param name="obj">Объект конвертации</param>
     /// <returns></returns>
-    public static int ConvertToInt(this object obj)
-    {
-        var parse = obj?.ToString()?.Replace(",", ".").Trim();
-        var parsed = int.TryParse(parse, NumberStyles.Any, _Formatter, out var result);
-        return parsed ? result : default;
-    }
+    public static int ConvertToInt(this object obj) => (int)Math.Round(ConvertToDouble(obj));
 
     /// <summary>
     /// Вычислить значение строки

@@ -70,8 +70,18 @@
                                      DecimalPlaces="3"/>
             <TextBlock Text="{Binding ElementName=N2, Path=Value, StringFormat=Value: {0}}" />
 
-            <controls:WPRNumericIntDecorator Value="{Binding ElementName=N2, Path=Value}"/>
-            <controls:WPRNumericDoubleDecorator Value="{Binding ElementName=N2, Path=Value}"/>
+            <controls:WPRNumericIntDecorator Name="IntDecorator" 
+                                             MinValue="-50"
+                                             MaxValue="50"
+                                             Increment="2"
+                                             Value="{Binding ElementName=N2, Path=Value, Mode=TwoWay}">
+                <controls:WPRNumericIntDecorator.TextBox>
+                    <TextBox Style="{StaticResource WPRBorderedTextBox}"/>
+                </controls:WPRNumericIntDecorator.TextBox>
+            </controls:WPRNumericIntDecorator>
+
+            <TextBlock Text="{Binding ElementName=IntDecorator, Path=Value, StringFormat=IntValue: {0}}" />
+
 
         </StackPanel>
         <StackPanel Width="200" Margin="10">
