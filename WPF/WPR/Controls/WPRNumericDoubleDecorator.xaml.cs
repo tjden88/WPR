@@ -2,6 +2,7 @@
 using System;
 using System.Globalization;
 using System.Windows;
+using System.Windows.Input;
 using WPR.Controls.Base;
 
 namespace WPR.Controls;
@@ -68,5 +69,26 @@ public class WPRNumericDoubleDecorator : NumericDecorator<double>
         errorText = expressionIsValid ? null : "Неверное выражение";
 
         return expressionIsValid ? result : 0d;
+    }
+
+    protected override bool DenyTextInput(string addedText, string checkedText)
+    {
+        //Десятичные
+        if (DecimalPlaces <= 0) return true;
+
+
+        if (addedText is "." or "," )
+        {
+            return checkedText.LastIndexOf(",", StringComparison.Ordinal) >= 0 ||
+                   checkedText.LastIndexOf(".", StringComparison.Ordinal) >= 0 || TextBox!.SelectionStart <= 0;
+        }
+
+        if (!char.IsDigit(addedText, 0)) return true;
+
+        // Проверим текущее десятичное после знака
+        var currdecimal = Math.Max(checkedText.LastIndexOf(",", StringComparison.Ordinal),
+            checkedText.LastIndexOf(".", StringComparison.Ordinal));
+
+        return currdecimal > -1 && TextBox!.SelectionStart - currdecimal > DecimalPlaces;
     }
 }

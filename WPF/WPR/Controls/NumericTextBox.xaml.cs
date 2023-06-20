@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Windows;
 using System.Windows.Controls;
@@ -447,6 +448,7 @@ public class NumericTextBox : Control, IDataErrorInfo
             e.Handled = false;
         }
     }
+
 
 
     private void TextBox_MouseWheel(object sender, MouseWheelEventArgs e)

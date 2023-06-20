@@ -1,6 +1,7 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -349,7 +350,9 @@ public abstract class NumericDecorator<T> : NumericDecorator where T : struct, I
 
     private void OnTextChanged(string NewValue)
     {
-        if (AllowTextExpressions || NewValue == "-")
+        const string allowedSymbols = "-.,";
+
+        if (AllowTextExpressions || allowedSymbols.Any(NewValue.EndsWith))
             return;
 
         CalculateNewValue(false);
@@ -424,7 +427,7 @@ public abstract class NumericDecorator<T> : NumericDecorator where T : struct, I
         }
     }
 
-    private void TextBox_PreviewTextInput(object sender, TextCompositionEventArgs e)
+    protected void TextBox_PreviewTextInput(object sender, TextCompositionEventArgs e)
     {
         if (AllowTextExpressions || e.Text.Length < 1) return;
 
@@ -446,7 +449,14 @@ public abstract class NumericDecorator<T> : NumericDecorator where T : struct, I
         {
             e.Handled = false;
         }
+
+        if (e.Handled)
+            e.Handled = DenyTextInput(e.Text, checkedText);
     }
+
+    /// <summary> Дополнительная проверка ввода (true = запретить ввод текущего символа) </summary>
+    protected virtual bool DenyTextInput([NotNull] string addedText, [NotNull] string checkedText) => true;
+
 
     private void TextBox_MouseWheel(object sender, MouseWheelEventArgs e)
     {
