@@ -17,5 +17,8 @@
         </Style.Resources>
     </Style>
 
+    <Style x:Key="WPRNumericIntBorderedDescriptionDecorator" TargetType="{x:Type local:WPRNumericIntDecorator}" BasedOn="{StaticResource WPRNumericIntBorderedDecorator}">
+        <Setter Property="Padding" Value="0,33,10,0"/>
+    </Style>
 
 </ResourceDictionary>

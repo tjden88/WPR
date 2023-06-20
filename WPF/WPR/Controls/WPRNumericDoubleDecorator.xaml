@@ -19,4 +19,8 @@
         </Style.Resources>
     </Style>
 
+    <Style x:Key="WPRNumericDoubleBorderedDescriptionDecorator" TargetType="{x:Type local:WPRNumericDoubleDecorator}" BasedOn="{StaticResource WPRNumericDoubleBorderedDecorator}">
+        <Setter Property="Padding" Value="0,33,10,0"/>
+    </Style>
+
 </ResourceDictionary>
