@@ -22,26 +22,26 @@ public class WPRNumericIntDecorator : NumericDecorator<int>
 
     protected override int ParseValue(string TextValue) => TextValue.ConvertToInt();
 
-    protected override int CoerseValue(int baseValue, out string ErrorText)
+    protected override int CoerseValue(int baseValue, out string errorText)
     {
-        ErrorText = null;
+        errorText = null;
 
         if (baseValue < MinValue)
-            ErrorText = $"Минимальное значение: {MinValue}";
+            errorText = $"Минимальное значение: {MinValue}";
 
         if (baseValue > MaxValue)
-            ErrorText = $"Максимальное значение: {MaxValue}";
+            errorText = $"Максимальное значение: {MaxValue}";
 
         return Math.Clamp(baseValue, MinValue, MaxValue);
     }
 
     protected override string SetText(int value) => value.ToString();
 
-    protected override int CalculateFromStringExpression(string Expression, out string ErrorText)
+    protected override int CalculateFromStringExpression(string Expression, out string errorText)
     {
         var expressionIsValid = Expression.CalculateStringExpression(out var result, 0);
 
-        ErrorText = expressionIsValid ? null : "Неверное выражение";
+        errorText = expressionIsValid ? null : "Неверное выражение";
 
         return expressionIsValid ? (int)result : 0;
     }

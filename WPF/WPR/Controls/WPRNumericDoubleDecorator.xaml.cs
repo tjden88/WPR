@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel;
 using System;
+using System.Globalization;
 using System.Windows;
 using WPR.Controls.Base;
 
@@ -13,7 +14,6 @@ public class WPRNumericDoubleDecorator : NumericDecorator<double>
     }
 
     
-
     public WPRNumericDoubleDecorator() : base(1d, double.MinValue, double.MaxValue)
     {
     }
@@ -40,33 +40,33 @@ public class WPRNumericDoubleDecorator : NumericDecorator<double>
 
     #endregion
 
-    protected override double IncrementValue()
-    {
-        throw new NotImplementedException();
-    }
+    protected override double IncrementValue() => Math.Min(MaxValue, Value + Increment);
 
-    protected override double DecrementValue()
-    {
-        throw new NotImplementedException();
-    }
+    protected override double DecrementValue() => Math.Max(MinValue, Value - Increment);
 
-    protected override double ParseValue(string TextValue)
-    {
-        throw new NotImplementedException();
-    }
+    protected override double ParseValue(string TextValue) => Math.Round(TextValue.ConvertToDouble(), DecimalPlaces);
 
     protected override double CoerseValue(double baseValue, out string errorText)
     {
-        throw new NotImplementedException();
+        errorText = null;
+
+        if (baseValue < MinValue)
+            errorText = $"Минимальное значение: {MinValue}";
+
+        if (baseValue > MaxValue)
+            errorText = $"Максимальное значение: {MaxValue}";
+
+        return Math.Round(Math.Clamp(baseValue, MinValue, MaxValue), DecimalPlaces);
     }
 
-    protected override string SetText(double value)
-    {
-        throw new NotImplementedException();
-    }
+    protected override string SetText(double value) => value.ToString(CultureInfo.InvariantCulture);
 
     protected override double CalculateFromStringExpression(string Expression, out string errorText)
     {
-        throw new NotImplementedException();
+        var expressionIsValid = Expression.CalculateStringExpression(out var result, DecimalPlaces);
+
+        errorText = expressionIsValid ? null : "Неверное выражение";
+
+        return expressionIsValid ? result : 0d;
     }
 }

@@ -59,25 +59,14 @@
                 <ComboBoxItem Content="Item 3"/>
                 <ComboBoxItem Content="Item 4"/>
             </ComboBox>
-            <controls:NumericTextBox Name="N1" Value="1200" helpers:TextHelper.Hint="Numeric Field" Margin="10"
-                                     AllowTextExpressions="True" />
-            <TextBlock Text="{Binding ElementName=N1, Path=Value, StringFormat=Value: {0}}" />
-            <controls:NumericTextBox Name="N2" helpers:TextHelper.Hint="Numeric Field Not Calc" Margin="10"
-                                     PlusMinusButtonsShowing="True"
-                                     MaxValue="100"
-                                     MinValue="-110"
-                                     Value="0"
-                                     DecimalPlaces="3"/>
-            <TextBlock Text="{Binding ElementName=N2, Path=Value, StringFormat=Value: {0}}" />
 
             <controls:WPRNumericIntDecorator Name="IntDecorator" 
                                              AllowTextExpressions="True"
                                              PlusMinusButtonsShowing="True"
-                                             Margin="5"
                                              MinValue="-500"
                                              MaxValue="500"
                                              Increment="2">
-                <TextBox Style="{StaticResource WPRTextBox}"/>
+                <TextBox/>
             </controls:WPRNumericIntDecorator>
 
             <TextBlock Text="{Binding ElementName=IntDecorator, Path=Value, StringFormat=IntValue: {0}}" />
@@ -85,12 +74,33 @@
             <controls:WPRNumericIntDecorator Style="{StaticResource WPRNumericIntBorderedDecorator}"
                                              AllowTextExpressions="True"
                                              PlusMinusButtonsShowing="True"
-                                             Margin="5"
                                              MinValue="-500"
                                              MaxValue="500"
                                              Increment="2">
                 <TextBox/>
             </controls:WPRNumericIntDecorator>
+
+            <controls:WPRNumericDoubleDecorator Name="DoubleDecorator" 
+                                                DecimalPlaces="3"
+                                                AllowTextExpressions="False"
+                                                PlusMinusButtonsShowing="True"
+                                                MinValue="-500"
+                                                MaxValue="500"
+                                                Increment="1.2">
+                <TextBox/>
+            </controls:WPRNumericDoubleDecorator>
+
+            <TextBlock Text="{Binding ElementName=DoubleDecorator, Path=Value, StringFormat=DoubleValue: {0}}" />
+
+
+            <controls:WPRNumericDoubleDecorator Style="{StaticResource WPRNumericDoubleBorderedDecorator}"
+                                             AllowTextExpressions="True"
+                                             PlusMinusButtonsShowing="True"
+                                             MinValue="-500"
+                                             MaxValue="500"
+                                             Increment="2">
+                <TextBox/>
+            </controls:WPRNumericDoubleDecorator>
 
 
         </StackPanel>
