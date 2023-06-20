@@ -17,6 +17,33 @@ namespace WPR.Controls.Base;
 [ContentProperty(nameof(TextBox))]
 public abstract class NumericDecorator : Control, IDataErrorInfo
 {
+    static NumericDecorator()
+    {
+        DefaultStyleKeyProperty.OverrideMetadata(typeof(NumericDecorator), new FrameworkPropertyMetadata(typeof(NumericDecorator)));
+    }
+
+    #region PlusMinusButtonsShowing : bool - Показывать кнопки плюс\минус
+
+    /// <summary>Показывать кнопки плюс\минус</summary>
+    public static readonly DependencyProperty PlusMinusButtonsShowingProperty =
+        DependencyProperty.Register(
+            nameof(PlusMinusButtonsShowing),
+            typeof(bool),
+            typeof(NumericDecorator),
+            new PropertyMetadata(false));
+
+    /// <summary>Показывать кнопки плюс\минус</summary>
+    [Category("NumericDecorator")]
+    [Description("Показывать кнопки плюс, минус")]
+    public bool PlusMinusButtonsShowing
+    {
+        get => (bool)GetValue(PlusMinusButtonsShowingProperty);
+        set => SetValue(PlusMinusButtonsShowingProperty, value);
+    }
+
+    #endregion
+
+
     /// <summary>Текстбокс декоратора</summary>
     public abstract TextBox TextBox { get; set; }
 
@@ -110,27 +137,6 @@ public abstract class NumericDecorator<T> : NumericDecorator where T : struct, I
     {
         get => (T)GetValue(ValueProperty);
         set => SetValue(ValueProperty, value);
-    }
-
-    #endregion
-
-    #region PlusMinusButtonsShowing : bool - Показывать кнопки плюс\минус
-
-    /// <summary>Показывать кнопки плюс\минус</summary>
-    public static readonly DependencyProperty PlusMinusButtonsShowingProperty =
-        DependencyProperty.Register(
-            nameof(PlusMinusButtonsShowing),
-            typeof(bool),
-            typeof(NumericDecorator<T>),
-            new PropertyMetadata(false));
-
-    /// <summary>Показывать кнопки плюс\минус</summary>
-    [Category("NumericDecorator")]
-    [Description("Показывать кнопки плюс, минус")]
-    public bool PlusMinusButtonsShowing
-    {
-        get => (bool)GetValue(PlusMinusButtonsShowingProperty);
-        set => SetValue(PlusMinusButtonsShowingProperty, value);
     }
 
     #endregion
@@ -264,7 +270,6 @@ public abstract class NumericDecorator<T> : NumericDecorator where T : struct, I
 
     #endregion
 
-
     #region Commands
 
     #region Command IncrementValueCommand - Увеличить значение
@@ -304,7 +309,6 @@ public abstract class NumericDecorator<T> : NumericDecorator where T : struct, I
     #endregion
 
     #endregion
-
 
     #region PropertyChangedHandlers
 
@@ -360,7 +364,6 @@ public abstract class NumericDecorator<T> : NumericDecorator where T : struct, I
 
     #endregion
 
-
     #region Abstract
 
     /// <summary> Перевести значение строки в тип значения контрола </summary>
@@ -387,7 +390,6 @@ public abstract class NumericDecorator<T> : NumericDecorator where T : struct, I
     protected abstract T DecrementValue();
 
     #endregion
-
 
     #region TextBox Events
 
@@ -464,7 +466,6 @@ public abstract class NumericDecorator<T> : NumericDecorator where T : struct, I
 
     #endregion
 
-
     #region Calculate
 
     private void CalculateNewValue(bool SetCursorToEnd = true)
@@ -483,6 +484,4 @@ public abstract class NumericDecorator<T> : NumericDecorator where T : struct, I
 
 
     #endregion
-
-
 }

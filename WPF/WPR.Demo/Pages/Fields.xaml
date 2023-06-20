@@ -82,6 +82,16 @@
 
             <TextBlock Text="{Binding ElementName=IntDecorator, Path=Value, StringFormat=IntValue: {0}}" />
 
+            <controls:WPRNumericIntDecorator Style="{StaticResource WPRNumericIntBorderedDecorator}"
+                                             AllowTextExpressions="True"
+                                             PlusMinusButtonsShowing="True"
+                                             Margin="5"
+                                             MinValue="-500"
+                                             MaxValue="500"
+                                             Increment="2">
+                <TextBox/>
+            </controls:WPRNumericIntDecorator>
+
 
         </StackPanel>
         <StackPanel Width="200" Margin="10">
