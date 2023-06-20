@@ -54,4 +54,9 @@ public class WPRNumericDoubleDecorator : NumericDecorator<double>
     {
         throw new NotImplementedException();
     }
+
+    protected override double CalculateFromStringExpression(string Expression)
+    {
+        throw new NotImplementedException();
+    }
 }

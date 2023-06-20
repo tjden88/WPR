@@ -30,4 +30,10 @@ public class WPRNumericIntDecorator : NumericDecorator<int>
     {
         return value.ToString();
     }
+
+    protected override int CalculateFromStringExpression(string Expression)
+    {
+        var expressionIsValid = Expression.CalculateStringExpression(out var result, 0);
+        return expressionIsValid ? (int) result : 0;
+    }
 }

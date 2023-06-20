@@ -71,11 +71,11 @@
             <TextBlock Text="{Binding ElementName=N2, Path=Value, StringFormat=Value: {0}}" />
 
             <controls:WPRNumericIntDecorator Name="IntDecorator" 
+                                             AllowTextExpressions="True"
                                              Margin="5"
-                                             MinValue="-50"
-                                             MaxValue="50"
-                                             Increment="2"
-                                             Value="{Binding ElementName=N2, Path=Value, Mode=TwoWay}">
+                                             MinValue="-500"
+                                             MaxValue="500"
+                                             Increment="2">
                 <TextBox Style="{StaticResource WPRBorderedTextBox}"/>
             </controls:WPRNumericIntDecorator>
 

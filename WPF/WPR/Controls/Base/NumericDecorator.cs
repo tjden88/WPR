@@ -301,6 +301,10 @@ public abstract class NumericDecorator<T> : Control, IDataErrorInfo where T : st
     /// <summary> Установить значение текстбокса при изменении значения </summary>
     protected abstract string SetText(T value);
 
+
+    /// <summary> Вычислить значение из строки </summary>
+    protected abstract T CalculateFromStringExpression(string Expression);
+
     #endregion
 
 
@@ -347,10 +351,10 @@ public abstract class NumericDecorator<T> : Control, IDataErrorInfo where T : st
             : TextBox.Text;
 
         //Запрет писать не цифры 
-        if (!char.IsDigit(e.Text, 0))
-        {
-            e.Handled = true;
-        }
+        if (!char.IsDigit(e.Text, 0)) e.Handled = true;
+
+        // Запрет пробелов
+        if(e.Text == " ") e.Handled = true;
 
         // Разрешение писать минус только в начале строки
         if (e.Text == "-" && checkedText.LastIndexOf("-", StringComparison.Ordinal) < 0
@@ -367,7 +371,8 @@ public abstract class NumericDecorator<T> : Control, IDataErrorInfo where T : st
 
     private void CalculateNewValue(bool SetCursorToEnd = true)
     {
-        Value = ParseValue(Text);
+
+        Value = AllowTextExpressions ? CalculateFromStringExpression(Text) : ParseValue(Text);
 
         if (!string.IsNullOrWhiteSpace(Text))
             Text = SetText(Value);
