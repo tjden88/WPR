@@ -15,7 +15,6 @@ namespace WPR.Controls.Base;
 /// <summary>
 /// Базовый шаблон декоратора текстбокса для отображения числовых значений
 /// </summary>
-/// <typeparam name="T"></typeparam>
 [ContentProperty(nameof(TextBox))]
 public abstract class NumericDecorator<T> : Control, IDataErrorInfo
 {
@@ -68,7 +67,7 @@ public abstract class NumericDecorator<T> : Control, IDataErrorInfo
             typeof(NumericDecorator<T>),
             new PropertyMetadata(default(T), (o, e) =>
             {
-                ((NumericDecorator<T>)o).SetStringValue((T)e.NewValue);
+                ((NumericDecorator<T>)o).OnValueUpdated((T)e.NewValue);
             }, (o, BaseValue) =>
             {
                 return ((NumericDecorator<T>)o).CoerseValue((T)BaseValue);
@@ -234,6 +233,9 @@ public abstract class NumericDecorator<T> : Control, IDataErrorInfo
 
     #endregion
 
+
+    #region PropertyChangedHandlers
+
     private void SetTextBox(TextBox oldValue, TextBox newValue)
     {
         if (oldValue != null)
@@ -262,13 +264,19 @@ public abstract class NumericDecorator<T> : Control, IDataErrorInfo
         }
     }
 
-    private void SetStringValue(T value)
+    private void OnValueUpdated(T value)
     {
         if (TextBox == null)
             throw new ArgumentNullException(nameof(TextBox));
 
         TextBox.Text = SetText(value);
-    }
+        ValueChanged?.Invoke(this, EventArgs.Empty);
+    } 
+
+    #endregion
+
+
+    #region Abstract
 
     /// <summary> Перевести значение строки в тип значения контрола </summary>
     protected abstract T ParseValue(string TextValue);
@@ -279,7 +287,9 @@ public abstract class NumericDecorator<T> : Control, IDataErrorInfo
 
 
     /// <summary> Установить значение текстбокса при изменении значения </summary>
-    protected abstract string SetText(T value);
+    protected abstract string SetText(T value); 
+
+    #endregion
 
 
     #region TextBox Events
@@ -297,14 +307,10 @@ public abstract class NumericDecorator<T> : Control, IDataErrorInfo
 
     #endregion
 
-    public string Error
-    {
-        get
-        {
-            Debug.WriteLine("error prop");
-            return "Error!";
-        }
-    }
+
+    #region Errors
+
+    public string Error => null;
 
     public string this[string columnName]
     {
@@ -328,5 +334,7 @@ public abstract class NumericDecorator<T> : Control, IDataErrorInfo
 
     public bool HasErrors => true;
 
-    public event EventHandler<DataErrorsChangedEventArgs> ErrorsChanged;
+    public event EventHandler<DataErrorsChangedEventArgs> ErrorsChanged; 
+
+    #endregion
 }
