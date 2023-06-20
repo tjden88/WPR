@@ -122,7 +122,7 @@ public abstract class NumericDecorator<T> : NumericDecorator where T : struct, I
             nameof(Value),
             typeof(T),
             typeof(NumericDecorator<T>),
-            new PropertyMetadata(default(T), (o, e) =>
+            new FrameworkPropertyMetadata(default(T), FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, (o, e) =>
             {
                 ((NumericDecorator<T>)o).OnValueUpdated((T)e.NewValue);
             }, (o, BaseValue) =>
