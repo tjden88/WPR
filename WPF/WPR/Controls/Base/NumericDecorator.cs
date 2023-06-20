@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
+using System.Globalization;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -16,7 +17,7 @@ namespace WPR.Controls.Base;
 /// Базовый шаблон декоратора текстбокса для отображения числовых значений
 /// </summary>
 [ContentProperty(nameof(TextBox))]
-public abstract class NumericDecorator<T> : Control, IDataErrorInfo
+public abstract class NumericDecorator<T> : Control, IDataErrorInfo where T : struct, IComparable<T>
 {
 
     /// <summary> Происходит при изменении значения </summary>
@@ -218,7 +219,7 @@ public abstract class NumericDecorator<T> : Control, IDataErrorInfo
             nameof(Text),
             typeof(string),
             typeof(NumericDecorator<T>),
-            new PropertyMetadata(default(string)));
+            new PropertyMetadata(default(string), (o, e) => ((NumericDecorator<T>)o).OnTextChanged((string)e.NewValue)));
 
     /// <summary>Текстовое значение</summary>
     [Category("NumericDecorator")]
@@ -242,6 +243,9 @@ public abstract class NumericDecorator<T> : Control, IDataErrorInfo
         {
             oldValue.LostFocus -= TextBox_LostFocus;
             oldValue.GotKeyboardFocus -= TextBoxOnGotKeyboardFocus;
+            oldValue.KeyUp -= TextBox_KeyUp;
+            oldValue.PreviewTextInput -= TextBox_PreviewTextInput;
+
             BindingOperations.ClearBinding(oldValue, TextBox.TextProperty);
         }
 
@@ -249,6 +253,8 @@ public abstract class NumericDecorator<T> : Control, IDataErrorInfo
         {
             newValue.LostFocus += TextBox_LostFocus;
             newValue.GotKeyboardFocus += TextBoxOnGotKeyboardFocus;
+            newValue.KeyUp += TextBox_KeyUp;
+            newValue.PreviewTextInput += TextBox_PreviewTextInput;
 
             var textBinding = new Binding()
             {
@@ -264,14 +270,20 @@ public abstract class NumericDecorator<T> : Control, IDataErrorInfo
         }
     }
 
+    private void OnTextChanged(string NewValue)
+    {
+        if (AllowTextExpressions || NewValue == "-")
+            return;
+
+        CalculateNewValue(false);
+    }
+
     private void OnValueUpdated(T value)
     {
-        if (TextBox == null)
-            throw new ArgumentNullException(nameof(TextBox));
-
-        TextBox.Text = SetText(value);
+        if (!Equals(value, default(T)))
+            Text = SetText(value);
         ValueChanged?.Invoke(this, EventArgs.Empty);
-    } 
+    }
 
     #endregion
 
@@ -287,7 +299,7 @@ public abstract class NumericDecorator<T> : Control, IDataErrorInfo
 
 
     /// <summary> Установить значение текстбокса при изменении значения </summary>
-    protected abstract string SetText(T value); 
+    protected abstract string SetText(T value);
 
     #endregion
 
@@ -296,14 +308,74 @@ public abstract class NumericDecorator<T> : Control, IDataErrorInfo
 
     private void TextBox_LostFocus(object sender, RoutedEventArgs e)
     {
-        Value = ParseValue(TextBox!.Text);
-        TextBox.Text = SetText(Value);
+        CalculateNewValue();
     }
 
     private void TextBoxOnGotKeyboardFocus(object Sender, KeyboardFocusChangedEventArgs E)
     {
-        if (SelectAllOnFocus) TextBox!.Dispatcher.BeginInvoke(new Action(() => TextBox.SelectAll()));
+        if (SelectAllOnFocus)
+        {
+            TextBox!.Dispatcher.BeginInvoke(new Action(() => TextBox.SelectAll()));
+        }
+        else
+        {
+            TextBox!.SelectionStart = TextBox.Text.Length;
+        }
     }
+
+    private void TextBox_KeyUp(object sender, KeyEventArgs e)
+    {
+        switch (e.Key)
+        {
+            case Key.Enter:
+                CalculateNewValue();
+                break;
+            case Key.Escape:
+                Text = SetText(Value);
+                TextBox!.SelectionStart = Text.Length;
+                break;
+        }
+    }
+
+    private void TextBox_PreviewTextInput(object sender, TextCompositionEventArgs e)
+    {
+        if (AllowTextExpressions || e.Text.Length < 1) return;
+
+        // берём не выделенный фрагмент текста, т.к выделенный будет удалён
+        var checkedText = TextBox!.SelectionLength > 0
+            ? Text.Replace(TextBox.SelectedText, "")
+            : TextBox.Text;
+
+        //Запрет писать не цифры 
+        if (!char.IsDigit(e.Text, 0))
+        {
+            e.Handled = true;
+        }
+
+        // Разрешение писать минус только в начале строки
+        if (e.Text == "-" && checkedText.LastIndexOf("-", StringComparison.Ordinal) < 0
+                          && TextBox.SelectionStart == 0
+                          && MinValue.CompareTo(default) < 0)
+        {
+            e.Handled = false;
+        }
+    }
+    #endregion
+
+
+    #region Calculate
+
+    private void CalculateNewValue(bool SetCursorToEnd = true)
+    {
+        Value = ParseValue(Text);
+
+        if (!string.IsNullOrWhiteSpace(Text))
+            Text = SetText(Value);
+
+        if (TextBox != null && SetCursorToEnd) TextBox.SelectionStart = Text?.Length ?? 0;
+    }
+
+
 
     #endregion
 
@@ -334,7 +406,7 @@ public abstract class NumericDecorator<T> : Control, IDataErrorInfo
 
     public bool HasErrors => true;
 
-    public event EventHandler<DataErrorsChangedEventArgs> ErrorsChanged; 
+    public event EventHandler<DataErrorsChangedEventArgs> ErrorsChanged;
 
     #endregion
 }

@@ -23,7 +23,7 @@ public class WPRNumericIntDecorator : NumericDecorator<int>
 
     protected override int CoerseValue(int baseValue)
     {
-        return Math.Min(MaxValue, Math.Max(MinValue, baseValue));
+        return Math.Clamp(baseValue, MinValue, MaxValue);
     }
 
     protected override string SetText(int value)
