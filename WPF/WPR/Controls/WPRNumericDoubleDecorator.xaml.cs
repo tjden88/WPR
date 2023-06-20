@@ -40,12 +40,12 @@ public class WPRNumericDoubleDecorator : NumericDecorator<double>
 
     #endregion
 
-    protected override void OnIncrementValueCommandExecuted()
+    protected override double IncrementValue()
     {
         throw new NotImplementedException();
     }
 
-    protected override void OnDecrementValueCommandExecuted()
+    protected override double DecrementValue()
     {
         throw new NotImplementedException();
     }

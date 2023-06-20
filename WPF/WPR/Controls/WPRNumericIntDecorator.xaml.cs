@@ -16,9 +16,9 @@ public class WPRNumericIntDecorator : NumericDecorator<int>
     {
     }
 
-    protected override void OnIncrementValueCommandExecuted() => Value = Math.Min(MaxValue, Value + Increment);
+    protected override int IncrementValue() => Math.Min(MaxValue, Value + Increment);
 
-    protected override void OnDecrementValueCommandExecuted() => Value = Math.Max(MinValue, Value - Increment);
+    protected override int DecrementValue() => Math.Max(MinValue, Value - Increment);
 
     protected override int ParseValue(string TextValue) => TextValue.ConvertToInt();
 
@@ -43,6 +43,6 @@ public class WPRNumericIntDecorator : NumericDecorator<int>
 
         ErrorText = expressionIsValid ? null : "Неверное выражение";
 
-        return expressionIsValid ? (int) result : 0;
+        return expressionIsValid ? (int)result : 0;
     }
 }

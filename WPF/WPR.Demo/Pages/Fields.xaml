@@ -72,11 +72,12 @@
 
             <controls:WPRNumericIntDecorator Name="IntDecorator" 
                                              AllowTextExpressions="True"
+                                             PlusMinusButtonsShowing="True"
                                              Margin="5"
                                              MinValue="-500"
                                              MaxValue="500"
                                              Increment="2">
-                <TextBox Style="{StaticResource WPRBorderedTextBox}"/>
+                <TextBox Style="{StaticResource WPRTextBox}"/>
             </controls:WPRNumericIntDecorator>
 
             <TextBlock Text="{Binding ElementName=IntDecorator, Path=Value, StringFormat=IntValue: {0}}" />

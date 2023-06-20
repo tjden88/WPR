@@ -222,6 +222,7 @@ public abstract class NumericDecorator<T> : Control, IDataErrorInfo where T : st
     /// <summary>Текстовое значение</summary>
     [Category("NumericDecorator")]
     [Description("Текстовое значение")]
+    [MaybeNull]
     public string Text
     {
         get => (string)GetValue(TextProperty);
@@ -239,12 +240,18 @@ public abstract class NumericDecorator<T> : Control, IDataErrorInfo where T : st
 
     /// <summary>Увеличить значение</summary>
     public Command IncrementValueCommand => new(OnIncrementValueCommandExecuted, CanIncrementValueCommandExecute, "Увеличить значение");
+     
 
     /// <summary>Проверка возможности выполнения - Увеличить значение</summary>
     private bool CanIncrementValueCommandExecute() => MaxValue.CompareTo(Value) > 0;
 
     /// <summary>Логика выполнения - Увеличить значение</summary>
-    protected abstract void OnIncrementValueCommandExecuted();
+    protected void OnIncrementValueCommandExecuted()
+    {
+        Value = IncrementValue();
+        if (TextBox != null) TextBox.SelectionStart = Text?.Length ?? 0;
+    }
+
 
     #endregion
 
@@ -257,7 +264,11 @@ public abstract class NumericDecorator<T> : Control, IDataErrorInfo where T : st
     private bool CanDecrementValueCommandExecute() => MinValue.CompareTo(Value) < 0;
 
     /// <summary>Логика выполнения - Уменьшить значение</summary>
-    protected abstract void OnDecrementValueCommandExecuted();
+    protected void OnDecrementValueCommandExecuted()
+    {
+        Value = DecrementValue();
+        if (TextBox != null) TextBox.SelectionStart = Text?.Length ?? 0;
+    }
 
     #endregion
 
@@ -336,6 +347,14 @@ public abstract class NumericDecorator<T> : Control, IDataErrorInfo where T : st
     /// <summary> Вычислить значение из строки </summary>
     protected abstract T CalculateFromStringExpression(string Expression, out string errorText);
 
+
+    /// <summary>Увеличить значение</summary>
+    protected abstract T IncrementValue();
+
+
+    /// <summary>Уменьшить значение</summary>
+    protected abstract T DecrementValue();
+
     #endregion
 
 
@@ -367,7 +386,7 @@ public abstract class NumericDecorator<T> : Control, IDataErrorInfo where T : st
                 break;
             case Key.Escape:
                 Text = SetText(Value);
-                TextBox!.SelectionStart = Text.Length;
+                TextBox!.SelectionStart = Text?.Length ?? 0;
                 break;
         }
     }
@@ -378,7 +397,7 @@ public abstract class NumericDecorator<T> : Control, IDataErrorInfo where T : st
 
         // берём не выделенный фрагмент текста, т.к выделенный будет удалён
         var checkedText = TextBox!.SelectionLength > 0
-            ? Text.Replace(TextBox.SelectedText, "")
+            ? Text?.Replace(TextBox.SelectedText, "") ?? string.Empty
             : TextBox.Text;
 
         //Запрет писать не цифры 
@@ -407,7 +426,7 @@ public abstract class NumericDecorator<T> : Control, IDataErrorInfo where T : st
         else
             OnDecrementValueCommandExecuted();
 
-        TextBox!.SelectionStart = Text.Length;
+        TextBox!.SelectionStart = Text?.Length ?? 0;
         e.Handled = true;
     }
 
