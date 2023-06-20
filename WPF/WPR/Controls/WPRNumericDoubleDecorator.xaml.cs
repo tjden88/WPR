@@ -40,6 +40,16 @@ public class WPRNumericDoubleDecorator : NumericDecorator<double>
 
     #endregion
 
+    protected override void OnIncrementValueCommandExecuted()
+    {
+        throw new NotImplementedException();
+    }
+
+    protected override void OnDecrementValueCommandExecuted()
+    {
+        throw new NotImplementedException();
+    }
+
     protected override double ParseValue(string TextValue)
     {
         throw new NotImplementedException();

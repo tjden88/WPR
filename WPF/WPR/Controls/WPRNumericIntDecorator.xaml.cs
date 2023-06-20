@@ -16,6 +16,16 @@ public class WPRNumericIntDecorator : NumericDecorator<int>
     {
     }
 
+    protected override void OnIncrementValueCommandExecuted()
+    {
+        Value += Increment;
+    }
+
+    protected override void OnDecrementValueCommandExecuted()
+    {
+        Value -= Increment;
+    }
+
     protected override int ParseValue(string TextValue)
     {
         return TextValue.ConvertToInt();

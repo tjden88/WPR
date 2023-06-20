@@ -10,6 +10,7 @@ using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Markup;
+using WPR.MVVM.Commands.Base;
 
 namespace WPR.Controls.Base;
 
@@ -234,6 +235,35 @@ public abstract class NumericDecorator<T> : Control, IDataErrorInfo where T : st
 
     #endregion
 
+    #region Commands
+
+    #region Command IncrementValueCommand - Увеличить значение
+
+    /// <summary>Увеличить значение</summary>
+    protected Command IncrementValueCommand => new Command(OnIncrementValueCommandExecuted, CanIncrementValueCommandExecute, "Увеличить значение");
+
+    /// <summary>Проверка возможности выполнения - Увеличить значение</summary>
+    private bool CanIncrementValueCommandExecute() => MaxValue.CompareTo(Value) > 0;
+
+    /// <summary>Логика выполнения - Увеличить значение</summary>
+    protected abstract void OnIncrementValueCommandExecuted();
+
+    #endregion
+
+    #region Command DecrementValueCommand - Уменьшить значение
+
+    /// <summary>Уменьшить значение</summary>
+    protected Command DecrementValueCommand => new Command(OnDecrementValueCommandExecuted, CanDecrementValueCommandExecute, "Уменьшить значение");
+
+    /// <summary>Проверка возможности выполнения - Уменьшить значение</summary>
+    private bool CanDecrementValueCommandExecute() => MinValue.CompareTo(Value) < 0;
+
+    /// <summary>Логика выполнения - Уменьшить значение</summary>
+    protected abstract void OnDecrementValueCommandExecuted();
+
+    #endregion
+
+    #endregion
 
     #region PropertyChangedHandlers
 
@@ -245,6 +275,7 @@ public abstract class NumericDecorator<T> : Control, IDataErrorInfo where T : st
             oldValue.GotKeyboardFocus -= TextBoxOnGotKeyboardFocus;
             oldValue.KeyUp -= TextBox_KeyUp;
             oldValue.PreviewTextInput -= TextBox_PreviewTextInput;
+            oldValue.MouseWheel -= TextBox_MouseWheel;
 
             BindingOperations.ClearBinding(oldValue, TextBox.TextProperty);
         }
@@ -255,6 +286,7 @@ public abstract class NumericDecorator<T> : Control, IDataErrorInfo where T : st
             newValue.GotKeyboardFocus += TextBoxOnGotKeyboardFocus;
             newValue.KeyUp += TextBox_KeyUp;
             newValue.PreviewTextInput += TextBox_PreviewTextInput;
+            newValue.MouseWheel += TextBox_MouseWheel;
 
             var textBinding = new Binding()
             {
@@ -364,6 +396,23 @@ public abstract class NumericDecorator<T> : Control, IDataErrorInfo where T : st
             e.Handled = false;
         }
     }
+
+    private void TextBox_MouseWheel(object sender, MouseWheelEventArgs e)
+    {
+
+        if (!Equals(Keyboard.FocusedElement, TextBox))
+            return;
+
+        if (e.Delta > 0)
+            OnIncrementValueCommandExecuted();
+        else
+            OnDecrementValueCommandExecuted();
+
+        TextBox!.SelectionStart = Text.Length;
+        e.Handled = true;
+    }
+
+
     #endregion
 
 
