@@ -13,8 +13,39 @@ namespace WPR.Controls.Base;
 /// <summary>
 /// Базовый шаблон декоратора текстбокса для отображения числовых значений
 /// </summary>
+
 [ContentProperty(nameof(TextBox))]
-public abstract class NumericDecorator<T> : Control, IDataErrorInfo where T : struct, IComparable<T>
+public abstract class NumericDecorator : Control, IDataErrorInfo
+{
+    /// <summary>Текстбокс декоратора</summary>
+    public abstract TextBox TextBox { get; set; }
+
+    /// <summary>Увеличить значение</summary>
+    public abstract Command IncrementValueCommand { get; }
+
+
+    /// <summary>Уменьшить значение</summary>
+    public abstract Command DecrementValueCommand { get; }
+
+    #region Errors
+
+    /// <summary> Текст ошибки </summary>
+    protected string ErrorText;
+
+    public string Error => null;
+
+    public string this[string propertyName] => ErrorText;
+
+    #endregion
+}
+
+
+
+/// <summary>
+/// Типизированный базовый шаблон декоратора текстбокса для отображения числовых значений
+/// </summary>
+
+public abstract class NumericDecorator<T> : NumericDecorator where T : struct, IComparable<T>
 {
 
     /// <summary> Происходит при изменении значения </summary>
@@ -47,7 +78,7 @@ public abstract class NumericDecorator<T> : Control, IDataErrorInfo where T : st
     [Description("Текстбокс декоратора")]
 
     [MaybeNull]
-    public TextBox TextBox
+    public override TextBox TextBox
     {
         get => (TextBox)GetValue(TextBoxProperty);
         set => SetValue(TextBoxProperty, value);
@@ -69,7 +100,7 @@ public abstract class NumericDecorator<T> : Control, IDataErrorInfo where T : st
             }, (o, BaseValue) =>
             {
                 var numericDecorator = (NumericDecorator<T>)o;
-                return numericDecorator.CoerseValue((T)BaseValue, out numericDecorator._ErrorText);
+                return numericDecorator.CoerseValue((T)BaseValue, out numericDecorator.ErrorText);
             }));
 
     /// <summary>Значение</summary>
@@ -239,7 +270,7 @@ public abstract class NumericDecorator<T> : Control, IDataErrorInfo where T : st
     #region Command IncrementValueCommand - Увеличить значение
 
     /// <summary>Увеличить значение</summary>
-    public Command IncrementValueCommand => new(OnIncrementValueCommandExecuted, CanIncrementValueCommandExecute, "Увеличить значение");
+    public override Command IncrementValueCommand => new(OnIncrementValueCommandExecuted, CanIncrementValueCommandExecute, "Увеличить значение");
      
 
     /// <summary>Проверка возможности выполнения - Увеличить значение</summary>
@@ -258,7 +289,7 @@ public abstract class NumericDecorator<T> : Control, IDataErrorInfo where T : st
     #region Command DecrementValueCommand - Уменьшить значение
 
     /// <summary>Уменьшить значение</summary>
-    public Command DecrementValueCommand => new(OnDecrementValueCommandExecuted, CanDecrementValueCommandExecute, "Уменьшить значение");
+    public override Command DecrementValueCommand => new(OnDecrementValueCommandExecuted, CanDecrementValueCommandExecute, "Уменьшить значение");
 
     /// <summary>Проверка возможности выполнения - Уменьшить значение</summary>
     private bool CanDecrementValueCommandExecute() => MinValue.CompareTo(Value) < 0;
@@ -441,7 +472,7 @@ public abstract class NumericDecorator<T> : Control, IDataErrorInfo where T : st
         string errorText = null;
         Value = AllowTextExpressions ? CalculateFromStringExpression(Text, out errorText) : ParseValue(Text);
 
-        _ErrorText ??= errorText;
+        ErrorText ??= errorText;
 
         if (!string.IsNullOrWhiteSpace(Text))
             Text = SetText(Value);
@@ -454,14 +485,4 @@ public abstract class NumericDecorator<T> : Control, IDataErrorInfo where T : st
     #endregion
 
 
-    #region Errors
-
-    /// <summary> Текст ошибки </summary>
-    private string _ErrorText;
-
-    public string Error => null;
-
-    public string this[string propertyName] => _ErrorText;
-
-    #endregion
 }
