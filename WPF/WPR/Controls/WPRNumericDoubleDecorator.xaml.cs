@@ -55,7 +55,7 @@ public class WPRNumericDoubleDecorator : NumericDecorator<double>
         throw new NotImplementedException();
     }
 
-    protected override double CoerseValue(double baseValue)
+    protected override double CoerseValue(double baseValue, out string errorText)
     {
         throw new NotImplementedException();
     }
@@ -65,7 +65,7 @@ public class WPRNumericDoubleDecorator : NumericDecorator<double>
         throw new NotImplementedException();
     }
 
-    protected override double CalculateFromStringExpression(string Expression)
+    protected override double CalculateFromStringExpression(string Expression, out string errorText)
     {
         throw new NotImplementedException();
     }

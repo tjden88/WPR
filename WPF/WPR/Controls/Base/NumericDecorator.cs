@@ -1,10 +1,6 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
-using System.Globalization;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -72,7 +68,8 @@ public abstract class NumericDecorator<T> : Control, IDataErrorInfo where T : st
                 ((NumericDecorator<T>)o).OnValueUpdated((T)e.NewValue);
             }, (o, BaseValue) =>
             {
-                return ((NumericDecorator<T>)o).CoerseValue((T)BaseValue);
+                var numericDecorator = (NumericDecorator<T>)o;
+                return numericDecorator.CoerseValue((T)BaseValue, out numericDecorator._ErrorText);
             }));
 
     /// <summary>Значение</summary>
@@ -235,12 +232,13 @@ public abstract class NumericDecorator<T> : Control, IDataErrorInfo where T : st
 
     #endregion
 
+
     #region Commands
 
     #region Command IncrementValueCommand - Увеличить значение
 
     /// <summary>Увеличить значение</summary>
-    protected Command IncrementValueCommand => new Command(OnIncrementValueCommandExecuted, CanIncrementValueCommandExecute, "Увеличить значение");
+    public Command IncrementValueCommand => new(OnIncrementValueCommandExecuted, CanIncrementValueCommandExecute, "Увеличить значение");
 
     /// <summary>Проверка возможности выполнения - Увеличить значение</summary>
     private bool CanIncrementValueCommandExecute() => MaxValue.CompareTo(Value) > 0;
@@ -253,7 +251,7 @@ public abstract class NumericDecorator<T> : Control, IDataErrorInfo where T : st
     #region Command DecrementValueCommand - Уменьшить значение
 
     /// <summary>Уменьшить значение</summary>
-    protected Command DecrementValueCommand => new Command(OnDecrementValueCommandExecuted, CanDecrementValueCommandExecute, "Уменьшить значение");
+    public Command DecrementValueCommand => new(OnDecrementValueCommandExecuted, CanDecrementValueCommandExecute, "Уменьшить значение");
 
     /// <summary>Проверка возможности выполнения - Уменьшить значение</summary>
     private bool CanDecrementValueCommandExecute() => MinValue.CompareTo(Value) < 0;
@@ -264,6 +262,7 @@ public abstract class NumericDecorator<T> : Control, IDataErrorInfo where T : st
     #endregion
 
     #endregion
+
 
     #region PropertyChangedHandlers
 
@@ -327,7 +326,7 @@ public abstract class NumericDecorator<T> : Control, IDataErrorInfo where T : st
 
 
     /// <summary> Корректировка значения при установке </summary>
-    protected abstract T CoerseValue(T baseValue);
+    protected abstract T CoerseValue(T baseValue, out string errorText);
 
 
     /// <summary> Установить значение текстбокса при изменении значения </summary>
@@ -335,7 +334,7 @@ public abstract class NumericDecorator<T> : Control, IDataErrorInfo where T : st
 
 
     /// <summary> Вычислить значение из строки </summary>
-    protected abstract T CalculateFromStringExpression(string Expression);
+    protected abstract T CalculateFromStringExpression(string Expression, out string errorText);
 
     #endregion
 
@@ -420,8 +419,10 @@ public abstract class NumericDecorator<T> : Control, IDataErrorInfo where T : st
 
     private void CalculateNewValue(bool SetCursorToEnd = true)
     {
+        string errorText = null;
+        Value = AllowTextExpressions ? CalculateFromStringExpression(Text, out errorText) : ParseValue(Text);
 
-        Value = AllowTextExpressions ? CalculateFromStringExpression(Text) : ParseValue(Text);
+        _ErrorText ??= errorText;
 
         if (!string.IsNullOrWhiteSpace(Text))
             Text = SetText(Value);
@@ -436,31 +437,12 @@ public abstract class NumericDecorator<T> : Control, IDataErrorInfo where T : st
 
     #region Errors
 
+    /// <summary> Текст ошибки </summary>
+    private string _ErrorText;
+
     public string Error => null;
 
-    public string this[string columnName]
-    {
-        get
-        {
-            Debug.WriteLine(columnName);
-
-            return $"Column: {columnName}";
-        }
-    }
-
-    private readonly List<string> _Errors = new();
-
-    public IEnumerable GetErrors(string propertyName)
-    {
-        if (!_Errors.Contains(propertyName))
-            _Errors.Add(propertyName);
-
-        return _Errors;
-    }
-
-    public bool HasErrors => true;
-
-    public event EventHandler<DataErrorsChangedEventArgs> ErrorsChanged;
+    public string this[string propertyName] => _ErrorText;
 
     #endregion
 }
