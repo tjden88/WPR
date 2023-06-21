@@ -2,7 +2,6 @@
 using System;
 using System.Globalization;
 using System.Windows;
-using System.Windows.Input;
 using WPR.Controls.Base;
 
 namespace WPR.Controls;
@@ -74,7 +73,7 @@ public class WPRNumericDoubleDecorator : NumericDecorator<double>
     protected override bool DenyTextInput(string addedText, string checkedText)
     {
         //Десятичные
-        if (DecimalPlaces <= 0) return true;
+        if (DecimalPlaces < 1) return true;
 
 
         if (addedText is "." or "," )

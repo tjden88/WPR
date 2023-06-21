@@ -10,6 +10,12 @@
 
     <Style TargetType="{x:Type local:WPRNumericIntDecorator}" BasedOn="{StaticResource {x:Type base:NumericDecorator}}"/>
 
+    <Style x:Key="WPRNumericIntDecorator" TargetType="{x:Type local:WPRNumericIntDecorator}" BasedOn="{StaticResource {x:Type base:NumericDecorator}}">
+        <Style.Resources>
+            <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource WPRTextBox}"/>
+        </Style.Resources>
+    </Style>
+
     <Style x:Key="WPRNumericIntBorderedDecorator" TargetType="{x:Type local:WPRNumericIntDecorator}" BasedOn="{StaticResource {x:Type base:NumericDecorator}}">
         <Setter Property="Padding" Value="0,9,10,0"/>
         <Style.Resources>

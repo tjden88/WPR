@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Windows;
@@ -18,10 +19,6 @@ namespace WPR.Controls.Base;
 [ContentProperty(nameof(TextBox))]
 public abstract class NumericDecorator : Control, IDataErrorInfo
 {
-    static NumericDecorator()
-    {
-        DefaultStyleKeyProperty.OverrideMetadata(typeof(NumericDecorator), new FrameworkPropertyMetadata(typeof(NumericDecorator)));
-    }
 
     #region PlusMinusButtonsShowing : bool - Показывать кнопки плюс\минус
 
@@ -150,7 +147,7 @@ public abstract class NumericDecorator<T> : NumericDecorator where T : struct, I
             nameof(Increment),
             typeof(T),
             typeof(NumericDecorator<T>),
-            new PropertyMetadata(default));
+            new PropertyMetadata(default(T)));
 
     /// <summary>Шаг изменения значения при использовании кнопок управления или колеса мыши</summary>
     [Category("NumericDecorator")]
@@ -171,7 +168,7 @@ public abstract class NumericDecorator<T> : NumericDecorator where T : struct, I
             nameof(MinValue),
             typeof(T),
             typeof(NumericDecorator<T>),
-            new PropertyMetadata(default));
+            new PropertyMetadata(default(T)));
 
     /// <summary>Минимальное значение</summary>
     [Category("NumericDecorator")]
@@ -192,7 +189,7 @@ public abstract class NumericDecorator<T> : NumericDecorator where T : struct, I
             nameof(MaxValue),
             typeof(T),
             typeof(NumericDecorator<T>),
-            new PropertyMetadata(default));
+            new PropertyMetadata(default(T)));
 
     /// <summary>Максимальное значение</summary>
     [Category("NumericDecorator")]
@@ -360,7 +357,7 @@ public abstract class NumericDecorator<T> : NumericDecorator where T : struct, I
 
     private void OnValueUpdated(T value)
     {
-        if (!Equals(value, default(T)))
+        if (!Equals(value, default(T)) || !string.IsNullOrWhiteSpace(Text))
             Text = SetText(value);
         ValueChanged?.Invoke(this, EventArgs.Empty);
     }

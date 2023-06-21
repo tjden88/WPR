@@ -10,7 +10,7 @@ using WPR.MVVM.Commands.Base;
 namespace WPR.Controls;
 
 /// <summary> Контрол с текстбоксом для ввода числовых данных </summary>
-[Obsolete(message:"Используйте NumericDecorator")]
+[Obsolete(message:"Используйте NumericDecorator", true )]
 public class NumericTextBox : Control, IDataErrorInfo
 {
     /// <summary> Происходит при изменении значения </summary>
