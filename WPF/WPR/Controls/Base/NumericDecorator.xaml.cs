@@ -1,6 +1,5 @@
 ﻿using System;
 using System.ComponentModel;
-using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Windows;
@@ -76,11 +75,32 @@ public abstract class NumericDecorator<T> : NumericDecorator where T : struct, I
     /// <summary> Происходит при изменении значения </summary>
     public event EventHandler ValueChanged;
 
-    protected NumericDecorator(T defaultIncrement, T defaultMinValue, T defaultMaxValue)
+
+    private static object GetMinValue()
     {
-        Increment = defaultIncrement;
-        MinValue = defaultMinValue;
-        MaxValue = defaultMaxValue;
+        if (typeof(T) == typeof(int))
+            return int.MinValue;
+        if (typeof(T) == typeof(double))
+            return double.MinValue;
+        throw new ArgumentException("Тип не поддерживается");
+    }
+
+    private static object GetMaxValue()
+    {
+        if (typeof(T) == typeof(int))
+            return int.MaxValue;
+        if (typeof(T) == typeof(double))
+            return double.MaxValue;
+        throw new ArgumentException("Тип не поддерживается");
+    }
+
+    private static object GetIncrement()
+    {
+        if (typeof(T) == typeof(int))
+            return 1;
+        if (typeof(T) == typeof(double))
+            return 1d;
+        throw new ArgumentException("Тип не поддерживается");
     }
 
     #region Props
@@ -147,7 +167,7 @@ public abstract class NumericDecorator<T> : NumericDecorator where T : struct, I
             nameof(Increment),
             typeof(T),
             typeof(NumericDecorator<T>),
-            new PropertyMetadata(default(T)));
+            new PropertyMetadata(GetIncrement()));
 
     /// <summary>Шаг изменения значения при использовании кнопок управления или колеса мыши</summary>
     [Category("NumericDecorator")]
@@ -168,7 +188,7 @@ public abstract class NumericDecorator<T> : NumericDecorator where T : struct, I
             nameof(MinValue),
             typeof(T),
             typeof(NumericDecorator<T>),
-            new PropertyMetadata(default(T)));
+            new PropertyMetadata(GetMinValue()));
 
     /// <summary>Минимальное значение</summary>
     [Category("NumericDecorator")]
@@ -189,7 +209,7 @@ public abstract class NumericDecorator<T> : NumericDecorator where T : struct, I
             nameof(MaxValue),
             typeof(T),
             typeof(NumericDecorator<T>),
-            new PropertyMetadata(default(T)));
+            new PropertyMetadata(GetMaxValue()));
 
     /// <summary>Максимальное значение</summary>
     [Category("NumericDecorator")]

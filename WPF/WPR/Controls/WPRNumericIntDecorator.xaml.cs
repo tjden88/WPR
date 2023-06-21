@@ -12,10 +12,6 @@ public class WPRNumericIntDecorator : NumericDecorator<int>
         DefaultStyleKeyProperty.OverrideMetadata(typeof(WPRNumericIntDecorator), new FrameworkPropertyMetadata(typeof(WPRNumericIntDecorator)));
     }
 
-    public WPRNumericIntDecorator() : base(1, int.MinValue, int.MaxValue)
-    {
-    }
-
     protected override int IncrementValue() => Math.Min(MaxValue, Value + Increment);
 
     protected override int DecrementValue() => Math.Max(MinValue, Value - Increment);

@@ -13,10 +13,6 @@ public class WPRNumericDoubleDecorator : NumericDecorator<double>
         DefaultStyleKeyProperty.OverrideMetadata(typeof(WPRNumericDoubleDecorator), new FrameworkPropertyMetadata(typeof(WPRNumericDoubleDecorator)));
     }
 
-    
-    public WPRNumericDoubleDecorator() : base(1d, double.MinValue, double.MaxValue)
-    {
-    }
 
     #region DecimalPlaces : int - Количество десятичных знаков
 
