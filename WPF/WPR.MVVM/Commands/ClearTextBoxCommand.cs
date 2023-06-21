@@ -16,7 +16,7 @@ public class ClearTextBoxCommand: BaseCommand
     protected override void ExecuteCommand(object p)
     {
         if (p is not TextBox tbox) return;
-        tbox.Text = null!;
+        tbox.Text = string.Empty;
         if(ClearFocus) Keyboard.ClearFocus();
     }
 
