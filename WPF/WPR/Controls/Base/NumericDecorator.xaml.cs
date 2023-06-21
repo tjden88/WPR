@@ -380,6 +380,7 @@ public abstract class NumericDecorator<T> : NumericDecorator where T : struct, I
         if (!Equals(value, default(T)) || !string.IsNullOrWhiteSpace(Text))
             Text = SetText(value);
         ValueChanged?.Invoke(this, EventArgs.Empty);
+        CommandManager.InvalidateRequerySuggested();
     }
 
     #endregion
