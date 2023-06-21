@@ -1,6 +1,7 @@
 ﻿using System.Data;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
+using System.Threading;
 using System.Windows;
 using System.Windows.Media;
 using System.Windows.Threading;
@@ -127,5 +128,23 @@ public static class SystemExtensions
     public static void DoDispatherAction(this object obj, [NotNull] Action Action, DispatcherPriority Priority = DispatcherPriority.Normal)
     {
         Application.Current.Dispatcher.BeginInvoke(Priority, Action);
+    }
+
+    /// <summary>
+    /// Обновить интерфейс принудительно
+    /// </summary>
+    public static void UpdateUi()
+    {
+        DispatcherFrame frame = new();
+        // DispatcherPriority set to Input, the highest priority
+        Dispatcher.CurrentDispatcher.Invoke(DispatcherPriority.Input, new DispatcherOperationCallback(delegate (object parameter)
+        {
+            frame.Continue = false;
+            Thread.Sleep(20); // Stop all processes to make sure the UI update is perform
+            return null;
+        }), null);
+        Dispatcher.PushFrame(frame);
+        // DispatcherPriority set to Input, the highest priority
+        Application.Current.Dispatcher.Invoke(DispatcherPriority.Input, new Action(delegate { }));
     }
 }
