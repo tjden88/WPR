@@ -7,29 +7,11 @@ namespace WPR.MVVM.Commands.Base;
 /// Типизированная базовая реализация команды
 /// </summary>
 /// <typeparam name="T">Тип параметра</typeparam>
-public class Command<T> : BaseCommand
+public class Command<T> : BaseCommand<T>
 {
     private readonly Action<T> _Execute;
     private readonly Predicate<T> _CanExecute;
 
-    #region CanExecuteWithNullParameter
-
-    private bool _CanExecuteWithNullParameter;
-
-    /// <summary>Разрешить выполнение команды с параметром = null</summary>
-    public bool CanExecuteWithNullParameter
-    {
-        get => _CanExecuteWithNullParameter;
-        set
-        {
-            if (_CanExecuteWithNullParameter == value) return;
-            _CanExecuteWithNullParameter = value;
-            CommandManager.InvalidateRequerySuggested();
-            OnPropertyChanged();
-        }
-    } 
-
-    #endregion
 
     public Command(Action<T> Execute, Predicate<T> CanExecute = null, string CommandText = null)
     {
@@ -55,5 +37,5 @@ public class Command<T> : BaseCommand
     }
 
     /// <summary>Выполнить команду</summary>
-    protected override void ExecuteCommand(object P) => _Execute((T)P);
+    public override void ExecuteCommand(T p) => _Execute(p);
 }
