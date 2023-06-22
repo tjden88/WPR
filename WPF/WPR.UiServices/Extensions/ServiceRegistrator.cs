@@ -18,5 +18,6 @@ public static class ServiceRegistrator
             .AddSingleton<IUserDialog, UserDialog>()
             .AddSingleton<IAppNavigation, AppNavigationService>()
             .AddSingleton<IColorThemeManager, WPRColorThemeManager>()
+            .AddSingleton<IMessageBus, MessageBusService>()
     ;
 }
