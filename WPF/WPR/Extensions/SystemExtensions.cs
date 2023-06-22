@@ -131,6 +131,18 @@ public static class SystemExtensions
     }
 
     /// <summary>
+    /// Потокобезопасное асинхронное действие через Dispatcher текущего приложения
+    /// Поддерживает ожидание
+    /// </summary>
+    /// <param name="obj">Объект действия</param>
+    /// <param name="Action">Делегат действия</param>
+    /// <param name="Priority">Приоритет действия</param>
+    public static DispatcherOperation DoDispatherActionAsync(this object obj, [NotNull] Action Action, DispatcherPriority Priority = DispatcherPriority.Normal)
+    {
+        return Application.Current.Dispatcher.BeginInvoke(Priority, Action);
+    }
+
+    /// <summary>
     /// Обновить интерфейс принудительно
     /// </summary>
     public static void UpdateUi()
