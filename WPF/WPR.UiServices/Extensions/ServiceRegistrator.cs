@@ -19,5 +19,6 @@ public static class ServiceRegistrator
             .AddSingleton<IAppNavigation, AppNavigationService>()
             .AddSingleton<IColorThemeManager, WPRColorThemeManager>()
             .AddSingleton<IMessageBus, MessageBusService>()
+            .AddTransient(typeof(Lazy<>), typeof(LazilyResolved<>))
     ;
 }
