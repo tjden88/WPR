@@ -1,5 +1,4 @@
 ﻿using System.Windows;
-using WPR.Domain.Interfaces;
 
 namespace WPR.UiServices.Interfaces;
 
@@ -10,7 +9,7 @@ public interface IAppNavigation
     Window? ActiveWindow { get; }
 
     /// <summary> Получить представление из коллекции сервисов </summary>
-    public T GetView<T>() where T : IView;
+    public T GetView<T>() where T : notnull;
 
     /// <summary> Получить окно необходимого типа </summary>
     T GetWindow<T>() where T : Window;

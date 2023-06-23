@@ -1,6 +1,5 @@
 ﻿using System.Windows;
 using Microsoft.Extensions.DependencyInjection;
-using WPR.Domain.Interfaces;
 using WPR.UiServices.Interfaces;
 
 namespace WPR.UiServices.UI;
@@ -20,7 +19,7 @@ public class AppNavigationService : IAppNavigation
     public Window? ActiveWindow => Application.Current.Windows.Cast<Window>().FirstOrDefault(w => w.IsActive);
 
 
-    public T GetView<T>() where T : IView => _Services.GetRequiredService<T>();
+    public T GetView<T>() where T : notnull => _Services.GetRequiredService<T>();
 
 
     public T GetWindow<T>() where T : Window => _Services.GetRequiredService<T>();
