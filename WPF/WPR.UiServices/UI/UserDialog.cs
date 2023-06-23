@@ -20,8 +20,13 @@ public class UserDialog : IUserDialog
         _AppNavigation = AppNavigation;
     }
 
-    public async Task InformationAsync(string message, string? Title = null) =>
-        await DoDispatcheredAction(WPRDialogHelper.InformationAsync(Active, message, Title));
+    public async Task InformationAsync(string message, string? Title = null)
+    {
+       await  Application.Current.Dispatcher.BeginInvoke(() =>
+        {
+            _ = WPRDialogHelper.InformationAsync(Active, message, Title);
+        });
+    }
 
 
     public async Task<bool> QuestionAsync(string message, string? Title = null) =>
@@ -47,7 +52,12 @@ public class UserDialog : IUserDialog
 
 
     public async Task ErrorMessageAsync(string message, string? Title = "Ошибка")
-        => await DoDispatcheredAction(WPRDialogHelper.ErrorAsync(Active, message, Title));
+    {
+        await Application.Current.Dispatcher.BeginInvoke(() =>
+        {
+            _ = WPRDialogHelper.ErrorAsync(Active, message, Title);
+        });
+    }
 
 
     public async Task<bool> CustomDialogAsync(IWPRDialog Dialog)
