@@ -53,7 +53,7 @@ public static class StoryboardExtensions
 
 
     /// <summary> Запустить анимацию для выбранного объекта</summary>
-    public static void Begin(this Storyboard a, FrameworkElement Target, DispatcherPriority Priority = DispatcherPriority.Normal)
+    public static void Start(this Storyboard a, FrameworkElement Target, DispatcherPriority Priority = DispatcherPriority.Normal)
     {
         Application.Current.Dispatcher.Invoke(Priority, () =>
         {
