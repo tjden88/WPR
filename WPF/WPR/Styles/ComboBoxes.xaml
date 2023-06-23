@@ -231,7 +231,7 @@
                              Background="{DynamicResource SecondaryBackgroundColorBrush}"
                         
                         x:Name="dropDownBorder" 
-                        Effect="{DynamicResource PopupSmallShadow}"
+                        Effect="{StaticResource PopupSmallShadow}"
                              IsHitTestVisible="False" />
                     <Grid>
                         <Grid.RowDefinitions>
@@ -500,7 +500,7 @@
                         <Border  MinWidth="{Binding ActualWidth, ElementName=templateRoot}"
                              Background="{DynamicResource SecondaryBackgroundColorBrush}"
                              x:Name="dropDownBorder" 
-                             Effect="{DynamicResource PopupSmallShadow}"
+                             Effect="{StaticResource PopupSmallShadow}"
                              IsHitTestVisible="False" />
 
                         <ScrollViewer x:Name="DropDownScrollViewer">

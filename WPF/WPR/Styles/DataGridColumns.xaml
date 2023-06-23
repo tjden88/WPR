@@ -86,7 +86,7 @@
                         MaxHeight="{TemplateBinding MaxDropDownHeight}"
                         x:Name="dropDownBorder" 
                         BorderBrush="{TemplateBinding Background}"
-                        Effect="{DynamicResource PopupSmallShadow}">
+                        Effect="{StaticResource PopupSmallShadow}">
                     <Border BorderThickness="1" CornerRadius="3"  Margin="0,10,0,0" BorderBrush="{DynamicResource AnimationEnterColorBrush}">
                         <StackPanel Orientation="Vertical">
                             <ScrollViewer x:Name="DropDownScrollViewer" Background="{DynamicResource BackgroundColorBrush}">

@@ -79,7 +79,7 @@
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type MenuBase}">
                     <Border Background="{TemplateBinding Background}"
-                                Effect="{DynamicResource PopupSmallShadow}"
+                                Effect="{StaticResource PopupSmallShadow}"
                                 Margin="10"
                                 CornerRadius="2">
                         <Border Background="Transparent">
@@ -193,7 +193,7 @@
                                Placement="Bottom">
                             <Border x:Name="SubMenuBorder" Margin="10"
                                     Background="{DynamicResource SecondaryBackgroundColorBrush}"
-                                    Effect="{DynamicResource PopupSmallShadow}"
+                                    Effect="{StaticResource PopupSmallShadow}"
                                     CornerRadius="2">
                                 <ScrollViewer x:Name="SubMenuScrollViewer" VerticalScrollBarVisibility="Hidden">
                                     <ItemsPresenter x:Name="ItemsPresenter"

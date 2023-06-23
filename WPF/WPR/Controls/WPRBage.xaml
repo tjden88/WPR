@@ -25,7 +25,7 @@
                                 CornerRadius="12"
                                 MinHeight="23" MinWidth="23"
                                 Visibility="{TemplateBinding BageVisible, Converter={StaticResource Bool2VisibilityConverter}}"
-                                Effect="{DynamicResource ButtonShadow}">
+                                Effect="{StaticResource ButtonShadow}">
                             <ContentPresenter Content="{TemplateBinding BageContent}"
                                               Margin="5,2"
                                               HorizontalAlignment="Center"

@@ -8,7 +8,7 @@
 
     <!--Шаблон кнопки-->
     <ControlTemplate TargetType="{x:Type ButtonBase}" x:Key="WPRButtonTemplate">
-        <Grid >
+        <Grid>
             <Border x:Name="ShadowBorder"
                     CornerRadius="{Binding Path=(helpers:ButtonHelper.BorderRadius), RelativeSource={RelativeSource TemplatedParent}}"
                     BorderThickness="{TemplateBinding BorderThickness }" 
@@ -118,7 +118,7 @@
     <Style x:Key="PrimaryWPRButton" TargetType="{x:Type ButtonBase}" BasedOn="{StaticResource WPRFlatButton}">
         <Setter Property="Background" Value="{DynamicResource PrimaryColorBrush}"/>
         <Setter Property="Foreground" Value="{DynamicResource PrimaryContrastColorBrush}" />
-        <Setter Property="helpers:ButtonHelper.ButtonShadow" Value="{DynamicResource ButtonShadow}"/>
+        <Setter Property="helpers:ButtonHelper.ButtonShadow" Value="{StaticResource ButtonShadow}"/>
     </Style>
 
     <Style x:Key="AccentWPRButton" TargetType="{x:Type ButtonBase}" BasedOn="{StaticResource PrimaryWPRButton }">
@@ -163,7 +163,7 @@
 
                     <Grid>
                         <Border Background="{TemplateBinding Background}"
-                                Effect="{DynamicResource SmallShadow}"
+                                Effect="{StaticResource SmallShadow}"
                                 BorderBrush="{TemplateBinding BorderBrush}"
                                 BorderThickness="{TemplateBinding BorderThickness}"
                                 CornerRadius="{Binding Path=(helpers:ButtonHelper.BorderRadius), RelativeSource={RelativeSource Mode=TemplatedParent}}">

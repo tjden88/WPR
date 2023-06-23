@@ -148,7 +148,7 @@
                                         BorderThickness="1" 
                                         Background="{DynamicResource SecondaryBackgroundColorBrush}"
                                         CornerRadius="3" Margin="10"
-                                        Effect="{DynamicResource PopupSmallShadow}">
+                                        Effect="{StaticResource PopupSmallShadow}">
                                     <Border Background="{StaticResource TransparentBrush}" Margin="2,6">
                                         <ToolBarOverflowPanel x:Name="PART_ToolBarOverflowPanel" 
                                                               KeyboardNavigation.DirectionalNavigation="Cycle" 
