@@ -5,12 +5,15 @@ using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Data;
 using System.Windows.Input;
+using System.Windows.Markup;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Threading;
+using WPR.Animations;
 
 namespace WPR.Controls;
 
+[ContentProperty(nameof(Content))]
 public class WPRPopup : Popup
 {
     private readonly Storyboard _ShowAnimation, _HideAnimation;
@@ -123,38 +126,30 @@ public class WPRPopup : Popup
         };
 
         // Подготовка анимации
-        CircleEase easein = new() { EasingMode = EasingMode.EaseIn };
-        ElasticEase easeout = new() { EasingMode = EasingMode.EaseOut, Oscillations = 1, Springiness = 8 };
 
-        _ShowAnimation = new Storyboard();
-        _ShowAnimation.Children.Add(new DoubleAnimation(0, 1, TimeSpan.FromSeconds(0.4)) { EasingFunction = easeout });
-        _ShowAnimation.Children.Add(new DoubleAnimation(0, 1, TimeSpan.FromSeconds(0.4)) { EasingFunction = easeout });
-
-        Storyboard.SetTargetProperty(_ShowAnimation.Children[0], new PropertyPath("(RenderTransform).(ScaleTransform.ScaleX)"));
-        Storyboard.SetTargetProperty(_ShowAnimation.Children[1], new PropertyPath("(RenderTransform).(ScaleTransform.ScaleY)"));
-
-        _HideAnimation = new Storyboard();
-        _HideAnimation.Children.Add(new DoubleAnimation(1, 0, TimeSpan.FromSeconds(0.2)) { EasingFunction = easein });
-        _HideAnimation.Children.Add(new DoubleAnimation(1, 0, TimeSpan.FromSeconds(0.2)) { EasingFunction = easein });
-
-        Storyboard.SetTargetProperty(_HideAnimation.Children[0], new PropertyPath("(RenderTransform).(ScaleTransform.ScaleX)"));
-        Storyboard.SetTargetProperty(_HideAnimation.Children[1], new PropertyPath("(RenderTransform).(ScaleTransform.ScaleY)"));
-
-        _HideAnimation.Completed += delegate
-        {
-            if (_StaysOpenIsChangeg)
+        _ShowAnimation = new Storyboard()
+            .AddDoubleAnimation("(RenderTransform).(ScaleTransform.ScaleX)", MsDuration:200, EasingFunction: EasingFunctions.SineEaseOut)
+            .AddDoubleAnimation("(RenderTransform).(ScaleTransform.ScaleY)", MsDuration:200, EasingFunction: EasingFunctions.SineEaseOut)
+            .OnComplete(() =>
             {
-                StaysOpen = false;
-            }
-            IsOpen = false;
-            PopupClosed?.Invoke();
-        };
+                PopupShowed?.Invoke();
+            })
+            ;
 
-        _ShowAnimation.Completed += delegate
-        {
-            PopupShowed?.Invoke();
-        };
-
+        _HideAnimation = new Storyboard()
+            .AddDoubleAnimation("(RenderTransform).(ScaleTransform.ScaleX)", 1, 0, MsDuration: 200, EasingFunction: EasingFunctions.CircleEaseIn)
+            .AddDoubleAnimation("(RenderTransform).(ScaleTransform.ScaleY)", 1, 0, MsDuration: 200, EasingFunction: EasingFunctions.CircleEaseIn)
+            .OnComplete(() =>
+            {
+                if (_StaysOpenIsChangeg)
+                {
+                    StaysOpen = false;
+                }
+                IsOpen = false;
+                PopupClosed?.Invoke();
+            })
+            ;
+        
         Opened += WPRPopup_Opened;
 
     }
