@@ -1,6 +1,7 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:controls="clr-namespace:WPR.Controls" >
+                    xmlns:controls="clr-namespace:WPR.Controls"
+                    xmlns:extensions="clr-namespace:WPR.Extensions">
 
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="Base.xaml"/>
@@ -67,8 +68,8 @@
         <Setter Property="BorderBrush" Value="{DynamicResource PrimaryColorBrush}"/>
         <Setter Property="HorizontalContentAlignment" Value="Center"/>
         <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="extensions:TabControlCaching.IsCached" Value="True"/>
         <Setter Property="ItemContainerStyle" Value="{StaticResource WPRTabItem}"/>
-        <Setter Property="Foreground" Value="{DynamicResource TextColorBrush}"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type TabControl}">
