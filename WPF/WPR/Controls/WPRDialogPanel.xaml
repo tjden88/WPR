@@ -15,12 +15,16 @@
                           Name="RootGrid"
                           HorizontalAlignment="{TemplateBinding HorizontalAlignment}"
                           VerticalAlignment="{TemplateBinding VerticalAlignment}">
-                        <ContentPresenter x:Name="content" Content="{TemplateBinding Content}"/>
+                        <ContentPresenter x:Name="content" Content="{TemplateBinding Content}">
+                            <ContentPresenter.CacheMode>
+                                <BitmapCache RenderAtScale="1" EnableClearType="False"></BitmapCache>
+                            </ContentPresenter.CacheMode>
+                        </ContentPresenter>
                         <Rectangle x:Name="PART_Rect"
                                    WindowChrome.IsHitTestVisibleInChrome="True"
                                    Visibility="Visible">
                             <Rectangle.Fill>
-                                <SolidColorBrush x:Name="RectBrush" Color="Transparent"/>
+                                <SolidColorBrush x:Name="RectBrush" Color="#7F000000" Opacity="0"/>
                             </Rectangle.Fill>
                         </Rectangle>
                         <controls:WPRPopup RenderTransformOrigin="0.5,0.5"
@@ -108,25 +112,26 @@
                     <ControlTemplate.Triggers>
                         <Trigger Property="CurrentStatus" Value="NotShowing">
                             <Setter Property="Visibility" TargetName="PART_Rect" Value="Hidden"/>
+                            <Setter Property="CacheMode" TargetName="content" Value="{x:Null}"/>
                         </Trigger>
                             <Trigger Property="CurrentStatus" Value="Showing">
                             <Setter Property="KeyboardNavigation.TabNavigation" Value="None"/>
                             <Trigger.EnterActions>
                                 <BeginStoryboard>
                                     <Storyboard>
-                                        <ColorAnimation Duration="0:0:0.2" 
-                                                        To="#7F000000"
+                                        <DoubleAnimation Duration="0:0:0.2" 
+                                                        To="1"
                                                         Storyboard.TargetName="RectBrush"
-                                                        Storyboard.TargetProperty="Color"/>
+                                                        Storyboard.TargetProperty="Opacity"/>
                                     </Storyboard>
                                 </BeginStoryboard>
                             </Trigger.EnterActions>
                             <Trigger.ExitActions>
                                 <BeginStoryboard>
                                     <Storyboard>
-                                        <ColorAnimation Duration="0:0:0.3" 
-                                                        Storyboard.TargetName="RectBrush"
-                                                        Storyboard.TargetProperty="Color"/>
+                                        <DoubleAnimation Duration="0:0:0.3" 
+                                                         Storyboard.TargetName="RectBrush"
+                                                         Storyboard.TargetProperty="Opacity"/>
                                     </Storyboard>
                                 </BeginStoryboard>
                             </Trigger.ExitActions>
