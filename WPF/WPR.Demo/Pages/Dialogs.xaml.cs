@@ -1,10 +1,14 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using WPR.Dialogs;
 using WPR.Domain.Interfaces;
+using WPR.Domain.Models.Dialogs;
+using WPR.Domain.Models.Dialogs.Extensions;
+using WPR.Domain.Models.Themes;
 using WPR.MVVM.Commands.Base;
 using WPR.UiServices.UI;
 
@@ -144,49 +148,56 @@ namespace WPR.Demo.Pages
 
         private async void Dlg_OnClick(object Sender, RoutedEventArgs E)
         {
-            //var dlg = new UserDialog(new AppNavigationService());
+            var dlg = new UserDialog(new AppNavigationService(null!));
 
-            //var msg = "Сообщение";
-            //var title = "Заголовок";
+            var msg = "Сообщение";
+            var title = "Заголовок";
 
-            //await dlg.InformationAsync(msg, title);
+            await dlg.InformationAsync(msg, title);
 
-            ////Debug.WriteLine(await dlg.QuestionAsync(msg, title));
-            ////Debug.WriteLine(await dlg.QuestionAsync(msg, IUserDialog.DialogTypes.YesNo, title));
-            ////Debug.WriteLine(await dlg.QuestionAsync(msg, IUserDialog.DialogTypes.OkCancel, title));
-            ////Debug.WriteLine(await dlg.QuestionAsync(msg, IUserDialog.DialogTypes.YesNoCancel, title));
+            Debug.WriteLine(await dlg.QuestionAsync(msg, title));
+            Debug.WriteLine(await dlg.QuestionAsync(msg, IUserDialog.DialogTypes.YesNo, title));
+            Debug.WriteLine(await dlg.QuestionAsync(msg, IUserDialog.DialogTypes.OkCancel, title));
+            Debug.WriteLine(await dlg.QuestionAsync(msg, IUserDialog.DialogTypes.YesNoCancel, title));
 
-            ////Debug.WriteLine(await dlg.CustomQuestionAsync(msg, title, "true"));
-            ////Debug.WriteLine(await dlg.CustomQuestionAsync(msg, title, "true", "false"));
-            ////Debug.WriteLine(await dlg.CustomQuestionAsync(msg, title, "true", null, "null"));
-            ////Debug.WriteLine(await dlg.CustomQuestionAsync(msg, title, "true", "false", "null"));
+            Debug.WriteLine(await dlg.CustomQuestionAsync(msg, title, "true"));
+            Debug.WriteLine(await dlg.CustomQuestionAsync(msg, title, "true", "false"));
+            Debug.WriteLine(await dlg.CustomQuestionAsync(msg, title, "true", null, "null"));
+            Debug.WriteLine(await dlg.CustomQuestionAsync(msg, title, "true", "false", "null"));
 
-            ////await dlg.ErrorMessageAsync(msg, title);
+            await dlg.ErrorMessageAsync(msg, title);
 
-            ////Debug.WriteLine(await dlg.CustomDialogAsync(new WprDialog()));
+            Debug.WriteLine(await dlg.CustomDialogAsync(new WprDialog()));
 
-            ////Debug.WriteLine(await dlg.InputTextAsync(title));
-            ////Debug.WriteLine(await dlg.InputTextAsync(title, "123", msg));
+            Debug.WriteLine(await dlg.InputTextAsync(title));
+            Debug.WriteLine(await dlg.InputTextAsync(title, "123", msg));
 
-            ////var val = new List<(Predicate<string> rule, string errorMessage)>()
-            ////{
-            ////    new(s => !string.IsNullOrEmpty(s), "Обязательно"),
-            ////    new(s => s?.Length > 2, "Больше 2"),
-            ////};
+            var val = new List<(Predicate<string> rule, string errorMessage)>()
+            {
+                new(s => !string.IsNullOrEmpty(s), "Обязательно"),
+                new(s => s?.Length > 2, "Больше 2"),
+            };
 
-            ////var coolFilter = new InputDialogFilter("Тест офигенного фильтра")
-            ////        .AddRequired()
-            ////        .AddDefaultValue("123")
-            ////        .AddMessage("Это сообщение")
-            ////        .AddMinLen(3)
-            ////        .AddMaxLen(10)
-            ////        .AddMustNotContains(new []{ "123", "456" })
-            ////        .AddRule(s => s?.StartsWith("789") ?? true, "Должно начинаться с 789")
-            ////    ;
-            ////await dlg.InputValidatedTextAsync(coolFilter);
-            //await dlg.ShowNotificationAsync("Задержка 5 сек", 5000);
+            var coolFilter = new InputDialogFilter("Тест офигенного фильтра")
+                    .AddRequired()
+                    .AddDefaultValue("123")
+                    .AddMessage("Это сообщение")
+                    .AddMinLen(3)
+                    .AddMaxLen(10)
+                    .AddMustNotContains(new[] { "123", "456" })
+                    .AddRule(s => s?.StartsWith("789") ?? true, "Должно начинаться с 789")
+                ;
+            await dlg.InputValidatedTextAsync(coolFilter);
+            await dlg.ShowNotificationAsync("Задержка 5 сек", 5000);
 
-            //Debug.WriteLine(await dlg.ShowQuestionNotificationAsync(msg, title));
+            Debug.WriteLine(await dlg.ShowQuestionNotificationAsync(msg, title));
+        }
+
+        private void ButtonBase3_OnClick(object Sender, RoutedEventArgs E)
+        {
+            WPRDialogHelper.Bubble(this, "Danger Dialog", "OK", null, 1000, StyleBrushes.DangerColorBrush);
+            WPRDialogHelper.Bubble(this, "Accent Dialog", "OK", null, 1000, StyleBrushes.AccentColorBrush);
+            WPRDialogHelper.Bubble(this, "Success Dialog", "OK", null, 1000, StyleBrushes.SuccessColorBrush);
         }
     }
 }

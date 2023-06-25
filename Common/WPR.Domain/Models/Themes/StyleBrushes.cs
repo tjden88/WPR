@@ -23,4 +23,5 @@ public enum StyleBrushes
     WindowTitleBackgroundContrastColorBrush,
     PrimaryContrastColorBrush,
     AccentContrastColorBrush,
+    SuccessColorBrush
 }

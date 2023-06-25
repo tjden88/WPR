@@ -3,7 +3,7 @@
                     xmlns:controls="clr-namespace:WPR.Controls">
 
     <ResourceDictionary.MergedDictionaries>
-        <ResourceDictionary Source="../Styles/Base.xaml"/>
+        <ResourceDictionary Source="../Styles/Buttons.xaml"/>
     </ResourceDictionary.MergedDictionaries>
 
     <Style TargetType="{x:Type controls:WPRDialogPanel}" BasedOn="{StaticResource BaseControl}">
@@ -57,21 +57,24 @@
                                 HorizontalAlignment="Center"
                                 VerticalAlignment="Bottom"
                                 BorderBrush="{TemplateBinding BorderBrush}"
+                                Background="{DynamicResource BackgroundContrastColorBrush}"
                                 BorderThickness="{TemplateBinding BorderThickness}">
                             <Border.RenderTransform>
                                 <ScaleTransform ScaleY="0"/>
                             </Border.RenderTransform>
                             <Grid>
-                                <Border CornerRadius="3" Background="{DynamicResource BackgroundContrastColorBrush}" Effect="{StaticResource ButtonShadow}"/>
+                                <Border CornerRadius="3" Background="{Binding Background, ElementName=PART_Bubble}"
+                                        Effect="{StaticResource ButtonShadow}"/>
                                 <StackPanel Orientation="Horizontal"
                                             HorizontalAlignment="Center"
                                             VerticalAlignment="Center">
                                     <TextBlock Text="{TemplateBinding BubbleText}"                                        
-                                               Foreground="{DynamicResource BackgroundColorBrush}"
+                                               Foreground="{Binding Background, ElementName=PART_Bubble, Converter={StaticResource BrushContrastConverter}}"
                                                Margin="15"/>
                                     <Button  Margin="7"
                                              x:Name="BubbleButton"
-                                             Background="{x:Null}"
+                                             Style="{StaticResource WPRFlatButton}"
+                                             Background="{DynamicResource BackgroundContrastColorBrush}"
                                              Foreground="{DynamicResource AccentColorBrush}"
                                              Visibility="Collapsed"/>
                                 </StackPanel>

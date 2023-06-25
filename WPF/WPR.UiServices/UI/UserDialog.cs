@@ -4,6 +4,7 @@ using System.Windows.Threading;
 using WPR.Dialogs;
 using WPR.Domain.Interfaces;
 using WPR.Domain.Models.Dialogs;
+using WPR.Domain.Models.Themes;
 using WPR.MVVM.Validation;
 using WPR.UiServices.Interfaces;
 
@@ -74,18 +75,18 @@ public class UserDialog : IUserDialog
             DialogFilter.DefaultValue,
             DialogFilter.ValidationRules.Select(f => new PredicateValidationRule<string>(f.Rule, f.ErrorMessage))));
 
-    public Task ShowNotificationAsync(string message, int delay = 2000)
+    public Task ShowNotificationAsync(string message, int delay = 2000, StyleBrushes Backgound = StyleBrushes.BackgroundContrastColorBrush)
     {
-        Application.Current.Dispatcher.Invoke(() => WPRDialogHelper.Bubble(Active, message, delay));
+        Application.Current.Dispatcher.Invoke(() => WPRDialogHelper.Bubble(Active, message, delay, Backgound));
         return Task.CompletedTask;
     }
 
-    public async Task<bool> ShowQuestionNotificationAsync(string message, string AcceptCaption, int delay = 3000)
+    public async Task<bool> ShowQuestionNotificationAsync(string message, string AcceptCaption, int delay = 3000, StyleBrushes Backgound = StyleBrushes.BackgroundContrastColorBrush)
     {
         return await GetDispatcheredResult(() =>
         {
             var result = new TaskCompletionSource<bool>();
-            WPRDialogHelper.Bubble(Active, message, AcceptCaption, b => result.TrySetResult(b), delay);
+            WPRDialogHelper.Bubble(Active, message, AcceptCaption, b => result.TrySetResult(b), delay, Backgound);
             return result.Task;
         });
     }

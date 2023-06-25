@@ -34,6 +34,7 @@
     <SolidColorBrush x:Key="BackgroundColorBrush" Color="{Binding BackgroundColor, Source={StaticResource StyleColors}}" p:Freeze="True"/>
     <SolidColorBrush x:Key="SecondaryBackgroundColorBrush" Color="{Binding SecondaryBackgroundColor, Source={StaticResource StyleColors}}" p:Freeze="True"/>
     <SolidColorBrush x:Key="DangerColorBrush" Color="{Binding DangerColor, Source={StaticResource StyleColors}}" p:Freeze="True"/>
+    <SolidColorBrush x:Key="SuccessColorBrush" Color="{Binding SuccessColor, Source={StaticResource StyleColors}}" p:Freeze="True"/>
     <SolidColorBrush x:Key="WindowTitleBackgroundColorBrush" Color="{Binding WindowTitleBackgroundColor, Source={StaticResource StyleColors}}" p:Freeze="True"/>
     <SolidColorBrush x:Key="BackgroundContrastColorBrush" Color="{Binding BackgroundColor, Source={StaticResource StyleColors}, Converter={StaticResource ColorContrastConverter}}" p:Freeze="True"/>
     <SolidColorBrush x:Key="WindowTitleBackgroundContrastColorBrush" Color="{Binding WindowTitleBackgroundColor, Source={StaticResource StyleColors}, Converter={StaticResource ColorContrastConverter}}" p:Freeze="True"/>

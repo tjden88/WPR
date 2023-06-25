@@ -20,6 +20,7 @@ public class StyleColors : DependencyObject
     internal static readonly Color _SecondaryColor = (Color)ColorConverter.ConvertFromString("#FF8B8B8B")!;
     internal static readonly Color _AccentColor = (Color)ColorConverter.ConvertFromString("#FF5722")!;
     internal static readonly Color _DangerColor = (Color)ColorConverter.ConvertFromString("#CA0B00")!;
+    internal static readonly Color _SuccessColor = Colors.Green;
 
 
     // Цвета по умолчанию для светлой темы
@@ -189,6 +190,28 @@ public class StyleColors : DependencyObject
     {
         get => (Color)GetValue(DangerColorProperty);
         set => SetValue(DangerColorProperty, value);
+    }
+
+    #endregion
+
+
+    #region SuccessColor : Color - Цвет успеха
+
+    /// <summary>Цвет успеха</summary>
+    public static readonly DependencyProperty SuccessColorProperty =
+        DependencyProperty.Register(
+            nameof(SuccessColor),
+            typeof(Color),
+            typeof(StyleColors),
+            new PropertyMetadata(_SuccessColor));
+
+    /// <summary>Цвет успеха</summary>
+    [Category("StyleColors")]
+    [Description("Цвет успеха")]
+    public Color SuccessColor
+    {
+        get => (Color) GetValue(SuccessColorProperty);
+        set => SetValue(SuccessColorProperty, value);
     }
 
     #endregion

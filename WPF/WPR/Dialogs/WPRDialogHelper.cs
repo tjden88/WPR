@@ -6,6 +6,7 @@ using System.Windows;
 using WPR.Controls;
 using WPR.Domain.Interfaces;
 using WPR.Domain.Models.Dialogs;
+using WPR.Domain.Models.Themes;
 using WPR.MVVM.Validation;
 
 namespace WPR.Dialogs;
@@ -298,24 +299,25 @@ public static class WPRDialogHelper
     #region Bubble
 
     /// <summary>Показать всплывающее сообщение</summary>
-    public static void Bubble(DependencyObject sender, string Text, int Duration = 3000)
+    public static void Bubble(DependencyObject sender, string Text, int Duration = 3000, StyleBrushes Background = StyleBrushes.BackgroundContrastColorBrush)
     {
         var p = FindDialogPanel(sender);
         if(p == null)
             Show(sender, Text, null, null, false, false);
         else
-            p.ShowBubble(Text, Duration);
+            p.ShowBubble(Text, Duration, BubbleBackground: Background);
     }
 
     /// <summary>Показать всплывающее сообщение с кнопкой</summary>
-    public static void Bubble(DependencyObject sender, string Text, string ButtonText, Action<bool> Callback, int Duration = 4000)
+    public static void Bubble(DependencyObject sender, string Text, string ButtonText, Action<bool> Callback, int Duration = 4000, StyleBrushes Background = StyleBrushes.BackgroundContrastColorBrush)
     {
         var p = FindDialogPanel(sender);
         if (p == null)
             Show(sender, Text, null, res => Callback?.Invoke(res == true), false, false);
         else
-            p.ShowBubble(Text, Duration, ButtonText, Callback);
+            p.ShowBubble(Text, Duration, ButtonText, Callback, Background);
     }
+
     #endregion
 
     #region InputBoxes

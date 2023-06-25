@@ -39,6 +39,7 @@
                 <Button Content="Show Modal Dialog" HorizontalAlignment="Center" VerticalAlignment="Center" Command="{Binding ShowModalDialogCommand}"/>
 
                 <Button Content="Show Bubble" HorizontalAlignment="Center" VerticalAlignment="Center" Click="ButtonBase_OnClick"/>
+                <Button Content="Show Colored Bubbles" HorizontalAlignment="Center" VerticalAlignment="Center" Click="ButtonBase3_OnClick"/>
                 <Button Content="Show Bubble Button" HorizontalAlignment="Center" VerticalAlignment="Center" Click="Button2_OnClick"/>
 
                 <Button Content="Show InputTextBox" HorizontalAlignment="Center" VerticalAlignment="Center" Click="Button3_OnClick"/>

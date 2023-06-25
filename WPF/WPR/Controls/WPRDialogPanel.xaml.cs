@@ -6,7 +6,9 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
+using WPR.ColorTheme;
 using WPR.Domain.Interfaces;
+using WPR.Domain.Models.Themes;
 
 namespace WPR.Controls;
 
@@ -167,9 +169,17 @@ internal class WPRDialogPanel : HeaderedContentControl
     /// <param name="Duration">Длительность</param>
     /// <param name="ButtonCommandText">Текст кнопки команды</param>
     /// <param name="Callback">True, если кнопка была нажата</param>
-    public void ShowBubble(string Text, int Duration = 2000, string ButtonCommandText = "", Action<bool> Callback = null)
+    /// <param name="BubbleBackground">Заливка сообщения</param>
+    public void ShowBubble(string Text, int Duration = 2000, string ButtonCommandText = "", Action<bool> Callback = null, StyleBrushes BubbleBackground = StyleBrushes.BackgroundContrastColorBrush)
     {
-        _StackBubblesQueue.Enqueue(new StackBubbles { Text = Text, Duration = Duration, Buttontext = ButtonCommandText, Action = Callback });
+        _StackBubblesQueue.Enqueue(new StackBubbles
+        {
+            Text = Text, 
+            Duration = Duration,
+            Buttontext = ButtonCommandText,
+            Action = Callback,
+            Background = BubbleBackground
+        });
         if (_StackBubblesQueue.Count == 1) ShowBubbleinStack();
     }
 
@@ -187,21 +197,21 @@ internal class WPRDialogPanel : HeaderedContentControl
         if (!_StackBubblesQueue.TryPeek(out var stack)) return;
         BubbleText = stack.Text;
 
+        if (GetTemplateChild("PART_Bubble") is not Border clip) return;
+        clip.Background = StyleHelper.GetBrushFromResource(stack.Background);
+
+
         if (GetTemplateChild("BubbleButton") is Button commandbutton)
         {
+
             if (!string.IsNullOrEmpty(stack.Buttontext))
             {
                 commandbutton.Content = stack.Buttontext;
                 commandbutton.Visibility = Visibility.Visible;
             }
             else
-            {
                 commandbutton.Visibility = Visibility.Collapsed;
-            }
         }
-
-
-        if (GetTemplateChild("PART_Bubble") is not Border clip) return;
 
         ScaleTransform trans = new(1, 0);
         clip.RenderTransform = trans;
@@ -241,6 +251,7 @@ internal class WPRDialogPanel : HeaderedContentControl
         public int Duration;
         public string Buttontext;
         public Action<bool> Action;
+        public StyleBrushes Background;
     }
     #endregion
 

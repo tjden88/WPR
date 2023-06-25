@@ -1,4 +1,5 @@
 ﻿using WPR.Domain.Models.Dialogs;
+using WPR.Domain.Models.Themes;
 
 namespace WPR.Domain.Interfaces;
 
@@ -56,7 +57,7 @@ public interface IUserDialog
 
 
     /// <summary> Показать всплывающее уведомление </summary>
-    Task ShowNotificationAsync(string message, int delay = 2000);
+    Task ShowNotificationAsync(string message, int delay = 2000, StyleBrushes Backgound = StyleBrushes.BackgroundContrastColorBrush);
 
 
     /// <summary>
@@ -65,8 +66,9 @@ public interface IUserDialog
     /// <param name="message">Сообщение пользователю</param>
     /// <param name="AcceptCaption">Подпись кнопки подтверждения</param>
     /// <param name="delay">Время показа уведомления</param>
+    /// <param name="Backgound">Фон сообщения</param>
     /// <returns></returns>
-    Task<bool> ShowQuestionNotificationAsync(string message, string AcceptCaption, int delay = 3000);
+    Task<bool> ShowQuestionNotificationAsync(string message, string AcceptCaption, int delay = 3000, StyleBrushes Backgound = StyleBrushes.BackgroundContrastColorBrush);
 
 
     /// <summary>

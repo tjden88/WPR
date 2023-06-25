@@ -139,7 +139,7 @@ namespace WPR.Extensions
             {
                 if (args.OldValue != null && (bool)args.OldValue)
                 {
-                    throw new NotImplementedException("Cannot change TabControlCaching.IsCached from True to False. Turning tab caching off is not implemented");
+                    throw new NotSupportedException("Cannot change TabControlCaching.IsCached from True to False. Turning tab caching off is not implemented");
                 }
 
                 return;
