@@ -1,0 +1,86 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:controls="clr-namespace:WPR.Controls"
+                    xmlns:helpers="clr-namespace:WPR.Helpers"
+                    x:Class="WPR.Styles.RadioButtons">
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="Base.xaml"/>
+        <ResourceDictionary Source="Toggles.xaml"/>
+    </ResourceDictionary.MergedDictionaries>
+
+    <ControlTemplate x:Key="WPRRadioButtonControlTemplate" TargetType="{x:Type RadioButton}">
+        <Grid x:Name="templateRoot" Background="Transparent">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Border Margin="{TemplateBinding Padding}"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center">
+
+                <controls:Ripple x:Name="Ripple"
+                                 Background="{Binding RelativeSource={RelativeSource TemplatedParent},Path=(helpers:RippleHelper.FeedbackBrush)}" 
+                                 RippleInCenter="True"
+                                 StartRippleOnClick="False">
+                    <Border x:Name="radioButtonBorder" Height="16" Width ="16"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            Background="{TemplateBinding Background}" 
+                            CornerRadius="16">
+
+                        <Ellipse x:Name="optionMark" Fill="{DynamicResource AccentColorBrush}" Width="0"
+                                 Height="{Binding RelativeSource={RelativeSource Self}, Path=Width}" 
+                                 Margin="2" />
+                    </Border>
+                </controls:Ripple>
+            </Border>
+
+            <ContentPresenter Grid.Column="1" Margin="5,0,0,0" Focusable="False" 
+                              HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                              RecognizesAccessKey="True" 
+                              VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+        </Grid>
+        <ControlTemplate.Triggers>
+            <Trigger Property="IsChecked" Value="True">
+                <Setter Property="BorderBrush" TargetName="radioButtonBorder" Value="{DynamicResource AccentColorBrush}"/>
+                <Trigger.EnterActions>
+                    <BeginStoryboard>
+                        <Storyboard>
+                            <DoubleAnimation To="8" Storyboard.TargetName="optionMark" Storyboard.TargetProperty="Width" Duration="0:0:0.3"/>
+                        </Storyboard>
+                    </BeginStoryboard>
+                </Trigger.EnterActions>
+                <Trigger.ExitActions >
+                    <BeginStoryboard>
+                        <Storyboard>
+                            <DoubleAnimation Storyboard.TargetName="optionMark" Storyboard.TargetProperty="Width" Duration="0:0:0.3"/>
+                        </Storyboard>
+                    </BeginStoryboard>
+                </Trigger.ExitActions>
+            </Trigger>
+            <Trigger Property="IsChecked" Value="{x:Null}">
+                <Setter Property="Width" TargetName="optionMark" Value="6"/>
+                <Setter Property="Ellipse.Fill" TargetName="optionMark" Value="{DynamicResource LightPrimaryColorBrush}"/>
+            </Trigger>
+            <Trigger Property="IsEnabled" Value="false">
+                <Setter Property="Opacity" Value="0.5"/>
+            </Trigger>
+        </ControlTemplate.Triggers>
+    </ControlTemplate>
+
+    <!--RadioButton-->
+    <Style x:Key="WPRRadioButton" TargetType="{x:Type RadioButton}" BasedOn="{StaticResource BaseControl}">
+        <EventSetter  Event="Checked" Handler="WPRRadioButton_MouseDown"/>
+        <Setter Property="BorderThickness" Value="2"/>
+        <Setter Property="Padding" Value="0,2"></Setter>
+        <Setter Property="BorderBrush" Value="{DynamicResource PrimaryColorBrush}"/>
+        <Setter Property="helpers:RippleHelper.FeedbackBrush" Value="{DynamicResource PrimaryColorBrush}"/>
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+        <Setter Property="Template" Value="{StaticResource WPRRadioButtonControlTemplate}"/>
+    </Style>
+
+    <Style x:Key="WPRRadioButtonButtonStyle" TargetType="{x:Type RadioButton}"  BasedOn="{StaticResource WPRToggleButton}">
+        <Setter Property="BorderBrush" Value="Transparent" />
+    </Style>
+</ResourceDictionary>

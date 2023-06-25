@@ -1,0 +1,7 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="MessageDialog.xaml"/>
+        <ResourceDictionary Source="InputDialog.xaml"/>
+        <ResourceDictionary Source="CustomButtonsDialog.xaml"/>
+    </ResourceDictionary.MergedDictionaries>
+</ResourceDictionary>

@@ -1,0 +1,15 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="Ripple.xaml"/>
+        <ResourceDictionary Source="WPRBage.xaml"/>
+        <ResourceDictionary Source="WPRTitledCard.xaml"/>
+        <ResourceDictionary Source="WPRCard.xaml"/>
+        <ResourceDictionary Source="WPRDialogPanel.xaml"/>
+        <ResourceDictionary Source="WPRIcon.xaml"/>
+        <ResourceDictionary Source="WPRIconText.xaml"/>
+        <ResourceDictionary Source="Base/NumericDecorator.xaml"/>
+        <ResourceDictionary Source="WPRNumericDoubleDecorator.xaml"/>
+        <ResourceDictionary Source="WPRNumericIntDecorator.xaml"/>
+        <ResourceDictionary Source="WPRPopupMenu.xaml"/>
+</ResourceDictionary.MergedDictionaries>
+</ResourceDictionary>

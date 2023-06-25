@@ -1,0 +1,86 @@
+﻿<Page x:Class="WPR.Demo.Pages.Menus"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:helpers="clr-namespace:WPR.Helpers;assembly=WPR"
+      xmlns:controls="clr-namespace:WPR.Controls;assembly=WPR"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="Меню, тулбары, слайдеры">
+
+    <Grid>
+        <StackPanel>
+            <Menu>
+                <MenuItem Header="Menu">
+                    <MenuItem Header="Create">
+                        <MenuItem.Icon>
+                            <controls:WPRIcon Source="Create"/>
+                        </MenuItem.Icon>
+                        <MenuItem Header="Create" IsCheckable="True" IsChecked="True"/>
+                        <MenuItem Header="Create" IsCheckable="True" IsChecked="True"/>
+                        <MenuItem Header="Create" IsCheckable="True" IsChecked="True"/>
+                        <MenuItem Header="Create" IsCheckable="True" IsChecked="False"/>
+                        <MenuItem Header="Create" IsCheckable="True" IsChecked="True"/>
+                        <MenuItem Header="Create" IsCheckable="True" IsChecked="False"/>
+                        <MenuItem Header="Create" IsCheckable="True" IsChecked="True"/>
+                        <MenuItem Header="Create" IsCheckable="True" IsChecked="False"/>
+                        <MenuItem Header="Create" IsCheckable="True" IsChecked="False"/>
+                        <MenuItem Header="Create" IsCheckable="True" IsChecked="True"/>
+                        <Separator/>
+                        <MenuItem Header="Close" InputGestureText="Ctrl+E"/>
+                    </MenuItem>
+                    <Separator/>
+                    <MenuItem Header="Close"/>
+                </MenuItem>
+                <MenuItem Header="Edit">
+                    <MenuItem Header="Create"/>
+                    <Separator/>
+                    <MenuItem Header="Close"/>
+                </MenuItem>
+            </Menu>
+            <ToolBarTray Margin="0,10">
+                <ToolBar Header="Head">
+                    <Button Content="Test"/>
+                    <Button Command="Cut">
+                        <controls:WPRIcon Source="ContentCut"/>
+                    </Button>
+                    <Separator/>
+                    <CheckBox>
+                        <controls:WPRIcon Source="Check"/>
+                    </CheckBox>
+                    <CheckBox>
+                        <controls:WPRIcon Source="Check"/>
+                    </CheckBox>
+                    <Separator/>
+                    <RadioButton Content="1"/>
+                    <RadioButton Content="2"/>
+                    <Separator/>
+                    <TextBlock Text="Combo" VerticalAlignment="Center" Margin="5"/>
+
+                    <ComboBox Width="120" helpers:TextHelper.Hint="Hint">
+                        <ComboBoxItem Content="10"/>
+                        <ComboBoxItem Content="12"/>
+                        <ComboBoxItem Content="14"/>
+                        <ComboBoxItem Content="16"/>
+                    </ComboBox>
+                    <controls:WPRIcon Source="Twitter"/>
+                    <ComboBox Width="120">
+                        <ComboBoxItem Content="10"/>
+                        <ComboBoxItem Content="12"/>
+                        <ComboBoxItem Content="14"/>
+                        <ComboBoxItem Content="16"/>
+                    </ComboBox>
+                    <Separator/>
+                    <TextBox Width="100" helpers:TextHelper.Hint="Filter"  helpers:TextHelper.ShowClearButton="True"/>
+                </ToolBar>
+                <ToolBar Header="Header2">
+                    <Button Content="Test2"/>
+                </ToolBar>
+            </ToolBarTray>
+            <TextBox HorizontalAlignment="Left" TextWrapping="Wrap" Text="TextBox" helpers:TextHelper.Hint="Hint" Width="176" />
+            <Slider Value="5" Width="300"/>
+        </StackPanel>
+
+    </Grid>
+</Page>

@@ -1,0 +1,32 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:WPR.Controls"
+                    xmlns:helpers="clr-namespace:WPR.Helpers"
+                    xmlns:base="clr-namespace:WPR.Controls.Base">
+
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="../Styles/TextBoxes.xaml"/>
+        <ResourceDictionary Source="Base/NumericDecorator.xaml"/>
+    </ResourceDictionary.MergedDictionaries>
+
+
+    <Style TargetType="{x:Type local:WPRNumericDoubleDecorator}" BasedOn="{StaticResource {x:Type base:NumericDecorator}}"/>
+
+    <Style x:Key="WPRNumericDoubleDecorator" TargetType="{x:Type local:WPRNumericDoubleDecorator}" BasedOn="{StaticResource {x:Type base:NumericDecorator}}">
+        <Style.Resources>
+            <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource WPRTextBox}"/>
+        </Style.Resources>
+    </Style>
+
+    <Style x:Key="WPRNumericDoubleBorderedDecorator" TargetType="{x:Type local:WPRNumericDoubleDecorator}" BasedOn="{StaticResource {x:Type base:NumericDecorator}}">
+        <Setter Property="Padding" Value="0,9,10,0"/>
+        <Style.Resources>
+            <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource WPRBorderedTextBox}"/>
+        </Style.Resources>
+    </Style>
+
+    <Style x:Key="WPRNumericDoubleBorderedDescriptionDecorator" TargetType="{x:Type local:WPRNumericDoubleDecorator}" BasedOn="{StaticResource WPRNumericDoubleBorderedDecorator}">
+        <Setter Property="Padding" Value="0,33,10,0"/>
+    </Style>
+
+</ResourceDictionary>
