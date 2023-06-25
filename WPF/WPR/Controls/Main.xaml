@@ -10,5 +10,6 @@
         <ResourceDictionary Source="Base/NumericDecorator.xaml"/>
         <ResourceDictionary Source="WPRNumericDoubleDecorator.xaml"/>
         <ResourceDictionary Source="WPRNumericIntDecorator.xaml"/>
+        <ResourceDictionary Source="WPRPopupMenu.xaml"/>
 </ResourceDictionary.MergedDictionaries>
 </ResourceDictionary>
