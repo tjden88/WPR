@@ -41,6 +41,15 @@ public abstract partial class ViewModel : INotifyPropertyChanged
         return true;
     }
 
+    /// <summary> Установить значение свойства с помощью действия в другой объект</summary>
+    protected virtual bool SetTo<T>(T field, T value, Action<T> to, [CallerMemberName] string PropertyName = null)
+    {
+        if (Equals(value, field)) return false;
+        to.Invoke(value);
+        OnPropertyChanged(PropertyName);
+        return true;
+    }
+
     /// <summary> Установить значение свойства (проверка по ссылке)</summary>
     protected virtual bool SetRef<T>(ref T field, ref T value, [CallerMemberName] string PropertyName = null)
     {
