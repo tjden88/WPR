@@ -20,6 +20,11 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type GridSplitter}">
+                    <Border Background="{StaticResource TransparentBrush}">
+                        <Border x:Name="Border" 
+                                Margin="{TemplateBinding Padding}"
+                                Background="{TemplateBinding Background}" Opacity="0"/>
+                    </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
                             <Trigger.EnterActions>
@@ -49,11 +54,6 @@
                             <Setter Property="Width" TargetName="Border" Value="5" />
                         </Trigger>
                     </ControlTemplate.Triggers>
-                    <Border Background="{StaticResource TransparentBrush}">
-                        <Border x:Name="Border" 
-                                Margin="{TemplateBinding Padding}"
-                                Background="{TemplateBinding Background}" Opacity="0"/>
-                    </Border>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
