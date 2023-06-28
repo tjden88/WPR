@@ -1,7 +1,6 @@
 ﻿using System.Globalization;
-using WPR.MVVM.Converters.Base;
 
-namespace WPR.MVVM.Converters;
+namespace WPR.MVVM.Converters.Base;
 
 /// <summary>Конвертации значения лямбда - функцией</summary>
 public class ValueConverter : Converter
@@ -9,7 +8,7 @@ public class ValueConverter : Converter
     private readonly Func<object, Type, object, CultureInfo, object> _ConvertFunction;
     private readonly Func<object, Type, object, CultureInfo, object> _ConvertBackFunction;
 
-    public ValueConverter(Func<object, Type, object, CultureInfo, object> ConvertFunction, Func< object, Type, object, CultureInfo, object> ConvertBackFunction = null)
+    public ValueConverter(Func<object, Type, object, CultureInfo, object> ConvertFunction, Func<object, Type, object, CultureInfo, object> ConvertBackFunction = null)
     {
         _ConvertFunction = ConvertFunction;
         _ConvertBackFunction = ConvertBackFunction;
