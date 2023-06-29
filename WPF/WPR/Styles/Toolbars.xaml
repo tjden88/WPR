@@ -79,6 +79,7 @@
 
     <Style x:Key="WPRToolBarTextBlock" TargetType="TextBlock" BasedOn="{StaticResource WPRTextBlock}">
         <Setter Property="FontSize" Value="13"></Setter>
+        <Setter Property="VerticalAlignment" Value="Center"/>
         <Setter Property="Margin" Value="4"/>
     </Style>
 
