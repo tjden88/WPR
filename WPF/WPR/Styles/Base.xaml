@@ -96,6 +96,7 @@
 
     <!--Базовый стиль для всех контролов-->
     <Style x:Key="BaseControl" TargetType="{x:Type Control}" BasedOn="{StaticResource FrameworkElementStyle}">
+        <Setter Property="VirtualizingPanel.ScrollUnit" Value="Pixel"/>
         <Setter Property="Background" Value="{x:Null}" />
         <Setter Property="Foreground" Value="{DynamicResource TextColorBrush}"/>
         <Setter Property="FontSize" Value="16"/>

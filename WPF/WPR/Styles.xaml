@@ -26,6 +26,7 @@
         <ResourceDictionary Source="Styles\TreeViews.xaml"/>
         <ResourceDictionary Source="Styles\Separators.xaml"/>
         <ResourceDictionary Source="Styles\GroupBoxes.xaml"/>
+        <ResourceDictionary Source="Styles\ItemsControls.xaml"/>
     </ResourceDictionary.MergedDictionaries>
 
     <!--Стили по умолчанию-->

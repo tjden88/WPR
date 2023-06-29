@@ -11,5 +11,10 @@
         <Setter Property="TextOptions.TextFormattingMode" Value="Ideal"/>
         <Setter Property="TextOptions.TextRenderingMode" Value="ClearType"/>
         <Setter Property="RenderOptions.BitmapScalingMode" Value="NearestNeighbor"/>
+        <Style.Triggers>
+            <Trigger Property="IsEnabled" Value="False">
+                <Setter Property="Opacity" Value="0.56"/>
+            </Trigger>
+        </Style.Triggers>
     </Style>
 </ResourceDictionary>
