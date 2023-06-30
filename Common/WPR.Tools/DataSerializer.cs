@@ -73,7 +73,7 @@ namespace WPR.Tools
         {
             try
             {
-                await using var stream = new FileStream(FileName, FileMode.OpenOrCreate, FileAccess.Write);
+                await using var stream = new FileStream(FileName, FileMode.Create, FileAccess.Write);
                 var options = new JsonSerializerOptions { WriteIndented = true, Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping, }; 
                 await JsonSerializer.SerializeAsync(stream, obj, options, cancel);
                 return true;
