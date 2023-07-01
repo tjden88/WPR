@@ -7,7 +7,8 @@ using WPR.Icons;
 namespace WPR.Controls
 {
     /// <summary>
-    /// Декорирование текстбокса иконкой слева. Она будет менять цвет вслед за текстбоксом
+    /// Декорирование текстбокса или другого контента иконкой слева.
+    /// Цвет иконки привязывается к свойству helpers:ButtonHelper.MouseOverButtonBrush контента
     /// </summary>
     [ContentProperty(nameof(Content))]
     public class WPRTextBoxIcon : Control
@@ -38,27 +39,26 @@ namespace WPR.Controls
 
         #endregion
 
-        #region Content : TextBox - Текстбокс декоратора
+        #region Content : FrameworkElement - Текстбокс декоратора
 
         /// <summary>Текстбокс декоратора</summary>
         public static readonly DependencyProperty ContentProperty =
             DependencyProperty.Register(
                 nameof(Content),
-                typeof(TextBox),
+                typeof(FrameworkElement),
                 typeof(WPRTextBoxIcon),
-                new PropertyMetadata(default(TextBox)));
+                new PropertyMetadata(default(FrameworkElement)));
 
         /// <summary>Текстбокс декоратора</summary>
         [Category("WPRTextBoxIcon")]
         [Description("Текстбокс декоратора")]
-        public TextBox Content
+        public FrameworkElement Content
         {
-            get => (TextBox) GetValue(ContentProperty);
+            get => (FrameworkElement) GetValue(ContentProperty);
             set => SetValue(ContentProperty, value);
         }
 
         #endregion
 
-        
     }
 }

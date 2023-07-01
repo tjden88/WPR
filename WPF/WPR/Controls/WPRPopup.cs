@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
@@ -152,6 +153,21 @@ public class WPRPopup : Popup
         
         Opened += WPRPopup_Opened;
 
+    }
+
+    protected override void OnPreviewMouseRightButtonDown(MouseButtonEventArgs e)
+    {
+        base.OnPreviewMouseLeftButtonDown(e);
+        var wnd = this.FindVisualParent<Window>();
+        if (wnd is { IsActive: false })
+            wnd.Activate();
+    }
+    protected override void OnPreviewMouseLeftButtonDown(MouseButtonEventArgs e)
+    {
+        base.OnPreviewMouseLeftButtonDown(e);
+        var wnd = this.FindVisualParent<Window>();
+        if (wnd is {IsActive: false})
+            wnd.Activate();
     }
 
     protected override void OnMouseDown(MouseButtonEventArgs e)
