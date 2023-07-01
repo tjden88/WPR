@@ -70,7 +70,6 @@
         <Setter Property="BorderBrush" Value="{DynamicResource PrimaryColorBrush}"/>
         <Setter Property="HorizontalContentAlignment" Value="Center"/>
         <Setter Property="VerticalContentAlignment" Value="Center"/>
-        <Setter Property="extensions:TabControlCaching.IsCached" Value="True"/>
         <Setter Property="ItemContainerStyle" Value="{StaticResource WPRTabItem}"/>
         <Setter Property="Template">
             <Setter.Value>

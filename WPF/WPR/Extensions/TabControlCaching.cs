@@ -20,15 +20,9 @@ namespace WPR.Extensions
     /// </remarks>
     public static class TabControlCaching
     {
-        public static bool GetIsCached(DependencyObject obj)
-        {
-            return (bool)obj.GetValue(IsCachedProperty);
-        }
+        public static bool GetIsCached(DependencyObject obj) => (bool)obj.GetValue(IsCachedProperty);
 
-        public static void SetIsCached(DependencyObject obj, bool value)
-        {
-            obj.SetValue(IsCachedProperty, value);
-        }
+        public static void SetIsCached(DependencyObject obj, bool value) => obj.SetValue(IsCachedProperty, value);
 
         /// <summary>
         /// Controls whether tab content is cached or not
@@ -38,15 +32,9 @@ namespace WPR.Extensions
             DependencyProperty.RegisterAttached("IsCached", typeof(bool), typeof(TabControlCaching), new UIPropertyMetadata(false, OnIsCachedChanged));
 
 
-        public static DataTemplate GetTemplate(DependencyObject obj)
-        {
-            return (DataTemplate)obj.GetValue(TemplateProperty);
-        }
+        public static DataTemplate GetTemplate(DependencyObject obj) => (DataTemplate)obj.GetValue(TemplateProperty);
 
-        public static void SetTemplate(DependencyObject obj, DataTemplate value)
-        {
-            obj.SetValue(TemplateProperty, value);
-        }
+        public static void SetTemplate(DependencyObject obj, DataTemplate value) => obj.SetValue(TemplateProperty, value);
 
         /// <summary>
         /// Used instead of TabControl.ContentTemplate for cached tabs
@@ -55,15 +43,9 @@ namespace WPR.Extensions
             DependencyProperty.RegisterAttached("Template", typeof(DataTemplate), typeof(TabControlCaching), new UIPropertyMetadata(null));
 
 
-        public static DataTemplateSelector GetTemplateSelector(DependencyObject obj)
-        {
-            return (DataTemplateSelector)obj.GetValue(TemplateSelectorProperty);
-        }
+        public static DataTemplateSelector GetTemplateSelector(DependencyObject obj) => (DataTemplateSelector)obj.GetValue(TemplateSelectorProperty);
 
-        public static void SetTemplateSelector(DependencyObject obj, DataTemplateSelector value)
-        {
-            obj.SetValue(TemplateSelectorProperty, value);
-        }
+        public static void SetTemplateSelector(DependencyObject obj, DataTemplateSelector value) => obj.SetValue(TemplateSelectorProperty, value);
 
         /// <summary>
         /// Used instead of TabControl.ContentTemplateSelector for cached tabs
@@ -72,16 +54,10 @@ namespace WPR.Extensions
             DependencyProperty.RegisterAttached("TemplateSelector", typeof(DataTemplateSelector), typeof(TabControlCaching), new UIPropertyMetadata(null));
 
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static TabControl GetInternalTabControl(DependencyObject obj)
-        {
-            return (TabControl)obj.GetValue(InternalTabControlProperty);
-        }
+        public static TabControl GetInternalTabControl(DependencyObject obj) => (TabControl)obj.GetValue(InternalTabControlProperty);
 
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static void SetInternalTabControl(DependencyObject obj, TabControl value)
-        {
-            obj.SetValue(InternalTabControlProperty, value);
-        }
+        public static void SetInternalTabControl(DependencyObject obj, TabControl value) => obj.SetValue(InternalTabControlProperty, value);
 
         // Using a DependencyProperty as the backing store for InternalTabControl.  This enables animation, styling, binding, etc...
         [EditorBrowsable(EditorBrowsableState.Never)]
@@ -90,16 +66,10 @@ namespace WPR.Extensions
 
 
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static ContentControl GetInternalCachedContent(DependencyObject obj)
-        {
-            return (ContentControl)obj.GetValue(InternalCachedContentProperty);
-        }
+        public static ContentControl GetInternalCachedContent(DependencyObject obj) => (ContentControl)obj.GetValue(InternalCachedContentProperty);
 
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static void SetInternalCachedContent(DependencyObject obj, ContentControl value)
-        {
-            obj.SetValue(InternalCachedContentProperty, value);
-        }
+        public static void SetInternalCachedContent(DependencyObject obj, ContentControl value) => obj.SetValue(InternalCachedContentProperty, value);
 
         // Using a DependencyProperty as the backing store for InternalCachedContent.  This enables animation, styling, binding, etc...
         [EditorBrowsable(EditorBrowsableState.Never)]
@@ -107,16 +77,10 @@ namespace WPR.Extensions
             DependencyProperty.RegisterAttached("InternalCachedContent", typeof(ContentControl), typeof(TabControlCaching), new UIPropertyMetadata(null));
 
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static object GetInternalContentManager(DependencyObject obj)
-        {
-            return obj.GetValue(InternalContentManagerProperty);
-        }
+        public static object GetInternalContentManager(DependencyObject obj) => obj.GetValue(InternalContentManagerProperty);
 
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static void SetInternalContentManager(DependencyObject obj, object value)
-        {
-            obj.SetValue(InternalContentManagerProperty, value);
-        }
+        public static void SetInternalContentManager(DependencyObject obj, object value) => obj.SetValue(InternalContentManagerProperty, value);
 
         // Using a DependencyProperty as the backing store for InternalContentManager.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty InternalContentManagerProperty =
@@ -128,12 +92,11 @@ namespace WPR.Extensions
 
             var tabControl = obj as TabControl;
             if (tabControl == null)
-            {
-                throw new InvalidOperationException("Cannot set TabControlCaching.IsCached on object of type " + args.NewValue.GetType().Name +
-                    ". Only objects of type TabControl can have TabControlCaching.IsCached property.");
-            }
+                throw new InvalidOperationException("Cannot set TabControlCaching.IsCached on object of type " +
+                                                    args.NewValue.GetType().Name +
+                                                    ". Only objects of type TabControl can have TabControlCaching.IsCached property.");
 
-            bool newValue = (bool)args.NewValue;
+            var newValue = (bool)args.NewValue;
 
             if (!newValue)
             {
@@ -238,7 +201,10 @@ namespace WPR.Extensions
             {
                 _TabControl = tabControl;
                 _Border = border;
-                _TabControl.SelectionChanged += (sender, args) => { UpdateSelectedTab(); };
+                _TabControl.SelectionChanged += (sender, args) =>
+                {
+                    if (Equals(args.OriginalSource, _TabControl)) UpdateSelectedTab();
+                };
             }
 
             public void ReplaceContainer(Decorator newBorder)
