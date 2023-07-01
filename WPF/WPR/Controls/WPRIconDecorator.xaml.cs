@@ -11,11 +11,11 @@ namespace WPR.Controls
     /// Цвет иконки привязывается к свойству helpers:ButtonHelper.MouseOverButtonBrush контента
     /// </summary>
     [ContentProperty(nameof(Content))]
-    public class WPRTextBoxIcon : Control
+    public class WPRIconDecorator : Control
     {
-        static WPRTextBoxIcon()
+        static WPRIconDecorator()
         {
-            DefaultStyleKeyProperty.OverrideMetadata(typeof(WPRTextBoxIcon), new FrameworkPropertyMetadata(typeof(WPRTextBoxIcon)));
+            DefaultStyleKeyProperty.OverrideMetadata(typeof(WPRIconDecorator), new FrameworkPropertyMetadata(typeof(WPRIconDecorator)));
         }
 
         #region Icon : PackIconKind - Иконка
@@ -25,11 +25,11 @@ namespace WPR.Controls
             DependencyProperty.Register(
                 nameof(Icon),
                 typeof(PackIconKind),
-                typeof(WPRTextBoxIcon),
+                typeof(WPRIconDecorator),
                 new PropertyMetadata(default(PackIconKind)));
 
         /// <summary>Иконка</summary>
-        [Category("WPRTextBoxIcon")]
+        [Category("WPRIconDecorator")]
         [Description("Иконка")]
         public PackIconKind Icon
         {
@@ -46,11 +46,11 @@ namespace WPR.Controls
             DependencyProperty.Register(
                 nameof(Content),
                 typeof(FrameworkElement),
-                typeof(WPRTextBoxIcon),
+                typeof(WPRIconDecorator),
                 new PropertyMetadata(default(FrameworkElement)));
 
         /// <summary>Текстбокс декоратора</summary>
-        [Category("WPRTextBoxIcon")]
+        [Category("WPRIconDecorator")]
         [Description("Текстбокс декоратора")]
         public FrameworkElement Content
         {
