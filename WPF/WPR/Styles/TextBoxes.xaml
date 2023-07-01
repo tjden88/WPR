@@ -13,6 +13,7 @@
 
     <Style x:Key="WPRTextBox" TargetType="{x:Type TextBox}" BasedOn="{StaticResource BaseControl}">
         <Setter Property="ContextMenu" Value="{StaticResource WPRDefaultContextMenu}"/>
+        <Setter Property="helpers:ButtonHelper.MouseOverButtonBrush" Value="{Binding BorderBrush, RelativeSource={RelativeSource Self}}"/>
         <Setter Property="BorderBrush" Value="{DynamicResource DividerColorBrush}"/>
         <Setter Property="BorderThickness" Value="1"/>
         <Setter Property="Background" Value="{DynamicResource PrimaryColorBrush}"/>
@@ -95,6 +96,7 @@
 
                         <Trigger Property="Validation.HasError" Value="True">
                             <Setter Property="Background" Value="{StaticResource DangerColorBrush}"/>
+                            <Setter Property="helpers:ButtonHelper.MouseOverButtonBrush" Value="{StaticResource DangerColorBrush}"/>
                             <Setter TargetName="ErrorText" Property="Visibility" Value="Visible"/>
                             <Setter TargetName="Description" Property="Visibility" Value="Hidden"/>
                         </Trigger>
@@ -145,10 +147,12 @@
                             </MultiTrigger.ExitActions>
                         </MultiTrigger>
                         <Trigger Property="IsMouseOver" Value="True" SourceName="ContentGrid">
+                            <Setter Property="helpers:ButtonHelper.MouseOverButtonBrush" Value="{Binding Background, RelativeSource={RelativeSource Self}}"/>
                             <Setter Property="BorderBrush" TargetName="BottomRect"
-                                        Value="{Binding Background, RelativeSource={RelativeSource AncestorType=TextBox}}"/>
+                                    Value="{Binding Background, RelativeSource={RelativeSource AncestorType=TextBox}}"/>
                         </Trigger>
                         <Trigger Property="IsKeyboardFocused" Value="True">
+                            <Setter Property="helpers:ButtonHelper.MouseOverButtonBrush" Value="{Binding Background, RelativeSource={RelativeSource Self}}"/>
                             <Setter Property="BorderBrush" TargetName="BottomRect"
                                     Value="{Binding Background, RelativeSource={RelativeSource AncestorType=TextBox}}"/>
                             <Setter Property="Fill" TargetName="Rectangle"
