@@ -1,4 +1,4 @@
-﻿namespace WPR.MVVM.Commands.Base;
+﻿namespace WPR.MVVM.Commands;
 
 /// <summary>
 /// Реализация базовой команды
@@ -10,7 +10,7 @@ public class Command : BaseCommand
 
 
 
-    public Command(Action Execute, string CommandText = null) 
+    public Command(Action Execute, string CommandText = null)
         : this(Execute, null, CommandText)
     {
     }

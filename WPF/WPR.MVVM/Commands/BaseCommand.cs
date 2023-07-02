@@ -2,7 +2,7 @@
 using System.Runtime.CompilerServices;
 using System.Windows.Input;
 
-namespace WPR.MVVM.Commands.Base;
+namespace WPR.MVVM.Commands;
 
 public abstract class BaseCommand : ICommand, INotifyPropertyChanged
 {

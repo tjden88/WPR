@@ -1,4 +1,4 @@
-﻿namespace WPR.MVVM.Commands.Base;
+﻿namespace WPR.MVVM.Commands;
 
 /// <summary>
 /// Типизированная асинхронная команда

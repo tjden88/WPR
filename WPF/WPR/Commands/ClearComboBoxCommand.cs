@@ -1,5 +1,5 @@
 ﻿using System.Windows.Controls;
-using WPR.MVVM.Commands.Base;
+using WPR.MVVM.Commands;
 
 namespace WPR.Commands;
 

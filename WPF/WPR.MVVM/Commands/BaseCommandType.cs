@@ -1,4 +1,4 @@
-﻿namespace WPR.MVVM.Commands.Base;
+﻿namespace WPR.MVVM.Commands;
 
 public abstract class BaseCommand<T> : BaseCommand
 {

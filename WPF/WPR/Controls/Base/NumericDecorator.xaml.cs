@@ -5,7 +5,7 @@ using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Markup;
-using WPR.MVVM.Commands.Base;
+using WPR.MVVM.Commands;
 
 namespace WPR.Controls.Base;
 

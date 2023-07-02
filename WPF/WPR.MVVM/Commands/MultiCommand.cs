@@ -1,7 +1,7 @@
 ﻿using System.Collections.ObjectModel;
 using System.Windows.Input;
 
-namespace WPR.MVVM.Commands.Base;
+namespace WPR.MVVM.Commands;
 
 /// <summary>
 /// Последовательное выполнение нескольких команд
