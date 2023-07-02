@@ -95,6 +95,7 @@ public abstract class BaseCommand : ICommand, INotifyPropertyChanged
     {
         if (!((ICommand)this).CanExecute(parameter)) return;
         Execute(parameter);
+        RaiseCanExecuteChanged();
     }
 
     #endregion
@@ -103,7 +104,7 @@ public abstract class BaseCommand : ICommand, INotifyPropertyChanged
     public virtual void Execute() => Execute(null);
 
     /// <summary>Возможность выполнения команды</summary>
-    public virtual bool CanExecute(object p) => ((ICommand)this).CanExecute(p);
+    public virtual bool CanExecute(object p) => true;
 
     /// <summary>Действие выполнения команды</summary>
     public abstract void Execute(object p);
@@ -111,6 +112,6 @@ public abstract class BaseCommand : ICommand, INotifyPropertyChanged
     public override string ToString() => Text;
 
     /// <summary> Объявить об изменении возможности выполнения команды </summary>
-    protected void RaiseCanExecuteChanged() => CanExecuteChanged?.Invoke(this, EventArgs.Empty);
+    public void RaiseCanExecuteChanged() => CanExecuteChanged?.Invoke(this, EventArgs.Empty);
 
 }

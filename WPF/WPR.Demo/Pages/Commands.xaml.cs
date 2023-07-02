@@ -102,6 +102,7 @@ namespace WPR.Demo.Pages
         /// <summary>Логика выполнения - Асинхронная команда</summary>
         private async Task OnSimpleAsyncCommandExecuted(CancellationToken cancel)
         {
+            CancelAsyncCommand.RaiseCanExecuteChanged();
             await VeryLongTask(cancel);
         }
 
