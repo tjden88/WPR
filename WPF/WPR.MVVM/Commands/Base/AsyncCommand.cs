@@ -1,7 +1,4 @@
-﻿using System.Windows;
-using System.Windows.Input;
-
-namespace WPR.MVVM.Commands.Base;
+﻿namespace WPR.MVVM.Commands.Base;
 
 /// <summary>
 /// Базовая асинхронная реализация команды.
@@ -22,7 +19,7 @@ public class AsyncCommand : BaseCommand
         protected set
         {
             _IsNowExecuting = value;
-            CommandManager.InvalidateRequerySuggested();
+            RaiseCanExecuteChanged();
             OnPropertyChanged();
         }
     }
@@ -43,6 +40,8 @@ public class AsyncCommand : BaseCommand
         get => _CancelSource;
         set
         {
+            _CancelSource?.Dispose();
+
             _CancelSource = value;
             OnPropertyChanged();
         }
@@ -59,36 +58,28 @@ public class AsyncCommand : BaseCommand
     {
     }
 
+    public AsyncCommand(Func<CancellationToken, Task> ExecuteAsync, Predicate<object> CanExecute = null, string CommandText = null) :
+        this((_, t) => ExecuteAsync(t), CanExecute, CommandText)
+    {
+    }
+
     public AsyncCommand(Func<CancellationToken, Task> ExecuteAsync, Func<bool> CanExecute = null, string CommandText = null) :
-        this(ExecuteAsync, CanExecute, CommandText, null, null)
+        this((_, t) => ExecuteAsync(t), CanExecute is null ? null : _ => CanExecute(), CommandText)
     {
     }
 
-    public AsyncCommand(Func<object, CancellationToken, Task> ExecuteAsync, Predicate<object> CanExecute = null, string CommandText = null) :
-        this(ExecuteAsync, CanExecute, CommandText, null, null)
-    {
-    }
-
-    public AsyncCommand(Func<CancellationToken, Task> ExecuteAsync, Func<bool> CanExecute, string CommandText, KeyGesture ExecuteGesture, UIElement GestureTarget) :
-        this((_, t) => ExecuteAsync(t), CanExecute is null ? null : _ => CanExecute(), CommandText, ExecuteGesture, GestureTarget)
-    {
-    }
-
-    public AsyncCommand(Func<object, CancellationToken, Task> ExecuteAsync, Predicate<object> CanExecute, string CommandText, KeyGesture ExecuteGesture, UIElement GestureTarget)
+    public AsyncCommand(Func<object, CancellationToken, Task> ExecuteAsync, Predicate<object> CanExecute = null, string CommandText = null)
     {
         _ExecuteAsync = ExecuteAsync;
         _CanExecute = CanExecute;
         Text = CommandText;
-
-        this.ExecuteGesture = ExecuteGesture;
-        GestureTarget?.InputBindings.Add(new InputBinding(this, ExecuteGesture));
     }
 
     #endregion
 
-    protected override bool CanExecute(object P) => !IsNowExecuting && (_CanExecute?.Invoke(P) ?? true);
+    public override bool CanExecute(object P) => !IsNowExecuting && (_CanExecute?.Invoke(P) ?? true);
 
-    protected override async void Execute(object P)
+    public override async void Execute(object P)
     {
         var cancelSourceisNull = _CancelSource == null;
         try

@@ -93,7 +93,7 @@ public abstract class BaseCommand : ICommand, INotifyPropertyChanged
     /// <summary>Выполнить команду с параметром</summary>
     void ICommand.Execute(object parameter)
     {
-        if (!CanExecute(parameter)) return;
+        if (!((ICommand)this).CanExecute(parameter)) return;
         Execute(parameter);
     }
 
@@ -103,50 +103,14 @@ public abstract class BaseCommand : ICommand, INotifyPropertyChanged
     public virtual void Execute() => Execute(null);
 
     /// <summary>Возможность выполнения команды</summary>
-    public virtual bool CanExecute(object p) => true;
+    public virtual bool CanExecute(object p) => ((ICommand)this).CanExecute(p);
 
     /// <summary>Действие выполнения команды</summary>
     public abstract void Execute(object p);
 
     public override string ToString() => Text;
 
+    /// <summary> Объявить об изменении возможности выполнения команды </summary>
     protected void RaiseCanExecuteChanged() => CanExecuteChanged?.Invoke(this, EventArgs.Empty);
 
-}
-
-
-
-public abstract class BaseCommand<T> : BaseCommand
-{
-    #region CanExecuteWithNullParameter
-
-    private bool _CanExecuteWithNullParameter;
-
-    /// <summary>Разрешить выполнение команды с параметром = null</summary>
-    public bool CanExecuteWithNullParameter
-    {
-        get => _CanExecuteWithNullParameter;
-        set
-        {
-            if (_CanExecuteWithNullParameter == value) return;
-            _CanExecuteWithNullParameter = value;
-            RaiseCanExecuteChanged();
-            OnPropertyChanged();
-        }
-    }
-
-    #endregion
-
-    /// <summary>Возможность выполнения команды</summary>
-    public override bool CanExecute(object P)
-    {
-
-        if (!CanExecuteWithNullParameter && P is not T) return false;
-        return true;
-    }
-
-    public sealed override void Execute(object p) => ExecuteCommand((T)p);
-
-    /// <summary>Выполнить команду с параметорм типа</summary>
-    public abstract void ExecuteCommand(T p);
 }

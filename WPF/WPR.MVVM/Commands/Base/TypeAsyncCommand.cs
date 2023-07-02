@@ -1,7 +1,4 @@
-﻿using System.Windows;
-using System.Windows.Input;
-
-namespace WPR.MVVM.Commands.Base;
+﻿namespace WPR.MVVM.Commands.Base;
 
 /// <summary>
 /// Типизированная асинхронная команда
@@ -25,7 +22,7 @@ public class AsyncCommand<T> : AsyncCommand
         {
             if (_CanExecuteWithNullParameter == value) return;
             _CanExecuteWithNullParameter = value;
-            CommandManager.InvalidateRequerySuggested();
+            RaiseCanExecuteChanged();
             OnPropertyChanged();
         }
     }
@@ -34,42 +31,30 @@ public class AsyncCommand<T> : AsyncCommand
 
     #region Ctor
 
-    public AsyncCommand(Func<T, Task> ExecuteAsync, Predicate<T> CanExecute = null, string CommandText = null) :
-        this(ExecuteAsync, CanExecute, CommandText, null, null)
-    {
-    }
 
-    public AsyncCommand(Func<T, CancellationToken, Task> ExecuteAsync, Predicate<T> CanExecute, string CommandText) :
-        this(ExecuteAsync, CanExecute, CommandText, null, null)
-    {
-    }
-
-    public AsyncCommand(Func<T, Task> ExecuteAsync, Predicate<T> CanExecute, string CommandText, KeyGesture ExecuteGesture, UIElement GestureTarget) :
-        this((o, _) => ExecuteAsync(o), CanExecute, CommandText, ExecuteGesture, GestureTarget)
+    public AsyncCommand(Func<T, CancellationToken, Task> ExecuteAsync, string CommandText = null) :
+        this(ExecuteAsync, null, CommandText)
     {
     }
 
 
-    public AsyncCommand(Func<T, CancellationToken, Task> ExecuteAsync, Predicate<T> CanExecute, string CommandText, KeyGesture ExecuteGesture, UIElement GestureTarget)
+    public AsyncCommand(Func<T, CancellationToken, Task> ExecuteAsync, Predicate<T> CanExecute = null, string CommandText = null)
     {
         _ExecuteAsync = ExecuteAsync;
         _CanExecute = CanExecute;
         Text = CommandText;
-
-        this.ExecuteGesture = ExecuteGesture;
-        GestureTarget?.InputBindings.Add(new InputBinding(this, ExecuteGesture));
     }
 
     #endregion
 
 
-    protected override bool CanExecute(object P)
+    public override bool CanExecute(object P)
     {
         if (!CanExecuteWithNullParameter && P is not T) return false;
         return _CanExecute?.Invoke((T)P) ?? true;
     }
 
-    protected override async void Execute(object P)
+    public override async void Execute(object P)
     {
         try
         {
