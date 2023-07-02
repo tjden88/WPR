@@ -152,7 +152,7 @@ public abstract class ValidationViewModel : ViewModel, INotifyDataErrorInfo
         return _Errors.TryGetValue(PropertyName, out var error) ? error : null;
     }
 
-    public bool HasErrors => _Errors.Any();
+    public virtual bool HasErrors => _Errors.Any();
 
     public event EventHandler<DataErrorsChangedEventArgs> ErrorsChanged;
 

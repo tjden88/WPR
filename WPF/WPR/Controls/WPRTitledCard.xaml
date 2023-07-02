@@ -8,7 +8,7 @@
 
 
     <Style TargetType="{x:Type controls:WPRTitledCard}" BasedOn="{StaticResource BaseControl}">
-        <Setter Property="Foreground" Value="{DynamicResource SecondaryColorBrush}"/>
+        <Setter Property="Foreground" Value="{DynamicResource PrimaryColorBrush}"/>
         <Setter Property="Focusable" Value="False"/>
         <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
         <Setter Property="VerticalContentAlignment" Value="Stretch"/>
@@ -17,20 +17,20 @@
                 <ControlTemplate TargetType="{x:Type controls:WPRTitledCard}">
                     <DockPanel Background="{TemplateBinding Background}">
                         <Grid DockPanel.Dock="Top">
-                            <DockPanel Margin="5,5" LastChildFill="False">
-                                <controls:WPRIcon Source="{TemplateBinding IconSource}" Margin="5"
-                                                  IconSize="26"
+                            <DockPanel Margin="10" LastChildFill="False">
+                                <controls:WPRIcon Source="{TemplateBinding IconSource}" Margin="10,10,10,5"
+                                                  IconSize="28"
                                                   Foreground="{TemplateBinding Foreground}"/>
                                 <TextBlock Text="{TemplateBinding Header}"
-                                           FontSize="18"
+                                           FontSize="24"
                                            VerticalAlignment="Center"
-                                           Margin="5"
+                                           Margin="10,10,0,5"
                                            Foreground="{TemplateBinding Foreground}"/>
                              <ToggleButton Style="{StaticResource WPRToolButtonNoRipple}" DockPanel.Dock="Right"
                                     Visibility="{TemplateBinding ShowMenuButton, Converter={StaticResource Bool2VisibilityConverter}}"
                                     IsChecked="{Binding IsOpen, ElementName=MenuPopup }"
                                     ToolTip="Меню"
-                                    HorizontalAlignment="Right" VerticalAlignment="Center" Margin="5">
+                                    HorizontalAlignment="Right" VerticalAlignment="Center" Margin="10">
                                 <controls:WPRIcon Source="DotsVertical"/>
                             </ToggleButton> 
                             </DockPanel>

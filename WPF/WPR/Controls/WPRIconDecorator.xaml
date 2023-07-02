@@ -7,7 +7,7 @@
     </ResourceDictionary.MergedDictionaries>
 
     <Style TargetType="{x:Type local:WPRIconDecorator}">
-        <Setter Property="Padding" Value="0,15,10,0" />
+        <Setter Property="Padding" Value="0,14,10,0" />
         <Setter Property="Margin" Value="0,10,0,10"></Setter>
         <Setter Property="VerticalContentAlignment" Value="Top" />
         <Setter Property="Focusable" Value="False" />
@@ -22,6 +22,7 @@
                             <ColumnDefinition/>
                         </Grid.ColumnDefinitions>
                         <local:WPRIcon Source="{Binding Icon, RelativeSource={RelativeSource TemplatedParent}}"
+                                       IconSize="18"
                                        Foreground="{Binding Content.(helpers:ButtonHelper.MouseOverButtonBrush), RelativeSource={RelativeSource TemplatedParent}}"
                                        VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
                                        Margin="{TemplateBinding Padding}"/>
