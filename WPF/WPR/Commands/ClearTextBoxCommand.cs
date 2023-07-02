@@ -2,7 +2,7 @@
 using System.Windows.Input;
 using WPR.MVVM.Commands.Base;
 
-namespace WPR.MVVM.Commands;
+namespace WPR.Commands;
 
 /// <summary>
 /// Команда очистки поля ввода текстбокса
@@ -13,12 +13,12 @@ public class ClearTextBoxCommand: BaseCommand
     /// <summary> Освободить фокус ввода после очистки </summary>
     public bool ClearFocus { get; set; } = true;
 
-    protected override void Execute(object p)
+    public override void Execute(object p)
     {
         if (p is not TextBox tbox) return;
         tbox.Text = string.Empty;
         if(ClearFocus) Keyboard.ClearFocus();
     }
 
-    protected override bool CanExecute(object p) => p is TextBox t && !string.IsNullOrEmpty(t.Text);
+    public override bool CanExecute(object p) => p is TextBox t && !string.IsNullOrEmpty(t.Text);
 }
