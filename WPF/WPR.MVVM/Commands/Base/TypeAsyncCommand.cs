@@ -63,13 +63,13 @@ public class AsyncCommand<T> : AsyncCommand
     #endregion
 
 
-    protected override bool CanExecuteCommand(object P)
+    protected override bool CanExecute(object P)
     {
         if (!CanExecuteWithNullParameter && P is not T) return false;
         return _CanExecute?.Invoke((T)P) ?? true;
     }
 
-    protected override async void ExecuteCommand(object P)
+    protected override async void Execute(object P)
     {
         try
         {

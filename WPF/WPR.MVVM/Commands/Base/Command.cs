@@ -42,8 +42,8 @@ public class Command : BaseCommand
     }
 
     /// <summary>Возможность выполнения команды</summary>
-    protected override bool CanExecuteCommand(object P) => _CanExecute?.Invoke(P) ?? true;
+    protected override bool CanExecute(object P) => _CanExecute?.Invoke(P) ?? true;
 
     /// <summary>Выполнить команду</summary>
-    protected override void ExecuteCommand(object P) => _Execute(P);
+    protected override void Execute(object P) => _Execute(P);
 }

@@ -86,9 +86,9 @@ public class AsyncCommand : BaseCommand
 
     #endregion
 
-    protected override bool CanExecuteCommand(object P) => !IsNowExecuting && (_CanExecute?.Invoke(P) ?? true);
+    protected override bool CanExecute(object P) => !IsNowExecuting && (_CanExecute?.Invoke(P) ?? true);
 
-    protected override async void ExecuteCommand(object P)
+    protected override async void Execute(object P)
     {
         var cancelSourceisNull = _CancelSource == null;
         try

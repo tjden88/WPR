@@ -28,7 +28,7 @@ public class Command<T> : BaseCommand<T>
     }
 
     /// <summary>Возможность выполнения команды</summary>
-    protected override bool CanExecuteCommand(object P)
+    protected override bool CanExecute(object P)
     {
 
         if (!CanExecuteWithNullParameter && P is not T) return false;

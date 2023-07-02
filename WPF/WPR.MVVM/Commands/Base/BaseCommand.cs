@@ -1,13 +1,10 @@
 ﻿using System.ComponentModel;
-using System.Globalization;
 using System.Runtime.CompilerServices;
-using System.Windows;
 using System.Windows.Input;
-using System.Windows.Markup;
 
 namespace WPR.MVVM.Commands.Base;
 
-public abstract class BaseCommand : MarkupExtension, ICommand, INotifyPropertyChanged
+public abstract class BaseCommand : ICommand, INotifyPropertyChanged
 {
 
     #region Executable: bool
@@ -25,27 +22,27 @@ public abstract class BaseCommand : MarkupExtension, ICommand, INotifyPropertyCh
         {
             if (_Executable == value) return;
             _Executable = value;
-            CommandManager.InvalidateRequerySuggested();
             ExecutableChanged?.Invoke(this, value);
+            CanExecuteChanged?.Invoke(this, EventArgs.Empty);
             OnPropertyChanged();
         }
     }
     #endregion
 
 
-    #region Visibility : Visibility - Видимость, если команда доступна
+    #region IsCanExecute : IsCanExecute - Можно ли выполнить команду
 
-    /// <summary>Видимость, если команда доступна</summary>
-    private Visibility _Visibility = Visibility.Collapsed;
+    private bool _IsCanExecute;
 
-    /// <summary>Видимость, если команда доступна</summary>
-    public Visibility Visibility
+    /// <summary>Можно ли выполнить команду</summary>
+    public bool IsCanExecute
     {
-        get => _Visibility;
+        get => _IsCanExecute;
         set
         {
-            if(Equals(_Visibility, value)) return;
-            _Visibility = value;
+            if (Equals(_IsCanExecute, value)) return;
+            _IsCanExecute = value;
+            CanExecuteChanged?.Invoke(this, EventArgs.Empty);
             OnPropertyChanged();
         }
     }
@@ -54,15 +51,13 @@ public abstract class BaseCommand : MarkupExtension, ICommand, INotifyPropertyCh
 
 
     #region Текст команды
+
     private string _CommandText;
+
     /// <summary> Текст - описание команды </summary>
     public string Text
     {
-        get
-        {
-            var gString = ExecuteGesture?.GetDisplayStringForCulture(CultureInfo.CurrentCulture);
-            return gString == null ? _CommandText : $"{_CommandText} ({gString})";
-        }
+        get => _CommandText;
         set
         {
             if (value == _CommandText) return;
@@ -83,43 +78,40 @@ public abstract class BaseCommand : MarkupExtension, ICommand, INotifyPropertyCh
     #endregion
 
 
-    /// <summary> Комбинация клавиш быстрого доступа </summary>
-    protected KeyGesture ExecuteGesture { get; init; }
+    #region ICommand
 
-    public event EventHandler CanExecuteChanged
-    {
-        add => CommandManager.RequerySuggested += value;
-        remove => CommandManager.RequerySuggested -= value;
-    }
+    public event EventHandler CanExecuteChanged;
 
     /// <summary>Возможность выполнения команды</summary>
-    public bool CanExecute(object parameter)
+    bool ICommand.CanExecute(object parameter)
     {
-        var canExecute = _Executable && CanExecuteCommand(parameter);
-        Visibility = canExecute ? Visibility.Visible : Visibility.Collapsed;
+        var canExecute = _Executable && CanExecute(parameter);
+        IsCanExecute = canExecute;
         return canExecute;
     }
 
     /// <summary>Выполнить команду с параметром</summary>
-    public void Execute(object parameter)
+    void ICommand.Execute(object parameter)
     {
         if (!CanExecute(parameter)) return;
-        ExecuteCommand(parameter);
+        Execute(parameter);
     }
+
+    #endregion
 
     ///// <summary> Выполнить команду без параметра </summary>
     public virtual void Execute() => Execute(null);
 
     /// <summary>Возможность выполнения команды</summary>
-    protected virtual bool CanExecuteCommand(object p) => true;
+    public virtual bool CanExecute(object p) => true;
 
     /// <summary>Действие выполнения команды</summary>
-    protected abstract void ExecuteCommand(object p);
+    public abstract void Execute(object p);
 
     public override string ToString() => Text;
 
+    protected void RaiseCanExecuteChanged() => CanExecuteChanged?.Invoke(this, EventArgs.Empty);
 
-    public override object ProvideValue(IServiceProvider serviceProvider) => this;
 }
 
 
@@ -138,7 +130,7 @@ public abstract class BaseCommand<T> : BaseCommand
         {
             if (_CanExecuteWithNullParameter == value) return;
             _CanExecuteWithNullParameter = value;
-            CommandManager.InvalidateRequerySuggested();
+            RaiseCanExecuteChanged();
             OnPropertyChanged();
         }
     }
@@ -146,14 +138,14 @@ public abstract class BaseCommand<T> : BaseCommand
     #endregion
 
     /// <summary>Возможность выполнения команды</summary>
-    protected override bool CanExecuteCommand(object P)
+    public override bool CanExecute(object P)
     {
 
         if (!CanExecuteWithNullParameter && P is not T) return false;
         return true;
     }
 
-    protected sealed override void ExecuteCommand(object p) => ExecuteCommand((T)p);
+    public sealed override void Execute(object p) => ExecuteCommand((T)p);
 
     /// <summary>Выполнить команду с параметорм типа</summary>
     public abstract void ExecuteCommand(T p);
