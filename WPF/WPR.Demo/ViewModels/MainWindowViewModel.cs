@@ -5,7 +5,7 @@ using System.Windows.Input;
 using WPR.Demo.Services.Interfaces;
 using WPR.ColorTheme;
 using WPR.Domain.ViewModels;
-using WPR.MVVM.Commands;
+using WPR.MVVM.Commands.Base;
 
 namespace WPR.Demo.ViewModels
 {

@@ -9,7 +9,7 @@ using WPR.Domain.Interfaces;
 using WPR.Domain.Models.Dialogs;
 using WPR.Domain.Models.Dialogs.Extensions;
 using WPR.Domain.Models.Themes;
-using WPR.MVVM.Commands;
+using WPR.MVVM.Commands.Base;
 using WPR.UiServices.UI;
 
 namespace WPR.Demo.Pages

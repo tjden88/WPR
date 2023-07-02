@@ -1,5 +1,5 @@
 ﻿using System.Windows.Controls;
-using WPR.MVVM.Commands;
+using WPR.MVVM.Commands.Base;
 
 namespace WPR.Commands;
 
@@ -9,12 +9,13 @@ namespace WPR.Commands;
 /// </summary>
 public class ClearComboBoxCommand : BaseCommand
 {
-    public override void Execute(object p)
+    protected override void ExecuteCommand(object p)
     {
         if (p is not ComboBox cbox) return;
         cbox.Text = null!;
         cbox.SelectedValue = null;
     }
 
-    public override bool CanExecute(object p) => p is ComboBox c && (c.SelectedIndex>-1 || !string.IsNullOrEmpty(c.Text));
+    protected override bool CanExecuteCommand(object p) => p is ComboBox c && (c.SelectedIndex > -1 || !string.IsNullOrEmpty(c.Text));
+
 }

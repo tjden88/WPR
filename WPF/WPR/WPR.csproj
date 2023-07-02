@@ -48,7 +48,6 @@
 
 	<ItemGroup>
 	  <ProjectReference Include="..\..\Common\WPR.Domain\WPR.Domain.csproj" />
-	  <ProjectReference Include="..\..\Common\WPR.MVVM\WPR.MVVM.csproj" />
 	</ItemGroup>
 
 	<ItemGroup>

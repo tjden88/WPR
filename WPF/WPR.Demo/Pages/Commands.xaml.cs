@@ -2,9 +2,8 @@
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Controls;
-using System.Windows.Input;
 using WPR.Dialogs;
-using WPR.MVVM.Commands;
+using WPR.MVVM.Commands.Base;
 
 namespace WPR.Demo.Pages
 {
@@ -102,7 +101,6 @@ namespace WPR.Demo.Pages
         /// <summary>Логика выполнения - Асинхронная команда</summary>
         private async Task OnSimpleAsyncCommandExecuted(CancellationToken cancel)
         {
-            CancelAsyncCommand.RaiseCanExecuteChanged();
             await VeryLongTask(cancel);
         }
 
