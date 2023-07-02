@@ -1,10 +1,11 @@
-﻿using WPR.Domain.Interfaces;
+﻿using Microsoft.Extensions.DependencyInjection;
+using WPR.Domain.Interfaces;
 using WPR.UiServices.Interfaces;
 using WPR.UiServices.Themes;
 using WPR.UiServices.UI;
 
 // ReSharper disable once CheckNamespace
-namespace Microsoft.Extensions.DependencyInjection;
+namespace WPR.UiServices;
 
 public static class ServiceRegistrator
 {
