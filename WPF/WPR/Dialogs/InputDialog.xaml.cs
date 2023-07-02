@@ -1,8 +1,8 @@
 ﻿using System.ComponentModel;
 using System.Windows;
 using WPR.Dialogs.Base;
-using WPR.MVVM.Validation;
 using WPR.MVVM.ViewModels;
+using WPR.Validation;
 
 namespace WPR.Dialogs;
 

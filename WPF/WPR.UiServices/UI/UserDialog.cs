@@ -5,8 +5,8 @@ using WPR.Dialogs;
 using WPR.Domain.Interfaces;
 using WPR.Domain.Models.Dialogs;
 using WPR.Domain.Models.Themes;
-using WPR.MVVM.Validation;
 using WPR.UiServices.Interfaces;
+using WPR.Validation;
 
 namespace WPR.UiServices.UI;
 

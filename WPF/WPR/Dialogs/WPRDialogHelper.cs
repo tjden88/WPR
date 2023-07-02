@@ -4,7 +4,7 @@ using WPR.Controls;
 using WPR.Domain.Interfaces;
 using WPR.Domain.Models.Dialogs;
 using WPR.Domain.Models.Themes;
-using WPR.MVVM.Validation;
+using WPR.Validation;
 
 namespace WPR.Dialogs;
 

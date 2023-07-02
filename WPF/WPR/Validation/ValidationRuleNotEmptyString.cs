@@ -1,7 +1,7 @@
 ﻿using System.Globalization;
-using WPR.MVVM.Validation.Base;
+using WPR.Validation.Base;
 
-namespace WPR.MVVM.Validation;
+namespace WPR.Validation;
 
 /// <summary>Строка не может быть пустой</summary>
 public class ValidationRuleNotEmptyString : ValidationBase

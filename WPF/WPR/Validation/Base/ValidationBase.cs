@@ -1,7 +1,7 @@
 ﻿using System.Globalization;
 using System.Windows.Controls;
 
-namespace WPR.MVVM.Validation.Base;
+namespace WPR.Validation.Base;
 
 /// <summary>Базовый класс валидаций</summary>
 public abstract class ValidationBase : ValidationRule
