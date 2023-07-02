@@ -15,9 +15,7 @@
         <Button Command="{Binding CommandWithTextCommand}" 
                 Content="{Binding CommandWithTextCommand.Text}"
                 ToolTip="{Binding CommandWithTextCommand}"/>
-        <Button Command="{Binding CommandWithKeyGestureCommand}" 
-                Content="{Binding CommandWithKeyGestureCommand.Text}"
-                ToolTip="{Binding CommandWithKeyGestureCommand}"/>
+       
 
         <TextBox Margin="5" x:Name="Tbox" helpers:TextHelper.Hint="Введите текст"/>
         <Button Command="{Binding GenericCommand}" CommandParameter="{Binding Text, ElementName=Tbox}">Шаблонная команда</Button>

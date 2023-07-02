@@ -38,11 +38,11 @@ public abstract class BaseCommand : ICommand, INotifyPropertyChanged
     public bool IsCanExecute
     {
         get => _IsCanExecute;
-        set
+        private set
         {
             if (Equals(_IsCanExecute, value)) return;
             _IsCanExecute = value;
-            CanExecuteChanged?.Invoke(this, EventArgs.Empty);
+            //CanExecuteChanged?.Invoke(this, EventArgs.Empty);
             OnPropertyChanged();
         }
     }
