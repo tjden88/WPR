@@ -1,6 +1,5 @@
 ﻿using System.ComponentModel;
 using System.Runtime.CompilerServices;
-using System.Windows;
 
 namespace WPR.MVVM.ViewModels;
 
@@ -8,7 +7,7 @@ public abstract partial class ViewModel : INotifyPropertyChanged
 {
 
     /// <summary>Признак того, что мы находимся в режиме разработки под Visual Studio</summary>
-    public static bool IsDesignMode => DesignerProperties.GetIsInDesignMode(new DependencyObject());
+    public static bool IsDesignMode => (LicenseManager.UsageMode == LicenseUsageMode.Designtime);
 
     /// <summary>
     /// Создать класс базовой модели-представления
