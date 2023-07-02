@@ -38,6 +38,29 @@ namespace WPR.Tools
         }
 
         /// <summary>
+        /// Создать копию объекта асинхронно
+        /// </summary>
+        /// <returns>default, если не удалось</returns>
+        [Obsolete("Не тестировалось")]
+        public static async Task<T> CopyObjectAsync<T>(T obj, CancellationToken cancel = default)
+        {
+            try
+            {
+                await using var stream = new MemoryStream();
+                var options = new JsonSerializerOptions { WriteIndented = true, Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping, };
+                await JsonSerializer.SerializeAsync(stream, obj, options, cancel).ConfigureAwait(false);
+                stream.Position = 0;
+                return await JsonSerializer.DeserializeAsync<T>(stream, cancellationToken: cancel).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine(e.Message, "DataSerializer");
+                LastOperationException = e;
+                return default;
+            }
+        }
+
+        /// <summary>
         /// Сохранить объект в файл
         /// </summary>
         /// <param name="obj">Исходный объект</param>
@@ -75,7 +98,7 @@ namespace WPR.Tools
             {
                 await using var stream = new FileStream(FileName, FileMode.Create, FileAccess.Write);
                 var options = new JsonSerializerOptions { WriteIndented = true, Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping, }; 
-                await JsonSerializer.SerializeAsync(stream, obj, options, cancel);
+                await JsonSerializer.SerializeAsync(stream, obj, options, cancel).ConfigureAwait(false);
                 return true;
             }
             catch (Exception e)
@@ -113,6 +136,7 @@ namespace WPR.Tools
         /// Загрузить из файла
         /// </summary>
         /// <param name="FileName">Имя файла</param>
+        /// <param name="cancel">Токен отмены</param>
         /// <returns>default, если не удалось</returns>
         public static async Task<T> LoadFromFileAsync<T>(string FileName, CancellationToken cancel = default)
         {
@@ -122,7 +146,7 @@ namespace WPR.Tools
             {
                 var options = new JsonSerializerOptions { WriteIndented = true, Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping, };
                 await using var stream = new FileStream(FileName, FileMode.Open, FileAccess.Read);
-                return await JsonSerializer.DeserializeAsync<T>(stream, options, cancel);
+                return await JsonSerializer.DeserializeAsync<T>(stream, options, cancel).ConfigureAwait(false);
             }
             catch (Exception e)
             {
