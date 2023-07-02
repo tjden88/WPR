@@ -42,7 +42,7 @@ public abstract class EditEntityViewModel : ValidationViewModel
     }
 
     /// <summary> Имеются ли изменённые свойства модели </summary>
-    public bool HasChanges => Properties.Any();
+    public virtual bool HasChanges => Properties.Any();
 
 
     /// <summary> Зафиксировать изменения </summary>
