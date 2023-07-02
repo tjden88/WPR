@@ -3,7 +3,7 @@
                     xmlns:helpers="clr-namespace:WPR.Helpers"
                     xmlns:controls="clr-namespace:WPR.Controls"
                     xmlns:animations="clr-namespace:WPR.Extensions.Animations"
-                    xmlns:commands="clr-namespace:WPR.MVVM.Commands;assembly=WPR.MVVM">
+                    xmlns:commands="clr-namespace:WPR.Commands">
 
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="Base.xaml"/>

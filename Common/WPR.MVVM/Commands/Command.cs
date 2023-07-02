@@ -15,12 +15,12 @@ public class Command : BaseCommand
     {
     }
 
-    public Command(Action Execute, Func<bool> CanExecute = null, string CommandText = null)
+    public Command(Action Execute, Func<bool> CanExecute, string CommandText = null)
         : this(P => Execute(), CanExecute is null ? null : _ => CanExecute(), CommandText)
     {
     }
 
-    public Command(Action<object> Execute, Predicate<object> CanExecute, string CommandText)
+    public Command(Action<object> Execute, Predicate<object> CanExecute = null, string CommandText = null)
     {
         _Execute = Execute ?? throw new ArgumentNullException(nameof(Execute));
         _CanExecute = CanExecute;

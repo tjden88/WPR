@@ -3,14 +3,31 @@ using System.Linq;
 using System.Windows.Controls;
 using System.Windows.Input;
 using WPR.Demo.Services.Interfaces;
-using WPR.MVVM.ViewModels;
 using WPR.ColorTheme;
-using WPR.MVVM.Commands.Base;
+using WPR.MVVM.Commands;
+using WPR.MVVM.ViewModels;
 
 namespace WPR.Demo.ViewModels
 {
-    internal class MainWindowViewModel : WindowViewModel
+    internal class MainWindowViewModel :ViewModel
     {
+
+        #region Title : string - Заголовок
+
+        /// <summary>Заголовок</summary>
+        private string _Title;
+
+        /// <summary>Заголовок</summary>
+        public string Title
+        {
+            get => _Title;
+            set => Set(ref _Title, value);
+        }
+
+        #endregion
+
+        
+
         #region Command SetNewStyleCommand - Установить рандомный стиль
 
         private ICommand _SetNewStyleCommand;

@@ -2,7 +2,7 @@
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using WPR.MVVM.Commands.Base;
+using WPR.MVVM.Commands;
 
 namespace WPR.Dialogs.Base;
 

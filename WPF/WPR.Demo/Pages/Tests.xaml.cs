@@ -23,7 +23,7 @@ namespace WPR.Demo.Pages
 
         /// <summary>Тестовая команда</summary>
         public Command TestCommand => _TestCommand
-            ??= new Command(OnTestCommandExecuted, CanTestCommandExecute, "Тестовая команда", new KeyGesture(Key.A, ModifierKeys.Control), Application.Current.MainWindow);
+            ??= new Command(OnTestCommandExecuted, CanTestCommandExecute, "Тестовая команда");
 
         /// <summary>Проверка возможности выполнения - Тестовая команда</summary>
         private bool CanTestCommandExecute() => true;
