@@ -1,6 +1,6 @@
 ﻿using System.Runtime.CompilerServices;
 
-namespace WPR.MVVM.ViewModels;
+namespace WPR.Domain.ViewModels;
 
 /// <summary>
 /// Базовая модель для редактирования сущности.

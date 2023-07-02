@@ -2,7 +2,7 @@
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
-namespace WPR.MVVM.ViewModels;
+namespace WPR.Domain.ViewModels;
 
 /// <summary>
 /// Вьюмодель с возможностью валидации данных при изменении свойств

@@ -1,4 +1,4 @@
-﻿using WPR.MVVM.ViewModels;
+﻿using WPR.Domain.ViewModels;
 
 namespace WPR.Demo.ViewModels
 {

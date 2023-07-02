@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
-namespace WPR.MVVM.ViewModels;
+namespace WPR.Domain.ViewModels;
 
 public abstract partial class ViewModel : INotifyPropertyChanged
 {

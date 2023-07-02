@@ -1,4 +1,4 @@
-﻿namespace WPR.MVVM.ViewModels;
+﻿namespace WPR.Domain.ViewModels;
 
 partial class ViewModel
 {
