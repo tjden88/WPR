@@ -4,7 +4,7 @@ using System.Windows;
 using System.Windows.Data;
 using System.Windows.Markup;
 
-namespace WPR.MVVM.Converters.Base;
+namespace WPR.Converters.Base;
 
 /// <summary> Конвертер с возможостью привязки другого конвертера </summary>
 public class DependencyConverter : Freezable, IValueConverter

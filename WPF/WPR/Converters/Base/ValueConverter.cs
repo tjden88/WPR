@@ -1,6 +1,6 @@
 ﻿using System.Globalization;
 
-namespace WPR.MVVM.Converters.Base;
+namespace WPR.Converters.Base;
 
 /// <summary>Конвертации значения лямбда - функцией</summary>
 public class ValueConverter : Converter

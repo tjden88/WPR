@@ -1,8 +1,8 @@
 ﻿using System.Globalization;
 using System.Windows.Data;
-using WPR.MVVM.Converters.Base;
+using WPR.Converters.Base;
 
-namespace WPR.MVVM.Converters;
+namespace WPR.Converters;
 
 /// <summary>
 /// Возвращает обратное значение

@@ -1,5 +1,4 @@
-﻿using System;
-using System.Windows;
+﻿using System.Windows;
 using WPR.Controls.Base;
 
 namespace WPR.Controls;

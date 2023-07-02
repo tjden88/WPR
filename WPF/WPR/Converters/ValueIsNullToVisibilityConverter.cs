@@ -1,9 +1,9 @@
 ﻿using System.Globalization;
 using System.Windows;
 using System.Windows.Data;
-using WPR.MVVM.Converters.Base;
+using WPR.Converters.Base;
 
-namespace WPR.MVVM.Converters;
+namespace WPR.Converters;
 
 /// <summary>
 /// Скрывает объект, если Value - пустая ссылка или пустая строка

@@ -1,7 +1,7 @@
 ﻿using System.Globalization;
 using System.Windows.Data;
 
-namespace WPR.MVVM.Converters.Base;
+namespace WPR.Converters.Base;
 
 /// <summary> Типизированный конвертер </summary>
 public class TypeConverter<T> : IValueConverter where T : class

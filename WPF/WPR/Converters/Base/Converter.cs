@@ -2,7 +2,7 @@
 using System.Windows.Data;
 using System.Windows.Markup;
 
-namespace WPR.MVVM.Converters.Base;
+namespace WPR.Converters.Base;
 
 /// <summary>Конвертер величин</summary>
 public abstract class Converter : MarkupExtension, IValueConverter

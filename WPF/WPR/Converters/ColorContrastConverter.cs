@@ -1,9 +1,9 @@
 ﻿using System.Globalization;
 using System.Windows.Data;
 using System.Windows.Media;
-using WPR.MVVM.Converters.Base;
+using WPR.Converters.Base;
 
-namespace WPR.MVVM.Converters;
+namespace WPR.Converters;
 
 /// <summary>
 /// Возвращает светлый или тёмный в зависимости от значения
