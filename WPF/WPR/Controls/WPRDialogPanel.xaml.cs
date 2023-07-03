@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Reflection;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -276,9 +277,27 @@ internal class WPRDialogPanel : HeaderedContentControl
         }
         else
         {
-            _WPRDialog?.SetDialogResult?.Invoke(false);
+            RaiseEvent(_WPRDialog, "Completed");
             Hide();
         }
+    }
+
+    private const BindingFlags StaticFlags = BindingFlags.Instance | BindingFlags.NonPublic;
+
+    private static void RaiseEvent(object instance, string eventName)
+    {
+        var type = instance?.GetType();
+        if (type == null) return;
+        var eventField = type.GetField(eventName, StaticFlags);
+        if (eventField == null)
+            throw new Exception($"Event with name {eventName} could not be found.");
+        if (eventField.GetValue(instance) is not Action<bool> multicastDelegate)
+            return;
+
+        var invocationList = multicastDelegate.GetInvocationList();
+
+        foreach (var invocationMethod in invocationList)
+            invocationMethod.DynamicInvoke(false);
     }
 
     #endregion

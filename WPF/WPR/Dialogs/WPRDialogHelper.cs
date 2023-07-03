@@ -138,7 +138,7 @@ public static class WPRDialogHelper
             Style = _ModalWindowStyle
         };
 
-        Content.SetDialogResult += B =>
+        Content.Completed += B =>
         {
             result = B;
             dlg.Close();
@@ -347,7 +347,7 @@ public static class WPRDialogHelper
         if (panel is null)
         {
             var dlg = new WPRDialog(inputDialog);
-            inputDialog.DialogResult += b => dlg.SetResult(b == true);
+            inputDialog.DialogResult += b => dlg.RaiseCompleted(b == true);
 
             var result = ShowCustomModal(sender, dlg);
             Callback?.Invoke(result, inputDialog.TextValue);
@@ -420,7 +420,7 @@ public static class WPRDialogHelper
             return;
         }
 
-        Content.SetDialogResult += b =>
+        Content.Completed += b =>
         {
             panel.Hide();
             Callback?.Invoke(b);

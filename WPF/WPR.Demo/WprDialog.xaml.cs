@@ -17,16 +17,17 @@ namespace WPR.Demo
         }
 
 
-        public Action<bool> SetDialogResult { get; set; }
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            SetDialogResult?.Invoke(false);
+            Completed?.Invoke(false);
         }
 
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
-            SetDialogResult?.Invoke(true);
+            Completed?.Invoke(true);
         }
+
+        public event Action<bool> Completed;
     }
 }

@@ -118,8 +118,7 @@ namespace WPR.Demo.Pages
             private readonly Dialogs _Parent;
             private int _Count;
 
-            public Action<bool> SetDialogResult { get; set; }
-
+            public event Action<bool> Completed;
             public object DialogContent { get; set; }
             public bool StaysOpen => false;
 

@@ -4,7 +4,7 @@ namespace WPR.Domain.Models.Dialogs;
 
 /// <summary>
 /// Базовая реализация диалога
-/// Для вызова результат действия необходимо выполнить метод SetResult
+/// Для вызова результат действия необходимо выполнить метод RaiseCompleted
 /// </summary>
 public class WPRDialog : IWPRDialog
 {
@@ -16,12 +16,12 @@ public class WPRDialog : IWPRDialog
     }
 
     /// <summary> Установить результат диалога </summary>
-    public void SetResult(bool result)
+    public void RaiseCompleted(bool result)
     {
-        SetDialogResult?.Invoke(result);
+        Completed?.Invoke(result);
     }
 
-    public Action<bool>? SetDialogResult { get; set; }
+    public event Action<bool>? Completed;
 
     public object DialogContent { get; }
 

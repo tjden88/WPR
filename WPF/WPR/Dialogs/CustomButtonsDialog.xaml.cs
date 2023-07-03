@@ -123,5 +123,6 @@ public class CustomButtonsDialog : DialogBase, IWPRDialog
     /// <summary> Результат выполнения базового диалога </summary>
     public bool? DialogBaseResult { get; set; }
 
-    
+
+    public event Action<bool> Completed;
 }
