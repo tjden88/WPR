@@ -45,7 +45,7 @@ public abstract class EditEntityViewModel : ValidationViewModel
     public virtual bool HasChanges => Properties.Any();
 
 
-    /// <summary> Зафиксировать изменения </summary>
+    /// <summary> Зафиксировать изменения и очистить свойства </summary>
     public virtual void CommitChanges()
     {
         OnCommitChanges();

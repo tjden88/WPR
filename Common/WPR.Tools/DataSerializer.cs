@@ -4,6 +4,7 @@ using System.IO;
 using System.Text;
 using System.Text.Encodings.Web;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -47,7 +48,12 @@ namespace WPR.Tools
             try
             {
                 await using var stream = new MemoryStream();
-                var options = new JsonSerializerOptions { WriteIndented = true, Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping, };
+                var options = new JsonSerializerOptions
+                {
+                    WriteIndented = true,
+                    Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
+                    DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull
+                };
                 await JsonSerializer.SerializeAsync(stream, obj, options, cancel).ConfigureAwait(false);
                 stream.Position = 0;
                 return await JsonSerializer.DeserializeAsync<T>(stream, cancellationToken: cancel).ConfigureAwait(false);
@@ -70,7 +76,13 @@ namespace WPR.Tools
         {
             try
             {
-                var options = new JsonSerializerOptions { WriteIndented = true, Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping, };
+                var options = new JsonSerializerOptions
+                {
+                    WriteIndented = true,
+                    Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
+                    DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull
+                };
+
                 var serialized = JsonSerializer.Serialize(obj, options);
 
                 File.WriteAllText(FileName, serialized, Encoding.UTF8);
@@ -97,7 +109,14 @@ namespace WPR.Tools
             try
             {
                 await using var stream = new FileStream(FileName, FileMode.Create, FileAccess.Write);
-                var options = new JsonSerializerOptions { WriteIndented = true, Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping, }; 
+
+                var options = new JsonSerializerOptions
+                {
+                    WriteIndented = true,
+                    Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
+                    DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull
+                };
+                    
                 await JsonSerializer.SerializeAsync(stream, obj, options, cancel).ConfigureAwait(false);
                 return true;
             }
@@ -121,8 +140,15 @@ namespace WPR.Tools
                 return default;
             try
             {
+                var options = new JsonSerializerOptions
+                {
+                    WriteIndented = true,
+                    Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
+                    DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull
+                };
+
                 var jsonString = File.ReadAllText(FileName);
-                return JsonSerializer.Deserialize<T>(jsonString);
+                return JsonSerializer.Deserialize<T>(jsonString, options);
             }
             catch (Exception e)
             {
@@ -144,7 +170,13 @@ namespace WPR.Tools
                 return default;
             try
             {
-                var options = new JsonSerializerOptions { WriteIndented = true, Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping, };
+                var options = new JsonSerializerOptions
+                {
+                    WriteIndented = true,
+                    Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
+                    DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull
+                };
+
                 await using var stream = new FileStream(FileName, FileMode.Open, FileAccess.Read);
                 return await JsonSerializer.DeserializeAsync<T>(stream, options, cancel).ConfigureAwait(false);
             }

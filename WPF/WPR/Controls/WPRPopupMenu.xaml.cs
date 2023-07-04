@@ -35,7 +35,28 @@ public class WPRPopupMenu : ContentControl
         set => SetValue(IconProperty, value);
     }
 
-    #endregion  
+    #endregion
+
+    #region IconSize : double - Размер значка
+
+    /// <summary>Размер значка</summary>
+    public static readonly DependencyProperty IconSizeProperty =
+        DependencyProperty.Register(
+            nameof(IconSize),
+            typeof(double),
+            typeof(WPRPopupMenu),
+            new PropertyMetadata(18d));
+
+    /// <summary>Размер значка</summary>
+    [Category("WPRPopupMenu")]
+    [Description("Размер значка")]
+    public double IconSize
+    {
+        get => (double) GetValue(IconSizeProperty);
+        set => SetValue(IconSizeProperty, value);
+    }
+
+    #endregion
 
 
 }

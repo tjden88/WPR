@@ -16,11 +16,13 @@
                             <Style TargetType="Menu" BasedOn="{StaticResource WPRVerticalMenu}"/>
                         </Grid.Resources>
                         <ToggleButton Style="{StaticResource WPRToolButton}"
+                                      Foreground="{TemplateBinding Foreground}"
                                       ToolTip="{Binding ToolTip, RelativeSource={RelativeSource TemplatedParent}}"
                                       VerticalAlignment="Center"
                                       Name="MenuButton">
                             <ToggleButton.Content>
-                                <local:WPRIcon Source="{Binding Icon, RelativeSource={RelativeSource TemplatedParent}}"/>
+                                <local:WPRIcon Source="{Binding Icon, RelativeSource={RelativeSource TemplatedParent}}"
+                                               IconSize="{Binding IconSize, RelativeSource={RelativeSource TemplatedParent}}"/>
                             </ToggleButton.Content>
                         </ToggleButton>
                         <local:WPRPopup IsOpen="{Binding IsChecked, ElementName=MenuButton}"
