@@ -6,7 +6,7 @@ namespace WPR.UiServices.UI;
 /// Отложенная загрузка зависимостей.
 /// Для предотвращения цмклических зависимостей
 /// </summary>
-public class LazilyResolved<T> : Lazy<T> where T : notnull
+class LazilyResolved<T> : Lazy<T> where T : notnull
 {
     public LazilyResolved(IServiceProvider serviceProvider)
         : base(serviceProvider.GetRequiredService<T>)
