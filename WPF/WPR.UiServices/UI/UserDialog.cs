@@ -121,7 +121,17 @@ public class UserDialog : IUserDialog
 
     public Task<string?> ShowFolderSelectDialogAsync(string Title, string InitPathName = "")
     {
-        throw new NotImplementedException();
+        var dialog = new FolderBrowserDialog
+        {
+            DefaultFolder = InitPathName,
+            Title = Title
+            
+        };
+
+        if (!dialog.ShowDialog())
+            return Task.FromResult<string?>(null);
+
+        return Task.FromResult(dialog.Folder);
     }
 
 
