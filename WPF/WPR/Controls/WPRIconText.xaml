@@ -15,7 +15,9 @@
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                                 Margin="{TemplateBinding Padding}"
                                 VerticalAlignment="{TemplateBinding VerticalContentAlignment}">
-                        <local:WPRIcon Source="{TemplateBinding IconSource}" Foreground="{TemplateBinding Foreground}"/>
+                        <local:WPRIcon x:Name="Icon" 
+                                       Source="{TemplateBinding IconSource}"
+                                       Foreground="{TemplateBinding IconForeground}"/>
                         <TextBlock Text="{TemplateBinding Text}" Foreground="{TemplateBinding Foreground}"
                                    Margin="5,0,0,0"
                                    FontStyle="{TemplateBinding FontStyle}"
@@ -23,6 +25,11 @@
                                    FontFamily="{TemplateBinding FontFamily}"
                                    FontWeight="{TemplateBinding FontWeight}"/>
                     </StackPanel>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IconForeground" Value="{x:Null}">
+                            <Setter TargetName="Icon" Property="Foreground" Value="{Binding Path=Foreground, RelativeSource={RelativeSource TemplatedParent}}"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>

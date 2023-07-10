@@ -84,7 +84,7 @@
                             SnapsToDevicePixels="True">
                         <ContentPresenter SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
                                           Margin="{TemplateBinding Padding}"
-                                          VerticalAlignment="Center"/>
+                                          VerticalAlignment="{Binding RelativeSource={RelativeSource AncestorType=DataGrid}, Path=VerticalContentAlignment}"/>
                     </Border>
                 </ControlTemplate>
             </Setter.Value>
@@ -307,7 +307,8 @@
         </Setter>
         <Style.Triggers>
             <Trigger Property="IsSelected" Value="True">
-                <Setter Property="Background" Value="{DynamicResource DividerColorBrush}" />
+                <Setter Property="Background" Value="{DynamicResource DividerColorBrush}">
+                </Setter>
             </Trigger>
             <Trigger Property="IsNewItem" Value="True">
                 <Setter Property="Margin" Value="{Binding NewItemMargin, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}"/>
@@ -328,6 +329,7 @@
         <Setter Property="ScrollViewer.PanningMode" Value="Both"/>
         <Setter Property="Stylus.IsFlicksEnabled" Value="False"/>
         <Setter Property="SelectionMode" Value="Single"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
         <Setter Property="BorderThickness" Value="1"></Setter>
         <!--<Setter Property="SelectionUnit" Value="CellOrRowHeader" />-->
         <Setter Property="Template">

@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media;
 using WPR.Icons;
 
 namespace WPR.Controls;
@@ -56,4 +57,25 @@ public class WPRIconText : Control
     }
 
     #endregion
+
+    #region IconForeground : Brush - Цвет иконки
+
+    /// <summary>Цвет иконки</summary>
+    public static readonly DependencyProperty IconForegroundProperty =
+        DependencyProperty.Register(
+            nameof(IconForeground),
+            typeof(Brush),
+            typeof(WPRIconText),
+            new PropertyMetadata(default(Brush)));
+
+    /// <summary>Цвет иконки</summary>
+    [Category("WPRIconText")]
+    [Description("Цвет иконки")]
+    public Brush IconForeground
+    {
+        get => (Brush) GetValue(IconForegroundProperty);
+        set => SetValue(IconForegroundProperty, value);
+    }
+
+    #endregion  
 }
