@@ -203,7 +203,7 @@
                                           DockPanel.Dock="Top"
                                           Focusable="False"
                                           Visibility="Hidden"
-                                          ItemsSource="{Binding (Validation.Errors) , RelativeSource={RelativeSource TemplatedParent}}">
+                                          ItemsSource="{Binding Path=(Validation.Errors) , RelativeSource={RelativeSource TemplatedParent}}">
                                 <ItemsControl.ItemTemplate>
                                     <DataTemplate>
                                         <TextBlock Foreground="{StaticResource DangerColorBrush}" 

@@ -85,7 +85,7 @@
                                           FontSize="{TemplateBinding FontSize}"
                                           FontFamily="{TemplateBinding FontFamily}"
                                           HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                          IsChecked="{Binding IsExpanded, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}" 
+                                          IsChecked="{Binding Path=IsExpanded, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}" 
                                           Padding="{TemplateBinding Padding}" 
                                           Style="{StaticResource WPRExpanderToggleButton}" 
                                           Tag="0"

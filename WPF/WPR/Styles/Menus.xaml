@@ -188,7 +188,7 @@
                         <Popup x:Name="PART_Popup"
                                AllowsTransparency="True"
                                Focusable="False"
-                               IsOpen="{Binding IsSubmenuOpen, RelativeSource={RelativeSource TemplatedParent}}"
+                               IsOpen="{Binding Path=IsSubmenuOpen, RelativeSource={RelativeSource TemplatedParent}}"
                                PopupAnimation="Slide"
                                Placement="Bottom">
                             <Border x:Name="SubMenuBorder" Margin="10"

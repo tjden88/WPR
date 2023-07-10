@@ -127,7 +127,7 @@
                                           helpers:ButtonHelper.BorderRadius="3"
                                           Height="32"
                                           Width="32"
-                                          IsChecked="{Binding IsOverflowOpen, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}" 
+                                          IsChecked="{Binding Path=IsOverflowOpen, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}" 
                                           Visibility="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=HasOverflowItems, Converter={StaticResource Bool2VisibilityConverter}}" 
                                           Foreground="{TemplateBinding Foreground}">
                                 <controls:WPRIcon Source="DotsVertical"/>
@@ -135,7 +135,7 @@
                             <Popup x:Name="OverflowPopup" 
                                    AllowsTransparency="true"
                                    Focusable="false" 
-                                   IsOpen="{Binding IsOverflowOpen, RelativeSource={RelativeSource TemplatedParent}}"
+                                   IsOpen="{Binding Path=IsOverflowOpen, RelativeSource={RelativeSource TemplatedParent}}"
                                    PopupAnimation="Scroll" 
                                    Placement="Bottom" 
                                    StaysOpen="false"

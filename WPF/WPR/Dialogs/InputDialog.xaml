@@ -26,7 +26,7 @@
                                        Text="{TemplateBinding Caption}"
                                        Margin="10"/>
                             <TextBox Margin="10" x:Name="TextBox" 
-                                     Text="{Binding ViewModel.Text, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                     Text="{Binding Path=ViewModel.Text, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="6">
                                 <Button x:Name="Cancel" Content="ОТМЕНА" Width="100" IsCancel="True" Style="{StaticResource WPRFlatButton}"
                                         Command="{TemplateBinding CancelCommand}"/>
@@ -37,7 +37,7 @@
                         </StackPanel>
                     </Grid>
                     <ControlTemplate.Triggers>
-                        <DataTrigger Binding="{Binding Caption, RelativeSource={RelativeSource TemplatedParent}}" Value="{x:Null}">
+                        <DataTrigger Binding="{Binding Path=Caption, RelativeSource={RelativeSource TemplatedParent}}" Value="{x:Null}">
                             <Setter TargetName="CaptionText" Property="Visibility" Value="Collapsed"/>
                         </DataTrigger>
                     </ControlTemplate.Triggers>

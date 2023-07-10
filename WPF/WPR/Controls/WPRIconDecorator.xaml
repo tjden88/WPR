@@ -21,15 +21,15 @@
                             <ColumnDefinition Width="Auto"/>
                             <ColumnDefinition/>
                         </Grid.ColumnDefinitions>
-                        <local:WPRIcon Source="{Binding Icon, RelativeSource={RelativeSource TemplatedParent}}"
+                        <local:WPRIcon Source="{Binding Path=Icon, RelativeSource={RelativeSource TemplatedParent}}"
                                        IconSize="18"
-                                       Foreground="{Binding Content.(helpers:ButtonHelper.MouseOverButtonBrush), RelativeSource={RelativeSource TemplatedParent}}"
+                                       Foreground="{Binding Path=Content.(helpers:ButtonHelper.MouseOverButtonBrush), RelativeSource={RelativeSource TemplatedParent}}"
                                        VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
                                        Margin="{TemplateBinding Padding}"/>
 
                         <ContentPresenter Grid.Column="1" 
                                           HorizontalAlignment="Stretch"
-                                          Content="{Binding Content, RelativeSource={RelativeSource TemplatedParent}}"/>
+                                          Content="{Binding Path=Content, RelativeSource={RelativeSource TemplatedParent}}"/>
                     </Grid>
                 </ControlTemplate>
             </Setter.Value>

@@ -17,17 +17,17 @@
                         </Grid.Resources>
                         <ToggleButton Style="{StaticResource WPRToolButton}"
                                       Foreground="{TemplateBinding Foreground}"
-                                      ToolTip="{Binding ToolTip, RelativeSource={RelativeSource TemplatedParent}}"
+                                      ToolTip="{Binding Path=ToolTip, RelativeSource={RelativeSource TemplatedParent}}"
                                       VerticalAlignment="Center"
                                       Name="MenuButton">
                             <ToggleButton.Content>
-                                <local:WPRIcon Source="{Binding Icon, RelativeSource={RelativeSource TemplatedParent}}"
-                                               IconSize="{Binding IconSize, RelativeSource={RelativeSource TemplatedParent}}"/>
+                                <local:WPRIcon Source="{Binding Path=Icon, RelativeSource={RelativeSource TemplatedParent}}"
+                                               IconSize="{Binding Path=IconSize, RelativeSource={RelativeSource TemplatedParent}}"/>
                             </ToggleButton.Content>
                         </ToggleButton>
-                        <local:WPRPopup IsOpen="{Binding IsChecked, ElementName=MenuButton}"
+                        <local:WPRPopup IsOpen="{Binding Path=IsChecked, ElementName=MenuButton}"
                                        CloseOnMouseButtonUp="True">
-                            <ContentPresenter Content="{Binding Content, RelativeSource={RelativeSource TemplatedParent}}"/>
+                            <ContentPresenter Content="{Binding Path=Content, RelativeSource={RelativeSource TemplatedParent}}"/>
                         </local:WPRPopup>
                     </Grid>
                 </ControlTemplate>

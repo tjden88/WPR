@@ -223,7 +223,7 @@
             <Popup x:Name="PART_Popup" AllowsTransparency="true"
                    Grid.ColumnSpan="2" 
                    MaxHeight="{TemplateBinding MaxDropDownHeight}"
-                   IsOpen="{Binding IsDropDownOpen, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
+                   IsOpen="{Binding Path=IsDropDownOpen, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
                    PlacementTarget="{Binding ElementName=PopupPlacement}"
                    PopupAnimation="Fade" Placement="Bottom">
                 <Grid Margin="10" x:Name="PopupContent" >
@@ -271,7 +271,7 @@
                           BorderThickness="{TemplateBinding BorderThickness}"
                           Background="{TemplateBinding Background}" 
                           Grid.ColumnSpan="2"
-                          IsChecked="{Binding IsDropDownOpen, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}" 
+                          IsChecked="{Binding Path=IsDropDownOpen, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}" 
                           Style="{StaticResource ComboBoxToggleButton}"/>
 
                 <ContentControl Grid.Row="0" Grid.Column="0" IsTabStop="False" x:Name="FloatingHint"
@@ -304,7 +304,7 @@
 
                 <TextBox Grid.Row="0" Grid.Column="0" x:Name="PART_EditableTextBox"
                          HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
-                         IsReadOnly="{Binding IsReadOnly, RelativeSource={RelativeSource TemplatedParent}}"
+                         IsReadOnly="{Binding Path=IsReadOnly, RelativeSource={RelativeSource TemplatedParent}}"
                          Margin="{TemplateBinding Padding}" 
                          Style="{StaticResource ComboBoxEditableTextBox}" 
                          Visibility="Hidden"
@@ -343,7 +343,7 @@
 
                 <ItemsControl Name="ErrorText" Visibility="Hidden" Grid.Row="1" Grid.Column="0" Margin="0"
                               Focusable="False"
-                              ItemsSource="{Binding (Validation.Errors) , RelativeSource={RelativeSource TemplatedParent}}">
+                              ItemsSource="{Binding Path=(Validation.Errors) , RelativeSource={RelativeSource TemplatedParent}}">
 
                     <ItemsControl.ItemTemplate>
                         <DataTemplate >
@@ -493,7 +493,7 @@
             <Grid Grid.Row="1">
                 <Popup x:Name="PART_Popup" AllowsTransparency="true"
                    MaxHeight="{TemplateBinding MaxDropDownHeight}"
-                   IsOpen="{Binding IsDropDownOpen, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
+                   IsOpen="{Binding Path=IsDropDownOpen, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
                    Margin="-10"
                    PopupAnimation="Fade" Placement="Bottom">
                     <Grid Margin="10" x:Name="PopupContent" >
@@ -516,7 +516,7 @@
                         BorderThickness="{TemplateBinding BorderThickness}"
                         UseLayoutRounding="False"
                         SnapsToDevicePixels="False"
-                        CornerRadius="{Binding (helpers:ButtonHelper.BorderRadius), RelativeSource={RelativeSource TemplatedParent}}">
+                        CornerRadius="{Binding Path=(helpers:ButtonHelper.BorderRadius), RelativeSource={RelativeSource TemplatedParent}}">
 
                     <Grid Margin="{TemplateBinding Padding}">
                         <Grid.ColumnDefinitions>
@@ -530,7 +530,7 @@
 
                         <ToggleButton x:Name="toggleButton" BorderBrush="{Binding BorderBrush, ElementName=Border}" 
                                       Grid.ColumnSpan="2"
-                                      IsChecked="{Binding IsDropDownOpen, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}" 
+                                      IsChecked="{Binding Path=IsDropDownOpen, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}" 
                                       Style="{StaticResource ComboBoxToggleButton}"/>
 
                         <!--Hint-->
@@ -559,7 +559,7 @@
                         <TextBox Grid.Row="0" Grid.Column="0" x:Name="PART_EditableTextBox"
                                  Margin="0,4,0,0"
                                  HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                 IsReadOnly="{Binding IsReadOnly, RelativeSource={RelativeSource TemplatedParent}}"
+                                 IsReadOnly="{Binding Path=IsReadOnly, RelativeSource={RelativeSource TemplatedParent}}"
                                  Style="{StaticResource ComboBoxEditableTextBox}" 
                                  Visibility="Hidden"
                                  VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"/>
@@ -584,7 +584,7 @@
                           Grid.Row="2"
                           Margin="0"
                           Focusable="False"
-                          ItemsSource="{Binding (Validation.Errors) , RelativeSource={RelativeSource TemplatedParent}}">
+                          ItemsSource="{Binding Path=(Validation.Errors) , RelativeSource={RelativeSource TemplatedParent}}">
 
                 <ItemsControl.ItemTemplate>
                     <DataTemplate >

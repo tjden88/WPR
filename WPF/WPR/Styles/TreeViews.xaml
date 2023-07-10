@@ -117,7 +117,7 @@
                             <RowDefinition/>
                         </Grid.RowDefinitions>
                         <ToggleButton x:Name="Expander" ClickMode="Press"
-                                      IsChecked="{Binding IsExpanded, RelativeSource={RelativeSource TemplatedParent}}"
+                                      IsChecked="{Binding Path=IsExpanded, RelativeSource={RelativeSource TemplatedParent}}"
                                       Style="{StaticResource WPRTreeViewToggleButton}"/>
                         <Border Grid.Row="0" Grid.Column="1" Name="SelectedBorder" Opacity="0" Background="{DynamicResource AnimationEnterColorBrush}"/>
                         <controls:ClippingBorder x:Name="ClippingBorder" ClipToBounds="True" Grid.Row="0" Grid.Column="1">

@@ -19,7 +19,7 @@
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type base:NumericDecorator}">
                     <Grid Background="{StaticResource TransparentBrush}">
-                        <ContentPresenter Content="{Binding TextBox, RelativeSource={RelativeSource TemplatedParent}}"></ContentPresenter>
+                        <ContentPresenter Content="{Binding Path= TextBox, RelativeSource={RelativeSource TemplatedParent}}"></ContentPresenter>
                         <StackPanel  Orientation="Horizontal"
                                      HorizontalAlignment="Right"
                                      VerticalAlignment="{TemplateBinding VerticalContentAlignment}"

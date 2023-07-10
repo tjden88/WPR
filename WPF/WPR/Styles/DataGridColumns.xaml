@@ -78,7 +78,7 @@
         <Grid x:Name="templateRoot" Margin="-8,0,-8,0" SnapsToDevicePixels="true">
             <Popup x:Name="PART_Popup" AllowsTransparency="true"
                    Grid.ColumnSpan="2" 
-                   IsOpen="{Binding IsDropDownOpen, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
+                   IsOpen="{Binding Path=IsDropDownOpen, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
                    PlacementTarget="{Binding ElementName=templateRoot}"
                    PopupAnimation="Fade" Placement="Bottom">
 
@@ -110,7 +110,7 @@
                           BorderThickness="{TemplateBinding BorderThickness}"
                           Background="{TemplateBinding Background}" 
                           Grid.ColumnSpan="2"
-                          IsChecked="{Binding IsDropDownOpen, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}" 
+                          IsChecked="{Binding Path=IsDropDownOpen, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}" 
                          Style="{StaticResource ComboBoxToggleButton}"
                               Visibility="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=DataGridCell}, Path=IsEditing,
                     Converter={StaticResource Bool2VisibilityConverter}}"/>
@@ -128,7 +128,7 @@
 
                 <TextBox x:Name="PART_EditableTextBox"
                          HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
-                         IsReadOnly="{Binding IsReadOnly, RelativeSource={RelativeSource TemplatedParent}}"
+                         IsReadOnly="{Binding Path=IsReadOnly, RelativeSource={RelativeSource TemplatedParent}}"
                          Margin="0" 
                          Style="{StaticResource WPRFlatTextBox}" 
                          Visibility="Hidden"
