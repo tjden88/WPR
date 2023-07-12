@@ -15,8 +15,8 @@
     <Style x:Key="WPRComboBoxItemStyle" TargetType="{x:Type ComboBoxItem}" BasedOn="{StaticResource BaseControl}">
         <Setter Property="SnapsToDevicePixels" Value="True" />
         <Setter Property="Padding" Value="16 8" />
-        <Setter Property="HorizontalContentAlignment" Value="{Binding HorizontalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}" />
-        <Setter Property="VerticalContentAlignment" Value="{Binding VerticalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}" />
+        <Setter Property="HorizontalContentAlignment" Value="{Binding Path=HorizontalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}" />
+        <Setter Property="VerticalContentAlignment" Value="{Binding Path= VerticalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type ComboBoxItem}">
@@ -227,7 +227,7 @@
                    PlacementTarget="{Binding ElementName=PopupPlacement}"
                    PopupAnimation="Fade" Placement="Bottom">
                 <Grid Margin="10" x:Name="PopupContent" >
-                    <Border  MinWidth="{Binding ActualWidth, ElementName=templateRoot}"
+                    <Border  MinWidth="{Binding  Path=ActualWidth, ElementName=templateRoot}"
                              Background="{DynamicResource SecondaryBackgroundColorBrush}"
                         
                         x:Name="dropDownBorder" 
@@ -315,7 +315,7 @@
                         ToolTip="Очистить выбор"
                         Margin="0,0,0,0"
                         Command="{StaticResource ClearCommand}"
-                        CommandParameter="{Binding RelativeSource={RelativeSource TemplatedParent}}"
+                        CommandParameter="{Binding  Path=., RelativeSource={RelativeSource TemplatedParent}}"
                         Style="{StaticResource WPRToolHiddenButton}"
                         VerticalAlignment="Center"
                         Visibility="{Binding Path=(helpers:TextHelper.ShowClearButton), RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource Bool2VisibilityConverter}}">
@@ -348,7 +348,7 @@
                     <ItemsControl.ItemTemplate>
                         <DataTemplate >
                             <TextBlock Foreground="{StaticResource DangerColorBrush}" 
-                                       Text="{Binding ErrorContent}"
+                                       Text="{Binding  Path=ErrorContent}"
                                        TextWrapping ="Wrap"
                                        FontSize="13"/>
                         </DataTemplate>
@@ -367,11 +367,11 @@
 
             <Trigger Property="IsMouseOver" Value="True">
                 <Setter Property="BorderBrush" 
-                        Value="{Binding Background, RelativeSource={RelativeSource Self}}"/>
+                        Value="{Binding  Path=Background, RelativeSource={RelativeSource Self}}"/>
             </Trigger>
             <Trigger Property="IsKeyboardFocused" Value="True">
                 <Setter Property="BorderBrush" 
-                        Value="{Binding Background, RelativeSource={RelativeSource Self}}"/>
+                        Value="{Binding  Path=Background, RelativeSource={RelativeSource Self}}"/>
             </Trigger>
             <MultiTrigger>
                 <MultiTrigger.Conditions>
@@ -448,7 +448,7 @@
                     <BeginStoryboard Storyboard="{StaticResource OutRect}"/>
                 </Trigger.ExitActions>
                 <Setter Property="BorderBrush" 
-                        Value="{Binding Background, RelativeSource={RelativeSource Self}}"/>
+                        Value="{Binding  Path=Background, RelativeSource={RelativeSource Self}}"/>
 
             </Trigger>
             <Trigger Property="HasItems" Value="false">
@@ -497,7 +497,7 @@
                    Margin="-10"
                    PopupAnimation="Fade" Placement="Bottom">
                     <Grid Margin="10" x:Name="PopupContent" >
-                        <Border  MinWidth="{Binding ActualWidth, ElementName=templateRoot}"
+                        <Border  MinWidth="{Binding  Path=ActualWidth, ElementName=templateRoot}"
                              Background="{DynamicResource SecondaryBackgroundColorBrush}"
                              x:Name="dropDownBorder" 
                              Effect="{StaticResource PopupSmallShadow}"
@@ -528,7 +528,7 @@
                             <RowDefinition Height="Auto"/>
                         </Grid.RowDefinitions>
 
-                        <ToggleButton x:Name="toggleButton" BorderBrush="{Binding BorderBrush, ElementName=Border}" 
+                        <ToggleButton x:Name="toggleButton" BorderBrush="{Binding  Path=BorderBrush, ElementName=Border}" 
                                       Grid.ColumnSpan="2"
                                       IsChecked="{Binding Path=IsDropDownOpen, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}" 
                                       Style="{StaticResource ComboBoxToggleButton}"/>
@@ -569,7 +569,7 @@
                                 ToolTip="Очистить выбор"
                                 Margin="0,0,0,0"
                                 Command="{StaticResource ClearCommand}"
-                                CommandParameter="{Binding RelativeSource={RelativeSource TemplatedParent}}"
+                                CommandParameter="{Binding Path=., RelativeSource={RelativeSource TemplatedParent}}"
                                 Style="{StaticResource WPRToolHiddenButton}"
                                 VerticalAlignment="Center"
                                 Visibility="{Binding Path=(helpers:TextHelper.ShowClearButton), RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource Bool2VisibilityConverter}}">
@@ -589,7 +589,7 @@
                 <ItemsControl.ItemTemplate>
                     <DataTemplate >
                         <TextBlock Foreground="{StaticResource DangerColorBrush}" 
-                                   Text="{Binding ErrorContent}"
+                                   Text="{Binding  Path=ErrorContent}"
                                    TextWrapping ="Wrap"
                                    FontSize="13"/>
                     </DataTemplate>
@@ -609,17 +609,17 @@
 
             <Trigger Property="IsMouseOver" Value="True">
                 <Setter Property="BorderBrush" TargetName="Border"
-                        Value="{Binding (helpers:ButtonHelper.MouseOverButtonBrush), RelativeSource={RelativeSource AncestorType=ComboBox}}"/>
+                        Value="{Binding  Path=(helpers:ButtonHelper.MouseOverButtonBrush), RelativeSource={RelativeSource AncestorType=ComboBox}}"/>
             </Trigger>
 
             <Trigger Property="IsDropDownOpen" Value="True">
                 <Setter Property="BorderBrush" TargetName="Border"
-                        Value="{Binding (helpers:ButtonHelper.MouseOverButtonBrush), RelativeSource={RelativeSource AncestorType=ComboBox}}"/>
+                        Value="{Binding  Path=(helpers:ButtonHelper.MouseOverButtonBrush), RelativeSource={RelativeSource AncestorType=ComboBox}}"/>
             </Trigger>
 
             <Trigger Property="IsKeyboardFocused" SourceName="PART_EditableTextBox" Value="True">
                 <Setter Property="BorderBrush" TargetName="Border"
-                        Value="{Binding (helpers:ButtonHelper.MouseOverButtonBrush), RelativeSource={RelativeSource AncestorType=ComboBox}}"/>
+                        Value="{Binding  Path=(helpers:ButtonHelper.MouseOverButtonBrush), RelativeSource={RelativeSource AncestorType=ComboBox}}"/>
             </Trigger>
 
             <MultiTrigger>
