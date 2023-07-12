@@ -1,6 +1,5 @@
 ﻿using System;
 using System.ComponentModel;
-using System.Diagnostics;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
@@ -21,7 +20,7 @@ public class WPRPopup : Popup
     private bool _StaysOpenIsChangeg; //Определить, изменили ли временно свойство для закрытия с анимацией
     private readonly Grid _RootGrid = new() { Background = Brushes.Transparent };
     private readonly WPRCard _RootCard = new() { IsPopupShadowStyle = true };
-    private readonly Thumb _Thumb = new() { Width = 0, Height = 0 };
+    private readonly Thumb _Thumb = new() { Width =0, Height = 0};
 
     static WPRPopup()
     {
@@ -174,7 +173,13 @@ public class WPRPopup : Popup
     {
         base.OnMouseDown(e);
         if (e.ChangedButton == MouseButton.Left && e.ClickCount == 1)
-            _Thumb.RaiseEvent(e);
+        {
+            var evt = new MouseButtonEventArgs(e.MouseDevice, e.Timestamp, MouseButton.Left)
+            {
+                RoutedEvent = MouseLeftButtonDownEvent
+            };
+            _Thumb.RaiseEvent(evt);
+        }
     }
 
     private void OnMouseUp(object Sender, MouseButtonEventArgs E)
@@ -233,6 +238,7 @@ public class WPRPopup : Popup
                     _StaysOpenIsChangeg = true;
                     StaysOpen = true;
                     Hide();
+                    e.Handled = true;
                 }
             }
         }
