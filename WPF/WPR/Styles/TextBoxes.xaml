@@ -13,7 +13,7 @@
 
     <Style x:Key="WPRTextBox" TargetType="{x:Type TextBox}" BasedOn="{StaticResource BaseControl}">
         <Setter Property="ContextMenu" Value="{StaticResource WPRDefaultContextMenu}"/>
-        <Setter Property="helpers:ButtonHelper.MouseOverButtonBrush" Value="{Binding BorderBrush, RelativeSource={RelativeSource Self}}"/>
+        <Setter Property="helpers:ButtonHelper.MouseOverButtonBrush" Value="{Binding Path= BorderBrush, RelativeSource={RelativeSource Self}}"/>
         <Setter Property="BorderBrush" Value="{DynamicResource DividerColorBrush}"/>
         <Setter Property="BorderThickness" Value="1"/>
         <Setter Property="Background" Value="{DynamicResource PrimaryColorBrush}"/>
@@ -42,7 +42,7 @@
                                             Margin="0,3">
                                 <ContentControl.RenderTransform>
                                     <TransformGroup>
-                                        <TranslateTransform x:Name="TranslateTransform" Y="{Binding ActualHeight, ElementName=ContentGrid, Converter={StaticResource SignPlusMinusConverter}}"/>
+                                        <TranslateTransform x:Name="TranslateTransform" Y="{Binding  Path= ActualHeight, ElementName=ContentGrid, Converter={StaticResource SignPlusMinusConverter}}"/>
                                         <ScaleTransform x:Name="ScaleTransform" ScaleX="0.9" ScaleY="{Binding Path=ScaleX, RelativeSource={RelativeSource Self}}"/>
                                     </TransformGroup>
                                 </ContentControl.RenderTransform>
@@ -85,7 +85,7 @@
                             <ItemsControl.ItemTemplate>
                                 <DataTemplate >
                                     <TextBlock Foreground="{StaticResource DangerColorBrush}" 
-                                               Text="{Binding ErrorContent}"
+                                               Text="{Binding  Path= ErrorContent}"
                                                TextWrapping ="Wrap"
                                                FontSize="13"/>
                                 </DataTemplate>
@@ -147,16 +147,16 @@
                             </MultiTrigger.ExitActions>
                         </MultiTrigger>
                         <Trigger Property="IsMouseOver" Value="True" SourceName="ContentGrid">
-                            <Setter Property="helpers:ButtonHelper.MouseOverButtonBrush" Value="{Binding Background, RelativeSource={RelativeSource Self}}"/>
+                            <Setter Property="helpers:ButtonHelper.MouseOverButtonBrush" Value="{Binding  Path= Background, RelativeSource={RelativeSource Self}}"/>
                             <Setter Property="BorderBrush" TargetName="BottomRect"
-                                    Value="{Binding Background, RelativeSource={RelativeSource AncestorType=TextBox}}"/>
+                                    Value="{Binding  Path= Background, RelativeSource={RelativeSource AncestorType=TextBox}}"/>
                         </Trigger>
                         <Trigger Property="IsKeyboardFocused" Value="True">
-                            <Setter Property="helpers:ButtonHelper.MouseOverButtonBrush" Value="{Binding Background, RelativeSource={RelativeSource Self}}"/>
+                            <Setter Property="helpers:ButtonHelper.MouseOverButtonBrush" Value="{Binding  Path= Background, RelativeSource={RelativeSource Self}}"/>
                             <Setter Property="BorderBrush" TargetName="BottomRect"
-                                    Value="{Binding Background, RelativeSource={RelativeSource AncestorType=TextBox}}"/>
+                                    Value="{Binding  Path= Background, RelativeSource={RelativeSource AncestorType=TextBox}}"/>
                             <Setter Property="Fill" TargetName="Rectangle"
-                                    Value="{Binding Background, RelativeSource={RelativeSource AncestorType=TextBox}}"/>
+                                    Value="{Binding  Path= Background, RelativeSource={RelativeSource AncestorType=TextBox}}"/>
 
                             <Trigger.EnterActions>
                                 <BeginStoryboard>
@@ -305,7 +305,7 @@
                         <ContentControl Foreground="{DynamicResource SecondaryColorBrush}"
                                         Content="{Binding Path=(helpers:TextHelper.Description), RelativeSource={RelativeSource TemplatedParent}}"
                                         Margin="0,0,0,6"
-                                        Visibility="{Binding Content, RelativeSource={RelativeSource Self}, Converter={StaticResource ValueIsNullToVisibilityConverter}}"/>
+                                        Visibility="{Binding  Path= Content, RelativeSource={RelativeSource Self}, Converter={StaticResource ValueIsNullToVisibilityConverter}}"/>
 
                         <Border Grid.Row="1"
                                 BorderBrush="{TemplateBinding BorderBrush}"
@@ -376,12 +376,12 @@
 
                         <Trigger Property="IsMouseOver" SourceName="TextBorder" Value="True">
                             <Setter Property="BorderBrush"  TargetName="TextBorder"
-                                    Value="{Binding (helpers:ButtonHelper.MouseOverButtonBrush), RelativeSource={RelativeSource AncestorType=TextBox}}"/>
+                                    Value="{Binding  Path= (helpers:ButtonHelper.MouseOverButtonBrush), RelativeSource={RelativeSource AncestorType=TextBox}}"/>
                         </Trigger>
 
                         <Trigger Property="IsKeyboardFocused" Value="True">
                             <Setter Property="BorderBrush"  TargetName="TextBorder"
-                                    Value="{Binding (helpers:ButtonHelper.MouseOverButtonBrush), RelativeSource={RelativeSource AncestorType=TextBox}}"/>
+                                    Value="{Binding  Path= (helpers:ButtonHelper.MouseOverButtonBrush), RelativeSource={RelativeSource AncestorType=TextBox}}"/>
                         </Trigger>
 
                         <Trigger Property="Text" Value="">
