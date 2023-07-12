@@ -172,7 +172,7 @@ public class WPRPopup : Popup
     protected override void OnMouseDown(MouseButtonEventArgs e)
     {
         base.OnMouseDown(e);
-        if (e.ChangedButton == MouseButton.Left && e.ClickCount == 1)
+        if (AllowMouseMove && e.ChangedButton == MouseButton.Left && e.ClickCount == 1)
         {
             var evt = new MouseButtonEventArgs(e.MouseDevice, e.Timestamp, MouseButton.Left)
             {
