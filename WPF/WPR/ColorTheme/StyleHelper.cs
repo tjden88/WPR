@@ -17,7 +17,17 @@ public static class StyleHelper
     public static event EventHandler StyleChanged;
 
     /// <summary>Установлена ли тёмная тема</summary>
-    public static bool IsDarkTheme => StyleColors._DarkColor == StyleColors.BackgroundColor;
+    public static bool IsDarkTheme
+    {
+        get => StyleColors._DarkColor == StyleColors.BackgroundColor;
+        set
+        {
+            if(value)
+                SetDarkColorTheme();
+            else
+                SetLightColorTheme();
+        }
+    }
 
 
     /// <summary>Задать новый рандомный стиль (цветовую палитру) элементам управления</summary>
