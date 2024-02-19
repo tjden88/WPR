@@ -16,7 +16,7 @@
         <Setter Property="WindowChrome.IsHitTestVisibleInChrome" Value="True" />
         <Setter Property="Focusable" Value="False"/>
         <Setter Property="Background" Value="{StaticResource TransparentBrush}"></Setter>
-        <Setter Property="Foreground" Value="{Binding Foreground, RelativeSource={RelativeSource AncestorType=Window}}" />
+        <Setter Property="Foreground" Value="{Binding Path=(wh:WindowHelper.HeaderButtonsForeground), RelativeSource={RelativeSource AncestorType=Window}}" />
         <Setter Property="wh:ButtonHelper.BorderRadius" Value="0"/>
     </Style>
 
@@ -312,7 +312,7 @@
         </Setter>
         <Setter Property="BorderBrush" Value="{DynamicResource PrimaryColorBrush}" />
         <Setter Property="Background" Value="{DynamicResource BackgroundColorBrush}"/>
-        <Setter Property="Foreground" Value="{DynamicResource WindowTitleBackgroundContrastColorBrush}"></Setter>
+        <Setter Property="wh:WindowHelper.HeaderButtonsForeground" Value="{DynamicResource WindowTitleBackgroundContrastColorBrush}"></Setter>
         <!--<Setter Property="UseLayoutRounding" Value="True"/>-->
         <Setter Property="Template" Value="{StaticResource ChromeWindowTemplate}"/>
     </Style>
@@ -320,7 +320,7 @@
     <!--Окно с полной клиентской областью-->
     <Style x:Key="NoTitledWindow" TargetType="{x:Type Window}" BasedOn="{StaticResource ChromeWindow}">
         <Setter Property="Template" Value="{StaticResource NoTitledWindowTemplate}"/>
-        <Setter Property="Foreground" Value="{DynamicResource TextColorBrush}"></Setter>
+        <Setter Property="wh:WindowHelper.HeaderButtonsForeground" Value="{DynamicResource TextColorBrush}"></Setter>
 
     </Style>
 
