@@ -342,6 +342,7 @@ public static class WPRDialogHelper
         InputDialog inputDialog = new(ValidationRules, DefaultValue)
         {
             Title = Title,
+            Caption = Caption,
         };
 
         if (panel is null)
