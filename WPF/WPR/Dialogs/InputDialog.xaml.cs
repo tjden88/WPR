@@ -73,7 +73,7 @@ public class InputDialog : DialogBase
         set => SetValue(CaptionProperty, value);
     }
 
-    #endregion
+    #endregion  
 
 
     /// <summary> Результат ввода пользователя </summary>
