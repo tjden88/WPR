@@ -27,7 +27,8 @@
                 <ControlTemplate TargetType="{x:Type Thumb}">
                     <Border CornerRadius="6"                           
                             Background="{DynamicResource LightPrimaryColorBrush}"
-                            BorderThickness="1" />
+                            BorderThickness="1" 
+                            BorderBrush="{DynamicResource BackgroundColorBrush}"/>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
