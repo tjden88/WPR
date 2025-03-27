@@ -8,7 +8,7 @@ namespace WPR.Demo.Services
 {
     class GetPages : IGetPages
     {
-        const string Nspace = "WPR.Demo.Pages";
+        private const string Nspace = "WPR.Demo.Pages";
 
         public IEnumerable<Page> GetAllPages()
         {
@@ -16,7 +16,12 @@ namespace WPR.Demo.Services
                 .SelectMany(t => t.GetTypes())
                 .Where(t => t.BaseType == typeof(Page) && t.Namespace == Nspace)
                 .Select(t => (Page) Activator.CreateInstance(t))
-                .OrderBy(t => t.Title)
+                .OrderBy(t =>
+                {
+                    var number = int.TryParse($"{t.Tag}", out var tag) ? tag : int.MaxValue;
+                    return number;
+                })
+                .ThenBy(page => page.Title)
                 ;
 
             return res;
