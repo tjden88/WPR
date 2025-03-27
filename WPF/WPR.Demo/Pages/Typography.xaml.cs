@@ -28,18 +28,30 @@ namespace WPR.Demo.Pages
                 ;
 
 
+            var items = resourceDictionary
+                    .Cast<DictionaryEntry>()
+                    .Where(Entry => !Equals(baseStyle, Entry.Key) && Entry.Value is Style)
+                    .Select(Entry =>
+                    {
+                        var style = (Style) Entry.Value;
+
+                        var fontSizeSetter = style.Setters.Cast<Setter>().FirstOrDefault(s=>s.Property.Name.Equals("FontSize"));
+                        var fontSize = int.Parse(fontSizeSetter?.Value?.ToString() ?? "14");
+
+                        return new
+                        {
+                            name = Entry.Key.ToString(),
+                            style = (Style) Entry.Value,
+                            fontSize
+                        };
+                    })
+                    .OrderBy(item => item.fontSize)
+                    .ThenBy(item => item.name)
+                    .Select(item => new StyleViewModel(item.name, item.style))
+                ;
 
 
-
-            TextBlockStyles = new();
-
-            foreach (DictionaryEntry item in resourceDictionary)
-            {
-                if (item.Value is Style style && !Equals(baseStyle, item.Key))
-                {
-                    TextBlockStyles.Add(new StyleViewModel(item.Key.ToString(), style));
-                }
-            }
+            TextBlockStyles = new(items);
 
             ListBoxText2.ItemsSource = TextBlockStyles;
             
