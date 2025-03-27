@@ -13,6 +13,7 @@ namespace WPR.Demo.Pages
     /// </summary>
     public partial class Typography : Page
     {
+        private const string BaseStyleName = "WPRTextBlock";
 
         public List<StyleViewModel> TextBlockStyles;
 
@@ -20,28 +21,31 @@ namespace WPR.Demo.Pages
         {
             InitializeComponent();
 
-            const string baseStyle = "WPRTextBlock";
+        }
+
+        public void Update()
+        {
 
             var resourceDictionary = Application.Current.Resources.MergedDictionaries
-                .SelectMany(dict => dict.MergedDictionaries)
-                .First(dict => dict.Source.ToString().Contains("TextBlocks"))
+                    .SelectMany(dict => dict.MergedDictionaries)
+                    .First(dict => dict.Source.ToString().Contains("TextBlocks"))
                 ;
 
 
             var items = resourceDictionary
                     .Cast<DictionaryEntry>()
-                    .Where(Entry => !Equals(baseStyle, Entry.Key) && Entry.Value is Style)
+                    .Where(Entry => !Equals(BaseStyleName, Entry.Key) && Entry.Value is Style)
                     .Select(Entry =>
                     {
-                        var style = (Style) Entry.Value;
+                        var style = (Style)Entry.Value;
 
-                        var fontSizeSetter = style.Setters.Cast<Setter>().FirstOrDefault(s=>s.Property.Name.Equals("FontSize"));
+                        var fontSizeSetter = style.Setters.Cast<Setter>().FirstOrDefault(s => s.Property.Name.Equals("FontSize"));
                         var fontSize = int.Parse(fontSizeSetter?.Value?.ToString() ?? "14");
 
                         return new
                         {
                             name = Entry.Key.ToString(),
-                            style = (Style) Entry.Value,
+                            style = (Style)Entry.Value,
                             fontSize
                         };
                     })
@@ -52,11 +56,12 @@ namespace WPR.Demo.Pages
 
 
             TextBlockStyles = new(items);
-
             ListBoxText2.ItemsSource = TextBlockStyles;
-            
         }
 
-       
+        private void Typography_OnLoaded(object Sender, RoutedEventArgs E)
+        {
+            Update();
+        }
     }
 }
