@@ -8,9 +8,9 @@
         <Setter Property="FontFamily" Value="{StaticResource RobotoFont}"/>
         <Setter Property="FontSize" Value="14"/>
         <Setter Property="TextWrapping" Value="WrapWithOverflow"/>
-        <Setter Property="TextOptions.TextFormattingMode" Value="Display"/>
-        <Setter Property="TextOptions.TextRenderingMode" Value="Auto"/>
-        <Setter Property="RenderOptions.BitmapScalingMode" Value="HighQuality"/>
+        <Setter Property="TextOptions.TextFormattingMode" Value="Ideal"/>
+        <Setter Property="TextOptions.TextRenderingMode" Value="ClearType"/>
+        <Setter Property="RenderOptions.BitmapScalingMode" Value="NearestNeighbor"/>
         <Style.Triggers>
             <Trigger Property="IsEnabled" Value="False">
                 <Setter Property="Opacity" Value="0.56"/>
@@ -28,5 +28,25 @@
 
     <Style x:Key="BodyStrongText" TargetType="{x:Type TextBlock}" BasedOn="{StaticResource WPRTextBlock}">
         <Setter Property="FontWeight" Value="Medium"/>
+    </Style>
+
+    <Style x:Key="SubtitleText" TargetType="{x:Type TextBlock}" BasedOn="{StaticResource WPRTextBlock}">
+        <Setter Property="FontSize" Value="20"/>
+        <Setter Property="FontWeight" Value="Medium"/>
+    </Style>
+
+    <Style x:Key="TitleText" TargetType="{x:Type TextBlock}" BasedOn="{StaticResource WPRTextBlock}">
+        <Setter Property="FontSize" Value="28"/>
+        <Setter Property="FontWeight" Value="Medium"/>
+    </Style>
+
+    <Style x:Key="LargeTitleText" TargetType="{x:Type TextBlock}" BasedOn="{StaticResource WPRTextBlock}">
+        <Setter Property="FontSize" Value="40"/>
+        <Setter Property="FontWeight" Value="Medium"/>
+    </Style>
+
+    <Style x:Key="DisplayText" TargetType="{x:Type TextBlock}" BasedOn="{StaticResource WPRTextBlock}">
+        <Setter Property="FontSize" Value="68"/>
+        <Setter Property="FontWeight" Value="Regular"/>
     </Style>
 </ResourceDictionary>
