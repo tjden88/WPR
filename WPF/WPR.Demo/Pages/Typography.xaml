@@ -3,16 +3,23 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-      xmlns:local="clr-namespace:WPR.Demo.Pages"
+      xmlns:models="clr-namespace:WPR.Demo.Models"
       mc:Ignorable="d" 
       Tag="2"
       d:DesignHeight="450" d:DesignWidth="800"
       Title="Текст">
     <Grid>
         <StackPanel Orientation="Vertical">
-            <TextBlock FontFamily="SegoeUI">Привет, мир!</TextBlock>
-            <TextBlock>Привет, мир!</TextBlock>
-            <TextBlock FontFamily="{StaticResource Montserrat}">Привет, мир!</TextBlock>
+            <ItemsControl Name="ListBoxText2">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate DataType="{x:Type models:StyleViewModel}">
+                        <Grid Margin="10">
+                            <TextBlock Style="{Binding Style}"
+                                       Text="{Binding Name}"/>
+                        </Grid>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
         </StackPanel>
     </Grid>
 </Page>

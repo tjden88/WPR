@@ -1,17 +1,10 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+using WPR.Demo.Models;
 
 namespace WPR.Demo.Pages
 {
@@ -20,9 +13,38 @@ namespace WPR.Demo.Pages
     /// </summary>
     public partial class Typography : Page
     {
+
+        public List<StyleViewModel> TextBlockStyles;
+
         public Typography()
         {
             InitializeComponent();
+
+            const string baseStyle = "WPRTextBlock";
+
+            var resourceDictionary = Application.Current.Resources.MergedDictionaries
+                .SelectMany(dict => dict.MergedDictionaries)
+                .First(dict => dict.Source.ToString().Contains("TextBlocks"))
+                ;
+
+
+
+
+
+            TextBlockStyles = new();
+
+            foreach (DictionaryEntry item in resourceDictionary)
+            {
+                if (item.Value is Style style && !Equals(baseStyle, item.Key))
+                {
+                    TextBlockStyles.Add(new StyleViewModel(item.Key.ToString(), style));
+                }
+            }
+
+            ListBoxText2.ItemsSource = TextBlockStyles;
+            
         }
+
+       
     }
 }
