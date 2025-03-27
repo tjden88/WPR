@@ -56,9 +56,6 @@ namespace WPR.Demo.ViewModels
         {
             EmptyWindow w = new EmptyWindow();
             w.Show();
-
-            Test test = new();
-            test.Show();
         }
 
         #endregion
