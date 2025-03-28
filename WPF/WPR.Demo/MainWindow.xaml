@@ -43,7 +43,11 @@
         </ListBox>
 
         <controls:WPRCard Grid.Column="1" Margin="10,10,0,0" helpers:ButtonHelper.BorderRadius ="8,0,0,0">
-            <Frame NavigationUIVisibility="Hidden" Content="{Binding SelectedPage}"/>
+            <Frame Name="PagesFrame" NavigationUIVisibility="Hidden" Content="{Binding SelectedPage}" Navigating="PagesFrame_Navigating">
+                <Frame.RenderTransform>
+                    <TranslateTransform/>
+                </Frame.RenderTransform>
+            </Frame>
         </controls:WPRCard>
     </Grid>
 </Window>
