@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Win32;
+using System;
 using System.Windows;
 using System.Windows.Media;
 using WPR.Domain.Models.Themes;
@@ -87,6 +88,7 @@ public static class StyleHelper
         StyleChanged?.Invoke(null, EventArgs.Empty);
     }
 
+
     /// <summary>
     /// Установить светлую тему.
     /// </summary>
@@ -100,6 +102,19 @@ public static class StyleHelper
 
         SetWindowColors(false);
         StyleChanged?.Invoke(null, EventArgs.Empty);
+    }
+
+
+    /// <summary>
+    /// Установить тему как в системе
+    /// </summary>
+    public static void SetSystemTheme()
+    {
+        var systemTheme = IsLightSystemTheme();
+        if (systemTheme) 
+            SetLightColorTheme();
+        else 
+            SetDarkColorTheme();
     }
 
     #endregion
@@ -133,6 +148,14 @@ public static class StyleHelper
             (byte)(basic.G / koef),
             (byte)(basic.B / koef));
         return darken;
+    }
+
+    /// <summary> Определить системную тему </summary>
+    private static bool IsLightSystemTheme()
+    {
+        using var key = Registry.CurrentUser.OpenSubKey(@"Software\Microsoft\Windows\CurrentVersion\Themes\Personalize");
+        var value = key?.GetValue("AppsUseLightTheme");
+        return value is > 0;
     }
 
     #endregion

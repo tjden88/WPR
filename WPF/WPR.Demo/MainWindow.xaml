@@ -14,6 +14,7 @@
         <StackPanel Margin="3" Orientation="Horizontal" HorizontalAlignment="Left" Width="Auto" >
             <Button Content="Новый стиль" Command="{Binding SetNewStyleCommand}"  Style="{StaticResource WindowTitleButton}"/>
             <Button Content="Переключить тему" Command="{Binding SetDarkThemeCommand}"  Style="{StaticResource WindowTitleButton}"/>
+            <Button Content="Как в системе" Command="{Binding SetSystemThemeCommand}"  Style="{StaticResource WindowTitleButton}"/>
             <Button Content="Тестовое окно" Command="{Binding ShowTestWindowCommand}"  Style="{StaticResource WindowTitleButton}"/>
             <ToggleButton Name="TopMost" helpers:RippleHelper.FeedbackBrush ="{DynamicResource AccentColorBrush}"
                           ToolTip="Поверх всех окон">

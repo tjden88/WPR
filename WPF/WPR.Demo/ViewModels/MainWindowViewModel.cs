@@ -42,6 +42,26 @@ namespace WPR.Demo.ViewModels
         }
         #endregion
 
+        #region Command SetSystemThemeCommand - Системная тема
+
+        /// <summary>Системная тема</summary>
+        private Command? _SetSystemThemeCommand;
+
+        /// <summary>Системная тема</summary>
+        public Command SetSystemThemeCommand => _SetSystemThemeCommand
+            ??= new Command(OnSetSystemThemeCommandExecuted, CanSetSystemThemeCommandExecute, "Системная тема");
+
+        /// <summary>Проверка возможности выполнения - Системная тема</summary>
+        private bool CanSetSystemThemeCommandExecute() => true;
+
+        /// <summary>Логика выполнения - Системная тема</summary>
+        private void OnSetSystemThemeCommandExecuted()
+        {
+            StyleHelper.SetSystemTheme();
+        }
+
+        #endregion
+
         #region Command ShowTestWindowCommand - Показать тестовое окно
 
         private ICommand _ShowTestWindowCommand;
