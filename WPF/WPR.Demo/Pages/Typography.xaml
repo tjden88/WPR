@@ -4,23 +4,60 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:models="clr-namespace:WPR.Demo.Models"
+      xmlns:converters="clr-namespace:WPR.Demo.Converters"
+      xmlns:controls="clr-namespace:WPR.Controls;assembly=WPR"
       mc:Ignorable="d" 
       Tag="2"
       Loaded="Typography_OnLoaded"
       d:DesignHeight="450" d:DesignWidth="800"
       Title="Текст">
-    <Grid>
-        <StackPanel Orientation="Vertical">
+    <Page.Resources>
+        <converters:TextToStyleNameConverter x:Key="TextToStyleNameConverter"/>
+    </Page.Resources>
+    <DockPanel>
+        <TextBlock DockPanel.Dock="Top" Margin="20" Style="{StaticResource TitleText}">Стили для TextBlock</TextBlock>
+        <Grid Margin="10"  IsSharedSizeScope="True">
             <ItemsControl Name="ListBoxText2">
                 <ItemsControl.ItemTemplate>
                     <DataTemplate DataType="{x:Type models:StyleViewModel}">
-                        <Grid Margin="10">
-                            <TextBlock Style="{Binding Style}"
-                                       Text="{Binding Name}"/>
+                        <Grid ShowGridLines="False">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" SharedSizeGroup="TextName"/>
+                                <ColumnDefinition Width="Auto" SharedSizeGroup="StyleName"/>
+                                <ColumnDefinition/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+                            <TextBlock Margin="10" Style="{Binding Style}"
+                                   Text="{Binding Name}" Name="tb"/>
+
+                            <TextBox Grid.Column="1" 
+                                 FontFamily="Consolas"
+                                 IsReadOnly="True"
+                                 Style="{StaticResource WPRFlatTextBox}"
+                                   DataContext="{Binding ElementName=tb}"
+                                   Grid.Row="0" Margin="20,0"
+                                   VerticalAlignment="Center"
+                                   Text="{Binding Text, Converter={StaticResource TextToStyleNameConverter}}"/>
+
+                            <Button Grid.Column="2" Grid.Row="0"
+                                VerticalAlignment="Center"
+                                HorizontalAlignment="Left"
+                                Padding="8"
+                                Click="ButtonCopy_OnClick"
+                                DataContext="{Binding}"
+                                Style="{StaticResource WPRFlatButton}">
+                                <controls:WPRIcon Source="ContentCopy"/>
+                            </Button>
+
+                            <Separator Grid.Row="1" Grid.ColumnSpan="3" Grid.Column="0" Margin="10"/>
                         </Grid>
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>
             </ItemsControl>
-        </StackPanel>
-    </Grid>
+        </Grid>
+
+    </DockPanel>
 </Page>

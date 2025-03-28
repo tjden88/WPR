@@ -40,6 +40,9 @@
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
-        <Frame NavigationUIVisibility="Hidden" Grid.Column="1" Content="{Binding SelectedPage}"/>
+
+        <controls:WPRCard Grid.Column="1" Margin="10,10,0,0" helpers:ButtonHelper.BorderRadius ="8,0,0,0">
+            <Frame NavigationUIVisibility="Hidden" Content="{Binding SelectedPage}"/>
+        </controls:WPRCard>
     </Grid>
 </Window>

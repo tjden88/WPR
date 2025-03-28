@@ -4,7 +4,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using WPR.Demo.Converters;
 using WPR.Demo.Models;
+using WPR.Dialogs;
 
 namespace WPR.Demo.Pages
 {
@@ -62,6 +64,19 @@ namespace WPR.Demo.Pages
         private void Typography_OnLoaded(object Sender, RoutedEventArgs E)
         {
             Update();
+        }
+
+        private void ButtonCopy_OnClick(object sender, RoutedEventArgs e)
+        {
+            var btn = (Button) sender;
+
+            var styleName = ((StyleViewModel) btn.DataContext).Name;
+
+            var copyText = new TextToStyleNameConverter().Convert(styleName);
+
+            Clipboard.SetText(copyText);
+
+            WPRDialogHelper.Bubble(this, "Скопировано в буфер обмена");
         }
     }
 }
