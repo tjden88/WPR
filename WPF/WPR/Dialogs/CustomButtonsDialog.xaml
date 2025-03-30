@@ -36,7 +36,7 @@
                                     >
                             </Button>
                             <Button x:Name="No" Content="{TemplateBinding DeclineButtonText}" Width="100"  Style="{StaticResource WPRFlatButton}"
-                                    Command="{TemplateBinding SetDialogResultCommand}"
+                                    Command="{Binding Path=SetDialogResultCommand, RelativeSource={RelativeSource TemplatedParent}}"
                                     Visibility="{TemplateBinding DeclineButtonText, Converter={StaticResource ValueIsNullToVisibilityConverter}}"
                                     CommandParameter="{StaticResource False}"></Button>
                             <Button x:Name="Yes" Content="{TemplateBinding AcceptButtonText}" Width="100" IsDefault="True"

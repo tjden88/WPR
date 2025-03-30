@@ -30,9 +30,9 @@
                                      Text="{Binding Path=ViewModel.Text, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="6">
                                 <Button x:Name="Cancel" Content="ОТМЕНА" Width="100" IsCancel="True" Style="{StaticResource WPRFlatButton}"
-                                        Command="{TemplateBinding CancelCommand}"/>
+                                        Command="{Binding Path=CancelCommand, RelativeSource={RelativeSource TemplatedParent}}"/>
                                 <Button x:Name="Ok" Content="OK" Width="100" IsDefault="True"
-                                        Command="{TemplateBinding SetDialogResultCommand}"
+                                        Command="{Binding Path=SetDialogResultCommand, RelativeSource={RelativeSource TemplatedParent}}"
                                         CommandParameter="{StaticResource True}"/>
                             </StackPanel>
                         </StackPanel>

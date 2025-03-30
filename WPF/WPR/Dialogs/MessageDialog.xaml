@@ -42,18 +42,18 @@
                                     DockPanel.Dock="Bottom"
                                     HorizontalAlignment="Right" Margin="6">
                             <Button x:Name="Cancel" Content="ОТМЕНА" Width="100"  IsCancel="True" Style="{StaticResource WPRFlatButton}"
-                                    Command="{TemplateBinding CancelCommand}"
+                                    Command="{Binding Path=CancelCommand, RelativeSource={RelativeSource TemplatedParent}}"
                                     Visibility="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=CancelButtonVisible , Converter={StaticResource Bool2VisibilityConverter}}"/>
                             <Button x:Name="Ok" Content="OK" Width="100" IsDefault="True"
-                                    Command="{TemplateBinding SetDialogResultCommand}"
+                                    Command="{Binding Path=SetDialogResultCommand, RelativeSource={RelativeSource TemplatedParent}}"
                                     CommandParameter="{StaticResource True}"
                                     Visibility="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=YesNoButtonsVisible , Converter={StaticResource Bool2VisibilityConverter}, ConverterParameter=!}"/>
                             <Button x:Name="No" Content="НЕТ" Width="100"  Style="{StaticResource WPRFlatButton}"
-                                    Command="{TemplateBinding SetDialogResultCommand}"
+                                    Command="{Binding Path=SetDialogResultCommand, RelativeSource={RelativeSource TemplatedParent}}"
                                     CommandParameter="{StaticResource False}"
                                     Visibility="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=YesNoButtonsVisible , Converter={StaticResource Bool2VisibilityConverter}}"/>
                             <Button x:Name="Yes" Content="ДА" Width="100" IsDefault="True"
-                                    Command="{TemplateBinding SetDialogResultCommand}"
+                                    Command="{Binding Path=SetDialogResultCommand, RelativeSource={RelativeSource TemplatedParent}}"
                                     CommandParameter="{StaticResource True}"
                                     Visibility="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=YesNoButtonsVisible , Converter={StaticResource Bool2VisibilityConverter}}"/>
                         </StackPanel>
