@@ -9,7 +9,7 @@
 
 
     <Style x:Key="WPRTreeView" TargetType="{x:Type TreeView}" BasedOn="{StaticResource BaseControl}">
-        <Setter Property="Padding" Value="1"/>
+        <Setter Property="Padding" Value="10"/>
         <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Auto"/>
         <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto"/>
         <Setter Property="ScrollViewer.PanningMode" Value="Both"/>
@@ -24,7 +24,6 @@
                         <ScrollViewer x:Name="_tv_scrollviewer_" Background="{TemplateBinding Background}"
                                       CanContentScroll="false" Focusable="false" 
                                       HorizontalScrollBarVisibility="{TemplateBinding ScrollViewer.HorizontalScrollBarVisibility}" 
-                                      Padding="{TemplateBinding Padding}"
                                       SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" 
                                       VerticalScrollBarVisibility="{TemplateBinding ScrollViewer.VerticalScrollBarVisibility}">
                             <ItemsPresenter/>
@@ -67,7 +66,7 @@
                             <RotateTransform/>
                         </Border.RenderTransform>
 
-                        <controls:WPRIcon Foreground="{DynamicResource AccentColorBrush}"
+                        <controls:WPRIcon Foreground="{DynamicResource PrimaryColorBrush}"
                                           HorizontalAlignment="Center" VerticalAlignment="Center"
                                           IconSize="18"
                                           Source="ChevronRight"/>
@@ -103,11 +102,11 @@
     <Style x:Key="WPRTreeViewItem" TargetType="{x:Type TreeViewItem}" BasedOn="{StaticResource BaseControl}">
         <Setter Property="HorizontalContentAlignment" Value="{Binding HorizontalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type TreeView}}}"/>
         <Setter Property="VerticalContentAlignment" Value="{Binding VerticalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type TreeView}}}"/>
-        <Setter Property="Padding" Value="5"/>
+        <Setter Property="Padding" Value="{Binding Path=Padding, RelativeSource={RelativeSource AncestorType={x:Type TreeView}}}"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type TreeViewItem}">
-                    <Grid>
+                    <Grid Margin="0,1,0,0">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition MinWidth="16" Width="Auto"/>
                             <ColumnDefinition Width="*"/>
@@ -119,18 +118,34 @@
                         <ToggleButton x:Name="Expander" ClickMode="Press"
                                       IsChecked="{Binding Path=IsExpanded, RelativeSource={RelativeSource TemplatedParent}}"
                                       Style="{StaticResource WPRTreeViewToggleButton}"/>
-                        <Border Grid.Row="0" Grid.Column="1" Name="SelectedBorder" Opacity="0" Background="{DynamicResource AnimationEnterColorBrush}"/>
-                        <controls:ClippingBorder x:Name="ClippingBorder" ClipToBounds="True" Grid.Row="0" Grid.Column="1">
-                            <controls:Ripple Background="{Binding Path=(helpers:RippleHelper.FeedbackBrush), RelativeSource={RelativeSource  AncestorType={x:Type TreeView}}}"
-                                             VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
-                                             HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}">
-                                <ContentPresenter x:Name="PART_Header" ContentSource="Header"
-                                                  Margin="{TemplateBinding Padding}"
-                                                  VerticalAlignment="{TemplateBinding VerticalAlignment}"
-                                                  HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                                  SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
-                            </controls:Ripple>
-                        </controls:ClippingBorder>
+                        <Grid Grid.Row="0" Grid.Column="1">
+
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition/>
+                            </Grid.ColumnDefinitions>
+                            <Border Grid.Column="0" Grid.ColumnSpan="2" Name="SelectedBorder" Opacity="0" Background="{DynamicResource AnimationEnterColorBrush}" CornerRadius="4"/>
+                            <controls:ClippingBorder Grid.Column="0" Grid.ColumnSpan="2" x:Name="ClippingBorder" ClipToBounds="True" CornerRadius="4">
+                                <controls:Ripple Background="{Binding Path=(helpers:RippleHelper.FeedbackBrush), RelativeSource={RelativeSource  AncestorType={x:Type TreeView}}}"
+                                                 VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+                                                 HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}">
+                                </controls:Ripple>
+                            </controls:ClippingBorder>
+
+                            <ContentPresenter Grid.Column="1" x:Name="PART_Header" ContentSource="Header"
+                                              Margin="{TemplateBinding Padding}"
+                                              VerticalAlignment="{TemplateBinding VerticalAlignment}"
+                                              HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                              SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
+
+                            <Border Grid.Column="0" Background="{DynamicResource AccentColorBrush}" RenderTransformOrigin="0.5,0.5"
+                                    Margin="0,10" Width="3" CornerRadius="2">
+                                <Border.RenderTransform>
+                                    <ScaleTransform ScaleY="0" x:Name="ScaleTransformSelected"/>
+                                </Border.RenderTransform>
+                            </Border>
+
+                        </Grid>
                         <ItemsPresenter x:Name="ItemsHost" Grid.Column="1" Grid.Row="1">
                             <ItemsPresenter.LayoutTransform>
                                 <ScaleTransform ScaleY="0"/>
@@ -164,11 +179,21 @@
                                         <DoubleAnimation Duration="0:0:0.25" To="0.7"/>
                                     </Storyboard>
                                 </BeginStoryboard>
+                                <BeginStoryboard>
+                                    <Storyboard TargetName="ScaleTransformSelected" TargetProperty="ScaleY">
+                                        <DoubleAnimation Duration="0:0:0.4" To="1"/>
+                                    </Storyboard>
+                                </BeginStoryboard>
                             </Trigger.EnterActions>
                             <Trigger.ExitActions>
                                 <BeginStoryboard>
                                     <Storyboard TargetName="SelectedBorder" TargetProperty="Opacity">
                                         <DoubleAnimation Duration="0:0:0.25"/>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                                <BeginStoryboard>
+                                    <Storyboard TargetName="ScaleTransformSelected" TargetProperty="ScaleY">
+                                        <DoubleAnimation Duration="0:0:0.4"/>
                                     </Storyboard>
                                 </BeginStoryboard>
                             </Trigger.ExitActions>

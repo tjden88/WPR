@@ -10,7 +10,7 @@
       Title="TreeView">
 
 <StackPanel Orientation="Horizontal">
-    <controls:WPRCard Width="200"  Margin="20">
+    <controls:WPRCard Width="300"  Margin="20">
         <TreeView Margin="10">
             <TreeViewItem Header="Item1">
                 <TreeViewItem Header="Child1"></TreeViewItem>
@@ -26,8 +26,8 @@
         </TreeView>
     </controls:WPRCard>
     <Separator Style="{StaticResource WPRVerticalSeparator}"></Separator>
-    <controls:WPRCard Width="200"  Margin="20">
-            <ListBox  Margin="10">
+    <controls:WPRCard Width="300"  Margin="20">
+            <ListBox  Margin="10" Style="{StaticResource WPRMenuListBox}">
             <ListBoxItem Content="Item1"></ListBoxItem>
             <ListBoxItem Content="Item2"></ListBoxItem>
             <ListBoxItem Content="Item3"></ListBoxItem>
