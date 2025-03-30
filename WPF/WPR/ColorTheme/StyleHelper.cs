@@ -126,7 +126,7 @@ public static class StyleHelper
     {
         var windowBackgroundColor = isDarkTheme
         ? StyleColors._DarkWindowTitleBackgroundColor
-        : StyleColors.PrimaryColor;
+        : StyleColors._LightSecondaryBackgroundColor;
 
         StyleColors.WindowTitleBackgroundColor = windowBackgroundColor;
     }

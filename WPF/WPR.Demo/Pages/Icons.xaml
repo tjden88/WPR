@@ -18,12 +18,12 @@
         <ListBox x:Name="ListIcons" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" >
             <ListBox.ItemsPanel>
                 <ItemsPanelTemplate>
-                    <local:VirtualizingWrapPanel ItemHeight="80" ItemWidth="120"/>
+                    <local:VirtualizingWrapPanel ItemHeight="80" ItemWidth="140"/>
                 </ItemsPanelTemplate>
             </ListBox.ItemsPanel>
             <ListBox.ItemTemplate>
                 <DataTemplate>
-                    <DockPanel Width="110" Background="Transparent">
+                    <DockPanel Width="120" Background="Transparent">
                         <TextBlock Text="{Binding}" DockPanel.Dock="Bottom" TextTrimming="CharacterEllipsis" HorizontalAlignment="Center" />
                         <controls:WPRIcon Source="{Binding}" VerticalAlignment="Center" HorizontalAlignment="Center" IconSize="32" />
                     </DockPanel>
