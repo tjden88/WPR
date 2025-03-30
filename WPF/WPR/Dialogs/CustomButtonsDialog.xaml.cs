@@ -23,7 +23,7 @@ public class CustomButtonsDialog : DialogBase, IWPRDialog
         {
             DialogBaseResult = B;
 #pragma warning disable CS0612
-            SetDialogResult?.Invoke(true);
+            Completed?.Invoke(true);
 #pragma warning restore CS0612
         };
     }
@@ -116,13 +116,12 @@ public class CustomButtonsDialog : DialogBase, IWPRDialog
 
     #endregion
 
-    /// <summary> В этом классе всегда будет возвращать истину! Используй DialogBaseResult  </summary>
-    [Obsolete]
-    public Action<bool> SetDialogResult { get; set; }
+
 
     /// <summary> Результат выполнения базового диалога </summary>
     public bool? DialogBaseResult { get; set; }
 
-
+    /// <summary> В этом классе всегда будет возвращать истину! Используй DialogBaseResult  </summary>
+    [Obsolete]
     public event Action<bool> Completed;
 }

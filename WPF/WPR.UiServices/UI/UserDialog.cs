@@ -21,13 +21,8 @@ public class UserDialog : IUserDialog
         _AppNavigation = AppNavigation;
     }
 
-    public async Task InformationAsync(string message, string? Title = null)
-    {
-       await  Application.Current.Dispatcher.BeginInvoke(() =>
-        {
-            _ = WPRDialogHelper.InformationAsync(Active, message, Title);
-        });
-    }
+    public async Task InformationAsync(string message, string? Title = null) => 
+        await DoDispatcheredAction(WPRDialogHelper.InformationAsync(Active, message, Title));
 
 
     public async Task<bool> QuestionAsync(string message, string? Title = null) =>

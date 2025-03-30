@@ -14,7 +14,9 @@ public abstract class DialogBase : Control
 
     protected DialogBase()
     {
-        SetDialogResultCommand = new Command(obj => DialogResult?.Invoke((bool)obj), _ => CanSetCommandExecuted());
+        
+
+        SetDialogResultCommand = new Command(OnSetDialogResultCommandExecuted, _ => CanSetCommandExecuted());
         CancelCommand = new Command(() => DialogResult?.Invoke(null));
     }
 
@@ -58,6 +60,11 @@ public abstract class DialogBase : Control
         set => SetValue(SetDialogResultCommandProperty, value);
     }
     #endregion
+
+    void OnSetDialogResultCommandExecuted(object obj)
+    {
+        DialogResult?.Invoke((bool)obj);
+    }
 
 
     #region CancelCommand : ICommand - Команда отмены

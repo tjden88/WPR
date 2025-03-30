@@ -152,14 +152,16 @@ namespace WPR.Demo.Pages
             var msg = "Сообщение";
             var title = "Заголовок";
 
-            await dlg.InformationAsync(msg, title);
+            //await dlg.InformationAsync(msg, title);
 
-            Debug.WriteLine(await dlg.QuestionAsync(msg, title));
-            Debug.WriteLine(await dlg.QuestionAsync(msg, IUserDialog.DialogTypes.YesNo, title));
-            Debug.WriteLine(await dlg.QuestionAsync(msg, IUserDialog.DialogTypes.OkCancel, title));
-            Debug.WriteLine(await dlg.QuestionAsync(msg, IUserDialog.DialogTypes.YesNoCancel, title));
+            //Debug.WriteLine(await dlg.QuestionAsync(msg, title));
+            //Debug.WriteLine(await dlg.QuestionAsync(msg, IUserDialog.DialogTypes.YesNo, title));
+            //Debug.WriteLine(await dlg.QuestionAsync(msg, IUserDialog.DialogTypes.OkCancel, title));
+            //Debug.WriteLine(await dlg.QuestionAsync(msg, IUserDialog.DialogTypes.YesNoCancel, title));
 
-            Debug.WriteLine(await dlg.CustomQuestionAsync(msg, title, "true"));
+
+            await WPRDialogHelper.ShowCustomButtonsDialog(this, "cc", "asda", "Acc", "Decl", null);
+            Debug.WriteLine(await dlg.CustomQuestionAsync(msg, title, "Accept Button"));
             Debug.WriteLine(await dlg.CustomQuestionAsync(msg, title, "true", "false"));
             Debug.WriteLine(await dlg.CustomQuestionAsync(msg, title, "true", null, "null"));
             Debug.WriteLine(await dlg.CustomQuestionAsync(msg, title, "true", "false", "null"));

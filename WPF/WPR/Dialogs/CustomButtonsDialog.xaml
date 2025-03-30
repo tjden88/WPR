@@ -40,7 +40,7 @@
                                     Visibility="{TemplateBinding DeclineButtonText, Converter={StaticResource ValueIsNullToVisibilityConverter}}"
                                     CommandParameter="{StaticResource False}"></Button>
                             <Button x:Name="Yes" Content="{TemplateBinding AcceptButtonText}" Width="100" IsDefault="True"
-                                    Command="{TemplateBinding SetDialogResultCommand}"
+                                    Command="{Binding Path=SetDialogResultCommand, RelativeSource={RelativeSource TemplatedParent}}"
                                     Visibility="{TemplateBinding AcceptButtonText, Converter={StaticResource ValueIsNullToVisibilityConverter}}"
                                     CommandParameter="{StaticResource True}"></Button>
                         </StackPanel>
