@@ -1,5 +1,4 @@
 ﻿using WPR.Domain.Interfaces;
-using WPR.UiServices.Interfaces;
 using WPR.UiServices.Themes;
 using WPR.UiServices.UI;
 
@@ -16,9 +15,7 @@ public static class ServiceRegistrator
     /// <returns></returns>
     public static IServiceCollection AddWPRUiServices(this IServiceCollection services) => services
             .AddSingleton<IUserDialog, UserDialog>()
-            .AddSingleton<IAppNavigation, AppNavigationService>()
             .AddSingleton<IColorThemeManager, WPRColorThemeManager>()
-            .AddSingleton<IMessageBus, MessageBusService>()
             .AddTransient(typeof(Lazy<>), typeof(LazilyResolved<>))
     ;
 }

@@ -6,20 +6,14 @@ using WPR.Domain.Interfaces;
 using WPR.Domain.Models.Dialogs;
 using WPR.Domain.Models.Themes;
 using WPR.MVVM.Validation;
-using WPR.UiServices.Interfaces;
 
 namespace WPR.UiServices.UI;
 
 public class UserDialog : IUserDialog
 {
-    private readonly IAppNavigation _AppNavigation;
 
-    private Window? Active => _AppNavigation.ActiveWindow;
+    private static Window? Active => Application.Current.Windows.Cast<Window>().FirstOrDefault(w => w.IsActive);
 
-    public UserDialog(IAppNavigation AppNavigation)
-    {
-        _AppNavigation = AppNavigation;
-    }
 
     public async Task InformationAsync(string message, string? Title = null) => 
         await DoDispatcheredAction(WPRDialogHelper.InformationAsync(Active, message, Title));
@@ -116,17 +110,17 @@ public class UserDialog : IUserDialog
 
     public Task<string?> ShowFolderSelectDialogAsync(string Title, string InitPathName = "")
     {
-        var dialog = new FolderBrowserDialog
+        var dialog = new OpenFolderDialog()
         {
-            DefaultFolder = InitPathName,
+            DefaultDirectory = InitPathName,
             Title = Title
             
         };
 
-        if (!dialog.ShowDialog())
+        if (!dialog.ShowDialog(Active) == true)
             return Task.FromResult<string?>(null);
 
-        return Task.FromResult(dialog.Folder);
+        return Task.FromResult(dialog.FolderName)!;
     }
 
 

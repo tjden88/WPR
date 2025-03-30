@@ -147,7 +147,7 @@ namespace WPR.Demo.Pages
 
         private async void Dlg_OnClick(object Sender, RoutedEventArgs E)
         {
-            var dlg = new UserDialog(new AppNavigationService(null!));
+            var dlg = new UserDialog();
 
             var msg = "Сообщение";
             var title = "Заголовок";
