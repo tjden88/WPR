@@ -1,8 +1,6 @@
-﻿using System.Diagnostics;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Media.Animation;
 using WPR.Animations;
-using WPR.ColorTheme;
 
 namespace WPR.Demo
 {
@@ -14,7 +12,6 @@ namespace WPR.Demo
         public MainWindow()
         {
             InitializeComponent();
-            StyleHelper.StyleColors.WindowTitleBackgroundColor = StyleHelper.StyleColors.SecondaryBackgroundColor;
         }
 
 

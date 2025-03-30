@@ -22,7 +22,7 @@
                                 BorderBrush="{TemplateBinding BorderBrush}"
                                 BorderThickness="{TemplateBinding BorderThickness}"
                                 CornerRadius="{Binding Path=(helpers:ButtonHelper.BorderRadius), RelativeSource={RelativeSource Mode=TemplatedParent}}"
-                                Effect="{StaticResource CardShadow}" />
+                                Effect="{DynamicResource CardShadow}" />
                         <controls:ClippingBorder ClipToBounds="True"
                                                  BorderBrush="{TemplateBinding BorderBrush}"
                                                  BorderThickness="{TemplateBinding BorderThickness}"
@@ -32,11 +32,11 @@
                     </Grid>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsPopupShadowStyle" Value="True">
-                            <Setter Property="Effect" TargetName="ShadowBorder" Value="{StaticResource PopupBigShadow}"/>
+                            <Setter Property="Effect" TargetName="ShadowBorder" Value="{DynamicResource PopupBigShadow}"/>
                             <Setter Property="Margin" Value="20"/>
                         </Trigger>
                         <Trigger Property="IsDialogShadowStyle" Value="True">
-                            <Setter Property="Effect" TargetName="ShadowBorder" Value="{StaticResource DialogShadow}"/>
+                            <Setter Property="Effect" TargetName="ShadowBorder" Value="{DynamicResource DialogShadow}"/>
                             <Setter Property="Margin" Value="20"/>
                         </Trigger>
                     </ControlTemplate.Triggers>

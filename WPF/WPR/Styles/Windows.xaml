@@ -55,7 +55,6 @@
 
     <!--Кнопка закрыть-->
     <Style x:Key="WindowHeaderCloseButton" TargetType="{x:Type Button}" BasedOn="{ StaticResource WindowHeaderMaxNormButton }" >
-        <Setter Property="Background" Value="{StaticResource TransparentBrush}"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Button}">
@@ -91,7 +90,7 @@
         <AdornerDecorator>
             <controls:WPRDialogPanel x:Name="WindowDialogPanel">
                 <Border Background="{TemplateBinding Background }"
-                        BorderThickness="1"
+                        BorderThickness="0"
                     BorderBrush="{TemplateBinding BorderBrush }">
                     <Border.Style>
                         <Style TargetType="{x:Type Border}">

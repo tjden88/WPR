@@ -5,7 +5,6 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:helpers="clr-namespace:WPR.Helpers;assembly=WPR"
         xmlns:controls="clr-namespace:WPR.Controls;assembly=WPR"
-        Background="{DynamicResource SecondaryBackgroundColorBrush}"
         Topmost="{Binding IsChecked, ElementName=TopMost}"
         DataContext="{Binding Source={StaticResource Locator}, Path=MainWindowViewModel}"
         Style="{StaticResource ChromeWindow}"

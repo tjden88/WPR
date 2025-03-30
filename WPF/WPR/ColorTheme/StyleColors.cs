@@ -12,7 +12,7 @@ public class StyleColors : DependencyObject
 {
     // Цвета по умолчанию
     internal static readonly Color _LightColor = Colors.White;
-    internal static readonly Color _DarkColor = (Color)ColorConverter.ConvertFromString("#1C1C1C")!;
+    internal static readonly Color _DarkColor = (Color)ColorConverter.ConvertFromString("#212121")!;
 
     internal static readonly Color _PrimaryColor = (Color)ColorConverter.ConvertFromString("#3F51B5")!;
     internal static readonly Color _DarkPrimaryColor = (Color)ColorConverter.ConvertFromString("#FF212E80")!;
@@ -27,9 +27,9 @@ public class StyleColors : DependencyObject
     internal static readonly Color _LightTextColor = _DarkColor;
     internal static readonly Color _LightDividerColor = (Color)ColorConverter.ConvertFromString("#FFE0E0E0")!;
     internal static readonly Color _LightShadowColor = Colors.DimGray;
-    internal static readonly Color _LightBackgroundColor = _LightColor;
+    internal static readonly Color _LightBackgroundColor = (Color)ColorConverter.ConvertFromString("#f2f2f2")!;
     internal static readonly Color _LightSecondaryBackgroundColor = (Color)ColorConverter.ConvertFromString("#FAFAFA")!;
-    internal static readonly Color _LightWindowTitleBackgroundColor = _PrimaryColor;
+    internal static readonly Color _LightWindowTitleBackgroundColor = _LightBackgroundColor;
 
 
     // Цвета по умолчанию для тёмной темы
@@ -37,7 +37,7 @@ public class StyleColors : DependencyObject
     internal static readonly Color _DarkDividerColor = (Color)ColorConverter.ConvertFromString("#FF494949")!;
     internal static readonly Color _DarkShadowColor = Colors.Black;
     internal static readonly Color _DarkBackgroundColor = _DarkColor;
-    internal static readonly Color _DarkSecondaryBackgroundColor = (Color)ColorConverter.ConvertFromString("#FF323232")!;
+    internal static readonly Color _DarkSecondaryBackgroundColor = (Color)ColorConverter.ConvertFromString("#292929")!;
     internal static readonly Color _DarkWindowTitleBackgroundColor = _DarkColor;
 
 
