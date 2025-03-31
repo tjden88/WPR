@@ -1,12 +1,16 @@
-﻿using WPR.Abstractions.Interfaces;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using WPR.Abstractions.Interfaces;
 using WPR.Abstractions.Models.Themes;
 
-namespace WPR.UiServices.UI;
+namespace WPR.Tools;
 
 /// <summary>
 /// Помощник рутинных операций
 /// </summary>
-public class ActionHelper
+public class ActionHelper(IUserDialog UserDialog)
 {
 
     public enum MessageType
@@ -16,10 +20,7 @@ public class ActionHelper
         Success
     }
 
-    private readonly IUserDialog _UserDialog;
-
-    public ActionHelper(IUserDialog UserDialog) =>
-        _UserDialog = UserDialog;
+    private readonly IUserDialog _UserDialog = UserDialog;
 
 
     private bool _SuccessResult;

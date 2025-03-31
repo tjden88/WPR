@@ -1,15 +1,9 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 
-namespace WPR.UiServices.UI;
+namespace WPR.Services.Implementations;
 
 /// <summary>
 /// Отложенная загрузка зависимостей.
 /// Для предотвращения цмклических зависимостей
 /// </summary>
-class LazilyResolved<T> : Lazy<T> where T : notnull
-{
-    public LazilyResolved(IServiceProvider serviceProvider)
-        : base(serviceProvider.GetRequiredService<T>)
-    {
-    }
-}
+class LazilyResolved<T>(IServiceProvider serviceProvider) : Lazy<T>(serviceProvider.GetRequiredService<T>) where T : notnull;

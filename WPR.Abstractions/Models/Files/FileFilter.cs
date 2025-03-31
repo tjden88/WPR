@@ -1,6 +1,4 @@
-﻿using WPR.Abstractions.Interfaces;
-
-namespace WPR.Abstractions.Models.Files;
+﻿namespace WPR.Abstractions.Models.Files;
 
 /// <summary>
 /// Фильтр файлов

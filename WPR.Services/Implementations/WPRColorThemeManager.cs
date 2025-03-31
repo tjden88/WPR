@@ -3,7 +3,7 @@ using WPR.Abstractions.Interfaces;
 using WPR.Abstractions.Models.Themes;
 using WPR.ColorTheme;
 
-namespace WPR.UiServices.Themes;
+namespace WPR.Services.Implementations;
 
 /// <summary>
 /// Реализация сервиса для WPF
