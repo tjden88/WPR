@@ -10,7 +10,7 @@
         Style="{StaticResource ChromeWindow}"
         Title="{Binding Title}" Height="900" Width="1200">
 
-    <helpers:WindowHelper.WindowHeaderContent>
+    <wpr:Ext.WindowHeaderContent>
         <StackPanel Margin="3" Orientation="Horizontal" HorizontalAlignment="Left" Width="Auto" >
             <Button Content="Новый стиль" Command="{Binding SetNewStyleCommand}"  Style="{StaticResource WindowTitleButton}"/>
             <Button Content="Переключить тему" Command="{Binding SetDarkThemeCommand}"  Style="{StaticResource WindowTitleButton}"/>
@@ -24,7 +24,7 @@
                 </ToggleButton.Content>
             </ToggleButton>
         </StackPanel>
-    </helpers:WindowHelper.WindowHeaderContent>
+    </wpr:Ext.WindowHeaderContent>
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="250"/>

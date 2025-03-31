@@ -5,14 +5,15 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
         xmlns:helpers="clr-namespace:WPR.Helpers;assembly=WPR"
+        xmlns:wpr="clr-namespace:WPR;assembly=WPR"
         DataContext="{Binding Source={StaticResource Locator}, Path=MainWindowViewModel}"
         Style="{StaticResource NoTitledWindow}"
         Title="{Binding Title}" Height="650" Width="1000">
-    <helpers:WindowHelper.WindowHeaderContent>
+    <wpr:Ext.WindowHeaderContent>
         <StackPanel Margin="3" Orientation="Horizontal" HorizontalAlignment="Left" Width="Auto" >
             <Button Content="?" Style="{StaticResource WindowTitleButton}"/>
         </StackPanel>
-    </helpers:WindowHelper.WindowHeaderContent>
+    </wpr:Ext.WindowHeaderContent>
 
     <Grid>
         <TextBlock Text="Привет!" 
