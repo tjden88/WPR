@@ -120,4 +120,22 @@ public static class Ext
         DependencyProperty.RegisterAttached("WindowHeaderContent", typeof(object), typeof(Ext), new PropertyMetadata(null));
     #endregion
 
+
+
+    #region Internal
+
+    #region Запретить Ripple выходить за границы кнопки
+
+    /// <summary>
+    /// Запретить Ripple выходить за границы кнопки
+    /// </summary>
+    internal static bool GetNoRippleCircleOutside(DependencyObject obj) => (bool)obj.GetValue(NoRippleCircleOutsideProperty);
+
+    internal static void SetNoRippleCircleOutside(DependencyObject obj, bool value) => obj.SetValue(NoRippleCircleOutsideProperty, value);
+
+    internal static readonly DependencyProperty NoRippleCircleOutsideProperty =
+        DependencyProperty.RegisterAttached("NoRippleCircleOutside", typeof(bool), typeof(Ext), new PropertyMetadata(true));
+    #endregion
+
+    #endregion
 }

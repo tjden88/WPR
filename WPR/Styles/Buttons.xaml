@@ -18,7 +18,7 @@
                     Effect="{Binding Path=(wpr:Ext.Shadow), RelativeSource={RelativeSource TemplatedParent}}"/>
 
             <wpr:ClippingBorder CornerRadius="{Binding Path=(wpr:Ext.BorderRadius), RelativeSource={RelativeSource TemplatedParent}}"
-                                     ClipToBounds="{Binding Path=(helpers:ButtonHelper.NoRippleCircleOutside), RelativeSource={RelativeSource TemplatedParent}}"
+                                     ClipToBounds="{Binding Path=(wpr:Ext.NoRippleCircleOutside), RelativeSource={RelativeSource TemplatedParent}}"
                                      SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
                 <Grid>
                     <Border x:Name="BackGrid"
@@ -132,7 +132,7 @@
         <Setter Property="helpers:RippleHelper.FeedbackBrush" Value="{DynamicResource AnimationEnterColorBrush}"/>
         <Setter Property="helpers:RippleHelper.IsCentered" Value="True"/>
         <Setter Property="wpr:Ext.BorderRadius" Value="100"/>
-        <Setter Property="helpers:ButtonHelper.NoRippleCircleOutside" Value="False"/>
+        <Setter Property="wpr:Ext.NoRippleCircleOutside" Value="False"/>
     </Style>
 
     <Style x:Key="WPRToolButtonNoRipple" TargetType="{x:Type ButtonBase}" BasedOn="{StaticResource WPRToolButton}">
