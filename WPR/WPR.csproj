@@ -46,7 +46,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\WPR.Abstractions\WPR.Abstractions.csproj" />
+    <ProjectReference Include="..\WPR.Abstractions\WPR.Abstractions.csproj" />
     <ProjectReference Include="..\WPR.MVVM\WPR.MVVM.csproj" />
   </ItemGroup>
 
