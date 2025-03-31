@@ -1,4 +1,5 @@
 ﻿using WPR.Abstractions.Models.Dialogs;
+using WPR.Abstractions.Models.Files;
 using WPR.Abstractions.Models.Themes;
 
 namespace WPR.Abstractions.Interfaces;
@@ -80,7 +81,7 @@ public interface IUserDialog
     /// <returns>
     /// null - пользователь отказался
     /// </returns>
-    Task<string?> ShowOpenFileDialogAsync(string Title, IEnumerable<IFileFilter>? Filters = null, string InitFileName = "");
+    Task<string?> ShowOpenFileDialogAsync(string Title, IEnumerable<FileFilter>? Filters = null, string InitFileName = "");
 
 
     /// <summary>
@@ -92,7 +93,7 @@ public interface IUserDialog
     /// <returns>
     /// null - пользователь отказался
     /// </returns>
-    Task<string?> ShowSaveFileDialogAsync(string Title, IEnumerable<IFileFilter>? Filters = null, string InitFileName = "");
+    Task<string?> ShowSaveFileDialogAsync(string Title, IEnumerable<FileFilter>? Filters = null, string InitFileName = "");
 
 
     /// <summary>

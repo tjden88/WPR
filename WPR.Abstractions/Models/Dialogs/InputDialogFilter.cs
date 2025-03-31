@@ -3,19 +3,13 @@
 /// <summary>
 /// Настройка валидации и свойств диалога ввода пользователя
 /// </summary>
-public class InputDialogFilter
+public class InputDialogFilter(string Title)
 {
-    public InputDialogFilter(string Title)
-    {
-        this.Title = Title;
-    }
-
-
     /// <summary> Значение по умолчанию </summary>
     public string? DefaultValue { get; set; }
 
     /// <summary> Заголовок </summary>
-    public string Title { get; init; }
+    public string Title { get; init; } = Title;
 
     /// <summary> Дополнительное сообщение </summary>
     public string? Message { get; set; }
@@ -29,12 +23,4 @@ public class InputDialogFilter
     public record ValidationRule(Predicate<string?> Rule, string ErrorMessage);
 
 
-    #region FluentFactory
-
-
-
-
-
-
-    #endregion
 }

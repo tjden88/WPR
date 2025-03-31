@@ -5,12 +5,19 @@ namespace WPR.Abstractions.Models.Files;
 /// <summary>
 /// Фильтр файлов
 /// </summary>
-public class FileFilter : IFileFilter
+public class FileFilter
 {
     private static readonly string[] _ImagePatterns = {"*.jpg", "*.jpeg", "*.png", "*.gif", "*.bmp",};
 
     private readonly List<string> _FileMathPattrerns = new();
+
+    /// <summary>
+    /// Список паттернов поиска совпадений файлов
+    /// Пример паттерна: *.jpg
+    /// </summary>
     public IEnumerable<string> FileMathPattrerns => _FileMathPattrerns;
+
+    /// <summary> Описание фильтра </summary>
     public string Description { get; init; }
 
 

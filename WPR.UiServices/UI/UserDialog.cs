@@ -3,6 +3,7 @@ using System.Windows;
 using System.Windows.Threading;
 using WPR.Abstractions.Interfaces;
 using WPR.Abstractions.Models.Dialogs;
+using WPR.Abstractions.Models.Files;
 using WPR.Abstractions.Models.Themes;
 using WPR.Dialogs;
 using WPR.MVVM.Validation;
@@ -80,7 +81,7 @@ public class UserDialog : IUserDialog
         });
     }
 
-    public Task<string?> ShowOpenFileDialogAsync(string Title, IEnumerable<IFileFilter>? Filters = null, string InitFileName = "")
+    public Task<string?> ShowOpenFileDialogAsync(string Title, IEnumerable<FileFilter>? Filters = null, string InitFileName = "")
     {
         var ofd = new OpenFileDialog()
         {
@@ -103,7 +104,7 @@ public class UserDialog : IUserDialog
         return Task.FromResult(dialogResult == true ? ofd.FileName : null);
     }
 
-    public Task<string?> ShowSaveFileDialogAsync(string Title, IEnumerable<IFileFilter>? Filters = null, string InitFileName = "")
+    public Task<string?> ShowSaveFileDialogAsync(string Title, IEnumerable<FileFilter>? Filters = null, string InitFileName = "")
     {
         throw new NotImplementedException();
     }

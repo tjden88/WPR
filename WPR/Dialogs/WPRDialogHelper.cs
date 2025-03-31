@@ -345,10 +345,12 @@ public static class WPRDialogHelper
             Caption = Caption,
         };
 
+
         if (panel is null)
         {
-            var dlg = new WPRDialog(inputDialog);
-            inputDialog.DialogResult += b => dlg.RaiseCompleted(b == true);
+
+            var dlg = new WprInputDialog(inputDialog);
+            inputDialog.DialogResult += b => dlg.CallComplete(b == true);
 
             var result = ShowCustomModal(sender, dlg);
             Callback?.Invoke(result, inputDialog.TextValue);
@@ -362,6 +364,16 @@ public static class WPRDialogHelper
             Callback?.Invoke(b == true, inputDialog.TextValue);
         };
         panel.Show(inputDialog, true);
+    }
+
+
+    private class WprInputDialog(InputDialog Dialog) : IWPRDialog
+    {
+        public object DialogContent { get; } = Dialog;
+
+        public event Action<bool> Completed;
+
+        public void CallComplete(bool result) => Completed?.Invoke(result);
     }
 
 
