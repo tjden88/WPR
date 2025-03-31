@@ -1,5 +1,5 @@
 ﻿using System.Windows.Controls;
-using System.Windows.Input;
+using WPR.Commands.Base;
 
 namespace WPR.Commands;
 
@@ -7,16 +7,14 @@ namespace WPR.Commands;
 /// Команда очистки выбранного элемента комбобокса
 /// Параметр - текстбокс
 /// </summary>
-public class ClearComboBoxCommand : ICommand
+public class ClearComboBoxCommand : BaseCommand
 {
-    public void Execute(object p)
+    protected override void ExecuteCommand(object p)
     {
         if (p is not ComboBox cbox) return;
         cbox.Text = null!;
         cbox.SelectedValue = null;
     }
 
-    public bool CanExecute(object p) => p is ComboBox c && (c.SelectedIndex>-1 || !string.IsNullOrEmpty(c.Text));
-
-    public event EventHandler CanExecuteChanged;
+    protected override bool CanExecuteCommand(object p) => p is ComboBox c && (c.SelectedIndex>-1 || !string.IsNullOrEmpty(c.Text));
 }

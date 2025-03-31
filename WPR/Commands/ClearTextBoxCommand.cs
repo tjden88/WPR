@@ -1,5 +1,6 @@
 ﻿using System.Windows.Controls;
 using System.Windows.Input;
+using WPR.Commands.Base;
 
 namespace WPR.Commands;
 
@@ -7,20 +8,17 @@ namespace WPR.Commands;
 /// Команда очистки поля ввода текстбокса
 /// Параметр - текстбокс
 /// </summary>
-public class ClearTextBoxCommand: ICommand
+public class ClearTextBoxCommand: BaseCommand
 {
     /// <summary> Освободить фокус ввода после очистки </summary>
     public bool ClearFocus { get; set; } = true;
 
-    public void Execute(object p)
+    protected override void ExecuteCommand(object p)
     {
         if (p is not TextBox tbox) return;
         tbox.Text = string.Empty;
         if(ClearFocus) Keyboard.ClearFocus();
     }
 
-    public event EventHandler CanExecuteChanged;
-
-
-    public bool CanExecute(object p) => p is TextBox t && !string.IsNullOrEmpty(t.Text);
+    protected override bool CanExecuteCommand(object p) => p is TextBox t && !string.IsNullOrEmpty(t.Text);
 }
