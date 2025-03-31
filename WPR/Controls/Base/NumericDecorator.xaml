@@ -11,7 +11,7 @@
 
     <Style TargetType="{x:Type base:NumericDecorator}" BasedOn="{StaticResource BaseControl}">
         <Setter Property="Padding" Value="0,10,0,0"/>
-        <Setter Property="helpers:ButtonHelper.MouseOverButtonBrush" Value="{Binding  Path=TextBox.(helpers:ButtonHelper.MouseOverButtonBrush), RelativeSource={RelativeSource Self}}" />
+        <Setter Property="wpr:Ext.MouseOverBrush" Value="{Binding  Path=TextBox.(wpr:Ext.MouseOverBrush), RelativeSource={RelativeSource Self}}" />
         <Setter Property="VerticalContentAlignment" Value="Top" />
 
         <Setter Property="Focusable" Value="False"/>

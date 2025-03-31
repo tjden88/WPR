@@ -42,7 +42,7 @@
             </ListBox.ItemTemplate>
         </ListBox>
 
-        <wpr:WPRCard Grid.Column="1" Margin="10,10,0,0" helpers:ButtonHelper.BorderRadius ="8,0,0,0">
+        <wpr:WPRCard Grid.Column="1" Margin="10,10,0,0" wpr:Ext.BorderRadius ="8,0,0,0">
             <Frame Name="PagesFrame" NavigationUIVisibility="Hidden" Content="{Binding SelectedPage}" Navigating="PagesFrame_Navigating">
                 <Frame.RenderTransform>
                     <TranslateTransform/>

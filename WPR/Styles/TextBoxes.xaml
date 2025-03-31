@@ -13,7 +13,7 @@
 
     <Style x:Key="WPRTextBox" TargetType="{x:Type TextBox}" BasedOn="{StaticResource BaseControl}">
         <Setter Property="ContextMenu" Value="{StaticResource WPRDefaultContextMenu}"/>
-        <Setter Property="helpers:ButtonHelper.MouseOverButtonBrush" Value="{Binding Path= BorderBrush, RelativeSource={RelativeSource Self}}"/>
+        <Setter Property="wpr:Ext.MouseOverBrush" Value="{Binding Path= BorderBrush, RelativeSource={RelativeSource Self}}"/>
         <Setter Property="BorderBrush" Value="{DynamicResource DividerColorBrush}"/>
         <Setter Property="BorderThickness" Value="1"/>
         <Setter Property="Background" Value="{DynamicResource PrimaryColorBrush}"/>
@@ -96,7 +96,7 @@
 
                         <Trigger Property="Validation.HasError" Value="True">
                             <Setter Property="Background" Value="{StaticResource DangerColorBrush}"/>
-                            <Setter Property="helpers:ButtonHelper.MouseOverButtonBrush" Value="{StaticResource DangerColorBrush}"/>
+                            <Setter Property="wpr:Ext.MouseOverBrush" Value="{StaticResource DangerColorBrush}"/>
                             <Setter TargetName="ErrorText" Property="Visibility" Value="Visible"/>
                             <Setter TargetName="Description" Property="Visibility" Value="Hidden"/>
                         </Trigger>
@@ -147,12 +147,12 @@
                             </MultiTrigger.ExitActions>
                         </MultiTrigger>
                         <Trigger Property="IsMouseOver" Value="True" SourceName="ContentGrid">
-                            <Setter Property="helpers:ButtonHelper.MouseOverButtonBrush" Value="{Binding  Path= Background, RelativeSource={RelativeSource Self}}"/>
+                            <Setter Property="wpr:Ext.MouseOverBrush" Value="{Binding  Path= Background, RelativeSource={RelativeSource Self}}"/>
                             <Setter Property="BorderBrush" TargetName="BottomRect"
                                     Value="{Binding  Path= Background, RelativeSource={RelativeSource AncestorType=TextBox}}"/>
                         </Trigger>
                         <Trigger Property="IsKeyboardFocused" Value="True">
-                            <Setter Property="helpers:ButtonHelper.MouseOverButtonBrush" Value="{Binding  Path= Background, RelativeSource={RelativeSource Self}}"/>
+                            <Setter Property="wpr:Ext.MouseOverBrush" Value="{Binding  Path= Background, RelativeSource={RelativeSource Self}}"/>
                             <Setter Property="BorderBrush" TargetName="BottomRect"
                                     Value="{Binding  Path= Background, RelativeSource={RelativeSource AncestorType=TextBox}}"/>
                             <Setter Property="Fill" TargetName="Rectangle"
@@ -284,8 +284,8 @@
         <Setter Property="BorderBrush" Value="{DynamicResource DividerColorBrush}"/>
         <Setter Property="Background" Value="{StaticResource TransparentBrush}"></Setter>
         <Setter Property="BorderThickness" Value="1"></Setter>
-        <Setter Property="helpers:ButtonHelper.BorderRadius" Value="6"></Setter>
-        <Setter Property="helpers:ButtonHelper.MouseOverButtonBrush" Value="{DynamicResource PrimaryColorBrush}"/>
+        <Setter Property="wpr:Ext.BorderRadius" Value="6"></Setter>
+        <Setter Property="wpr:Ext.MouseOverBrush" Value="{DynamicResource PrimaryColorBrush}"/>
         <Setter Property="HorizontalContentAlignment" Value="Left"/>
         <Setter Property="SelectionBrush" Value="{DynamicResource PrimaryColorBrush}"></Setter>
         <Setter Property="CaretBrush" Value="{DynamicResource TextColorBrush}"/>
@@ -311,7 +311,7 @@
                                 BorderBrush="{TemplateBinding BorderBrush}"
                                 Name="TextBorder"
                                 Background="{TemplateBinding Background}"
-                                CornerRadius="{Binding Path=(helpers:ButtonHelper.BorderRadius), RelativeSource={RelativeSource TemplatedParent}}"
+                                CornerRadius="{Binding Path=(wpr:Ext.BorderRadius), RelativeSource={RelativeSource TemplatedParent}}"
                                 BorderThickness="{TemplateBinding BorderThickness}">
 
                             <Grid Margin="{TemplateBinding Padding}">
@@ -376,12 +376,12 @@
 
                         <Trigger Property="IsMouseOver" SourceName="TextBorder" Value="True">
                             <Setter Property="BorderBrush"  TargetName="TextBorder"
-                                    Value="{Binding  Path= (helpers:ButtonHelper.MouseOverButtonBrush), RelativeSource={RelativeSource AncestorType=TextBox}}"/>
+                                    Value="{Binding  Path= (wpr:Ext.MouseOverBrush), RelativeSource={RelativeSource AncestorType=TextBox}}"/>
                         </Trigger>
 
                         <Trigger Property="IsKeyboardFocused" Value="True">
                             <Setter Property="BorderBrush"  TargetName="TextBorder"
-                                    Value="{Binding  Path= (helpers:ButtonHelper.MouseOverButtonBrush), RelativeSource={RelativeSource AncestorType=TextBox}}"/>
+                                    Value="{Binding  Path= (wpr:Ext.MouseOverBrush), RelativeSource={RelativeSource AncestorType=TextBox}}"/>
                         </Trigger>
 
                         <Trigger Property="Text" Value="">

@@ -115,7 +115,7 @@
 
             <TextBox Style="{StaticResource WPRBorderedTextBox}" 
                      BorderBrush="{DynamicResource AccentColorBrush}"
-                     helpers:ButtonHelper.MouseOverButtonBrush="{DynamicResource SecondaryColorBrush}"
+                     wpr:Ext.MouseOverBrush="{DynamicResource SecondaryColorBrush}"
                      wpr:Ext.TextHint="Bordered Custom Border"
                      wpr:Ext.ClearButton="False"></TextBox>
             <ComboBox wpr:Ext.TextHint="Bordered Combo"

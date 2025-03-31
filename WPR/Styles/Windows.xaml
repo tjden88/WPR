@@ -17,7 +17,7 @@
         <Setter Property="Focusable" Value="False"/>
         <Setter Property="Foreground" Value="{DynamicResource WindowTitleBackgroundContrastColorBrush}"></Setter>
         <Setter Property="Background" Value="{StaticResource TransparentBrush}"></Setter>
-        <Setter Property="wh:ButtonHelper.BorderRadius" Value="0"/>
+        <Setter Property="wpr:Ext.BorderRadius" Value="0"/>
     </Style>
 
     <!--Кнопка разворачивания-->

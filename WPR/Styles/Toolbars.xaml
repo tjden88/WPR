@@ -17,7 +17,7 @@
     <Style x:Key="WPRToolBarCheckBox" TargetType="{x:Type CheckBox}" BasedOn="{StaticResource WPRToggleButton}">
         <Setter Property="MinHeight" Value="32" />
         <Setter Property="MinWidth" Value="32" />
-        <Setter Property="helpers:ButtonHelper.BorderRadius" Value="3"/>
+        <Setter Property="wpr:Ext.BorderRadius" Value="3"/>
         <Setter Property="Margin" Value="2,4"/>
         <Setter Property="BorderThickness" Value="1"/>
         <Setter Property="BorderBrush" Value="{DynamicResource DividerColorBrush}"/>
@@ -29,7 +29,7 @@
     </Style>
 
     <Style x:Key="WPRToolBarRadioButton" TargetType="{x:Type RadioButton}" BasedOn="{StaticResource WPRRadioButtonButtonStyle}">
-        <Setter Property="helpers:ButtonHelper.BorderRadius" Value="3"/>
+        <Setter Property="wpr:Ext.BorderRadius" Value="3"/>
         <Setter Property="MinHeight" Value="32" />
         <Setter Property="MinWidth" Value="32" />
         <Setter Property="Margin" Value="2,4"/>
@@ -69,7 +69,7 @@
     <Style x:Key="WPRToolBarButton" TargetType="Button" BasedOn="{StaticResource WPRFlatButton}">
         <Setter Property="Foreground" Value="{DynamicResource TextColorBrush}"/>
         <Setter Property="BorderThickness" Value="1"/>
-        <Setter Property="helpers:ButtonHelper.BorderRadius" Value="3"/>
+        <Setter Property="wpr:Ext.BorderRadius" Value="3"/>
         <Setter Property="BorderBrush" Value="{DynamicResource DividerColorBrush}"/>
         <Setter Property="Padding" Value="5,0"/>
         <Setter Property="Margin" Value="2,4"/>
@@ -124,7 +124,7 @@
                     <DockPanel x:Name="Grid" SnapsToDevicePixels="true" Background="{TemplateBinding Background}">
                         <Grid DockPanel.Dock="Right" x:Name="OverflowGrid" HorizontalAlignment="Right">
                             <ToggleButton x:Name="OverflowButton" ClickMode="Press" FocusVisualStyle="{x:Null}" 
-                                          helpers:ButtonHelper.BorderRadius="3"
+                                          wpr:Ext.BorderRadius="3"
                                           Height="32"
                                           Width="32"
                                           IsChecked="{Binding Path=IsOverflowOpen, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}" 

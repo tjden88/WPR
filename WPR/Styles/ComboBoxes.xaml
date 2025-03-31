@@ -516,7 +516,7 @@
                         BorderThickness="{TemplateBinding BorderThickness}"
                         UseLayoutRounding="False"
                         SnapsToDevicePixels="False"
-                        CornerRadius="{Binding Path=(helpers:ButtonHelper.BorderRadius), RelativeSource={RelativeSource TemplatedParent}}">
+                        CornerRadius="{Binding Path=(wpr:Ext.BorderRadius), RelativeSource={RelativeSource TemplatedParent}}">
 
                     <Grid Margin="{TemplateBinding Padding}">
                         <Grid.ColumnDefinitions>
@@ -609,17 +609,17 @@
 
             <Trigger Property="IsMouseOver" Value="True">
                 <Setter Property="BorderBrush" TargetName="Border"
-                        Value="{Binding  Path=(helpers:ButtonHelper.MouseOverButtonBrush), RelativeSource={RelativeSource AncestorType=ComboBox}}"/>
+                        Value="{Binding  Path=(wpr:Ext.MouseOverBrush), RelativeSource={RelativeSource AncestorType=ComboBox}}"/>
             </Trigger>
 
             <Trigger Property="IsDropDownOpen" Value="True">
                 <Setter Property="BorderBrush" TargetName="Border"
-                        Value="{Binding  Path=(helpers:ButtonHelper.MouseOverButtonBrush), RelativeSource={RelativeSource AncestorType=ComboBox}}"/>
+                        Value="{Binding  Path=(wpr:Ext.MouseOverBrush), RelativeSource={RelativeSource AncestorType=ComboBox}}"/>
             </Trigger>
 
             <Trigger Property="IsKeyboardFocused" SourceName="PART_EditableTextBox" Value="True">
                 <Setter Property="BorderBrush" TargetName="Border"
-                        Value="{Binding  Path=(helpers:ButtonHelper.MouseOverButtonBrush), RelativeSource={RelativeSource AncestorType=ComboBox}}"/>
+                        Value="{Binding  Path=(wpr:Ext.MouseOverBrush), RelativeSource={RelativeSource AncestorType=ComboBox}}"/>
             </Trigger>
 
             <MultiTrigger>
@@ -674,8 +674,8 @@
         <Setter Property="Background" Value="{DynamicResource BackgroundColorBrush}"/>
         <Setter Property="BorderThickness" Value="1"/>
         <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
-        <Setter Property="helpers:ButtonHelper.MouseOverButtonBrush" Value="{DynamicResource PrimaryColorBrush}"/>
-        <Setter Property="helpers:ButtonHelper.BorderRadius" Value="6"/>
+        <Setter Property="wpr:Ext.MouseOverBrush" Value="{DynamicResource PrimaryColorBrush}"/>
+        <Setter Property="wpr:Ext.BorderRadius" Value="6"/>
     </Style>
 
 </ResourceDictionary>

@@ -23,7 +23,7 @@
                         </Grid.ColumnDefinitions>
                         <local:WPRIcon Source="{Binding Path=Icon, RelativeSource={RelativeSource TemplatedParent}}"
                                        IconSize="18"
-                                       Foreground="{Binding Path=Content.(helpers:ButtonHelper.MouseOverButtonBrush), RelativeSource={RelativeSource TemplatedParent}}"
+                                       Foreground="{Binding Path=Content.(wpr:Ext.MouseOverBrush), RelativeSource={RelativeSource TemplatedParent}}"
                                        VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
                                        Margin="{TemplateBinding Padding}"/>
 

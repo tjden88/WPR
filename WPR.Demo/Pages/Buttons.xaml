@@ -24,16 +24,16 @@
                     <Button Content="PRIMARY DISABLED" Style="{StaticResource PrimaryWPRButton}" IsEnabled="False" Margin="10"/>
                     <Button Content="CustomRadius"                    
                     BorderThickness="1"
-                    Margin="5" helpers:ButtonHelper.BorderRadius="10,20,5,0" BorderBrush="{DynamicResource AccentColorBrush}"/>
+                    Margin="5" wpr:Ext.BorderRadius="10,20,5,0" BorderBrush="{DynamicResource AccentColorBrush}"/>
 
-                    <Button Margin="5" helpers:ButtonHelper.BorderRadius="50"
+                    <Button Margin="5" wpr:Ext.BorderRadius="50"
                     Style="{StaticResource AccentWPRButton}"
                     Height="40"
                     Padding="5"
                     Width="{Binding Path=ActualHeight, RelativeSource={RelativeSource Self}}">
                         <wpr:WPRIcon Source="EmoticonDevil" IconSize="20"/>
                     </Button>
-                    <Button Content="OVAL" Margin="5" helpers:ButtonHelper.BorderRadius="15"
+                    <Button Content="OVAL" Margin="5" wpr:Ext.BorderRadius="15"
                     Style="{StaticResource PrimaryWPRButton}"
                     Height="30"
                     Width="120"/>

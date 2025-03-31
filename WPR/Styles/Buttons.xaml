@@ -10,20 +10,20 @@
     <ControlTemplate TargetType="{x:Type ButtonBase}" x:Key="WPRButtonTemplate">
         <Grid>
             <Border x:Name="ShadowBorder"
-                    CornerRadius="{Binding Path=(helpers:ButtonHelper.BorderRadius), RelativeSource={RelativeSource TemplatedParent}}"
+                    CornerRadius="{Binding Path=(wpr:Ext.BorderRadius), RelativeSource={RelativeSource TemplatedParent}}"
                     BorderThickness="{TemplateBinding BorderThickness }" 
                     Background="{TemplateBinding Background}"
                     BorderBrush="{TemplateBinding BorderBrush}" 
                     SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
-                    Effect="{Binding Path=(helpers:ButtonHelper.ButtonShadow), RelativeSource={RelativeSource TemplatedParent}}"/>
+                    Effect="{Binding Path=(wpr:Ext.Shadow), RelativeSource={RelativeSource TemplatedParent}}"/>
 
-            <wpr:ClippingBorder CornerRadius="{Binding Path=(helpers:ButtonHelper.BorderRadius), RelativeSource={RelativeSource TemplatedParent}}"
+            <wpr:ClippingBorder CornerRadius="{Binding Path=(wpr:Ext.BorderRadius), RelativeSource={RelativeSource TemplatedParent}}"
                                      ClipToBounds="{Binding Path=(helpers:ButtonHelper.NoRippleCircleOutside), RelativeSource={RelativeSource TemplatedParent}}"
                                      SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
                 <Grid>
                     <Border x:Name="BackGrid"
-                                Background="{Binding Path=(helpers:ButtonHelper.MouseOverButtonBrush), RelativeSource={RelativeSource TemplatedParent}}" 
-                                CornerRadius="{Binding Path=(helpers:ButtonHelper.BorderRadius), RelativeSource={RelativeSource TemplatedParent}}"
+                                Background="{Binding Path=(wpr:Ext.MouseOverBrush), RelativeSource={RelativeSource TemplatedParent}}" 
+                                CornerRadius="{Binding Path=(wpr:Ext.BorderRadius), RelativeSource={RelativeSource TemplatedParent}}"
                                 BorderThickness="0"
                                 SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
                                 Opacity="0.4" />
@@ -108,8 +108,8 @@
         <Setter Property="Margin" Value="5"/>
         <Setter Property="VerticalContentAlignment" Value="Center"/>
         <Setter Property="HorizontalContentAlignment" Value="Center"/>
-        <Setter Property="helpers:ButtonHelper.BorderRadius" Value="6"/>
-        <Setter Property="helpers:ButtonHelper.MouseOverButtonBrush" Value="{DynamicResource AnimationEnterColorBrush}"/>
+        <Setter Property="wpr:Ext.BorderRadius" Value="6"/>
+        <Setter Property="wpr:Ext.MouseOverBrush" Value="{DynamicResource AnimationEnterColorBrush}"/>
         <Setter Property="Cursor" Value="Hand"/>
         <Setter Property="helpers:RippleHelper.FeedbackBrush" Value="{DynamicResource LightPrimaryColorBrush}"/>
         <Setter Property="Template" Value="{StaticResource WPRButtonTemplate}"/>
@@ -118,7 +118,7 @@
     <Style x:Key="PrimaryWPRButton" TargetType="{x:Type ButtonBase}" BasedOn="{StaticResource WPRFlatButton}">
         <Setter Property="Background" Value="{DynamicResource PrimaryColorBrush}"/>
         <Setter Property="Foreground" Value="{DynamicResource PrimaryContrastColorBrush}" />
-        <Setter Property="helpers:ButtonHelper.ButtonShadow" Value="{StaticResource ButtonShadow}"/>
+        <Setter Property="wpr:Ext.Shadow" Value="{StaticResource ButtonShadow}"/>
     </Style>
 
     <Style x:Key="AccentWPRButton" TargetType="{x:Type ButtonBase}" BasedOn="{StaticResource PrimaryWPRButton }">
@@ -131,7 +131,7 @@
         <Setter Property="Foreground" Value="{DynamicResource SecondaryColorBrush}"/>
         <Setter Property="helpers:RippleHelper.FeedbackBrush" Value="{DynamicResource AnimationEnterColorBrush}"/>
         <Setter Property="helpers:RippleHelper.IsCentered" Value="True"/>
-        <Setter Property="helpers:ButtonHelper.BorderRadius" Value="100"/>
+        <Setter Property="wpr:Ext.BorderRadius" Value="100"/>
         <Setter Property="helpers:ButtonHelper.NoRippleCircleOutside" Value="False"/>
     </Style>
 
@@ -141,7 +141,7 @@
 
     <Style x:Key="MenuButton" TargetType="{x:Type ButtonBase}" BasedOn="{StaticResource WPRFlatButton}">
         <Setter Property="Padding" Value="3,0,3,0"/>
-        <Setter Property="helpers:ButtonHelper.BorderRadius" Value="0"/>
+        <Setter Property="wpr:Ext.BorderRadius" Value="0"/>
         <Setter Property="Foreground" Value="{DynamicResource SecondaryColorBrush}"/>
         <Setter Property="MinWidth" Value="32"/>
         <Setter Property="MinHeight" Value="32"/>
@@ -151,7 +151,7 @@
     <Style x:Key="RoundedDecorator" TargetType="{x:Type ContentControl}">
         <Setter Property="Height" Value="28"/>
         <Setter Property="Margin" Value="1,0,1,0"/>
-        <Setter Property="helpers:ButtonHelper.BorderRadius" Value="14"/>
+        <Setter Property="wpr:Ext.BorderRadius" Value="14"/>
         <Setter Property="Foreground" Value="{DynamicResource TextColorBrush}"/>
         <Setter Property="Padding" Value="50,0,15,0"/>
         <Setter Property="Background" Value="{DynamicResource SecondaryBackgroundColorBrush}"/>
@@ -166,7 +166,7 @@
                                 Effect="{StaticResource SmallShadow}"
                                 BorderBrush="{TemplateBinding BorderBrush}"
                                 BorderThickness="{TemplateBinding BorderThickness}"
-                                CornerRadius="{Binding Path=(helpers:ButtonHelper.BorderRadius), RelativeSource={RelativeSource Mode=TemplatedParent}}">
+                                CornerRadius="{Binding Path=(wpr:Ext.BorderRadius), RelativeSource={RelativeSource Mode=TemplatedParent}}">
                         </Border>
                         <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" 
                                           VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
@@ -205,7 +205,7 @@
                                 CommandParameter="{TemplateBinding CommandParameter}"
                                      x:Name="But"
                                      Margin="0"
-                                     helpers:ButtonHelper.BorderRadius="20"
+                                     wpr:Ext.BorderRadius="20"
                                      helpers:RippleHelper.FeedbackBrush ="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=(helpers:RippleHelper.FeedbackBrush)}"
                                      Height="40" Width="40"
                                      Background="{TemplateBinding Background}"
@@ -247,7 +247,7 @@
                         <Trigger Property="Tag" Value="Big">
                             <Setter TargetName="But" Property="Height" Value="50"/>
                             <Setter TargetName="But" Property="Width" Value="50"/>
-                            <Setter TargetName="But" Property="helpers:ButtonHelper.BorderRadius" Value="25"/>
+                            <Setter TargetName="But" Property="wpr:Ext.BorderRadius" Value="25"/>
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
