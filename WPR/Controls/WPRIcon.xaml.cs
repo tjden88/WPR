@@ -38,7 +38,7 @@ public class WPRIcon : Control
     }
 
     public static readonly DependencyProperty IconSizeProperty =
-        DependencyProperty.Register("IconSize", typeof(double), typeof(WPRIcon), new PropertyMetadata(16.0));
+        DependencyProperty.Register(nameof(IconSize), typeof(double), typeof(WPRIcon), new PropertyMetadata(16.0));
 
 
     private static readonly DependencyPropertyKey DataPropertyKey

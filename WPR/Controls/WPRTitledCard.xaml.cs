@@ -24,7 +24,7 @@ public class WPRTitledCard : ContentControl
     // Using a DependencyProperty as the backing store for Header.  This enables animation, styling, binding, etc...
     [Category("WPRTitledCard")]
     public static readonly DependencyProperty HeaderProperty =
-        DependencyProperty.Register("Header", typeof(string), typeof(WPRTitledCard),
+        DependencyProperty.Register(nameof(Header), typeof(string), typeof(WPRTitledCard),
             new PropertyMetadata(string.Empty));
 
 
@@ -38,7 +38,7 @@ public class WPRTitledCard : ContentControl
     // Using a DependencyProperty as the backing store for IconSource.  This enables animation, styling, binding, etc...
     [Category("WPRTitledCard")]
     public static readonly DependencyProperty IconSourceProperty =
-        DependencyProperty.Register("IconSource", typeof(PackIconKind), typeof(WPRTitledCard),
+        DependencyProperty.Register(nameof(IconSource), typeof(PackIconKind), typeof(WPRTitledCard),
             new PropertyMetadata(PackIconKind.InfoCircle));
 
     #region PopupMenu : Menu - Меню в правой части заголовка

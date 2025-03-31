@@ -155,7 +155,7 @@ internal class WPRDialogPanel : HeaderedContentControl
     }
 
     public static readonly DependencyProperty BubbleTextProperty =
-        DependencyProperty.Register("BubbleText", typeof(string), typeof(WPRDialogPanel), new PropertyMetadata(""));
+        DependencyProperty.Register(nameof(BubbleText), typeof(string), typeof(WPRDialogPanel), new PropertyMetadata(""));
 
 
     #endregion

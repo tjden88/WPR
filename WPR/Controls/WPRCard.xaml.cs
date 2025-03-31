@@ -19,7 +19,7 @@ public class WPRCard : ContentControl
         set => SetValue(IsPopupShadowStyleProperty, value);
     }
     public static readonly DependencyProperty IsPopupShadowStyleProperty =
-        DependencyProperty.Register("IsPopupShadowStyle", typeof(bool), typeof(WPRCard), new PropertyMetadata(false));
+        DependencyProperty.Register(nameof(IsPopupShadowStyle), typeof(bool), typeof(WPRCard), new PropertyMetadata(false));
 
     /// <summary> Тень для всплывающего окна</summary>
     public bool IsDialogShadowStyle
@@ -28,6 +28,6 @@ public class WPRCard : ContentControl
         set => SetValue(IsDialogShadowStyleProperty, value);
     }
     public static readonly DependencyProperty IsDialogShadowStyleProperty =
-        DependencyProperty.Register("IsDialogShadowStyle", typeof(bool), typeof(WPRCard), new PropertyMetadata(false));
+        DependencyProperty.Register(nameof(IsDialogShadowStyle), typeof(bool), typeof(WPRCard), new PropertyMetadata(false));
 
 }

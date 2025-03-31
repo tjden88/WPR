@@ -15,7 +15,7 @@ public class WPRBage : ContentControl
 
     /// <summary>Контент бейджа</summary>
     public static readonly DependencyProperty BageContentProperty = DependencyProperty.Register(
-        "BageContent", typeof(object), typeof(WPRBage),
+        nameof(BageContent), typeof(object), typeof(WPRBage),
         new PropertyMetadata(string.Empty));
 
     public object BageContent
@@ -29,7 +29,7 @@ public class WPRBage : ContentControl
     }
 
     /// <summary> Видимость бейджа </summary>
-    public static readonly DependencyProperty BageVisibleProperty = DependencyProperty.Register("BageVisible", typeof(bool), typeof(WPRBage), 
+    public static readonly DependencyProperty BageVisibleProperty = DependencyProperty.Register(nameof(BageVisible), typeof(bool), typeof(WPRBage), 
         new PropertyMetadata(false));
 
     public bool BageVisible

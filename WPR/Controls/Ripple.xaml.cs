@@ -42,7 +42,7 @@ public class Ripple : ContentControl
     }
 
     public static readonly DependencyProperty RippleInCenterProperty =
-        DependencyProperty.Register("RippleInCenter", typeof(bool), typeof(Ripple), new PropertyMetadata(false));
+        DependencyProperty.Register(nameof(RippleInCenter), typeof(bool), typeof(Ripple), new PropertyMetadata(false));
 
     /// <summary>
     /// Отображается ли анимация в текущий момент
@@ -54,7 +54,7 @@ public class Ripple : ContentControl
     }
 
     public static readonly DependencyProperty IsAnimationActiveProperty =
-        DependencyProperty.Register("IsAnimationActive", typeof(bool), typeof(Ripple), new PropertyMetadata(false));
+        DependencyProperty.Register(nameof(IsAnimationActive), typeof(bool), typeof(Ripple), new PropertyMetadata(false));
 
     /// <summary>
     /// Если False - анимацию нужно запускать вручную
@@ -66,7 +66,7 @@ public class Ripple : ContentControl
     }
 
     public static readonly DependencyProperty StartRippleOnClickProperty =
-        DependencyProperty.Register("StartRippleOnClick", typeof(bool), typeof(Ripple), new PropertyMetadata(true));
+        DependencyProperty.Register(nameof(StartRippleOnClick), typeof(bool), typeof(Ripple), new PropertyMetadata(true));
 
 
     /// <summary>
@@ -80,7 +80,7 @@ public class Ripple : ContentControl
 
     // Using a DependencyProperty as the backing store for RippleSpeed.  This enables animation, styling, binding, etc...
     public static readonly DependencyProperty RippleSpeedProperty =
-        DependencyProperty.Register("RippleSpeed", typeof(double), typeof(Ripple), new PropertyMetadata(1.0, OnRippleSpeedPropertyChanged));
+        DependencyProperty.Register(nameof(RippleSpeed), typeof(double), typeof(Ripple), new PropertyMetadata(1.0, OnRippleSpeedPropertyChanged));
 
     private static void OnRippleSpeedPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
     {
@@ -99,7 +99,7 @@ public class Ripple : ContentControl
 
     // Using a DependencyProperty as the backing store for RippleMouseDownSpeed.  This enables animation, styling, binding, etc...
     public static readonly DependencyProperty RippleMouseDownSpeedProperty =
-        DependencyProperty.Register("RippleMouseDownSpeed", typeof(double), typeof(Ripple), new PropertyMetadata(0.1));
+        DependencyProperty.Register(nameof(RippleMouseDownSpeed), typeof(double), typeof(Ripple), new PropertyMetadata(0.1));
 
 
 
