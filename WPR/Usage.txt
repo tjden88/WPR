@@ -9,15 +9,13 @@
 ------ >>>
 
         xmlns:wpr="clr-namespace:WPR;assembly=WPR"
-        xmlns:cnt="clr-namespace:WPR.Controls;assembly=WPR"
-        
         Style="{StaticResource ChromeWindow}"
         Title="{Binding Title}" Height="650" Width="1000">
-    <helpers:WindowHelper.WindowHeaderContent>
+    <wpr:Extra.WindowHeaderContent>
         <StackPanel Margin="3" Orientation="Horizontal" HorizontalAlignment="Left" Width="Auto" >
             <Button Content="?" Style="{StaticResource WindowTitleButton}"/>
         </StackPanel>
-    </helpers:WindowHelper.WindowHeaderContent>
+    </wpr:Extra.WindowHeaderContent>
 
     <Grid>
         <TextBlock Text="Привет!" 
