@@ -4,11 +4,11 @@ using System.Diagnostics;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using WPR.Abstractions.Interfaces;
+using WPR.Abstractions.Models.Dialogs;
+using WPR.Abstractions.Models.Dialogs.Extensions;
+using WPR.Abstractions.Models.Themes;
 using WPR.Dialogs;
-using WPR.Domain.Interfaces;
-using WPR.Domain.Models.Dialogs;
-using WPR.Domain.Models.Dialogs.Extensions;
-using WPR.Domain.Models.Themes;
 using WPR.MVVM.Commands.Base;
 using WPR.UiServices.UI;
 

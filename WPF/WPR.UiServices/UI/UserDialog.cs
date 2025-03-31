@@ -1,10 +1,10 @@
 ﻿using Microsoft.Win32;
 using System.Windows;
 using System.Windows.Threading;
+using WPR.Abstractions.Interfaces;
+using WPR.Abstractions.Models.Dialogs;
+using WPR.Abstractions.Models.Themes;
 using WPR.Dialogs;
-using WPR.Domain.Interfaces;
-using WPR.Domain.Models.Dialogs;
-using WPR.Domain.Models.Themes;
 using WPR.MVVM.Validation;
 
 namespace WPR.UiServices.UI;

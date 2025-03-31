@@ -1,5 +1,5 @@
-﻿using WPR.Domain.Interfaces;
-using WPR.Domain.Models.Themes;
+﻿using WPR.Abstractions.Interfaces;
+using WPR.Abstractions.Models.Themes;
 
 namespace WPR.UiServices.UI;
 

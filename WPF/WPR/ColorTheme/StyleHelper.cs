@@ -2,7 +2,7 @@
 using System;
 using System.Windows;
 using System.Windows.Media;
-using WPR.Domain.Models.Themes;
+using WPR.Abstractions.Models.Themes;
 
 namespace WPR.ColorTheme;
 

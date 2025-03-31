@@ -8,7 +8,7 @@
   </PropertyGroup>
 
   <PropertyGroup>
-    <TargetFrameworks>net6.0-windows;net7.0-windows;net8.0-windows;net9.0-windows</TargetFrameworks>
+    <TargetFrameworks>net8.0-windows;net9.0-windows</TargetFrameworks>
     <UseWPF>true</UseWPF>
     <PublishReadyToRun>True</PublishReadyToRun>
     <PackageId>WPR.Styles</PackageId>
@@ -46,7 +46,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Common\WPR.Domain\WPR.Domain.csproj" />
+    <ProjectReference Include="..\..\WPR.Abstractions\WPR.Abstractions.csproj" />
     <ProjectReference Include="..\WPR.MVVM\WPR.MVVM.csproj" />
   </ItemGroup>
 

@@ -7,9 +7,9 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
+using WPR.Abstractions.Interfaces;
+using WPR.Abstractions.Models.Themes;
 using WPR.ColorTheme;
-using WPR.Domain.Interfaces;
-using WPR.Domain.Models.Themes;
 
 namespace WPR.Controls;
 

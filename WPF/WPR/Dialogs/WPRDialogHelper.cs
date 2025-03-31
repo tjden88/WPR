@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
 using System.Windows;
+using WPR.Abstractions.Interfaces;
+using WPR.Abstractions.Models.Dialogs;
+using WPR.Abstractions.Models.Themes;
 using WPR.Controls;
-using WPR.Domain.Interfaces;
-using WPR.Domain.Models.Dialogs;
-using WPR.Domain.Models.Themes;
 using WPR.MVVM.Validation;
 
 namespace WPR.Dialogs;

@@ -1,8 +1,8 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Windows;
+using WPR.Abstractions.Interfaces;
 using WPR.Dialogs.Base;
-using WPR.Domain.Interfaces;
 
 namespace WPR.Dialogs;
 

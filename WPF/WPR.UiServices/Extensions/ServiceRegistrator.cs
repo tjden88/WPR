@@ -1,4 +1,4 @@
-﻿using WPR.Domain.Interfaces;
+﻿using WPR.Abstractions.Interfaces;
 using WPR.UiServices.Themes;
 using WPR.UiServices.UI;
 
