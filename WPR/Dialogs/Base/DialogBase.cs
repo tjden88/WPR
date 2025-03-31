@@ -15,8 +15,8 @@ public abstract class DialogBase : Control
     {
         
 
-        SetDialogResultCommand = new Command(OnSetDialogResultCommandExecuted, _ => CanSetCommandExecuted());
-        CancelCommand = new Command(() => DialogResult?.Invoke(null));
+        SetDialogResultCommand = new BaseCommand(OnSetDialogResultCommandExecuted, _ => CanSetCommandExecuted());
+        CancelCommand = new BaseCommand(() => DialogResult?.Invoke(null));
     }
 
     #region Title : string - Заголовок

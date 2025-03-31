@@ -43,11 +43,11 @@ public abstract class NumericDecorator : Control, IDataErrorInfo
     public abstract TextBox TextBox { get; set; }
 
     /// <summary>Увеличить значение</summary>
-    public abstract Command IncrementValueCommand { get; }
+    public abstract ICommand IncrementValueCommand { get; }
 
 
     /// <summary>Уменьшить значение</summary>
-    public abstract Command DecrementValueCommand { get; }
+    public abstract ICommand DecrementValueCommand { get; }
 
     #region Errors
 
@@ -291,7 +291,7 @@ public abstract class NumericDecorator<T> : NumericDecorator where T : struct, I
     #region Command IncrementValueCommand - Увеличить значение
 
     /// <summary>Увеличить значение</summary>
-    public override Command IncrementValueCommand => new(OnIncrementValueCommandExecuted, CanIncrementValueCommandExecute, "Увеличить значение");
+    public override ICommand IncrementValueCommand => new BaseCommand(OnIncrementValueCommandExecuted, CanIncrementValueCommandExecute);
      
 
     /// <summary>Проверка возможности выполнения - Увеличить значение</summary>
@@ -310,7 +310,7 @@ public abstract class NumericDecorator<T> : NumericDecorator where T : struct, I
     #region Command DecrementValueCommand - Уменьшить значение
 
     /// <summary>Уменьшить значение</summary>
-    public override Command DecrementValueCommand => new(OnDecrementValueCommandExecuted, CanDecrementValueCommandExecute, "Уменьшить значение");
+    public override ICommand DecrementValueCommand => new BaseCommand(OnDecrementValueCommandExecuted, CanDecrementValueCommandExecute);
 
     /// <summary>Проверка возможности выполнения - Уменьшить значение</summary>
     private bool CanDecrementValueCommandExecute() => MinValue.CompareTo(Value) < 0;
