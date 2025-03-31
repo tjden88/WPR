@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>net6.0;net7.0</TargetFrameworks>
+    <TargetFrameworks>net8.0;net9.0</TargetFrameworks>
 	  <Description>Библиотека инструментов .NET Core</Description>
 	  <FileVersion>1.0</FileVersion>
 	  <AssemblyVersion>1.0</AssemblyVersion>
@@ -23,6 +23,10 @@
       <Pack>True</Pack>
       <PackagePath>\</PackagePath>
     </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\WPR.Services.Abstractions\WPR.Services.Abstractions.csproj" />
   </ItemGroup>
 
 </Project>

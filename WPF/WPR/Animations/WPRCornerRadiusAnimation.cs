@@ -3,7 +3,7 @@ using System.ComponentModel;
 using System.Windows;
 using System.Windows.Media.Animation;
 
-namespace WPR.Extensions.Animations;
+namespace WPR.Animations;
 
 /// <summary>
 /// Анимация радиусов

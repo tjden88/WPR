@@ -7,7 +7,7 @@ using System.Windows.Media.Animation;
 using WPR.ColorTheme;
 using WPR.Domain.Models.Themes;
 
-namespace WPR.Extensions.Animations;
+namespace WPR.Animations;
 
 /// <summary>
 /// Анимация кистей на основе цветов текущего стиля

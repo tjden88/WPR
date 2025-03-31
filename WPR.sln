@@ -15,6 +15,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WPR.MVVM", "WPF\WPR.MVVM\WP
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WPR.UiServices", "WPF\WPR.UiServices\WPR.UiServices.csproj", "{7454A8E8-98AF-400F-AF7D-0F2ECE314E33}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WPR.Services", "WPR.Services\WPR.Services.csproj", "{0EF79BC5-EF7E-48C9-86E3-36DA9F068281}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WPR.Services.Abstractions", "WPR.Services.Abstractions\WPR.Services.Abstractions.csproj", "{C17B587D-157D-45EF-B8A8-BE53846417AD}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -45,6 +49,14 @@ Global
 		{7454A8E8-98AF-400F-AF7D-0F2ECE314E33}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7454A8E8-98AF-400F-AF7D-0F2ECE314E33}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7454A8E8-98AF-400F-AF7D-0F2ECE314E33}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0EF79BC5-EF7E-48C9-86E3-36DA9F068281}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0EF79BC5-EF7E-48C9-86E3-36DA9F068281}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0EF79BC5-EF7E-48C9-86E3-36DA9F068281}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0EF79BC5-EF7E-48C9-86E3-36DA9F068281}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C17B587D-157D-45EF-B8A8-BE53846417AD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C17B587D-157D-45EF-B8A8-BE53846417AD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C17B587D-157D-45EF-B8A8-BE53846417AD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C17B587D-157D-45EF-B8A8-BE53846417AD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
