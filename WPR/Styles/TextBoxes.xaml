@@ -34,7 +34,7 @@
                         </Grid.RowDefinitions>
                         <Grid Margin="0,10,0,0" Name="ContentGrid">
                             <ContentControl IsTabStop="False" x:Name="FloatingHint"
-                                            Content="{Binding Path=(helpers:TextHelper.Hint), RelativeSource={RelativeSource TemplatedParent}}"
+                                            Content="{Binding Path=(wpr:Ext.TextHint), RelativeSource={RelativeSource TemplatedParent}}"
                                             HorizontalAlignment="Left"
                                             VerticalAlignment="Bottom"
                                             Foreground="{TemplateBinding Background}"
@@ -73,7 +73,7 @@
                         <ContentControl Grid.Row="1" 
                                    x:Name="Description"
                                    Focusable="False"
-                                   Content="{Binding Path=(helpers:TextHelper.Description), RelativeSource={RelativeSource TemplatedParent}}"
+                                   Content="{Binding Path=(wpr:Ext.TextDescription), RelativeSource={RelativeSource TemplatedParent}}"
                                    HorizontalAlignment="Left"
                                    Foreground="{DynamicResource SecondaryColorBrush}"
                                    FontSize="13" Margin="0,3,0,0"/>
@@ -203,7 +203,7 @@
                             Background="{TemplateBinding Background}"
                             BorderThickness="{TemplateBinding BorderThickness}">
                         <Grid>
-                            <ContentControl Content="{Binding Path=(helpers:TextHelper.Hint), RelativeSource={RelativeSource TemplatedParent}}"
+                            <ContentControl Content="{Binding Path=(wpr:Ext.TextHint), RelativeSource={RelativeSource TemplatedParent}}"
                                        x:Name="Hint"
                                        Opacity="0"
                                        Margin="{TemplateBinding Padding}"
@@ -224,7 +224,7 @@
                                 <Button x:Name="ClearButton" Grid.Column="1" Style="{StaticResource WPRToolHiddenButton}" VerticalAlignment="Center"
                                     Command="{StaticResource ClearCommand}"
                                     CommandParameter="{Binding RelativeSource={RelativeSource TemplatedParent}}"
-                                    Visibility="{Binding Path=(helpers:TextHelper.ShowClearButton), 
+                                    Visibility="{Binding Path=(wpr:Ext.ClearButton), 
                                 RelativeSource={RelativeSource TemplatedParent},
                                 Converter={StaticResource Bool2VisibilityConverter}}">
                                     <wpr:WPRIcon Source="CloseCircle"/>
@@ -303,7 +303,7 @@
                         </Grid.RowDefinitions>
 
                         <ContentControl Foreground="{DynamicResource SecondaryColorBrush}"
-                                        Content="{Binding Path=(helpers:TextHelper.Description), RelativeSource={RelativeSource TemplatedParent}}"
+                                        Content="{Binding Path=(wpr:Ext.TextDescription), RelativeSource={RelativeSource TemplatedParent}}"
                                         Margin="0,0,0,6"
                                         Visibility="{Binding  Path= Content, RelativeSource={RelativeSource Self}, Converter={StaticResource ValueIsNullToVisibilityConverter}}"/>
 
@@ -315,7 +315,7 @@
                                 BorderThickness="{TemplateBinding BorderThickness}">
 
                             <Grid Margin="{TemplateBinding Padding}">
-                                <ContentControl Content="{Binding Path=(helpers:TextHelper.Hint), RelativeSource={RelativeSource TemplatedParent}}"
+                                <ContentControl Content="{Binding Path=(wpr:Ext.TextHint), RelativeSource={RelativeSource TemplatedParent}}"
                                        x:Name="Hint"
                                        Opacity="0"
                                        Margin="0,5,0,0"
@@ -343,7 +343,7 @@
                                             VerticalAlignment="Top"
                                             Command="{StaticResource ClearCommand}"
                                             CommandParameter="{Binding RelativeSource={RelativeSource TemplatedParent}}"
-                                            Visibility="{Binding Path=(helpers:TextHelper.ShowClearButton), RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource Bool2VisibilityConverter}}">
+                                            Visibility="{Binding Path=(wpr:Ext.ClearButton), RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource Bool2VisibilityConverter}}">
                                         <wpr:WPRIcon Source="CloseCircle"/>
                                     </Button>
                                 </Grid>

@@ -277,7 +277,7 @@
                 <ContentControl Grid.Row="0" Grid.Column="0" IsTabStop="False" x:Name="FloatingHint"
                                 IsHitTestVisible="False"
                                 VerticalAlignment="Bottom"
-                                Content="{Binding Path=(helpers:TextHelper.Hint), RelativeSource={RelativeSource TemplatedParent}}"
+                                Content="{Binding Path=(wpr:Ext.TextHint), RelativeSource={RelativeSource TemplatedParent}}"
                                 HorizontalAlignment="Left"
                                 Foreground="{TemplateBinding Background}"
                                 FontSize="{TemplateBinding FontSize}"
@@ -318,7 +318,7 @@
                         CommandParameter="{Binding  Path=., RelativeSource={RelativeSource TemplatedParent}}"
                         Style="{StaticResource WPRToolHiddenButton}"
                         VerticalAlignment="Center"
-                        Visibility="{Binding Path=(helpers:TextHelper.ShowClearButton), RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource Bool2VisibilityConverter}}">
+                        Visibility="{Binding Path=(wpr:Ext.ClearButton), RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource Bool2VisibilityConverter}}">
                     <wpr:WPRIcon Source="CloseCircle"/>
                 </Button>
 
@@ -336,7 +336,7 @@
                 <ContentControl IsTabStop="False"
                                 Name="Description"
                                             Grid.Row="1" Grid.Column="0"
-                                Content="{Binding Path=(helpers:TextHelper.Description), RelativeSource={RelativeSource TemplatedParent}}"
+                                Content="{Binding Path=(wpr:Ext.TextDescription), RelativeSource={RelativeSource TemplatedParent}}"
                                             HorizontalAlignment="Left"
                                             Foreground="{DynamicResource SecondaryColorBrush}"
                                             FontSize="13"/>
@@ -486,7 +486,7 @@
             <ContentControl IsTabStop="False"
                             Margin="0,0,0,6"
                             Name="Description"
-                            Content="{Binding Path=(helpers:TextHelper.Description), RelativeSource={RelativeSource TemplatedParent}}"
+                            Content="{Binding Path=(wpr:Ext.TextDescription), RelativeSource={RelativeSource TemplatedParent}}"
                             HorizontalAlignment="Left"
                             Foreground="{DynamicResource SecondaryColorBrush}"/>
 
@@ -537,7 +537,7 @@
                         <ContentControl Grid.Row="0" Grid.Column="0" IsTabStop="False" x:Name="FloatingHint"
                                 IsHitTestVisible="False"
                                 VerticalAlignment="Bottom"
-                                Content="{Binding Path=(helpers:TextHelper.Hint), RelativeSource={RelativeSource TemplatedParent}}"
+                                Content="{Binding Path=(wpr:Ext.TextHint), RelativeSource={RelativeSource TemplatedParent}}"
                                 HorizontalAlignment="Left"
                                 Foreground="{StaticResource TransparentBrush}"
                                 FontSize="{TemplateBinding FontSize}"
@@ -572,7 +572,7 @@
                                 CommandParameter="{Binding Path=., RelativeSource={RelativeSource TemplatedParent}}"
                                 Style="{StaticResource WPRToolHiddenButton}"
                                 VerticalAlignment="Center"
-                                Visibility="{Binding Path=(helpers:TextHelper.ShowClearButton), RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource Bool2VisibilityConverter}}">
+                                Visibility="{Binding Path=(wpr:Ext.ClearButton), RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource Bool2VisibilityConverter}}">
                             <wpr:WPRIcon Source="CloseCircle"/>
                         </Button>
                     </Grid>

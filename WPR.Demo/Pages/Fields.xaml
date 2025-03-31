@@ -12,24 +12,24 @@
 
     <DockPanel Background="{DynamicResource BackgroundColorBrush}">
         <StackPanel Width="200" Margin="10">
-            <TextBox Margin="15" helpers:TextHelper.Hint="Возраст: 21-100" 
-                     helpers:TextHelper.Description="ValidatedTextBox" FontSize="40">
+            <TextBox Margin="15" wpr:Ext.TextHint="Возраст: 21-100" 
+                     wpr:Ext.TextDescription="ValidatedTextBox" FontSize="40">
             </TextBox>
-            <TextBox Margin="15" helpers:TextHelper.Hint="Подсказка" 
-                     helpers:TextHelper.Description="Описание"
+            <TextBox Margin="15" wpr:Ext.TextHint="Подсказка" 
+                     wpr:Ext.TextDescription="Описание"
                      Text="Текст"/>
             <Border CornerRadius="15">
                 <TextBox x:Name="Clearable" Margin="10"
                          BorderThickness="0"
                          Style="{StaticResource WPRFlatTextBox}" 
-                         helpers:TextHelper.ShowClearButton="True"
-                         helpers:TextHelper.Hint="Flat Clearable TextBox"/>
+                         wpr:Ext.ClearButton="True"
+                         wpr:Ext.TextHint="Flat Clearable TextBox"/>
             </Border>
             <DockPanel>
                 <wpr:WPRIcon Source="Person" Foreground="{Binding ElementName=NameText, Path=BorderBrush}"/>
-                <TextBox helpers:TextHelper.Hint="Имя"
+                <TextBox wpr:Ext.TextHint="Имя"
                          VerticalAlignment="Bottom" Margin="5,10,0,0"
-                         helpers:TextHelper.Description="Представьтесь"
+                         wpr:Ext.TextDescription="Представьтесь"
                          x:Name="NameText"
                          Background="{DynamicResource AccentColorBrush}" />
             </DockPanel>
@@ -37,9 +37,9 @@
             <RichTextBox Height="100"></RichTextBox>
         </StackPanel>
         <StackPanel Width="200">
-            <ComboBox helpers:TextHelper.Description="Описание"  SelectedIndex="-1"
-          helpers:TextHelper.Hint="Not Editable"
-          helpers:TextHelper.ShowClearButton="True"
+            <ComboBox wpr:Ext.TextDescription="Описание"  SelectedIndex="-1"
+          wpr:Ext.TextHint="Not Editable"
+          wpr:Ext.ClearButton="True"
           Margin="0,30"
           Name="Box">
                 <ComboBoxItem>
@@ -52,7 +52,7 @@
                 <ComboBoxItem Content="Item 4"/>
             </ComboBox>
             <Button Content="Clear" Click="ClearCB_Click" />
-            <ComboBox helpers:TextHelper.Description="Описание 2" helpers:TextHelper.Hint="Editable" IsEditable="True" Margin="10">
+            <ComboBox wpr:Ext.TextDescription="Описание 2" wpr:Ext.TextHint="Editable" IsEditable="True" Margin="10">
                 <ComboBoxItem Content="Item 1"/>
                 <ComboBoxItem Content="Item 2"/>
                 <ComboBoxItem Content="Item 3"/>
@@ -105,30 +105,30 @@
         </StackPanel>
         <StackPanel Width="200" Margin="10">
             <TextBox Style="{StaticResource WPRBorderedTextBox}" 
-                     helpers:TextHelper.Hint="Bordered"
-                     helpers:TextHelper.Description="Description"
-                     helpers:TextHelper.ShowClearButton="True"></TextBox>
+                     wpr:Ext.TextHint="Bordered"
+                     wpr:Ext.TextDescription="Description"
+                     wpr:Ext.ClearButton="True"></TextBox>
 
             <TextBox Style="{StaticResource WPRBorderedTextBox}" 
-                     helpers:TextHelper.Hint="Bordered no Descr"
-                     helpers:TextHelper.ShowClearButton="False"/>
+                     wpr:Ext.TextHint="Bordered no Descr"
+                     wpr:Ext.ClearButton="False"/>
 
             <TextBox Style="{StaticResource WPRBorderedTextBox}" 
                      BorderBrush="{DynamicResource AccentColorBrush}"
                      helpers:ButtonHelper.MouseOverButtonBrush="{DynamicResource SecondaryColorBrush}"
-                     helpers:TextHelper.Hint="Bordered Custom Border"
-                     helpers:TextHelper.ShowClearButton="False"></TextBox>
-            <ComboBox helpers:TextHelper.Hint="Bordered Combo"
+                     wpr:Ext.TextHint="Bordered Custom Border"
+                     wpr:Ext.ClearButton="False"></TextBox>
+            <ComboBox wpr:Ext.TextHint="Bordered Combo"
                       Style="{StaticResource WPRBorderedComboBox}"
-                      helpers:TextHelper.ShowClearButton="True"
-                      helpers:TextHelper.Description="Description">
+                      wpr:Ext.ClearButton="True"
+                      wpr:Ext.TextDescription="Description">
                 <ComboBoxItem Content="Item1"/>
                 <ComboBoxItem Content="Item2"/>
                 <ComboBoxItem Content="Item3"/>
             </ComboBox>
-            <ComboBox helpers:TextHelper.Hint="Combo no descr"
+            <ComboBox wpr:Ext.TextHint="Combo no descr"
                       IsEditable="True"
-                      helpers:TextHelper.ShowClearButton="True"
+                      wpr:Ext.ClearButton="True"
                       Style="{StaticResource WPRBorderedComboBox}">
                 <ComboBoxItem Content="Item1"/>
                 <ComboBoxItem Content="Item2"/>

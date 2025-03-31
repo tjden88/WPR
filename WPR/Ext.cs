@@ -75,14 +75,14 @@ public static class Ext
     /// <summary>
     /// Дополнительное описание для текстовых полей или комбобоксов
     /// </summary>
-    public static readonly DependencyProperty DescriptionProperty =
-        DependencyProperty.RegisterAttached("Description", typeof(object), typeof(Ext),
+    public static readonly DependencyProperty TextDescriptionProperty =
+        DependencyProperty.RegisterAttached("TextDescription", typeof(object), typeof(Ext),
             new FrameworkPropertyMetadata(null,
                 FrameworkPropertyMetadataOptions.AffectsRender | FrameworkPropertyMetadataOptions.AffectsMeasure));
 
-    public static void SetDescription(UIElement element, object value) => element.SetValue(DescriptionProperty, value);
+    public static void SetTextDescription(UIElement element, object value) => element.SetValue(TextDescriptionProperty, value);
 
-    public static object GetDescription(UIElement element) => (object)element.GetValue(DescriptionProperty);
+    public static object GetTextDescription(UIElement element) => (object)element.GetValue(TextDescriptionProperty);
 
     #endregion
 

@@ -195,7 +195,7 @@
                                         Style="{StaticResource RoundedDecorator}"
                                         HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                                         VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-                                        Content="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=(helpers:TextHelper.Hint)}">
+                                        Content="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=(wpr:Ext.TextHint)}">
                             <ContentControl.RenderTransform>
                                 <ScaleTransform ScaleX="0" x:Name="ScaleDecorator"/>
                             </ContentControl.RenderTransform>

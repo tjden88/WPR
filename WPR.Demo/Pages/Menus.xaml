@@ -58,7 +58,7 @@
                     <Separator/>
                     <TextBlock Text="Combo" VerticalAlignment="Center" Margin="5"/>
 
-                    <ComboBox Width="120" helpers:TextHelper.Hint="Hint">
+                    <ComboBox Width="120" wpr:Ext.TextHint="Hint">
                         <ComboBoxItem Content="10"/>
                         <ComboBoxItem Content="12"/>
                         <ComboBoxItem Content="14"/>
@@ -72,13 +72,13 @@
                         <ComboBoxItem Content="16"/>
                     </ComboBox>
                     <Separator/>
-                    <TextBox Width="100" helpers:TextHelper.Hint="Filter"  helpers:TextHelper.ShowClearButton="True"/>
+                    <TextBox Width="100" wpr:Ext.TextHint="Filter"  wpr:Ext.ClearButton="True"/>
                 </ToolBar>
                 <ToolBar Header="Header2">
                     <Button Content="Test2"/>
                 </ToolBar>
             </ToolBarTray>
-            <TextBox HorizontalAlignment="Left" TextWrapping="Wrap" Text="TextBox" helpers:TextHelper.Hint="Hint" Width="176" />
+            <TextBox HorizontalAlignment="Left" TextWrapping="Wrap" Text="TextBox" wpr:Ext.TextHint="Hint" Width="176" />
             <Slider Value="5" Width="300"/>
         </StackPanel>
 
