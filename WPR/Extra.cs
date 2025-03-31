@@ -7,14 +7,14 @@ namespace WPR;
 /// <summary>
 /// Присоединённые свойства для расширения отображения и поведения контролов
 /// </summary>
-public static class Ext
+public static class Extra
 {
     #region Радиус бордера элементов
     /// <summary>
     /// Радиус бордера элементов
     /// </summary>
     public static readonly DependencyProperty BorderRadiusProperty =
-        DependencyProperty.RegisterAttached("BorderRadius", typeof(CornerRadius), typeof(Ext), new PropertyMetadata(default(CornerRadius)));
+        DependencyProperty.RegisterAttached("BorderRadius", typeof(CornerRadius), typeof(Extra), new PropertyMetadata(default(CornerRadius)));
 
     public static void SetBorderRadius(UIElement element, CornerRadius value) => element.SetValue(BorderRadiusProperty, value);
 
@@ -29,7 +29,7 @@ public static class Ext
         DependencyProperty.RegisterAttached(
             "MouseOverBrush",
             typeof(Brush),
-            typeof(Ext),
+            typeof(Extra),
             new PropertyMetadata(default(Brush)));
 
     /// <summary>Кисть заливки при наведении мыши</summary>
@@ -47,7 +47,7 @@ public static class Ext
         DependencyProperty.RegisterAttached(
             "Shadow",
             typeof(DropShadowEffect),
-            typeof(Ext),
+            typeof(Extra),
             new PropertyMetadata(default(DropShadowEffect)));
 
     /// <summary>Тень элемента</summary>
@@ -63,7 +63,7 @@ public static class Ext
     /// Подсказка для текстовых полей или комбобоксов
     /// </summary>
     public static readonly DependencyProperty TextHintProperty =
-        DependencyProperty.RegisterAttached("TextHint", typeof(object), typeof(Ext), new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.AffectsRender));
+        DependencyProperty.RegisterAttached("TextHint", typeof(object), typeof(Extra), new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.AffectsRender));
 
     public static void SetTextHint(UIElement element, object value) => element?.SetValue(TextHintProperty, value);
 
@@ -76,7 +76,7 @@ public static class Ext
     /// Дополнительное описание для текстовых полей или комбобоксов
     /// </summary>
     public static readonly DependencyProperty TextDescriptionProperty =
-        DependencyProperty.RegisterAttached("TextDescription", typeof(object), typeof(Ext),
+        DependencyProperty.RegisterAttached("TextDescription", typeof(object), typeof(Extra),
             new FrameworkPropertyMetadata(null,
                 FrameworkPropertyMetadataOptions.AffectsRender | FrameworkPropertyMetadataOptions.AffectsMeasure));
 
@@ -93,7 +93,7 @@ public static class Ext
         DependencyProperty.RegisterAttached(
             "ClearButton",
             typeof(bool),
-            typeof(Ext),
+            typeof(Extra),
             new PropertyMetadata(false));
 
     /// <summary>Показать ли кнопку очистки текстбокса или комбобокса</summary>
@@ -117,7 +117,7 @@ public static class Ext
 
     /// <summary> Контент заголовка окна (слева в строке заголовка) </summary>
     public static readonly DependencyProperty WindowHeaderContentProperty =
-        DependencyProperty.RegisterAttached("WindowHeaderContent", typeof(object), typeof(Ext), new PropertyMetadata(null));
+        DependencyProperty.RegisterAttached("WindowHeaderContent", typeof(object), typeof(Extra), new PropertyMetadata(null));
     #endregion
 
     #region Кисть эффекта нажатия элемнта
@@ -131,6 +131,6 @@ public static class Ext
 
     // Using a DependencyProperty as the backing store for FeedbackBrush.  This enables animation, styling, binding, etc...
     public static readonly DependencyProperty FeedbackBrushProperty =
-        DependencyProperty.RegisterAttached("FeedbackBrush", typeof(SolidColorBrush), typeof(Ext), new PropertyMetadata());
+        DependencyProperty.RegisterAttached("FeedbackBrush", typeof(SolidColorBrush), typeof(Extra), new PropertyMetadata());
     #endregion
 }

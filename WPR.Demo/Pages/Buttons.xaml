@@ -15,24 +15,24 @@
                     <Button Content="PRIMARY Button" Style="{StaticResource PrimaryWPRButton}"  Margin="10"/>
                     <Button Content="ACCENT Button" Style="{StaticResource AccentWPRButton}"  Margin="10"/>
                     <Button Content="Menu Button" Style="{StaticResource MenuButton}"  Margin="10"/>
-                    <Button Content="A" Style="{StaticResource RoundedButtonWithFloatingHintPrimary}" wpr:Ext.TextHint="Hint!" Margin="10" HorizontalContentAlignment="Left"/>
-                    <Button Content="B" Style="{StaticResource RoundedButtonWithFloatingHintPrimary}" wpr:Ext.TextHint="Hint!" Margin="10"/>
+                    <Button Content="A" Style="{StaticResource RoundedButtonWithFloatingHintPrimary}" wpr:Extra.TextHint="Hint!" Margin="10" HorizontalContentAlignment="Left"/>
+                    <Button Content="B" Style="{StaticResource RoundedButtonWithFloatingHintPrimary}" wpr:Extra.TextHint="Hint!" Margin="10"/>
                 </StackPanel>
                 <StackPanel>
                     <Button Content="DISABLED" Style="{StaticResource WPRFlatButton}" IsEnabled="False" Margin="10"/>
                     <Button Content="PRIMARY DISABLED" Style="{StaticResource PrimaryWPRButton}" IsEnabled="False" Margin="10"/>
                     <Button Content="CustomRadius"                    
                     BorderThickness="1"
-                    Margin="5" wpr:Ext.BorderRadius="10,20,5,0" BorderBrush="{DynamicResource AccentColorBrush}"/>
+                    Margin="5" wpr:Extra.BorderRadius="10,20,5,0" BorderBrush="{DynamicResource AccentColorBrush}"/>
 
-                    <Button Margin="5" wpr:Ext.BorderRadius="50"
+                    <Button Margin="5" wpr:Extra.BorderRadius="50"
                     Style="{StaticResource AccentWPRButton}"
                     Height="40"
                     Padding="5"
                     Width="{Binding Path=ActualHeight, RelativeSource={RelativeSource Self}}">
                         <wpr:WPRIcon Source="EmoticonDevil" IconSize="20"/>
                     </Button>
-                    <Button Content="OVAL" Margin="5" wpr:Ext.BorderRadius="15"
+                    <Button Content="OVAL" Margin="5" wpr:Extra.BorderRadius="15"
                     Style="{StaticResource PrimaryWPRButton}"
                     Height="30"
                     Width="120"/>
@@ -42,12 +42,12 @@
                             <wpr:WPRIcon Source="Star"/>
                         </Button>
                         <Button Style="{StaticResource WPRToolButton}"
-                        wpr:Ext.FeedbackBrush="{DynamicResource AccentColorBrush }"
+                        wpr:Extra.FeedbackBrush="{DynamicResource AccentColorBrush }"
                         Padding="3">
                             <wpr:WPRIcon Source="Like"/>
                         </Button>
                         <Button Style="{StaticResource WPRToolButton}"
-                        wpr:Ext.FeedbackBrush="{DynamicResource  DarkPrimaryColorBrush }"
+                        wpr:Extra.FeedbackBrush="{DynamicResource  DarkPrimaryColorBrush }"
                         Padding="3">
                             <wpr:WPRIcon Source="Dislike"/>
                         </Button>

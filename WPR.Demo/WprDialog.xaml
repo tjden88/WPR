@@ -9,7 +9,7 @@
              d:DesignHeight="450" d:DesignWidth="800">
     <wpr:WPRTitledCard Header="Пользовательский диалог">
         <StackPanel Margin="15">
-            <TextBox wpr:Ext.TextHint="Текст"></TextBox>
+            <TextBox wpr:Extra.TextHint="Текст"></TextBox>
             <Separator/>
             <Button Content="Ок" HorizontalAlignment="Right" Click="Button_Click_1"></Button>
             <Button Content="Отмена" HorizontalAlignment="Right" Click="Button_Click"></Button>

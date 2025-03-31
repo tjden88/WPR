@@ -8,11 +8,11 @@
         DataContext="{Binding Source={StaticResource Locator}, Path=MainWindowViewModel}"
         Style="{StaticResource NoTitledWindow}"
         Title="{Binding Title}" Height="650" Width="1000">
-    <wpr:Ext.WindowHeaderContent>
+    <wpr:Extra.WindowHeaderContent>
         <StackPanel Margin="3" Orientation="Horizontal" HorizontalAlignment="Left" Width="Auto" >
             <Button Content="?" Style="{StaticResource WindowTitleButton}"/>
         </StackPanel>
-    </wpr:Ext.WindowHeaderContent>
+    </wpr:Extra.WindowHeaderContent>
 
     <Grid>
         <TextBlock Text="Привет!" 

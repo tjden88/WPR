@@ -14,7 +14,7 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
             <wpr:Ripple x:Name="Ripple" VerticalAlignment="Center"
-                             Background="{Binding RelativeSource={RelativeSource TemplatedParent},Path=(wpr:Ext.FeedbackBrush)}" 
+                             Background="{Binding RelativeSource={RelativeSource TemplatedParent},Path=(wpr:Extra.FeedbackBrush)}" 
                              RippleInCenter="True"
                              StartRippleOnClick="False">
                 <Border x:Name="checkBoxBorder" 
@@ -89,7 +89,7 @@
         <Setter Property="Cursor" Value="Hand"/>
         <Setter Property="BorderThickness" Value="2"/>
         <Setter Property="BorderBrush" Value="{DynamicResource PrimaryColorBrush}"/>
-        <Setter Property="wpr:Ext.FeedbackBrush" Value="{DynamicResource PrimaryColorBrush}"/>
+        <Setter Property="wpr:Extra.FeedbackBrush" Value="{DynamicResource PrimaryColorBrush}"/>
         <EventSetter Event="PreviewMouseLeftButtonUp" Handler="WPRCheckBox_MouseUp"/>
         <Setter Property="Template" Value="{StaticResource WPRCheckBoxControlTemplate}"/>
     </Style>

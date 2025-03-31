@@ -16,7 +16,7 @@
         <Setter Property="Focusable" Value="False"/>
         <Setter Property="Foreground" Value="{DynamicResource WindowTitleBackgroundContrastColorBrush}"></Setter>
         <Setter Property="Background" Value="{StaticResource TransparentBrush}"></Setter>
-        <Setter Property="wpr:Ext.BorderRadius" Value="0"/>
+        <Setter Property="wpr:Extra.BorderRadius" Value="0"/>
     </Style>
 
     <!--Кнопка разворачивания-->
@@ -128,7 +128,7 @@
                                                 Foreground="{DynamicResource WindowTitleBackgroundContrastColorBrush}"
                                                 WindowChrome.IsHitTestVisibleInChrome="True"
                                                 TextBlock.Foreground="{DynamicResource WindowTitleBackgroundContrastColorBrush}"
-                                                Content="{Binding Path=(wpr:Ext.WindowHeaderContent), RelativeSource={RelativeSource TemplatedParent}}"/>
+                                                Content="{Binding Path=(wpr:Extra.WindowHeaderContent), RelativeSource={RelativeSource TemplatedParent}}"/>
                             </StackPanel>
 
                             <TextBlock Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center" 

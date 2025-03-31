@@ -40,7 +40,7 @@
                     <wpr:WPRIcon Source="Search"/>
                 </Button>
                 <TextBox x:Name="SearchText" KeyUp="SearchText_KeyUp" Width="132" Margin="10"
-                         wpr:Ext.TextHint="Поиск"/>
+                         wpr:Extra.TextHint="Поиск"/>
             </StackPanel>
             <TextBox IsReadOnly="True"  Margin="10" Grid.Column="1" 
                              BorderThickness="1"

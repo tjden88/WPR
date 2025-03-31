@@ -18,7 +18,7 @@
                     VerticalAlignment="Center">
 
                 <wpr:Ripple x:Name="Ripple"
-                                 Background="{Binding RelativeSource={RelativeSource TemplatedParent},Path=(wpr:Ext.FeedbackBrush)}" 
+                                 Background="{Binding RelativeSource={RelativeSource TemplatedParent},Path=(wpr:Extra.FeedbackBrush)}" 
                                  RippleInCenter="True"
                                  StartRippleOnClick="False">
                     <Border x:Name="radioButtonBorder" Height="16" Width ="16"
@@ -74,7 +74,7 @@
         <Setter Property="BorderThickness" Value="2"/>
         <Setter Property="Padding" Value="0,2"></Setter>
         <Setter Property="BorderBrush" Value="{DynamicResource PrimaryColorBrush}"/>
-        <Setter Property="wpr:Ext.FeedbackBrush" Value="{DynamicResource PrimaryColorBrush}"/>
+        <Setter Property="wpr:Extra.FeedbackBrush" Value="{DynamicResource PrimaryColorBrush}"/>
         <Setter Property="VerticalContentAlignment" Value="Center" />
         <Setter Property="Template" Value="{StaticResource WPRRadioButtonControlTemplate}"/>
     </Style>

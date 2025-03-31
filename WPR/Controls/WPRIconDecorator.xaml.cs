@@ -8,7 +8,7 @@ namespace WPR
 {
     /// <summary>
     /// Декорирование текстбокса или другого контента иконкой слева.
-    /// Цвет иконки привязывается к свойству wpr:Ext.MouseOverBrush контента
+    /// Цвет иконки привязывается к свойству wpr:Extra.MouseOverBrush контента
     /// </summary>
     [ContentProperty(nameof(Content))]
     public class WPRIconDecorator : Control

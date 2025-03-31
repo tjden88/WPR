@@ -8,7 +8,7 @@
 
     <Style TargetType="{x:Type wpr:WPRCard}" BasedOn="{StaticResource BaseControl}">
 
-        <Setter Property="wpr:Ext.BorderRadius" Value="4"/>
+        <Setter Property="wpr:Extra.BorderRadius" Value="4"/>
         <Setter Property="Margin" Value="10"/>
         <Setter Property="Background" Value="{DynamicResource SecondaryBackgroundColorBrush}" />
         <Setter Property="Focusable" Value="False"/>
@@ -20,12 +20,12 @@
                                 Background="{TemplateBinding Background}"
                                 BorderBrush="{TemplateBinding BorderBrush}"
                                 BorderThickness="{TemplateBinding BorderThickness}"
-                                CornerRadius="{Binding Path=(wpr:Ext.BorderRadius), RelativeSource={RelativeSource Mode=TemplatedParent}}"
+                                CornerRadius="{Binding Path=(wpr:Extra.BorderRadius), RelativeSource={RelativeSource Mode=TemplatedParent}}"
                                 Effect="{DynamicResource CardShadow}" />
                         <wpr:ClippingBorder ClipToBounds="True"
                                                  BorderBrush="{TemplateBinding BorderBrush}"
                                                  BorderThickness="{TemplateBinding BorderThickness}"
-                                                 CornerRadius="{Binding Path=(wpr:Ext.BorderRadius), RelativeSource={RelativeSource Mode=TemplatedParent}}">
+                                                 CornerRadius="{Binding Path=(wpr:Extra.BorderRadius), RelativeSource={RelativeSource Mode=TemplatedParent}}">
                             <ContentPresenter/>
                         </wpr:ClippingBorder>
                     </Grid>

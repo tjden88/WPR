@@ -19,7 +19,7 @@
                 Content="{Binding CommandWithKeyGestureCommand.Text}"
                 ToolTip="{Binding CommandWithKeyGestureCommand}"/>
 
-        <TextBox Margin="5" x:Name="Tbox" wpr:Ext.TextHint="Введите текст"/>
+        <TextBox Margin="5" x:Name="Tbox" wpr:Extra.TextHint="Введите текст"/>
         <Button Command="{Binding GenericCommand}" CommandParameter="{Binding Text, ElementName=Tbox}">Шаблонная команда</Button>
         <Button Command="{Binding GenericCommand}">Шаблонная команда (null параметр)</Button>
         <Button Command="{Binding SimpleAsyncCommand}"

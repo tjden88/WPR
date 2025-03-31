@@ -23,7 +23,7 @@
                     Background="{TemplateBinding Background}"
                     BorderBrush="{TemplateBinding BorderBrush}"
                     BorderThickness="{TemplateBinding BorderThickness }"
-                    CornerRadius="{Binding Path= (wpr:Ext.BorderRadius), RelativeSource={RelativeSource TemplatedParent}}">
+                    CornerRadius="{Binding Path= (wpr:Extra.BorderRadius), RelativeSource={RelativeSource TemplatedParent}}">
                 <ContentPresenter  Margin="{TemplateBinding Padding}"
                                    SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
             </Border>
@@ -33,7 +33,7 @@
     <Style x:Key="WPRGroupBox" TargetType="{x:Type GroupBox}" BasedOn="{StaticResource BaseControl}">
         <Setter Property="BorderBrush" Value="{DynamicResource DividerColorBrush}"/>
         <Setter Property="BorderThickness" Value="1"/>
-        <Setter Property="wpr:Ext.BorderRadius" Value="6"/>
+        <Setter Property="wpr:Extra.BorderRadius" Value="6"/>
         <Setter Property="Template" Value="{StaticResource WPRGroupBoxTemplate}"/>
     </Style>
 

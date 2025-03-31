@@ -10,7 +10,7 @@
     <ControlTemplate x:Key="WPRToggleControlTemplate" TargetType="{x:Type ToggleButton}">
         <wpr:ClippingBorder ClipToBounds="True"
                                  Cursor="Hand"
-                                    CornerRadius="{Binding Path=(wpr:Ext.BorderRadius), RelativeSource={RelativeSource TemplatedParent}}"
+                                    CornerRadius="{Binding Path=(wpr:Extra.BorderRadius), RelativeSource={RelativeSource TemplatedParent}}"
                                     Background="{TemplateBinding Background}"
                                     BorderBrush="{TemplateBinding BorderBrush}"
                                     BorderThickness="{TemplateBinding BorderThickness}">
@@ -18,7 +18,7 @@
                 <Canvas>
                     <Ellipse UseLayoutRounding="False" SnapsToDevicePixels="False" x:Name="PART_ellipse"
                              Canvas.Left="-5000" Canvas.Top="-5000"
-                                Fill="{Binding Path=(wpr:Ext.FeedbackBrush), RelativeSource={RelativeSource TemplatedParent}}"  
+                                Fill="{Binding Path=(wpr:Extra.FeedbackBrush), RelativeSource={RelativeSource TemplatedParent}}"  
                                 Opacity="0.6"
                                 Width="10000" Height="{Binding Path=Width, RelativeSource={RelativeSource Self}}"
                                 HorizontalAlignment="Left" VerticalAlignment="Top"
@@ -93,7 +93,7 @@
         <Setter Property="Cursor" Value="Hand"/>
         <Setter Property="VerticalContentAlignment" Value="Center"/>
         <Setter Property="HorizontalContentAlignment" Value="Center"/>
-        <Setter Property="wpr:Ext.FeedbackBrush" Value="{DynamicResource PrimaryColorBrush}"/>
+        <Setter Property="wpr:Extra.FeedbackBrush" Value="{DynamicResource PrimaryColorBrush}"/>
         <EventSetter Event="PreviewMouseLeftButtonUp" Handler="WPRToggleButton_MouseUp"/>
         <Setter Property="Template" Value="{StaticResource WPRToggleControlTemplate}"/>
     </Style>
@@ -120,7 +120,7 @@
                             <Grid HorizontalAlignment="Left">
                                 <wpr:Ripple x:Name="Ripple"
                                          VerticalAlignment="Center"
-                                         Background="{Binding RelativeSource={RelativeSource TemplatedParent},Path=(wpr:Ext.FeedbackBrush)}" 
+                                         Background="{Binding RelativeSource={RelativeSource TemplatedParent},Path=(wpr:Extra.FeedbackBrush)}" 
                                          RippleInCenter="True"
                                          StartRippleOnClick="False" />
                                 <Ellipse x:Name="Ellipse" Width="18" Height="18" Fill="{DynamicResource BackgroundColorBrush}" 

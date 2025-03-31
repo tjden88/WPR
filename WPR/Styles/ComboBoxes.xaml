@@ -276,7 +276,7 @@
                 <ContentControl Grid.Row="0" Grid.Column="0" IsTabStop="False" x:Name="FloatingHint"
                                 IsHitTestVisible="False"
                                 VerticalAlignment="Bottom"
-                                Content="{Binding Path=(wpr:Ext.TextHint), RelativeSource={RelativeSource TemplatedParent}}"
+                                Content="{Binding Path=(wpr:Extra.TextHint), RelativeSource={RelativeSource TemplatedParent}}"
                                 HorizontalAlignment="Left"
                                 Foreground="{TemplateBinding Background}"
                                 FontSize="{TemplateBinding FontSize}"
@@ -317,7 +317,7 @@
                         CommandParameter="{Binding  Path=., RelativeSource={RelativeSource TemplatedParent}}"
                         Style="{StaticResource WPRToolHiddenButton}"
                         VerticalAlignment="Center"
-                        Visibility="{Binding Path=(wpr:Ext.ClearButton), RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource Bool2VisibilityConverter}}">
+                        Visibility="{Binding Path=(wpr:Extra.ClearButton), RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource Bool2VisibilityConverter}}">
                     <wpr:WPRIcon Source="CloseCircle"/>
                 </Button>
 
@@ -335,7 +335,7 @@
                 <ContentControl IsTabStop="False"
                                 Name="Description"
                                             Grid.Row="1" Grid.Column="0"
-                                Content="{Binding Path=(wpr:Ext.TextDescription), RelativeSource={RelativeSource TemplatedParent}}"
+                                Content="{Binding Path=(wpr:Extra.TextDescription), RelativeSource={RelativeSource TemplatedParent}}"
                                             HorizontalAlignment="Left"
                                             Foreground="{DynamicResource SecondaryColorBrush}"
                                             FontSize="13"/>
@@ -485,7 +485,7 @@
             <ContentControl IsTabStop="False"
                             Margin="0,0,0,6"
                             Name="Description"
-                            Content="{Binding Path=(wpr:Ext.TextDescription), RelativeSource={RelativeSource TemplatedParent}}"
+                            Content="{Binding Path=(wpr:Extra.TextDescription), RelativeSource={RelativeSource TemplatedParent}}"
                             HorizontalAlignment="Left"
                             Foreground="{DynamicResource SecondaryColorBrush}"/>
 
@@ -515,7 +515,7 @@
                         BorderThickness="{TemplateBinding BorderThickness}"
                         UseLayoutRounding="False"
                         SnapsToDevicePixels="False"
-                        CornerRadius="{Binding Path=(wpr:Ext.BorderRadius), RelativeSource={RelativeSource TemplatedParent}}">
+                        CornerRadius="{Binding Path=(wpr:Extra.BorderRadius), RelativeSource={RelativeSource TemplatedParent}}">
 
                     <Grid Margin="{TemplateBinding Padding}">
                         <Grid.ColumnDefinitions>
@@ -536,7 +536,7 @@
                         <ContentControl Grid.Row="0" Grid.Column="0" IsTabStop="False" x:Name="FloatingHint"
                                 IsHitTestVisible="False"
                                 VerticalAlignment="Bottom"
-                                Content="{Binding Path=(wpr:Ext.TextHint), RelativeSource={RelativeSource TemplatedParent}}"
+                                Content="{Binding Path=(wpr:Extra.TextHint), RelativeSource={RelativeSource TemplatedParent}}"
                                 HorizontalAlignment="Left"
                                 Foreground="{StaticResource TransparentBrush}"
                                 FontSize="{TemplateBinding FontSize}"
@@ -571,7 +571,7 @@
                                 CommandParameter="{Binding Path=., RelativeSource={RelativeSource TemplatedParent}}"
                                 Style="{StaticResource WPRToolHiddenButton}"
                                 VerticalAlignment="Center"
-                                Visibility="{Binding Path=(wpr:Ext.ClearButton), RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource Bool2VisibilityConverter}}">
+                                Visibility="{Binding Path=(wpr:Extra.ClearButton), RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource Bool2VisibilityConverter}}">
                             <wpr:WPRIcon Source="CloseCircle"/>
                         </Button>
                     </Grid>
@@ -608,17 +608,17 @@
 
             <Trigger Property="IsMouseOver" Value="True">
                 <Setter Property="BorderBrush" TargetName="Border"
-                        Value="{Binding  Path=(wpr:Ext.MouseOverBrush), RelativeSource={RelativeSource AncestorType=ComboBox}}"/>
+                        Value="{Binding  Path=(wpr:Extra.MouseOverBrush), RelativeSource={RelativeSource AncestorType=ComboBox}}"/>
             </Trigger>
 
             <Trigger Property="IsDropDownOpen" Value="True">
                 <Setter Property="BorderBrush" TargetName="Border"
-                        Value="{Binding  Path=(wpr:Ext.MouseOverBrush), RelativeSource={RelativeSource AncestorType=ComboBox}}"/>
+                        Value="{Binding  Path=(wpr:Extra.MouseOverBrush), RelativeSource={RelativeSource AncestorType=ComboBox}}"/>
             </Trigger>
 
             <Trigger Property="IsKeyboardFocused" SourceName="PART_EditableTextBox" Value="True">
                 <Setter Property="BorderBrush" TargetName="Border"
-                        Value="{Binding  Path=(wpr:Ext.MouseOverBrush), RelativeSource={RelativeSource AncestorType=ComboBox}}"/>
+                        Value="{Binding  Path=(wpr:Extra.MouseOverBrush), RelativeSource={RelativeSource AncestorType=ComboBox}}"/>
             </Trigger>
 
             <MultiTrigger>
@@ -673,8 +673,8 @@
         <Setter Property="Background" Value="{DynamicResource BackgroundColorBrush}"/>
         <Setter Property="BorderThickness" Value="1"/>
         <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
-        <Setter Property="wpr:Ext.MouseOverBrush" Value="{DynamicResource PrimaryColorBrush}"/>
-        <Setter Property="wpr:Ext.BorderRadius" Value="6"/>
+        <Setter Property="wpr:Extra.MouseOverBrush" Value="{DynamicResource PrimaryColorBrush}"/>
+        <Setter Property="wpr:Extra.BorderRadius" Value="6"/>
     </Style>
 
 </ResourceDictionary>
