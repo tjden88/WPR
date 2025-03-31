@@ -1,6 +1,5 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:helpers="clr-namespace:WPR.Helpers"
                     xmlns:local="clr-namespace:WPR">
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="../Styles/Base.xaml"/>
@@ -23,7 +22,7 @@
                         </Grid.ColumnDefinitions>
                         <local:WPRIcon Source="{Binding Path=Icon, RelativeSource={RelativeSource TemplatedParent}}"
                                        IconSize="18"
-                                       Foreground="{Binding Path=Content.(wpr:Ext.MouseOverBrush), RelativeSource={RelativeSource TemplatedParent}}"
+                                       Foreground="{Binding Path=Content.(local:Ext.MouseOverBrush), RelativeSource={RelativeSource TemplatedParent}}"
                                        VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
                                        Margin="{TemplateBinding Padding}"/>
 

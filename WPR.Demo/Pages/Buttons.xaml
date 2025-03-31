@@ -3,7 +3,6 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-      xmlns:helpers="clr-namespace:WPR.Helpers;assembly=WPR"
       xmlns:wpr="clr-namespace:WPR;assembly=WPR"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
@@ -43,12 +42,12 @@
                             <wpr:WPRIcon Source="Star"/>
                         </Button>
                         <Button Style="{StaticResource WPRToolButton}"
-                        helpers:RippleHelper.FeedbackBrush="{DynamicResource AccentColorBrush }"
+                        wpr:Ext.FeedbackBrush="{DynamicResource AccentColorBrush }"
                         Padding="3">
                             <wpr:WPRIcon Source="Like"/>
                         </Button>
                         <Button Style="{StaticResource WPRToolButton}"
-                        helpers:RippleHelper.FeedbackBrush="{DynamicResource  DarkPrimaryColorBrush }"
+                        wpr:Ext.FeedbackBrush="{DynamicResource  DarkPrimaryColorBrush }"
                         Padding="3">
                             <wpr:WPRIcon Source="Dislike"/>
                         </Button>

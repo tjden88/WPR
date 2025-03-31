@@ -120,22 +120,17 @@ public static class Ext
         DependencyProperty.RegisterAttached("WindowHeaderContent", typeof(object), typeof(Ext), new PropertyMetadata(null));
     #endregion
 
-
-
-    #region Internal
-
-    #region Запретить Ripple выходить за границы кнопки
+    #region Кисть эффекта нажатия элемнта
 
     /// <summary>
-    /// Запретить Ripple выходить за границы кнопки
+    /// Кисть эффекта нажатия элемнта
     /// </summary>
-    internal static bool GetNoRippleCircleOutside(DependencyObject obj) => (bool)obj.GetValue(NoRippleCircleOutsideProperty);
+    public static SolidColorBrush GetFeedbackBrush(DependencyObject obj) => (SolidColorBrush)obj?.GetValue(FeedbackBrushProperty);
 
-    internal static void SetNoRippleCircleOutside(DependencyObject obj, bool value) => obj.SetValue(NoRippleCircleOutsideProperty, value);
+    public static void SetFeedbackBrush(DependencyObject obj, SolidColorBrush value) => obj?.SetValue(FeedbackBrushProperty, value);
 
-    internal static readonly DependencyProperty NoRippleCircleOutsideProperty =
-        DependencyProperty.RegisterAttached("NoRippleCircleOutside", typeof(bool), typeof(Ext), new PropertyMetadata(true));
-    #endregion
-
+    // Using a DependencyProperty as the backing store for FeedbackBrush.  This enables animation, styling, binding, etc...
+    public static readonly DependencyProperty FeedbackBrushProperty =
+        DependencyProperty.RegisterAttached("FeedbackBrush", typeof(SolidColorBrush), typeof(Ext), new PropertyMetadata());
     #endregion
 }

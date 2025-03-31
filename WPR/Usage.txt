@@ -10,7 +10,7 @@
 
         xmlns:wpr="clr-namespace:WPR;assembly=WPR"
         xmlns:cnt="clr-namespace:WPR.Controls;assembly=WPR"
-        xmlns:helpers="clr-namespace:WPR.Helpers;assembly=WPR"
+        
         Style="{StaticResource ChromeWindow}"
         Title="{Binding Title}" Height="650" Width="1000">
     <helpers:WindowHelper.WindowHeaderContent>

@@ -1,7 +1,7 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:helpers="clr-namespace:WPR.Helpers"
-                    xmlns:wpr="clr-namespace:WPR">
+                    xmlns:wpr="clr-namespace:WPR"
+                    xmlns:extensions="clr-namespace:WPR.Extensions">
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="Base.xaml"/>
     </ResourceDictionary.MergedDictionaries>
@@ -18,7 +18,7 @@
                     Effect="{Binding Path=(wpr:Ext.Shadow), RelativeSource={RelativeSource TemplatedParent}}"/>
 
             <wpr:ClippingBorder CornerRadius="{Binding Path=(wpr:Ext.BorderRadius), RelativeSource={RelativeSource TemplatedParent}}"
-                                     ClipToBounds="{Binding Path=(wpr:Ext.NoRippleCircleOutside), RelativeSource={RelativeSource TemplatedParent}}"
+                                     ClipToBounds="{Binding Path=(extensions:AttachedProperties.NoRippleCircleOutside), RelativeSource={RelativeSource TemplatedParent}}"
                                      SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
                 <Grid>
                     <Border x:Name="BackGrid"
@@ -34,9 +34,9 @@
                                          RippleMouseDownSpeed="0.7"
                                          HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
                                          VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
-                                         Background="{Binding Path=(helpers:RippleHelper.FeedbackBrush), RelativeSource={RelativeSource TemplatedParent}}"
-                                         RippleInCenter="{Binding Path=(helpers:RippleHelper.IsCentered), RelativeSource={RelativeSource TemplatedParent}}"
-                                         IsEnabled="{Binding Path=(helpers:RippleHelper.IsRippleEnabled), RelativeSource={RelativeSource TemplatedParent}}">
+                                         Background="{Binding Path=(wpr:Ext.FeedbackBrush), RelativeSource={RelativeSource TemplatedParent}}"
+                                         RippleInCenter="{Binding Path=(extensions:AttachedProperties.RippleOnCenter), RelativeSource={RelativeSource TemplatedParent}}"
+                                         IsEnabled="{Binding Path=(extensions:AttachedProperties.IsRippleEnabled), RelativeSource={RelativeSource TemplatedParent}}">
                         <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                                           VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
                                                   Margin="{TemplateBinding Padding}"/>
@@ -111,7 +111,7 @@
         <Setter Property="wpr:Ext.BorderRadius" Value="6"/>
         <Setter Property="wpr:Ext.MouseOverBrush" Value="{DynamicResource AnimationEnterColorBrush}"/>
         <Setter Property="Cursor" Value="Hand"/>
-        <Setter Property="helpers:RippleHelper.FeedbackBrush" Value="{DynamicResource LightPrimaryColorBrush}"/>
+        <Setter Property="wpr:Ext.FeedbackBrush" Value="{DynamicResource LightPrimaryColorBrush}"/>
         <Setter Property="Template" Value="{StaticResource WPRButtonTemplate}"/>
     </Style>
 
@@ -129,14 +129,14 @@
     <Style x:Key="WPRToolButton" TargetType="{x:Type ButtonBase}" BasedOn="{StaticResource WPRFlatButton}">
         <Setter Property="Padding" Value="3"/>
         <Setter Property="Foreground" Value="{DynamicResource SecondaryColorBrush}"/>
-        <Setter Property="helpers:RippleHelper.FeedbackBrush" Value="{DynamicResource AnimationEnterColorBrush}"/>
-        <Setter Property="helpers:RippleHelper.IsCentered" Value="True"/>
+        <Setter Property="wpr:Ext.FeedbackBrush" Value="{DynamicResource AnimationEnterColorBrush}"/>
+        <Setter Property="extensions:AttachedProperties.RippleOnCenter" Value="True"/>
         <Setter Property="wpr:Ext.BorderRadius" Value="100"/>
-        <Setter Property="wpr:Ext.NoRippleCircleOutside" Value="False"/>
+        <Setter Property="extensions:AttachedProperties.NoRippleCircleOutside" Value="False"/>
     </Style>
 
     <Style x:Key="WPRToolButtonNoRipple" TargetType="{x:Type ButtonBase}" BasedOn="{StaticResource WPRToolButton}">
-        <Setter Property="helpers:RippleHelper.IsRippleEnabled" Value="False"/>
+        <Setter Property="extensions:AttachedProperties.IsRippleEnabled" Value="False"/>
     </Style>
 
     <Style x:Key="MenuButton" TargetType="{x:Type ButtonBase}" BasedOn="{StaticResource WPRFlatButton}">
@@ -180,7 +180,7 @@
     <!--Кнопка с выпрыгивающей текстовой подсказкой-->
     <Style x:Key="RoundedButtonWithFloatingHint" TargetType="{x:Type ButtonBase}">
         <Setter Property="Background" Value="{DynamicResource BackgroundColorBrush}"/>
-        <Setter Property="helpers:RippleHelper.FeedbackBrush" Value="{StaticResource LightPrimaryColorBrush}"/>
+        <Setter Property="wpr:Ext.FeedbackBrush" Value="{StaticResource LightPrimaryColorBrush}"/>
         <Setter Property="Foreground" Value="{DynamicResource TextColorBrush}"/>
         <Setter Property="HorizontalContentAlignment" Value="Right"/>
         <Setter Property="VerticalContentAlignment" Value="Center"/>
@@ -206,7 +206,7 @@
                                      x:Name="But"
                                      Margin="0"
                                      wpr:Ext.BorderRadius="20"
-                                     helpers:RippleHelper.FeedbackBrush ="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=(helpers:RippleHelper.FeedbackBrush)}"
+                                     wpr:Ext.FeedbackBrush ="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=(wpr:Ext.FeedbackBrush)}"
                                      Height="40" Width="40"
                                      Background="{TemplateBinding Background}"
                                      Foreground="{TemplateBinding Foreground}"
