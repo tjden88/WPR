@@ -23,6 +23,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\WPR.Services\WPR.Services.csproj" />
     <ProjectReference Include="..\WPR\WPR.csproj" />
   </ItemGroup>
 

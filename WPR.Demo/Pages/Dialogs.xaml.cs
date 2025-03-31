@@ -10,7 +10,7 @@ using WPR.Abstractions.Models.Dialogs.Extensions;
 using WPR.Abstractions.Models.Themes;
 using WPR.Dialogs;
 using WPR.MVVM.Commands.Base;
-using WPR.UiServices.UI;
+using WPR.Services.Implementations;
 
 namespace WPR.Demo.Pages
 {

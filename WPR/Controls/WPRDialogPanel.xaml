@@ -56,6 +56,7 @@
                                 RenderTransformOrigin="0.5,1"
                                 HorizontalAlignment="Center"
                                 VerticalAlignment="Bottom"
+                                CornerRadius="4"
                                 BorderBrush="{TemplateBinding BorderBrush}"
                                 Background="{DynamicResource BackgroundContrastColorBrush}"
                                 BorderThickness="{TemplateBinding BorderThickness}">
@@ -63,7 +64,7 @@
                                 <ScaleTransform ScaleY="0"/>
                             </Border.RenderTransform>
                             <Grid>
-                                <Border CornerRadius="3" Background="{Binding Background, ElementName=PART_Bubble}"
+                                <Border CornerRadius="4" Background="{Binding Background, ElementName=PART_Bubble}"
                                         Effect="{StaticResource ButtonShadow}"/>
                                 <StackPanel Orientation="Horizontal"
                                             HorizontalAlignment="Center"
