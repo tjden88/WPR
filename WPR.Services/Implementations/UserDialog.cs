@@ -6,7 +6,7 @@ using WPR.Abstractions.Models.Dialogs;
 using WPR.Abstractions.Models.Files;
 using WPR.Abstractions.Models.Themes;
 using WPR.Dialogs;
-using WPR.MVVM.Validation;
+using WPR.Validation;
 
 namespace WPR.Services.Implementations;
 

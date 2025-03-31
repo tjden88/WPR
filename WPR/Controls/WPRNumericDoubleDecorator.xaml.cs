@@ -1,8 +1,8 @@
 ﻿using System.ComponentModel;
-using System;
 using System.Globalization;
 using System.Windows;
 using WPR.Controls.Base;
+using WPR.Extensions;
 
 namespace WPR.Controls;
 

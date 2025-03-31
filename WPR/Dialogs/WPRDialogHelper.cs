@@ -1,13 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
-using System.Threading.Tasks;
+﻿using System.Diagnostics.CodeAnalysis;
 using System.Windows;
 using WPR.Abstractions.Interfaces;
-using WPR.Abstractions.Models.Dialogs;
 using WPR.Abstractions.Models.Themes;
 using WPR.Controls;
-using WPR.MVVM.Validation;
+using WPR.Extensions;
+using WPR.Validation;
 
 namespace WPR.Dialogs;
 

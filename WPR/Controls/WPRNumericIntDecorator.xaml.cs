@@ -1,6 +1,6 @@
-﻿using System;
-using System.Windows;
+﻿using System.Windows;
 using WPR.Controls.Base;
+using WPR.Extensions;
 
 namespace WPR.Controls;
 

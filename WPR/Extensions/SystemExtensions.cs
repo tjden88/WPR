@@ -1,12 +1,11 @@
 ﻿using System.Data;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
-using System.Threading;
 using System.Windows;
 using System.Windows.Media;
 using System.Windows.Threading;
 
-namespace System;
+namespace WPR.Extensions;
 
 public static class SystemExtensions
 {

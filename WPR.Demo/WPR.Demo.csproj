@@ -23,7 +23,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\WPR.MVVM\WPR.MVVM.csproj" />
     <ProjectReference Include="..\WPR.Services\WPR.Services.csproj" />
+    <ProjectReference Include="..\WPR.Tools\WPR.Tools.csproj" />
     <ProjectReference Include="..\WPR\WPR.csproj" />
   </ItemGroup>
 

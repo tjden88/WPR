@@ -1,11 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections;
 using System.ComponentModel;
-using System.Linq;
+using System.Globalization;
 using System.Windows;
 using WPR.Dialogs.Base;
-using WPR.MVVM.Validation;
-using WPR.MVVM.ViewModels;
+using WPR.Validation;
 
 namespace WPR.Dialogs;
 
@@ -27,7 +25,7 @@ public class InputDialog : DialogBase
         {
             Text = DefaultValue
         };
-        ViewModel.ValidateAll();
+        ViewModel.CheckErrors();
     }
 
     protected override bool CanSetCommandExecuted() => ViewModel?.HasErrors == false;
@@ -47,7 +45,7 @@ public class InputDialog : DialogBase
     [Description("Вьюмодель валидации")]
     public ValidationView ViewModel
     {
-        get => (ValidationView) GetValue(ViewModelProperty);
+        get => (ValidationView)GetValue(ViewModelProperty);
         set => SetValue(ViewModelProperty, value);
     }
 
@@ -69,7 +67,7 @@ public class InputDialog : DialogBase
     [Description("Описание")]
     public string Caption
     {
-        get => (string) GetValue(CaptionProperty);
+        get => (string)GetValue(CaptionProperty);
         set => SetValue(CaptionProperty, value);
     }
 
@@ -81,13 +79,10 @@ public class InputDialog : DialogBase
 
 
 
-    public class ValidationView : ValidationViewModel
+    public class ValidationView(IEnumerable<PredicateValidationRule<string>> TextValidationRules)
+        : INotifyDataErrorInfo, INotifyPropertyChanged
     {
-        public ValidationView(IEnumerable<PredicateValidationRule<string>> TextValidationRules)
-        {
-            ValidationRules.AddRange(TextValidationRules
-                .Select(tv => new ValidationRule(nameof(Text), () => tv.Predicate.Invoke(Text), tv.Message)));
-        }
+        private readonly List<PredicateValidationRule<string>> _TextValidationRules = [.. TextValidationRules];
 
 
         #region Text : string - Текст
@@ -99,11 +94,37 @@ public class InputDialog : DialogBase
         public string Text
         {
             get => _Text;
-            set => Set(ref _Text, value);
+            set
+            {
+                if (Equals(_Text, value)) return;
+                _Text = value;
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Text)));
+                CheckErrors();
+            }
         }
 
         #endregion
 
-        
+        public void CheckErrors()
+        {
+            _Errors.Clear();
+            var text = Text;
+            var errors = _TextValidationRules.Where(Rule => !Rule.Validated(text, CultureInfo.InvariantCulture)).Select(Rule => Rule.Message);
+            _Errors.AddRange(errors);
+            ErrorsChanged?.Invoke(this, new DataErrorsChangedEventArgs(nameof(Text)));
+        }
+
+        public IEnumerable GetErrors(string propertyName)
+        {
+            if (propertyName != nameof(Text)) return null!;
+            return _Errors;
+        }
+
+
+        private readonly List<string> _Errors = new();
+        public bool HasErrors => _Errors.Any();
+
+        public event EventHandler<DataErrorsChangedEventArgs> ErrorsChanged;
+        public event PropertyChangedEventHandler PropertyChanged;
     }
 }

@@ -1,5 +1,4 @@
-﻿using System;
-using System.ComponentModel;
+﻿using System.ComponentModel;
 using System.Windows;
 using WPR.Abstractions.Interfaces;
 using WPR.Dialogs.Base;
