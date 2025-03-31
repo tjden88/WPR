@@ -1,9 +1,9 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:helpers="clr-namespace:WPR.Helpers"
-                    xmlns:controls="clr-namespace:WPR.Controls"
                     xmlns:animations="clr-namespace:WPR.Animations"
-                    xmlns:commands="clr-namespace:WPR.Commands">
+                    xmlns:commands="clr-namespace:WPR.Commands"
+                    xmlns:wpr="clr-namespace:WPR">
 
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="Base.xaml"/>
@@ -90,8 +90,8 @@
                     Background="{TemplateBinding Foreground}"
                     Opacity="0"
                     RenderTransformOrigin="0.5,0.5" />
-                        <controls:ClippingBorder ClipToBounds="True" CornerRadius="0">
-                            <controls:Ripple
+                        <wpr:ClippingBorder ClipToBounds="True" CornerRadius="0">
+                            <wpr:Ripple
                                 HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
                                 VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
                                 Content="{TemplateBinding Content}"
@@ -100,7 +100,7 @@
                                 RippleSpeed="0.7"
                                 RippleMouseDownSpeed="0.1"
                                 Padding="{TemplateBinding Padding}"/>
-                        </controls:ClippingBorder>
+                        </wpr:ClippingBorder>
 
                     </Grid>
                     <ControlTemplate.Triggers>
@@ -319,7 +319,7 @@
                         Style="{StaticResource WPRToolHiddenButton}"
                         VerticalAlignment="Center"
                         Visibility="{Binding Path=(helpers:TextHelper.ShowClearButton), RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource Bool2VisibilityConverter}}">
-                    <controls:WPRIcon Source="CloseCircle"/>
+                    <wpr:WPRIcon Source="CloseCircle"/>
                 </Button>
 
                 <Rectangle Margin="{TemplateBinding Padding}" x:Name="BottomRect" Grid.Row="0" Grid.ColumnSpan="2"
@@ -573,7 +573,7 @@
                                 Style="{StaticResource WPRToolHiddenButton}"
                                 VerticalAlignment="Center"
                                 Visibility="{Binding Path=(helpers:TextHelper.ShowClearButton), RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource Bool2VisibilityConverter}}">
-                            <controls:WPRIcon Source="CloseCircle"/>
+                            <wpr:WPRIcon Source="CloseCircle"/>
                         </Button>
                     </Grid>
                 </Border>

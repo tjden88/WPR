@@ -3,7 +3,7 @@ using System.Windows;
 using System.Windows.Controls;
 using WPR.Icons;
 
-namespace WPR.Controls;
+namespace WPR;
 
 /// <summary>
 /// Всплывающее меню (попап с кнопкой)

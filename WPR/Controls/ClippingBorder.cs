@@ -2,7 +2,7 @@
 using System.Windows.Controls;
 using System.Windows.Media;
 
-namespace WPR.Controls;
+namespace WPR;
 
 /// <summary>
 /// Border, контент которого обрезается в соответствии с Corner Radius

@@ -9,7 +9,7 @@ using WPR.Abstractions.Interfaces;
 using WPR.Abstractions.Models.Themes;
 using WPR.ColorTheme;
 
-namespace WPR.Controls;
+namespace WPR;
 
 /// <summary> Контрол для обёртки диалоговых окон </summary>
 internal class WPRDialogPanel : HeaderedContentControl

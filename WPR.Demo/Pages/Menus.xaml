@@ -4,7 +4,7 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:helpers="clr-namespace:WPR.Helpers;assembly=WPR"
-      xmlns:controls="clr-namespace:WPR.Controls;assembly=WPR"
+      xmlns:wpr="clr-namespace:WPR;assembly=WPR"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="Меню, тулбары, слайдеры">
@@ -15,7 +15,7 @@
                 <MenuItem Header="Menu">
                     <MenuItem Header="Create">
                         <MenuItem.Icon>
-                            <controls:WPRIcon Source="Create"/>
+                            <wpr:WPRIcon Source="Create"/>
                         </MenuItem.Icon>
                         <MenuItem Header="Create" IsCheckable="True" IsChecked="True"/>
                         <MenuItem Header="Create" IsCheckable="True" IsChecked="True"/>
@@ -43,14 +43,14 @@
                 <ToolBar Header="Head">
                     <Button Content="Test"/>
                     <Button Command="Cut">
-                        <controls:WPRIcon Source="ContentCut"/>
+                        <wpr:WPRIcon Source="ContentCut"/>
                     </Button>
                     <Separator/>
                     <CheckBox>
-                        <controls:WPRIcon Source="Check"/>
+                        <wpr:WPRIcon Source="Check"/>
                     </CheckBox>
                     <CheckBox>
-                        <controls:WPRIcon Source="Check"/>
+                        <wpr:WPRIcon Source="Check"/>
                     </CheckBox>
                     <Separator/>
                     <RadioButton Content="1"/>
@@ -64,7 +64,7 @@
                         <ComboBoxItem Content="14"/>
                         <ComboBoxItem Content="16"/>
                     </ComboBox>
-                    <controls:WPRIcon Source="Twitter"/>
+                    <wpr:WPRIcon Source="Twitter"/>
                     <ComboBox Width="120">
                         <ComboBoxItem Content="10"/>
                         <ComboBoxItem Content="12"/>

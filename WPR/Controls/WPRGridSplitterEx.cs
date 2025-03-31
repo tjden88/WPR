@@ -5,7 +5,7 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using WPR.Extensions;
 
-namespace WPR.Controls;
+namespace WPR;
 
 /// <summary>
 /// Изменение размера связанного элемента при помощи мыши

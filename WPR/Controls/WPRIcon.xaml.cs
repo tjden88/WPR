@@ -4,7 +4,7 @@ using System.Windows.Controls;
 using System.Windows.Media;
 using WPR.Icons;
 
-namespace WPR.Controls;
+namespace WPR;
 
 /// <summary> Иконка (векторная) </summary>
 public class WPRIcon : Control

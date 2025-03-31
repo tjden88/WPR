@@ -1,5 +1,4 @@
 ﻿using System.Windows.Controls;
-using WPR.Controls;
 
 namespace WPR.Styles;
 

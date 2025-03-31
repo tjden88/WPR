@@ -3,35 +3,35 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-      xmlns:controls="clr-namespace:WPR.Controls;assembly=WPR"
       xmlns:dialogs="clr-namespace:WPR.Dialogs;assembly=WPR"
+      xmlns:wpr="clr-namespace:WPR;assembly=WPR"
       mc:Ignorable="d" 
       DataContext="{Binding RelativeSource={RelativeSource Self}}"
       d:DesignHeight="450" d:DesignWidth="800"
       Title="Диалоги">
 
-    <controls:WPRCard Background="{DynamicResource BackgroundColorBrush}">
+    <wpr:WPRCard Background="{DynamicResource BackgroundColorBrush}">
 
         <StackPanel Orientation="Horizontal">
             <StackPanel Margin="10" Width="400">
                 <Button Content="Show User Dialog" HorizontalAlignment="Center" VerticalAlignment="Center" Click="Button_Click" />
-                <controls:WPRCard HorizontalAlignment="Center" >
+                <wpr:WPRCard HorizontalAlignment="Center" >
                     <dialogs:MessageDialog Title="Заголовок"
                                        x:Name="MsgBox"
                                        Caption="Текст сообщения..." 
                                        CancelButtonVisible="True"
                                        YesNoButtonsVisible="True"/>
-                </controls:WPRCard>
-                <controls:WPRCard HorizontalAlignment="Center" >
+                </wpr:WPRCard>
+                <wpr:WPRCard HorizontalAlignment="Center" >
                     <dialogs:InputDialog Title="Введите что-нибудь"
                                          x:Name="InputBox"/>
-                </controls:WPRCard>
-                <controls:WPRTitledCard Name="EditDialog" Header="Кастом диалог" IconSource="Style">
+                </wpr:WPRCard>
+                <wpr:WPRTitledCard Name="EditDialog" Header="Кастом диалог" IconSource="Style">
                     <StackPanel>
                         <TextBlock Text="Содержание..." HorizontalAlignment="Center" Margin="20"></TextBlock>
                         <Button Content="Ok" Click="CustomDialog_Click" />
                     </StackPanel>
-                </controls:WPRTitledCard>
+                </wpr:WPRTitledCard>
             </StackPanel>
             <StackPanel Width="250">
                 <Button Content="Show Window Dialog" HorizontalAlignment="Center" VerticalAlignment="Center" Command="{Binding ShowWindowDialogCommand}"/>
@@ -48,5 +48,5 @@
             </StackPanel>
         </StackPanel>
 
-    </controls:WPRCard>
+    </wpr:WPRCard>
 </Page>

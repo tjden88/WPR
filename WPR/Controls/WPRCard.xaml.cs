@@ -1,7 +1,7 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
 
-namespace WPR.Controls;
+namespace WPR;
 
 /// <summary> Карточка для отображения контента с тенью </summary>
 public class WPRCard : ContentControl

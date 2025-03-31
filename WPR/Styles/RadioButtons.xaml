@@ -1,7 +1,7 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:controls="clr-namespace:WPR.Controls"
                     xmlns:helpers="clr-namespace:WPR.Helpers"
+                    xmlns:wpr="clr-namespace:WPR"
                     x:Class="WPR.Styles.RadioButtons">
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="Base.xaml"/>
@@ -18,7 +18,7 @@
                     HorizontalAlignment="Center"
                     VerticalAlignment="Center">
 
-                <controls:Ripple x:Name="Ripple"
+                <wpr:Ripple x:Name="Ripple"
                                  Background="{Binding RelativeSource={RelativeSource TemplatedParent},Path=(helpers:RippleHelper.FeedbackBrush)}" 
                                  RippleInCenter="True"
                                  StartRippleOnClick="False">
@@ -33,7 +33,7 @@
                                  Height="{Binding RelativeSource={RelativeSource Self}, Path=Width}" 
                                  Margin="2" />
                     </Border>
-                </controls:Ripple>
+                </wpr:Ripple>
             </Border>
 
             <ContentPresenter Grid.Column="1" Margin="5,0,0,0" Focusable="False" 

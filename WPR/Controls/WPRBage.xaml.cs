@@ -3,7 +3,7 @@ using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 
-namespace WPR.Controls;
+namespace WPR;
 
 /// <summary>Наклейка с контентом на элемент</summary>
 public class WPRBage : ContentControl

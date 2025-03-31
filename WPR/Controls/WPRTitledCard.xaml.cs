@@ -3,7 +3,7 @@ using System.Windows;
 using System.Windows.Controls;
 using WPR.Icons;
 
-namespace WPR.Controls;
+namespace WPR;
 
 /// <summary> Панелька с заголовком и иконкой </summary>
 public class WPRTitledCard : ContentControl

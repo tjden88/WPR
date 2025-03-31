@@ -4,7 +4,7 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:helpers="clr-namespace:WPR.Helpers;assembly=WPR"
-      xmlns:controls="clr-namespace:WPR.Controls;assembly=WPR"
+      xmlns:wpr="clr-namespace:WPR;assembly=WPR"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="Кнопки">
@@ -31,7 +31,7 @@
                     Height="40"
                     Padding="5"
                     Width="{Binding Path=ActualHeight, RelativeSource={RelativeSource Self}}">
-                        <controls:WPRIcon Source="EmoticonDevil" IconSize="20"/>
+                        <wpr:WPRIcon Source="EmoticonDevil" IconSize="20"/>
                     </Button>
                     <Button Content="OVAL" Margin="5" helpers:ButtonHelper.BorderRadius="15"
                     Style="{StaticResource PrimaryWPRButton}"
@@ -40,22 +40,22 @@
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="10">
                         <Button Style="{StaticResource WPRToolButton}"
                         Padding="3">
-                            <controls:WPRIcon Source="Star"/>
+                            <wpr:WPRIcon Source="Star"/>
                         </Button>
                         <Button Style="{StaticResource WPRToolButton}"
                         helpers:RippleHelper.FeedbackBrush="{DynamicResource AccentColorBrush }"
                         Padding="3">
-                            <controls:WPRIcon Source="Like"/>
+                            <wpr:WPRIcon Source="Like"/>
                         </Button>
                         <Button Style="{StaticResource WPRToolButton}"
                         helpers:RippleHelper.FeedbackBrush="{DynamicResource  DarkPrimaryColorBrush }"
                         Padding="3">
-                            <controls:WPRIcon Source="Dislike"/>
+                            <wpr:WPRIcon Source="Dislike"/>
                         </Button>
                     </StackPanel>
-                    <controls:WPRBage x:Name="BageButton" BageContent ="1">
+                    <wpr:WPRBage x:Name="BageButton" BageContent ="1">
                         <Button BorderThickness="1" Click="Button_Click" Content="КНОПКА С БЕЙДЖЕМ"/>
-                    </controls:WPRBage>
+                    </wpr:WPRBage>
                 </StackPanel>
             </StackPanel>
 

@@ -11,7 +11,7 @@ using System.Windows.Threading;
 using WPR.Animations;
 using WPR.Extensions;
 
-namespace WPR.Controls;
+namespace WPR;
 
 [ContentProperty(nameof(Content))]
 public class WPRPopup : Popup

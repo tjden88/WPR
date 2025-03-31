@@ -1,10 +1,10 @@
 ﻿using System.ComponentModel;
 using System.Globalization;
 using System.Windows;
-using WPR.Controls.Base;
+using WPR.Base;
 using WPR.Extensions;
 
-namespace WPR.Controls;
+namespace WPR;
 
 public class WPRNumericDoubleDecorator : NumericDecorator<double>
 {

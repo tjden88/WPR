@@ -5,7 +5,7 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:models="clr-namespace:WPR.Demo.Models"
       xmlns:converters="clr-namespace:WPR.Demo.Converters"
-      xmlns:controls="clr-namespace:WPR.Controls;assembly=WPR"
+      xmlns:wpr="clr-namespace:WPR;assembly=WPR"
       mc:Ignorable="d" 
       Tag="2"
       Loaded="Typography_OnLoaded"
@@ -50,7 +50,7 @@
                                 Click="ButtonCopy_OnClick"
                                 DataContext="{Binding}"
                                 Style="{StaticResource WPRFlatButton}">
-                                <controls:WPRIcon Source="ContentCopy"/>
+                                <wpr:WPRIcon Source="ContentCopy"/>
                             </Button>
 
                             <Separator Grid.Row="1" Grid.ColumnSpan="3" Grid.Column="0" Margin="10"/>

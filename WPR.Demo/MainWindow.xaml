@@ -4,7 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:helpers="clr-namespace:WPR.Helpers;assembly=WPR"
-        xmlns:controls="clr-namespace:WPR.Controls;assembly=WPR"
+        xmlns:wpr="clr-namespace:WPR;assembly=WPR"
         Topmost="{Binding IsChecked, ElementName=TopMost}"
         DataContext="{Binding Source={StaticResource Locator}, Path=MainWindowViewModel}"
         Style="{StaticResource ChromeWindow}"
@@ -19,7 +19,7 @@
             <ToggleButton Name="TopMost" helpers:RippleHelper.FeedbackBrush ="{DynamicResource AccentColorBrush}"
                           ToolTip="Поверх всех окон">
                 <ToggleButton.Content>
-                    <controls:WPRIcon Source="ProjectorScreen"
+                    <wpr:WPRIcon Source="ProjectorScreen"
                                       Foreground="{DynamicResource WindowTitleBackgroundContrastColorBrush}"/>
                 </ToggleButton.Content>
             </ToggleButton>
@@ -42,12 +42,12 @@
             </ListBox.ItemTemplate>
         </ListBox>
 
-        <controls:WPRCard Grid.Column="1" Margin="10,10,0,0" helpers:ButtonHelper.BorderRadius ="8,0,0,0">
+        <wpr:WPRCard Grid.Column="1" Margin="10,10,0,0" helpers:ButtonHelper.BorderRadius ="8,0,0,0">
             <Frame Name="PagesFrame" NavigationUIVisibility="Hidden" Content="{Binding SelectedPage}" Navigating="PagesFrame_Navigating">
                 <Frame.RenderTransform>
                     <TranslateTransform/>
                 </Frame.RenderTransform>
             </Frame>
-        </controls:WPRCard>
+        </wpr:WPRCard>
     </Grid>
 </Window>

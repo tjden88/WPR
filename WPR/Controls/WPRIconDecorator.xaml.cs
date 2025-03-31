@@ -4,7 +4,7 @@ using System.Windows.Controls;
 using System.Windows.Markup;
 using WPR.Icons;
 
-namespace WPR.Controls
+namespace WPR
 {
     /// <summary>
     /// Декорирование текстбокса или другого контента иконкой слева.

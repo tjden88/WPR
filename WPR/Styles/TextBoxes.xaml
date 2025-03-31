@@ -1,8 +1,8 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:helpers="clr-namespace:WPR.Helpers"
-                    xmlns:controls="clr-namespace:WPR.Controls"
-                    xmlns:commands="clr-namespace:WPR.Commands">
+                    xmlns:commands="clr-namespace:WPR.Commands"
+                    xmlns:wpr="clr-namespace:WPR">
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="Base.xaml"/>
         <ResourceDictionary Source="Buttons.xaml"/>
@@ -227,7 +227,7 @@
                                     Visibility="{Binding Path=(helpers:TextHelper.ShowClearButton), 
                                 RelativeSource={RelativeSource TemplatedParent},
                                 Converter={StaticResource Bool2VisibilityConverter}}">
-                                    <controls:WPRIcon Source="CloseCircle"/>
+                                    <wpr:WPRIcon Source="CloseCircle"/>
                                 </Button>
                             </Grid>
                         </Grid>
@@ -344,7 +344,7 @@
                                             Command="{StaticResource ClearCommand}"
                                             CommandParameter="{Binding RelativeSource={RelativeSource TemplatedParent}}"
                                             Visibility="{Binding Path=(helpers:TextHelper.ShowClearButton), RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource Bool2VisibilityConverter}}">
-                                        <controls:WPRIcon Source="CloseCircle"/>
+                                        <wpr:WPRIcon Source="CloseCircle"/>
                                     </Button>
                                 </Grid>
                             </Grid>

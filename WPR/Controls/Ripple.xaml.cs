@@ -5,7 +5,7 @@ using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 using WPR.Animations;
 
-namespace WPR.Controls;
+namespace WPR;
 
 /// <summary> Анимация кнопок и прочих контролов </summary>
 public class Ripple : ContentControl
