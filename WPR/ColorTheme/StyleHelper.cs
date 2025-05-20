@@ -103,6 +103,14 @@ public static class StyleHelper
         StyleChanged?.Invoke(null, EventArgs.Empty);
     }
 
+    /// <summary>
+    /// Переключить тему (светлую в тёмную и наоборот)
+    /// </summary>
+    public static void SwitchTheme()
+    {
+        IsDarkTheme = !IsDarkTheme;
+    }
+
 
     /// <summary>
     /// Установить тему как в системе
