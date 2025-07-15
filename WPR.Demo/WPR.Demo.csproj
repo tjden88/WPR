@@ -19,10 +19,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="System.Drawing.Common" Version="8.0.2" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\WPR.MVVM\WPR.MVVM.csproj" />
     <ProjectReference Include="..\WPR.Services\WPR.Services.csproj" />
     <ProjectReference Include="..\WPR.Tools\WPR.Tools.csproj" />
