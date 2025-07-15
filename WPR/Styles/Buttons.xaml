@@ -184,10 +184,12 @@
         <Setter Property="Foreground" Value="{DynamicResource TextColorBrush}"/>
         <Setter Property="HorizontalContentAlignment" Value="Right"/>
         <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="BorderThickness" Value="0"></Setter>
+        <Setter Property="Padding" Value="5"></Setter>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="ButtonBase">
-                    <Grid Margin="{TemplateBinding Padding}">
+                    <Grid>
                         <ContentControl x:Name="Decorator"
                                         Margin="-500,0,2,0"
                                         Padding="15,0,50,0"
@@ -203,13 +205,17 @@
                         <Button Style="{StaticResource PrimaryWPRButton}"
                                 Command="{TemplateBinding Command}"
                                 CommandParameter="{TemplateBinding CommandParameter}"
+                                wpr:Extra.Shadow="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=(wpr:Extra.Shadow)}"
                                      x:Name="But"
                                      Margin="0"
-                                     wpr:Extra.BorderRadius="20"
+                                Padding="{TemplateBinding Padding}"
+                                     wpr:Extra.BorderRadius="2000"
                                      wpr:Extra.FeedbackBrush ="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=(wpr:Extra.FeedbackBrush)}"
-                                     Height="40" Width="40"
+                                     MinHeight="40" MinWidth="40"
                                      Background="{TemplateBinding Background}"
                                      Foreground="{TemplateBinding Foreground}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
                                      Content="{TemplateBinding Content}"
                                      VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
                                      HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"/>
@@ -244,11 +250,7 @@
                                 </BeginStoryboard>
                             </Trigger.ExitActions>
                         </Trigger>
-                        <Trigger Property="Tag" Value="Big">
-                            <Setter TargetName="But" Property="Height" Value="50"/>
-                            <Setter TargetName="But" Property="Width" Value="50"/>
-                            <Setter TargetName="But" Property="wpr:Extra.BorderRadius" Value="25"/>
-                        </Trigger>
+
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
