@@ -84,6 +84,33 @@
                     </StackPanel>
                 </wpr:ClippingBorder>
             </StackPanel>
+            <StackPanel>
+                <wpr:WPRTipDecorator Tip="Подсказка!">
+                    <ToggleButton wpr:Extra.BorderRadius="30" IsChecked="False" BorderThickness="1" Margin="5" Padding="10">
+                        <wpr:WPRIcon Source="Star"/>
+                    </ToggleButton>
+                </wpr:WPRTipDecorator>
+                <wpr:WPRTipDecorator Tip="Подсказка слева!" HorizontalContentAlignment="Right">
+                    <ToggleButton wpr:Extra.BorderRadius="30" IsChecked="False" BorderThickness="1" Margin="5" Padding="10">
+                        <wpr:WPRIcon Source="Star"/>
+                    </ToggleButton>
+                </wpr:WPRTipDecorator>
+                <wpr:WPRTipDecorator Tip="Подсказка в центре!" HorizontalContentAlignment="Center" VerticalContentAlignment="Bottom">
+                    <ToggleButton wpr:Extra.BorderRadius="30" IsChecked="False" BorderThickness="1" Margin="5" Padding="10">
+                        <wpr:WPRIcon Source="Star"/>
+                    </ToggleButton>
+                </wpr:WPRTipDecorator>
+                <wpr:WPRTipDecorator VerticalContentAlignment="Top" HorizontalContentAlignment="Center" TipMargin="50">
+                    <wpr:WPRTipDecorator.Tip>
+                        <Button Padding="40">
+                            <wpr:WPRIconText IconSource="Burger" Text="Big One!"></wpr:WPRIconText>
+                        </Button>
+                    </wpr:WPRTipDecorator.Tip>
+                    <ToggleButton wpr:Extra.BorderRadius="30" IsChecked="False" BorderThickness="1" Margin="5" Padding="10">
+                        <wpr:WPRIcon Source="Burger"/>
+                    </ToggleButton>
+                </wpr:WPRTipDecorator>
+            </StackPanel>
         </StackPanel>
     </Grid>
 </Page>

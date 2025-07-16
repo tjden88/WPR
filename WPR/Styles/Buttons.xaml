@@ -191,7 +191,7 @@
                 <ControlTemplate TargetType="ButtonBase">
                     <Grid>
                         <ContentControl x:Name="Decorator"
-                                        Margin="-500,0,2,0"
+                                        Margin="-5000,0,2,0"
                                         Padding="15,0,50,0"
                                         RenderTransformOrigin="1,1"
                                         Style="{StaticResource RoundedDecorator}"
@@ -223,7 +223,7 @@
 
                     <ControlTemplate.Triggers>
                         <Trigger Property="HorizontalContentAlignment" Value="Left">
-                            <Setter Property="Margin" TargetName="Decorator" Value="2,0,-500,0"/>
+                            <Setter Property="Margin" TargetName="Decorator" Value="2,0,-5000,0"/>
                             <Setter Property="Padding" TargetName="Decorator" Value="50,0,15,0"/>
                             <Setter Property="RenderTransformOrigin" TargetName="Decorator" Value="0,0"/>
                         </Trigger>

@@ -12,5 +12,6 @@
         <ResourceDictionary Source="WPRNumericIntDecorator.xaml"/>
         <ResourceDictionary Source="WPRPopupMenu.xaml"/>
         <ResourceDictionary Source="WPRIconDecorator.xaml"/>
+        <ResourceDictionary Source="WPRTipDecorator.xaml"/>
 </ResourceDictionary.MergedDictionaries>
 </ResourceDictionary>
