@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System.ComponentModel;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
@@ -41,6 +42,28 @@ public class WPRBage : ContentControl
             if (value) AnimateBage();
         }
     }
+
+
+    #region BageMargin : Thickness - Положение бейджа
+
+    /// <summary>Положение бейджа</summary>
+    public static readonly DependencyProperty BageMarginProperty =
+        DependencyProperty.Register(
+            nameof(BageMargin),
+            typeof(Thickness),
+            typeof(WPRBage),
+            new PropertyMetadata(default(Thickness)));
+
+    /// <summary>Положение бейджа</summary>
+    [Category("WPRBage")]
+    [Description("Положение бейджа")]
+    public Thickness BageMargin
+    {
+        get => (Thickness) GetValue(BageMarginProperty);
+        set => SetValue(BageMarginProperty, value);
+    }
+
+    #endregion
 
 
     private void AnimateBage()
