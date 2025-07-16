@@ -35,8 +35,13 @@
         <Setter Property="FontWeight" Value="Medium"/>
     </Style>
 
+    <Style x:Key="SubtitleLightText" TargetType="{x:Type TextBlock}" BasedOn="{StaticResource WPRTextBlock}">
+        <Setter Property="FontSize" Value="18"/>
+        <Setter Property="FontWeight" Value="Regular"/>
+    </Style>
+
     <Style x:Key="TitleText" TargetType="{x:Type TextBlock}" BasedOn="{StaticResource WPRTextBlock}">
-        <Setter Property="FontSize" Value="28"/>
+        <Setter Property="FontSize" Value="26"/>
         <Setter Property="FontWeight" Value="Medium"/>
     </Style>
 
