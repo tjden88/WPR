@@ -66,19 +66,24 @@
                             <Grid>
                                 <Border CornerRadius="4" Background="{Binding Background, ElementName=PART_Bubble}"
                                         Effect="{StaticResource ButtonShadow}"/>
-                                <StackPanel Orientation="Horizontal"
+                                <DockPanel 
                                             HorizontalAlignment="Center"
                                             VerticalAlignment="Center">
-                                    <TextBlock Text="{TemplateBinding BubbleText}"                                        
-                                               Foreground="{Binding Background, ElementName=PART_Bubble, Converter={StaticResource BrushContrastConverter}}"
-                                               Margin="15"/>
+
                                     <Button  Margin="7"
+                                             DockPanel.Dock="Right"
                                              x:Name="BubbleButton"
                                              Style="{StaticResource WPRFlatButton}"
                                              Background="{DynamicResource BackgroundContrastColorBrush}"
                                              Foreground="{DynamicResource AccentColorBrush}"
                                              Visibility="Collapsed"/>
-                                </StackPanel>
+
+                                    <TextBlock Text="{TemplateBinding BubbleText}"   
+                                               TextWrapping="Wrap"
+                                               Foreground="{Binding Background, ElementName=PART_Bubble, Converter={StaticResource BrushContrastConverter}}"
+                                               Margin="15"/>
+                                    
+                                </DockPanel>
                             </Grid>
                         </Border>
                     </Grid>
