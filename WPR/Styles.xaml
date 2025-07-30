@@ -42,8 +42,8 @@
     <Style TargetType="RadioButton" BasedOn="{StaticResource WPRRadioButton}"/>
     <Style TargetType="ListBox" BasedOn="{StaticResource WPRListBox}"/>
     <Style TargetType="ListBoxItem" BasedOn="{StaticResource WPRListBoxItem}"/>
-    <Style TargetType="TextBox" BasedOn="{StaticResource WPRTextBox}"/>
-    <Style TargetType="ComboBox" BasedOn="{StaticResource WPRComboBox}"/>
+    <Style TargetType="TextBox" BasedOn="{StaticResource WPRBorderedTextBox}"/>
+    <Style TargetType="ComboBox" BasedOn="{StaticResource WPRBorderedComboBox}"/>
     <Style TargetType="TabControl" BasedOn="{StaticResource WPRTabControl}"/>
     <Style TargetType="Expander" BasedOn="{StaticResource WPRExpander}"/>
     <Style TargetType="Menu" BasedOn="{StaticResource WPRMenu}"/>
