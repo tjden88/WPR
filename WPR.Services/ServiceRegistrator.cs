@@ -16,6 +16,6 @@ public static class ServiceRegistrator
     public static IServiceCollection AddWPRServices(this IServiceCollection services) => services
             .AddSingleton<IUserDialog, UserDialog>()
             .AddSingleton<IColorThemeManager, WPRColorThemeManager>()
-            .AddTransient(typeof(Lazy<>), typeof(LazilyResolved<>))
+            .AddSingleton(typeof(IResolver<>), typeof(Resolver<>))
     ;
 }
