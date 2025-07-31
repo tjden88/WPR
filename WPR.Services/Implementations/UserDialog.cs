@@ -106,7 +106,25 @@ public class UserDialog : IUserDialog
 
     public Task<string?> ShowSaveFileDialogAsync(string Title, IEnumerable<FileFilter>? Filters = null, string InitFileName = "")
     {
-        throw new NotImplementedException();
+        var sfd = new SaveFileDialog
+        {
+            FileName = InitFileName,
+            Title = Title
+        };
+
+        if (Filters != null)
+        {
+            var ofdFilter = Filters
+                .Select(f => $"{f.Description}|{string.Concat(f.FileMathPattrerns.Select(e => $"{e};"))}");
+            sfd.Filter = string.Join("|", ofdFilter);
+        }
+
+        Window? window = null;
+        Application.Current.Dispatcher.Invoke(() => window = Active);
+
+        var dialogResult = sfd.ShowDialog(window);
+
+        return Task.FromResult(dialogResult == true ? sfd.FileName : null);
     }
 
     public Task<string?> ShowFolderSelectDialogAsync(string Title, string InitPathName = "")
