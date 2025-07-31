@@ -101,6 +101,7 @@
 
     <Style x:Key="WPRListBoxItem" TargetType="{x:Type ListBoxItem}" BasedOn="{StaticResource BaseControl}">
         <Setter Property="SnapsToDevicePixels" Value="True"/>
+        <Setter Property="Cursor" Value="Hand"></Setter>
         <Setter Property="Padding" Value="{Binding Padding, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}"/>
         <Setter Property="Foreground" Value="{Binding Foreground, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}"/>
         <Setter Property="BorderBrush" Value="{Binding BorderBrush, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}"/>
