@@ -64,7 +64,7 @@ public class UserDialog : IUserDialog
 
 
     public async Task<string?> InputTextAsync(string title, string? DefaultValue = null, string? message = null, bool MultiLine = false) =>
-        await GetDispatcheredResult(() => WPRDialogHelper.InputTextAsync(Active, title, null, DefaultValue, MultiLine));
+        await GetDispatcheredResult(() => WPRDialogHelper.InputTextAsync(Active, title, message, DefaultValue, MultiLine));
 
     private async Task<string?> InputValidatedTextAsync(InputDialogFilterOptions DialogFilter) =>
         await GetDispatcheredResult(() => WPRDialogHelper.InputTextAsync(Active,
