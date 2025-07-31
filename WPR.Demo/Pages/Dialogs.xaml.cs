@@ -6,7 +6,6 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using WPR.Abstractions.Interfaces;
 using WPR.Abstractions.Models.Dialogs;
-using WPR.Abstractions.Models.Dialogs.Extensions;
 using WPR.Abstractions.Models.Themes;
 using WPR.Dialogs;
 using WPR.MVVM.Commands.Base;
@@ -99,6 +98,7 @@ namespace WPR.Demo.Pages
                 (B, S) => {if(B) Debug.WriteLine(S);},
                 "Описание",
                 "Стартовое значение",
+                true,
                 S => S.Length>0,
                 "Поле не может быть пустым");
         }
@@ -109,6 +109,7 @@ namespace WPR.Demo.Pages
                 (B, S) => { Debug.WriteLine(B + S); },
                 "Описание",
                 "12",
+                false,
                 S => S?.Length > 3,
                 "Нужно больше 3 символов");
         }
@@ -153,7 +154,8 @@ namespace WPR.Demo.Pages
             var title = "Заголовок";
 
             await dlg.InformationAsync(msg, title);
-
+            Debug.WriteLine(await dlg.InputTextAsync(title, MultiLine: false));
+            Debug.WriteLine(await dlg.InputTextAsync(title, MultiLine: true));
             Debug.WriteLine(await dlg.QuestionAsync(msg, title));
             Debug.WriteLine(await dlg.QuestionAsync(msg, IUserDialog.DialogTypes.YesNo, title));
             Debug.WriteLine(await dlg.QuestionAsync(msg, IUserDialog.DialogTypes.OkCancel, title));
@@ -177,16 +179,29 @@ namespace WPR.Demo.Pages
                 new(s => s?.Length > 2, "Больше 2"),
             };
 
-            var coolFilter = new InputDialogFilter("Тест офигенного фильтра")
+            var coolFilter = new InputDialogFilterOptions()
                     .AddRequired()
                     .AddDefaultValue("123")
                     .AddMessage("Это сообщение")
                     .AddMinLen(3)
                     .AddMaxLen(10)
-                    .AddMustNotContains(new[] { "123", "456" })
+                    .AddMustNotContains(["123", "456"])
                     .AddRule(s => s?.StartsWith("789") ?? true, "Должно начинаться с 789")
                 ;
-            await dlg.InputValidatedTextAsync(coolFilter);
+            await dlg.InputValidatedTextAsync(options =>
+            {  
+                options
+                    .AddTitle("Ввод с валидацией")
+                    .AddDefaultValue("123")
+                    .AddMessage("Это сообщение")
+                    .AddRequired().AddMinLen(3)
+                    .AddMaxLen(10)
+                    .SetMultiline()
+                    .AddMustNotContains(new[] { "123", "456" })
+                    .AddRule(s => s?.StartsWith("789") ?? true, "Должно начинаться с 789")
+                    ;
+
+            });
             await dlg.ShowNotificationAsync("Задержка 5 сек", 5000);
 
             Debug.WriteLine(await dlg.ShowQuestionNotificationAsync(msg, title));

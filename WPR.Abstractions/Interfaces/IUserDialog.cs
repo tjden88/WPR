@@ -50,11 +50,11 @@ public interface IUserDialog
 
 
     /// <summary> Текстовое поле для ввода. Если null - пользователь отменил ввод </summary>
-    Task<string?> InputTextAsync(string title, string? DefaultValue = null, string? message = null);
+    Task<string?> InputTextAsync(string title, string? DefaultValue = null, string? message = null, bool MultiLine = false);
 
 
     /// <summary> Текстовое поле для ввода с валидацией введённых данных. Если null - пользователь отменил ввод </summary>
-    Task<string?> InputValidatedTextAsync(InputDialogFilter DialogFilter);
+    Task<string?> InputValidatedTextAsync(Action<InputDialogFilterOptions> options);
 
 
     /// <summary> Показать всплывающее уведомление </summary>

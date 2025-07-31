@@ -27,7 +27,8 @@
                                        Visibility="Visible"
                                        Margin="10"/>
                             <TextBox Margin="10" x:Name="TextBox" 
-                                     AcceptsReturn="True"
+                                     MinHeight="{Binding Path=MinTextBoxHeight, Mode=OneTime, RelativeSource={RelativeSource TemplatedParent}}"
+                                     AcceptsReturn="{Binding Path=MultiLine, Mode=OneTime, RelativeSource={RelativeSource TemplatedParent}}"
                                      Text="{Binding Path=ViewModel.Text, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="6">
                                 <Button x:Name="Cancel" Content="ОТМЕНА" Width="100" IsCancel="True" Style="{StaticResource WPRFlatButton}"

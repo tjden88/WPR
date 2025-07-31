@@ -9,18 +9,23 @@ namespace WPR.Dialogs;
 
 public class InputDialog : DialogBase
 {
+    public bool MultiLine { get; }
+
+    public int MinTextBoxHeight => MultiLine ? 80 : 20;
 
     static InputDialog()
     {
         DefaultStyleKeyProperty.OverrideMetadata(typeof(InputDialog), new FrameworkPropertyMetadata(typeof(InputDialog)));
     }
+    public InputDialog() : this(false) { }
 
-    public InputDialog() : this(null) { }
+    public InputDialog(bool MultiLine) : this(null, MultiLine) { }
 
-    public InputDialog(string DefaultValue) : this(Array.Empty<PredicateValidationRule<string>>(), DefaultValue) { }
+    public InputDialog(string DefaultValue, bool MultiLine) : this([], DefaultValue, MultiLine) { }
 
-    public InputDialog(IEnumerable<PredicateValidationRule<string>> TextValidationRules, string DefaultValue)
+    public InputDialog(IEnumerable<PredicateValidationRule<string>> TextValidationRules, string DefaultValue, bool MultiLine)
     {
+        this.MultiLine = MultiLine;
         ViewModel = new ValidationView(TextValidationRules)
         {
             Text = DefaultValue

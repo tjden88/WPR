@@ -55,15 +55,24 @@ public class UserDialog : IUserDialog
         => await GetDispatcheredResult(() => WPRDialogHelper.ShowCustomDialogAsync(Active, Dialog));
 
 
-    public async Task<string?> InputTextAsync(string title, string? DefaultValue = null, string? message = null) =>
-        await GetDispatcheredResult(() => WPRDialogHelper.InputTextAsync(Active, title, null, DefaultValue));
+    public Task<string?> InputValidatedTextAsync(Action<InputDialogFilterOptions> options)
+    {
+        var filterOptions = new InputDialogFilterOptions();
+        options.Invoke(filterOptions);
+        return InputValidatedTextAsync(filterOptions);
+    }
 
-    public async Task<string?> InputValidatedTextAsync(InputDialogFilter DialogFilter) =>
+
+    public async Task<string?> InputTextAsync(string title, string? DefaultValue = null, string? message = null, bool MultiLine = false) =>
+        await GetDispatcheredResult(() => WPRDialogHelper.InputTextAsync(Active, title, null, DefaultValue, MultiLine));
+
+    private async Task<string?> InputValidatedTextAsync(InputDialogFilterOptions DialogFilter) =>
         await GetDispatcheredResult(() => WPRDialogHelper.InputTextAsync(Active,
             DialogFilter.Title,
             DialogFilter.Message,
             DialogFilter.DefaultValue,
-            DialogFilter.ValidationRules.Select(f => new PredicateValidationRule<string>(f.Rule, f.ErrorMessage))));
+            DialogFilter.ValidationRules.Select(f => new PredicateValidationRule<string>(f.Rule, f.ErrorMessage)),
+            DialogFilter.MultiLine));
 
     public Task ShowNotificationAsync(string message, int delay = 2000, StyleBrushes Backgound = StyleBrushes.BackgroundContrastColorBrush)
     {

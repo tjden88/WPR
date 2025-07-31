@@ -318,24 +318,24 @@ public static class WPRDialogHelper
 
     #region InputBoxes
 
-    public static void InputText(DependencyObject sender, string Title, Action<bool, string> Callback, string Caption, string DefaultValue = "")
+    public static void InputText(DependencyObject sender, string Title, Action<bool, string> Callback, string Caption, string DefaultValue, bool MultiLine)
     {
-        InputText(sender, Title, Callback, Caption, DefaultValue, S => true);
+        InputText(sender, Title, Callback, Caption, DefaultValue, MultiLine, S => true);
     }
 
-    public static void InputText(DependencyObject sender, string Title, Action<bool, string> Callback, string Caption, string DefaultValue , Predicate<string> ValidationRule , string ValidationErrorMessage = "Неверное значение")
+    public static void InputText(DependencyObject sender, string Title, Action<bool, string> Callback, string Caption, string DefaultValue, bool MultiLine, Predicate<string> ValidationRule , string ValidationErrorMessage = "Неверное значение")
     {
         var rule = new PredicateValidationRule<string>(ValidationRule, ValidationErrorMessage);
 
-        InputText(sender, Title, Callback, Caption, DefaultValue, new[] {rule});
+        InputText(sender, Title, Callback, Caption, DefaultValue, new[] {rule}, MultiLine);
     }
 
-    public static void InputText(DependencyObject sender, string Title, Action<bool, string> Callback, string Caption, string DefaultValue, IEnumerable<PredicateValidationRule<string>> ValidationRules)
+    public static void InputText(DependencyObject sender, string Title, Action<bool, string> Callback, string Caption, string DefaultValue, IEnumerable<PredicateValidationRule<string>> ValidationRules, bool MultiLine)
     {
         // Ищем панель
         var panel = FindDialogPanel(sender);
 
-        InputDialog inputDialog = new(ValidationRules, DefaultValue)
+        InputDialog inputDialog = new(ValidationRules, DefaultValue, MultiLine)
         {
             Title = Title,
             Caption = Caption,
@@ -374,20 +374,20 @@ public static class WPRDialogHelper
 
 
     /// <summary> Поле ввода текста </summary>
-    public static Task<string> InputTextAsync(DependencyObject sender, string Title, string Caption, string DefaultValue = "") => 
-        InputTextAsync(sender, Title, Caption, DefaultValue, S => true);
+    public static Task<string> InputTextAsync(DependencyObject sender, string Title, string Caption, string DefaultValue, bool MultiLine) => 
+        InputTextAsync(sender, Title, Caption, DefaultValue, S => true, MultiLine);
 
 
     /// <summary> Поле ввода текста с валидацией </summary>
-    public static Task<string> InputTextAsync(DependencyObject sender, string Title, string Caption, string DefaultValue, Predicate<string> ValidationRule, string ValidationErrorMessage = "Неверное значение") => 
-        InputTextAsync(sender, Title, Caption , DefaultValue, new []{new PredicateValidationRule<string>(ValidationRule, ValidationErrorMessage) });
+    public static Task<string> InputTextAsync(DependencyObject sender, string Title, string Caption, string DefaultValue, Predicate<string> ValidationRule, bool MultiLine, string ValidationErrorMessage = "Неверное значение") => 
+        InputTextAsync(sender, Title, Caption , DefaultValue, new []{new PredicateValidationRule<string>(ValidationRule, ValidationErrorMessage) }, MultiLine);
 
 
     /// <summary> Поле ввода текста с коллекцией валидаций </summary>
-    public static async Task<string> InputTextAsync(DependencyObject sender, string Title, string Caption, string DefaultValue, IEnumerable<PredicateValidationRule<string>> ValidationRules)
+    public static async Task<string> InputTextAsync(DependencyObject sender, string Title, string Caption, string DefaultValue, IEnumerable<PredicateValidationRule<string>> ValidationRules, bool MultiLine)
     {
         TaskCompletionSource<string> complete = new();
-        InputText(sender, Title, (B, S) => { complete.TrySetResult(B ? S : null); }, Caption, DefaultValue, ValidationRules);
+        InputText(sender, Title, (B, S) => { complete.TrySetResult(B ? S : null); }, Caption, DefaultValue, ValidationRules, MultiLine);
         return await complete.Task.ConfigureAwait(false);
     }
 
