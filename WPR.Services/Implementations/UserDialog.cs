@@ -42,13 +42,8 @@ public class UserDialog : IUserDialog
 
 
 
-    public async Task ErrorMessageAsync(string message, string? Title = "Ошибка")
-    {
-        await Application.Current.Dispatcher.BeginInvoke(() =>
-        {
-            _ = WPRDialogHelper.ErrorAsync(Active, message, Title);
-        });
-    }
+    public async Task ErrorMessageAsync(string message, string? Title = "Ошибка") =>
+        await DoDispatcheredAction(WPRDialogHelper.ErrorAsync(Active, message, Title));
 
 
     public async Task<bool> CustomDialogAsync(IWPRDialog Dialog)
