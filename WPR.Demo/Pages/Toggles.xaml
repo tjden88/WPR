@@ -29,15 +29,15 @@
                         <StackPanel Orientation="Horizontal">
                             <ToggleButton IsChecked="True" wpr:Extra.BorderRadius="0" Margin="0"
                                           ToolTip="Полужирный">
-                                <wpr:WPRIcon Source="FormatBold" Width="34" IconSize="18"/>
+                                <wpr:Icon Source="FormatBold" Width="34" IconSize="18"/>
                             </ToggleButton>
                             <ToggleButton wpr:Extra.BorderRadius="0" Margin="0"
                                           ToolTip="Наклонный">
-                                <wpr:WPRIcon Source="FormatItalic" Width="34" IconSize="18"/>
+                                <wpr:Icon Source="FormatItalic" Width="34" IconSize="18"/>
                             </ToggleButton>
                             <ToggleButton wpr:Extra.BorderRadius="0" Margin="0"
                                           ToolTip="Подчёркнутый">
-                                <wpr:WPRIcon Source="FormatUnderlined" Width="34" IconSize="18"/>
+                                <wpr:Icon Source="FormatUnderlined" Width="34" IconSize="18"/>
                             </ToggleButton>
                         </StackPanel>
                     </wpr:ClippingBorder>
@@ -64,52 +64,52 @@
                         <RadioButton Style="{StaticResource WPRRadioButtonButtonStyle}" IsChecked="True" Margin="0"
                                      wpr:Extra.BorderRadius="0"
                               ToolTip="По левому краю">
-                            <wpr:WPRIcon Source="FormatAlignLeft" Width="34" Height="18"/>
+                            <wpr:Icon Source="FormatAlignLeft" Width="34" Height="18"/>
                         </RadioButton>
                         <RadioButton Style="{StaticResource WPRRadioButtonButtonStyle}"  Margin="0"
                                      wpr:Extra.BorderRadius="0"
                               ToolTip="По центру">
-                            <wpr:WPRIcon Source="FormatAlignCenter" Width="34" Height="18"/>
+                            <wpr:Icon Source="FormatAlignCenter" Width="34" Height="18"/>
                         </RadioButton>
                         <RadioButton Style="{StaticResource WPRRadioButtonButtonStyle}"  Margin="0"
                                      wpr:Extra.BorderRadius="0"
                               ToolTip="По правому краю">
-                            <wpr:WPRIcon Source="FormatAlignRight" Width="34" Height="18"/>
+                            <wpr:Icon Source="FormatAlignRight" Width="34" Height="18"/>
                         </RadioButton>
                         <RadioButton Style="{StaticResource WPRRadioButtonButtonStyle}"  Margin="0"
                                      wpr:Extra.BorderRadius="0"
                               ToolTip="По ширине">
-                            <wpr:WPRIcon Source="FormatAlignJustify" Width="34" Height="18"/>
+                            <wpr:Icon Source="FormatAlignJustify" Width="34" Height="18"/>
                         </RadioButton>
                     </StackPanel>
                 </wpr:ClippingBorder>
             </StackPanel>
             <StackPanel>
-                <wpr:WPRTipDecorator Tip="Подсказка!">
+                <wpr:TipDecorator Tip="Подсказка!">
                     <ToggleButton wpr:Extra.BorderRadius="30" IsChecked="False" BorderThickness="1" Margin="5" Padding="10">
-                        <wpr:WPRIcon Source="Star"/>
+                        <wpr:Icon Source="Star"/>
                     </ToggleButton>
-                </wpr:WPRTipDecorator>
-                <wpr:WPRTipDecorator Tip="Подсказка слева!" HorizontalContentAlignment="Right">
+                </wpr:TipDecorator>
+                <wpr:TipDecorator Tip="Подсказка слева!" HorizontalContentAlignment="Right">
                     <ToggleButton wpr:Extra.BorderRadius="30" IsChecked="False" BorderThickness="1" Margin="5" Padding="10">
-                        <wpr:WPRIcon Source="Star"/>
+                        <wpr:Icon Source="Star"/>
                     </ToggleButton>
-                </wpr:WPRTipDecorator>
-                <wpr:WPRTipDecorator Tip="Подсказка в центре!" HorizontalContentAlignment="Center" VerticalContentAlignment="Bottom">
+                </wpr:TipDecorator>
+                <wpr:TipDecorator Tip="Подсказка в центре!" HorizontalContentAlignment="Center" VerticalContentAlignment="Bottom">
                     <ToggleButton wpr:Extra.BorderRadius="30" IsChecked="False" BorderThickness="1" Margin="5" Padding="10">
-                        <wpr:WPRIcon Source="Star"/>
+                        <wpr:Icon Source="Star"/>
                     </ToggleButton>
-                </wpr:WPRTipDecorator>
-                <wpr:WPRTipDecorator VerticalContentAlignment="Top" HorizontalContentAlignment="Center" TipMargin="50">
-                    <wpr:WPRTipDecorator.Tip>
+                </wpr:TipDecorator>
+                <wpr:TipDecorator VerticalContentAlignment="Top" HorizontalContentAlignment="Center" TipMargin="50">
+                    <wpr:TipDecorator.Tip>
                         <Button Padding="40">
-                            <wpr:WPRIconText IconSource="Burger" Text="Big One!"></wpr:WPRIconText>
+                            <wpr:IconText IconSource="Burger" Text="Big One!"></wpr:IconText>
                         </Button>
-                    </wpr:WPRTipDecorator.Tip>
+                    </wpr:TipDecorator.Tip>
                     <ToggleButton wpr:Extra.BorderRadius="30" IsChecked="False" BorderThickness="1" Margin="5" Padding="10">
-                        <wpr:WPRIcon Source="Burger"/>
+                        <wpr:Icon Source="Burger"/>
                     </ToggleButton>
-                </wpr:WPRTipDecorator>
+                </wpr:TipDecorator>
             </StackPanel>
         </StackPanel>
     </Grid>

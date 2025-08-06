@@ -24,7 +24,7 @@
                 <DataTemplate>
                     <DockPanel Width="120" Background="Transparent">
                         <TextBlock Text="{Binding}" DockPanel.Dock="Bottom" TextTrimming="CharacterEllipsis" HorizontalAlignment="Center" />
-                        <wpr:WPRIcon Source="{Binding}" VerticalAlignment="Center" HorizontalAlignment="Center" IconSize="32" />
+                        <wpr:Icon Source="{Binding}" VerticalAlignment="Center" HorizontalAlignment="Center" IconSize="32" />
                     </DockPanel>
                 </DataTemplate>
             </ListBox.ItemTemplate>
@@ -37,7 +37,7 @@
             </Grid.ColumnDefinitions>
             <StackPanel Orientation="Horizontal" Grid.Row="1"  >
                 <Button Click="Button_Click" Margin="10" Width="36" Style="{StaticResource PrimaryWPRButton}">
-                    <wpr:WPRIcon Source="Search"/>
+                    <wpr:Icon Source="Search"/>
                 </Button>
                 <TextBox x:Name="SearchText" KeyUp="SearchText_KeyUp" Width="132" Margin="10"
                          wpr:Extra.TextHint="Поиск"/>
@@ -48,7 +48,7 @@
                              FontFamily="Courier New"
                              FontWeight="Bold"
                              GotFocus="TextBox_OnGotFocus"
-                             Text="{Binding ElementName=ListIcons, Path=SelectedItem, StringFormat='&lt;wpr:WPRIcon Source=&quot;{0}&quot; \/>'}" />
+                             Text="{Binding ElementName=ListIcons, Path=SelectedItem, StringFormat='&lt;wpr:Icon Source=&quot;{0}&quot; \/>'}" />
             <TextBox IsReadOnly="True"  Margin="10" Grid.Column="2" 
                      BorderThickness="1"
                      BorderBrush="{DynamicResource AccentColorBrush}"

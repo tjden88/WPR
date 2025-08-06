@@ -24,7 +24,7 @@
                          wpr:Extra.TextHint="Flat Clearable TextBox"/>
             </Border>
             <DockPanel>
-                <wpr:WPRIcon Source="Person" Foreground="{Binding ElementName=NameText, Path=BorderBrush}"/>
+                <wpr:Icon Source="Person" Foreground="{Binding ElementName=NameText, Path=BorderBrush}"/>
                 <TextBox wpr:Extra.TextHint="Имя"
                          VerticalAlignment="Bottom" Margin="5,10,0,0"
                          wpr:Extra.TextDescription="Представьтесь"
@@ -57,27 +57,27 @@
                 <ComboBoxItem Content="Item 4"/>
             </ComboBox>
 
-            <wpr:WPRNumericIntDecorator Name="IntDecorator" 
+            <wpr:NumericIntDecorator Name="IntDecorator" 
                                              AllowTextExpressions="True"
                                              PlusMinusButtonsShowing="True"
                                              MinValue="-500"
                                              MaxValue="500"
                                              Increment="2">
                 <TextBox/>
-            </wpr:WPRNumericIntDecorator>
+            </wpr:NumericIntDecorator>
 
             <TextBlock Text="{Binding ElementName=IntDecorator, Path=Value, StringFormat=IntValue: {0}}" />
 
-            <wpr:WPRNumericIntDecorator Style="{StaticResource WPRNumericIntBorderedDecorator}"
+            <wpr:NumericIntDecorator Style="{StaticResource WPRNumericIntBorderedDecorator}"
                                              AllowTextExpressions="False"
                                              PlusMinusButtonsShowing="True"
                                              MinValue="-20"
                                              MaxValue="500"
                                              Increment="2">
                 <TextBox/>
-            </wpr:WPRNumericIntDecorator>
+            </wpr:NumericIntDecorator>
 
-            <wpr:WPRNumericDoubleDecorator Name="DoubleDecorator" 
+            <wpr:NumericDoubleDecorator Name="DoubleDecorator" 
                                                 DecimalPlaces="3"
                                                 AllowTextExpressions="False"
                                                 PlusMinusButtonsShowing="True"
@@ -85,19 +85,19 @@
                                                 MaxValue="500"
                                                 Increment="1.2">
                 <TextBox/>
-            </wpr:WPRNumericDoubleDecorator>
+            </wpr:NumericDoubleDecorator>
 
             <TextBlock Text="{Binding ElementName=DoubleDecorator, Path=Value, StringFormat=DoubleValue: {0}}" />
 
 
-            <wpr:WPRNumericDoubleDecorator Style="{StaticResource WPRNumericDoubleBorderedDecorator}"
+            <wpr:NumericDoubleDecorator Style="{StaticResource WPRNumericDoubleBorderedDecorator}"
                                              AllowTextExpressions="True"
                                              PlusMinusButtonsShowing="True"
                                              MinValue="-500"
                                              MaxValue="500"
                                              Increment="2">
                 <TextBox/>
-            </wpr:WPRNumericDoubleDecorator>
+            </wpr:NumericDoubleDecorator>
 
 
         </StackPanel>

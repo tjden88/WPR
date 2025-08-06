@@ -14,7 +14,7 @@
                 <MenuItem Header="Menu">
                     <MenuItem Header="Create">
                         <MenuItem.Icon>
-                            <wpr:WPRIcon Source="Create"/>
+                            <wpr:Icon Source="Create"/>
                         </MenuItem.Icon>
                         <MenuItem Header="Create" IsCheckable="True" IsChecked="True"/>
                         <MenuItem Header="Create" IsCheckable="True" IsChecked="True"/>
@@ -42,14 +42,14 @@
                 <ToolBar Header="Head">
                     <Button Content="Test"/>
                     <Button Command="Cut">
-                        <wpr:WPRIcon Source="ContentCut"/>
+                        <wpr:Icon Source="ContentCut"/>
                     </Button>
                     <Separator/>
                     <CheckBox>
-                        <wpr:WPRIcon Source="Check"/>
+                        <wpr:Icon Source="Check"/>
                     </CheckBox>
                     <CheckBox>
-                        <wpr:WPRIcon Source="Check"/>
+                        <wpr:Icon Source="Check"/>
                     </CheckBox>
                     <Separator/>
                     <RadioButton Content="1"/>
@@ -63,7 +63,7 @@
                         <ComboBoxItem Content="14"/>
                         <ComboBoxItem Content="16"/>
                     </ComboBox>
-                    <wpr:WPRIcon Source="Twitter"/>
+                    <wpr:Icon Source="Twitter"/>
                     <ComboBox Width="120">
                         <ComboBoxItem Content="10"/>
                         <ComboBoxItem Content="12"/>

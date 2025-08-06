@@ -18,7 +18,7 @@
             <ToggleButton Name="TopMost" wpr:Extra.FeedbackBrush ="{DynamicResource AccentColorBrush}"
                           ToolTip="Поверх всех окон">
                 <ToggleButton.Content>
-                    <wpr:WPRIcon Source="ProjectorScreen"
+                    <wpr:Icon Source="ProjectorScreen"
                                       Foreground="{DynamicResource WindowTitleBackgroundContrastColorBrush}"/>
                 </ToggleButton.Content>
             </ToggleButton>
@@ -41,12 +41,12 @@
             </ListBox.ItemTemplate>
         </ListBox>
 
-        <wpr:WPRCard Grid.Column="1" Margin="10,10,0,0" wpr:Extra.BorderRadius ="8,0,0,0">
+        <wpr:Card Grid.Column="1" Margin="10,10,0,0" wpr:Extra.BorderRadius ="8,0,0,0">
             <Frame Name="PagesFrame" NavigationUIVisibility="Hidden" Content="{Binding SelectedPage}" Navigating="PagesFrame_Navigating">
                 <Frame.RenderTransform>
                     <TranslateTransform/>
                 </Frame.RenderTransform>
             </Frame>
-        </wpr:WPRCard>
+        </wpr:Card>
     </Grid>
 </Window>
