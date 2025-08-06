@@ -10,7 +10,7 @@ public abstract class DialogBase : Control, IWPRDialog
 
     protected DialogBase()
     {
-        SubmitCommand = new BaseCommand(() => Completed?.Invoke(true));
+        SubmitCommand = new BaseCommand(() => Completed?.Invoke(true), CanSubmit);
         CancelCommand = new BaseCommand(() => Completed?.Invoke(false));
     }
 
@@ -23,6 +23,8 @@ public abstract class DialogBase : Control, IWPRDialog
     public ICommand SubmitCommand { get; }
 
     public ICommand CancelCommand { get; }
+
+    protected virtual bool CanSubmit() => true;
 
     protected void RaiseCompleted(bool result) => Completed?.Invoke(result);
 }

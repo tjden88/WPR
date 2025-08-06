@@ -1,134 +1,78 @@
 ﻿using System.Collections;
 using System.ComponentModel;
-using System.Globalization;
 using System.Windows;
-using WPR.Validation;
 
 namespace WPR.Dialogs;
 
-public class InputDialog : DialogBase
+public class InputDialog(IEnumerable<InputDialog.ValidationInfo> validation) : DialogBase, INotifyDataErrorInfo
 {
-    public bool MultiLine { get; }
-
-    public int MinTextBoxHeight => MultiLine ? 80 : 20;
+    public record ValidationInfo(Predicate<string> Validated, string Message);
 
     static InputDialog()
     {
-        DefaultStyleKeyProperty.OverrideMetadata(typeof(InputDialog), new FrameworkPropertyMetadata(typeof(InputDialog)));
+        DefaultStyleKeyProperty.OverrideMetadata(typeof(InputDialog),
+            new FrameworkPropertyMetadata(typeof(InputDialog)));
     }
-    public InputDialog() : this(false) { }
 
-    public InputDialog(bool MultiLine) : this(null, MultiLine) { }
-
-    public InputDialog(string DefaultValue, bool MultiLine) : this([], DefaultValue, MultiLine) { }
-
-    public InputDialog(IEnumerable<PredicateValidationRule<string>> TextValidationRules, string DefaultValue, bool MultiLine)
+    public InputDialog() : this([])
     {
-        this.MultiLine = MultiLine;
-        ViewModel = new ValidationView(TextValidationRules)
-        {
-            Text = DefaultValue
-        };
-        ViewModel.CheckErrors();
     }
 
-    protected override bool CanSetCommandExecuted() => ViewModel?.HasErrors == false;
+    protected override bool CanSubmit() => !HasErrors;
 
-    #region ViewModel : ValidationView - Вьюмодель валидации
 
-    /// <summary>Вьюмодель валидации</summary>
-    public static readonly DependencyProperty ViewModelProperty =
+    #region Props
+
+    public bool MultiLine { get; init; }
+    public int MinTextBoxHeight => MultiLine ? 80 : 20;
+
+
+    
+
+    /// <summary>Текст пользователя</summary>
+    public static readonly DependencyProperty TextProperty =
         DependencyProperty.Register(
-            nameof(ViewModel),
-            typeof(ValidationView),
+            nameof(Text),
+            typeof(string),
             typeof(InputDialog),
-            new PropertyMetadata(default(ValidationView)));
+            new PropertyMetadata(null, OnTextChanged));
 
-    /// <summary>Вьюмодель валидации</summary>
-    [Category("InputDialog")]
-    [Description("Вьюмодель валидации")]
-    public ValidationView ViewModel
+    private static void OnTextChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
     {
-        get => (ValidationView)GetValue(ViewModelProperty);
-        set => SetValue(ViewModelProperty, value);
+        ((InputDialog)d).CheckErrors();
+    }
+
+    /// <summary>Текст пользователя</summary>
+    [Category("InputDialog")]
+    [Description("Текст пользователя")]
+    public string Text
+    {
+        get => (string) GetValue(TextProperty);
+        init => SetValue(TextProperty, value);
     }
 
     #endregion
 
+    #region INotifyDataErrorInfo 
 
-    #region Caption : string - Описание
-
-    /// <summary>Описание</summary>
-    public static readonly DependencyProperty CaptionProperty =
-        DependencyProperty.Register(
-            nameof(Caption),
-            typeof(string),
-            typeof(InputDialog),
-            new PropertyMetadata(default(string)));
-
-    /// <summary>Описание</summary>
-    [Category("InputDialog")]
-    [Description("Описание")]
-    public string Caption
+    private void CheckErrors()
     {
-        get => (string)GetValue(CaptionProperty);
-        set => SetValue(CaptionProperty, value);
+        _Errors.Clear();
+        var text = Text;
+        var errors = validation.Where(Rule => !Rule.Validated(text)).Select(Rule => Rule.Message);
+        _Errors.AddRange(errors);
+        ErrorsChanged?.Invoke(this, new DataErrorsChangedEventArgs(nameof(Text)));
     }
 
-    #endregion  
-
-
-    /// <summary> Результат ввода пользователя </summary>
-    public string TextValue => ViewModel.Text;
-
-
-
-    public class ValidationView(IEnumerable<PredicateValidationRule<string>> TextValidationRules)
-        : INotifyDataErrorInfo, INotifyPropertyChanged
+    public IEnumerable GetErrors(string propertyName)
     {
-        private readonly List<PredicateValidationRule<string>> _TextValidationRules = [.. TextValidationRules];
-
-
-        #region Text : string - Текст
-
-        /// <summary>Текст</summary>
-        private string _Text;
-
-        /// <summary>Текст</summary>
-        public string Text
-        {
-            get => _Text;
-            set
-            {
-                if (Equals(_Text, value)) return;
-                _Text = value;
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Text)));
-                CheckErrors();
-            }
-        }
-
-        #endregion
-
-        public void CheckErrors()
-        {
-            _Errors.Clear();
-            var text = Text;
-            var errors = _TextValidationRules.Where(Rule => !Rule.Validated(text, CultureInfo.InvariantCulture)).Select(Rule => Rule.Message);
-            _Errors.AddRange(errors);
-            ErrorsChanged?.Invoke(this, new DataErrorsChangedEventArgs(nameof(Text)));
-        }
-
-        public IEnumerable GetErrors(string propertyName)
-        {
-            if (propertyName != nameof(Text)) return null!;
-            return _Errors;
-        }
-
-
-        private readonly List<string> _Errors = new();
-        public bool HasErrors => _Errors.Any();
-
-        public event EventHandler<DataErrorsChangedEventArgs> ErrorsChanged;
-        public event PropertyChangedEventHandler PropertyChanged;
+        if (propertyName != nameof(Text)) return null!;
+        return _Errors;
     }
+
+    private readonly List<string> _Errors = new();
+    public bool HasErrors => _Errors.Any();
+    public event EventHandler<DataErrorsChangedEventArgs> ErrorsChanged; 
+    #endregion
 }
+
