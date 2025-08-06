@@ -6,24 +6,26 @@ using WPR.Theme;
 namespace WPR.Dialogs;
 public static class UserDialog
 {
-
-    #region Internal
-
     private static readonly Style _ModalWindowStyle = (Style)Application.Current.Resources["WPRModalWindow"];
 
     // Найти панель для отображения диалога
     [return: MaybeNull]
-    private static WPRDialogPanel FindDialogPanel(DependencyObject uIElement)
+    private static WPRDialogPanel FindDialogPanel(DependencyObject element)
     {
-        if (uIElement == null)
+        if (element == null)
             return null;
 
-        if (uIElement is Window window)
+        if(element is WPRDialogPanel panel)
+            return panel;
+
+        if (element is Window window)
             return window.Template?.FindName("WindowDialogPanel", window) as WPRDialogPanel;
 
-        return uIElement.FindVisualParent<WPRDialogPanel>();
+        return element.FindVisualParent<WPRDialogPanel>();
     }
 
+
+    #region Internal
 
     /// <summary>
     /// Показать диалог в потоке UI

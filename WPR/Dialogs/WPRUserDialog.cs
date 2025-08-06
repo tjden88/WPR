@@ -79,7 +79,7 @@ internal class WPRUserDialog : IUserDialog
             Title = Title,
             Content = message,
             AcceptButtonText = AcceptCaption,
-            CancelButtonText = RejectCaption,
+            CancelButtonText = CancelCaption,
             QuestionAcceptButtonText = AcceptCaption,
             QuestionCancelButtonText = RejectCaption,
             DialogType = dialogType
@@ -106,7 +106,7 @@ internal class WPRUserDialog : IUserDialog
     public async Task<bool> CustomDialogAsync(IWPRDialog Dialog, CancellationToken cancellationToken = default) => 
          await Show(Dialog, cancellationToken);
 
-    public async Task<string> InputTextAsync(string title, string DefaultValue = null, string message = null, bool MultiLine = false,
+    public async Task<string> InputTextAsync(string message, string defaultValue = null, string title = null, bool MultiLine = false,
         CancellationToken cancellationToken = default)
     {
         var input = new InputDialog()
@@ -114,7 +114,7 @@ internal class WPRUserDialog : IUserDialog
             Title = title,
             Content = message,
             MultiLine = MultiLine,
-            Text = DefaultValue
+            Text = defaultValue
         };
 
         var result = await Show(input, cancellationToken);

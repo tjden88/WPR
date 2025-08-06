@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.ComponentModel;
 using System.Windows;
+using System.Windows.Controls;
 using WPR.Controls.Base;
 using WPR.Dialogs;
 
@@ -11,12 +12,23 @@ public class InputDialog(IEnumerable<ValidationInfo> validation) : DialogBase, I
 
     static InputDialog()
     {
-        DefaultStyleKeyProperty.OverrideMetadata(typeof(InputDialog),
-            new FrameworkPropertyMetadata(typeof(InputDialog)));
+        DefaultStyleKeyProperty.OverrideMetadata(typeof(InputDialog), new FrameworkPropertyMetadata(typeof(InputDialog)));
     }
 
     public InputDialog() : this([])
     {
+    }
+
+
+    public override void OnApplyTemplate()
+    {
+        base.OnApplyTemplate();
+        if (GetTemplateChild("TextBox") is TextBox t)
+            t.Loaded += (_, _) =>
+            {
+                t.SelectionStart = 0;
+                t.SelectionLength = t.Text.Length;
+            };
     }
 
     protected override bool CanSubmit() => !HasErrors;

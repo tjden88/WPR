@@ -41,7 +41,7 @@ public interface IUserDialog
 
 
     /// <summary> Текстовое поле для ввода. Если null - пользователь отменил ввод </summary>
-    Task<string> InputTextAsync(string title, string DefaultValue = null, string message = null, bool MultiLine = false, CancellationToken cancellationToken = default);
+    Task<string> InputTextAsync(string message, string defaultValue = null, string title = null, bool MultiLine = false, CancellationToken cancellationToken = default);
 
 
     /// <summary> Текстовое поле для ввода с валидацией введённых данных. Если null - пользователь отменил ввод </summary>

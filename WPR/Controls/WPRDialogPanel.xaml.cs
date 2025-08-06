@@ -1,4 +1,5 @@
-﻿using System.Reflection;
+﻿using System.ComponentModel;
+using System.Reflection;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -11,7 +12,7 @@ using WPR.Theme;
 namespace WPR;
 
 /// <summary> Контрол для обёртки диалоговых окон </summary>
-internal class WPRDialogPanel : HeaderedContentControl
+public class WPRDialogPanel : HeaderedContentControl
 {
     public enum Status
     {
@@ -45,6 +46,34 @@ internal class WPRDialogPanel : HeaderedContentControl
 
         _HeaderPopup.PopupClosed += HeaderPopupOnClosed;
     }
+
+
+    #region DialogSource : IUserDialog - Сообщения из этого источника будут появляться в этой панели
+
+    /// <summary>Сообщения из этого источника будут появляться в этой панели</summary>
+    public static readonly DependencyProperty DialogSourceProperty =
+        DependencyProperty.Register(
+            nameof(DialogSource),
+            typeof(IUserDialog),
+            typeof(WPRDialogPanel),
+            new PropertyMetadata(null, OnDialogSourceChanged));
+
+    private static void OnDialogSourceChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+    {
+        if (e.NewValue is WPRUserDialog dlg && d is WPRDialogPanel panel)
+            dlg.AssociatedElement = panel;
+    }
+
+    /// <summary>Сообщения из этого источника будут появляться в этой панели</summary>
+    [Category("WPRDialogPanel")]
+    [Description("Сообщения из этого источника будут появляться в этой панели")]
+    public IUserDialog DialogSource
+    {
+        get => (IUserDialog) GetValue(DialogSourceProperty);
+        set => SetValue(DialogSourceProperty, value);
+    }
+
+    #endregion
 
 
     #region Диалоговое окно

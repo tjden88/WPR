@@ -1,13 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Threading;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Input;
 using WPR.Dialogs;
-using WPR.MVVM.Commands.Base;
 using WPR.Theme;
 
 namespace WPR.Demo.Pages
@@ -17,120 +11,94 @@ namespace WPR.Demo.Pages
     /// </summary>
     public partial class Dialogs : Page
     {
+        private readonly IUserDialog _UserDialog;
+        public IUserDialog PanelDlg { get; }
+
+
         public Dialogs()
         {
+            PanelDlg = UserDialog.CreateUserDialog();
             InitializeComponent();
+            _UserDialog = UserDialog.Default;
         }
 
-        private void DialogResult(bool? Obj)
-        {
-            Debug.WriteLine(Obj);
-        }
-
-        #region Command ShowWindowDialogCommand - Показать диалог окна
-
-        private ICommand _ShowWindowDialogCommand;
-
-        /// <summary>Показать диалог окна</summary>
-        public ICommand ShowWindowDialogCommand => _ShowWindowDialogCommand
-            ??= new Command(OnShowWindowDialogCommandExecuted);
-
-        private void OnShowWindowDialogCommandExecuted()
-        {
-            //WPRDialogHelper.Information(this, "Текст диалога пользователя", "Заголовок", () => Debug.WriteLine("Диалог закрыт"));
-            //WPRDialogHelper.InformationCancel(this, "Текст диалога пользователя", "Заголовок", (b) => Debug.WriteLine($"Диалог закрыт: {b}"));
-            //WPRDialogHelper.Question(this, "Текст диалога пользователя", "Заголовок", (b) => Debug.WriteLine($"Диалог закрыт: {b}"));
-        }
-
-        #endregion
-
-        #region Command ShowWindowDialogCommandAsync - Показать диалог асинхронно
-
-        private ICommand _ShowWindowDialogCommandAsync;
-
-        /// <summary>Показать диалог асинхронно</summary>
-        public ICommand ShowWindowDialogCommandAsync => _ShowWindowDialogCommandAsync
-            ??= new Command(OnShowWindowDialogCommandAsyncExecuted);
-
-        private async void OnShowWindowDialogCommandAsyncExecuted()
-        {
-            using var cts = new CancellationTokenSource(TimeSpan.FromSeconds(5));
-            var dialog = new MessageDialog()
-            {
-                Title = "Заголовок",
-                Content = "Текст диалога пользователя",
-                DialogType = DialogType.QuestionCancel
-            };
-            await Task.Delay(100).ConfigureAwait(false);
-            //var result = await UserDialogHelper.Show(this, dialog, cts.Token).ConfigureAwait(false);
-            //Debug.WriteLine(result);
-
-            //var result2 = await UserDialogHelper.Show(null, dialog, cts.Token).ConfigureAwait(false);
-            //Debug.WriteLine(result2);
-
-        }
-
-        #endregion
-
-        #region Command ShowModalDialogCommand - Показать модальный диалог
-
-        private ICommand _ShowModalDialogCommand;
-
-        /// <summary>Показать модальный диалог</summary>
-        public ICommand ShowModalDialogCommand => _ShowModalDialogCommand
-            ??= new Command(OnShowModalDialogCommandExecuted);
-
-        private void OnShowModalDialogCommandExecuted()
-        {
-        }
-
-        #endregion
-
+        private async Task ShowNotification(object message) =>
+            await _UserDialog.ShowNotificationAsync(message?.ToString() ?? "null");
 
 
         private async void Dlg_OnClick(object Sender, RoutedEventArgs E)
         {
-            var dlg = new WPRUserDialog();
+            var dlg = _UserDialog;
 
-            var msg = "Сообщение";
-            var title = "Заголовок";
-
-            await dlg.InformationAsync(msg, title);
-
-
-            var val = new List<(Predicate<string> rule, string errorMessage)>()
-            {
-                new(s => !string.IsNullOrEmpty(s), "Обязательно"),
-                new(s => s?.Length > 2, "Больше 2"),
-            };
-
-            var coolFilter = new InputDialogFilterOptions()
-                    .AddRequired()
-                    .AddDefaultValue("123")
-                    .AddMessage("Это сообщение")
-                    .AddMinLen(3)
-                    .AddMaxLen(10)
-                    .AddMustNotContains(["123", "456"])
-                    .AddRule(s => s?.StartsWith("789") ?? true, "Должно начинаться с 789")
-                ;
-            await dlg.InputValidatedTextAsync(options =>
+            var result = await dlg.InputValidatedTextAsync(options =>
             {  
                 options
                     .AddTitle("Ввод с валидацией")
                     .AddDefaultValue("123")
                     .AddMessage("Это сообщение")
-                    .AddRequired().AddMinLen(3)
+                    .AddRequired()
+                    .AddMinLen(3)
                     .AddMaxLen(10)
                     .SetMultiline()
-                    .AddMustNotContains(new[] { "123", "456" })
+                    .AddMustNotContains(["123", "456"])
                     .AddRule(s => s?.StartsWith("789") ?? true, "Должно начинаться с 789")
                     ;
 
             });
-            await dlg.ShowNotificationAsync("Задержка 5 сек", StyleBrushes.AccentColorBrush, 5000);
+
+            await dlg.ShowNotificationAsync(result, StyleBrushes.AccentColorBrush, 5000);
 
         }
 
 
+        private void Button1_OnClick(object sender, RoutedEventArgs e)
+        { 
+            _UserDialog.InformationAsync("Текст сообщения", "Заголовок");
+        }
+
+        private async void Button2_OnClick(object sender, RoutedEventArgs e)
+        {
+            await ShowNotification(await _UserDialog.QuestionAsync("Вопрос", "Заголовок"));
+        }
+
+        private async void Button3_OnClick(object sender, RoutedEventArgs e)
+        {
+            await ShowNotification(await _UserDialog.QuestionAsync("Вопрос с отменой", DialogType.QuestionCancel, "Заголовок"));
+        }
+
+        private async void Button4_OnClick(object sender, RoutedEventArgs e)
+        {
+            await ShowNotification(await _UserDialog.CustomQuestionAsync("Кастомные кнопки", "Заголовок", "Принять!", "Завернуть!", "Отмена нах!"));
+        }
+        private void Button5_OnClick(object sender, RoutedEventArgs e)
+        {
+            _UserDialog.ErrorMessageAsync("Текст сообщения ошибки");
+        }
+
+        private void Button6_OnClick(object sender, RoutedEventArgs e)
+        {
+            UserDialog.ModalDialog.InformationAsync("Модальное окно", "Модальный заголовок");
+        }
+
+        private async void Button7_OnClick(object sender, RoutedEventArgs e)
+        {
+            await ShowNotification(await _UserDialog.InputTextAsync("Контент", "123", "Заголовок"));
+        }
+        private async void Button8_OnClick(object sender, RoutedEventArgs e)
+        {
+            await ShowNotification(await _UserDialog.InputTextAsync("Контент мульти-инпута", "123", "Заголовок", true));
+        }
+
+        private async void Button9_OnClick(object sender, RoutedEventArgs e)
+        {
+            await PanelDlg.InformationAsync("Внутри панели");
+            var pressed = await PanelDlg.ShowQuestionNotificationAsync("Нотификация с кнопкой", "Push!");
+            await PanelDlg.ShowNotificationAsync(pressed.ToString(), StyleBrushes.SuccessColorBrush);
+        }
+
+        private void ButtonBase_OnClick(object sender, RoutedEventArgs e)
+        {
+            DialogPanel.DialogSource = PanelDlg;
+        }
     }
 }

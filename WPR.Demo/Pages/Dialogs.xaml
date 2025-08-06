@@ -10,9 +10,21 @@
       Title="Диалоги">
 
     <DockPanel>
-        <StackPanel>
-            <Button Content="Тестовый диалог" Command="{Binding ShowWindowDialogCommandAsync}"></Button>
+        <StackPanel Margin="10">
+            <Button Content="Информация" Click="Button1_OnClick"/>
+            <Button Content="Вопрос" Click="Button2_OnClick"/>
+            <Button Content="Вопрос с отменой" Click="Button3_OnClick"/>
+            <Button Content="Свои кнопки" Click="Button4_OnClick"/>
+            <Button Content="Ошибка" Click="Button5_OnClick"/>
+            <Button Content="Модальное окно" Click="Button6_OnClick"/>
+            <Button Content="Ввод текста" Click="Button7_OnClick"/>
+            <Button Content="Ввод текста (Multiline)" Click="Button8_OnClick"/>
+            <Button Content="Ввод текста с валидацией" Click="Dlg_OnClick"/>
+            <Button Content="Диалог внутри панели" Click="Button9_OnClick"/>
         </StackPanel>
+        <wpr:WPRDialogPanel Name="DialogPanel" DialogSource="{Binding PanelDlg}" Background="{DynamicResource LightPrimaryColorBrush}" >
+            <TextBlock HorizontalAlignment="Center" Style="{StaticResource TitleText}" VerticalAlignment="Center" Text="Содержимое внутри панели"></TextBlock>
+        </wpr:WPRDialogPanel>
     </DockPanel>
 
 </Page>
