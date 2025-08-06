@@ -5,9 +5,9 @@ using System.Windows;
 using System.Windows.Media;
 using System.Windows.Threading;
 
-namespace WPR.Extensions;
+namespace WPR.Infrastructure.Extensions;
 
-public static class SystemExtensions
+internal static class SystemExtensions
 {
     /// <summary> Поиск визуального родителя по типу </summary>
     /// <typeparam name="T">Тип искомого родительского элемента</typeparam>
@@ -113,7 +113,7 @@ public static class SystemExtensions
     /// <param name="obj">Объект действия</param>
     /// <param name="Action">Делегат действия</param>
     /// <param name="Priority">Приоритет действия</param>
-    public static void DoDispatherAction<T>(this T obj, [NotNull] Action<T> Action, DispatcherPriority Priority = DispatcherPriority.Normal)
+    public static void DoDispatcherAction<T>(this T obj, [NotNull] Action<T> Action, DispatcherPriority Priority = DispatcherPriority.Normal)
     {
         Application.Current.Dispatcher.BeginInvoke(Priority, Action);
     }
@@ -124,7 +124,7 @@ public static class SystemExtensions
     /// <param name="obj">Объект действия</param>
     /// <param name="Action">Делегат действия</param>
     /// <param name="Priority">Приоритет действия</param>
-    public static void DoDispatherAction(this object obj, [NotNull] Action Action, DispatcherPriority Priority = DispatcherPriority.Normal)
+    public static void DoDispatcherAction(this object obj, [NotNull] Action Action, DispatcherPriority Priority = DispatcherPriority.Normal)
     {
         Application.Current.Dispatcher.BeginInvoke(Priority, Action);
     }
@@ -136,26 +136,9 @@ public static class SystemExtensions
     /// <param name="obj">Объект действия</param>
     /// <param name="Action">Делегат действия</param>
     /// <param name="Priority">Приоритет действия</param>
-    public static DispatcherOperation DoDispatherActionAsync(this object obj, [NotNull] Action Action, DispatcherPriority Priority = DispatcherPriority.Normal)
+    public static DispatcherOperation DoDispatcherActionAsync(this object obj, [NotNull] Action Action, DispatcherPriority Priority = DispatcherPriority.Normal)
     {
         return Application.Current.Dispatcher.BeginInvoke(Priority, Action);
     }
 
-    /// <summary>
-    /// Обновить интерфейс принудительно
-    /// </summary>
-    public static void UpdateUi()
-    {
-        DispatcherFrame frame = new();
-        // DispatcherPriority set to Input, the highest priority
-        Dispatcher.CurrentDispatcher.Invoke(DispatcherPriority.Input, new DispatcherOperationCallback(delegate (object parameter)
-        {
-            frame.Continue = false;
-            Thread.Sleep(20); // Stop all processes to make sure the UI update is perform
-            return null;
-        }), null);
-        Dispatcher.PushFrame(frame);
-        // DispatcherPriority set to Input, the highest priority
-        Application.Current.Dispatcher.Invoke(DispatcherPriority.Input, new Action(delegate { }));
-    }
 }

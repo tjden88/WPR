@@ -2,7 +2,7 @@
 using System.Globalization;
 using System.Windows;
 using WPR.Base;
-using WPR.Extensions;
+using WPR.Infrastructure.Extensions;
 
 namespace WPR;
 

@@ -1,6 +1,6 @@
 ﻿using System.Windows;
 
-namespace WPR.Extensions;
+namespace WPR.Infrastructure.Extensions;
 
 internal static class AttachedProperties
 {

@@ -1,7 +1,7 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 using System.Windows;
 using WPR.Abstractions.Interfaces;
-using WPR.Extensions;
+using WPR.Infrastructure.Extensions;
 using WPR.Theme;
 using WPR.Validation;
 

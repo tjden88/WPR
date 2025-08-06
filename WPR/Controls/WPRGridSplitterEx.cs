@@ -3,7 +3,7 @@ using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using WPR.Extensions;
+using WPR.Infrastructure.Extensions;
 
 namespace WPR;
 

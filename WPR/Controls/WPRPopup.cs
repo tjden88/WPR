@@ -9,7 +9,7 @@ using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Threading;
 using WPR.Animations;
-using WPR.Extensions;
+using WPR.Infrastructure.Extensions;
 
 namespace WPR;
 
