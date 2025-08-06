@@ -19,6 +19,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\WPR.MVVM.Old\WPR.MVVM.Old.csproj" />
     <ProjectReference Include="..\WPR.MVVM\WPR.MVVM.csproj" />
     <ProjectReference Include="..\WPR.Tools\WPR.Tools.csproj" />
     <ProjectReference Include="..\WPR\WPR.csproj" />
