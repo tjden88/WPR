@@ -1,8 +1,9 @@
 ﻿using System.Windows.Controls;
 using System.Windows.Input;
+using WPR.Dialogs;
 using WPR.Infrastructure.Commands;
 
-namespace WPR.Dialogs;
+namespace WPR.Controls.Base;
 
 public abstract class DialogBase : Control, IWPRDialog
 {

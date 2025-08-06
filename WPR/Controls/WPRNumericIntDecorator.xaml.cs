@@ -1,5 +1,5 @@
 ﻿using System.Windows;
-using WPR.Base;
+using WPR.Controls.Base;
 using WPR.Infrastructure.Extensions;
 
 namespace WPR;

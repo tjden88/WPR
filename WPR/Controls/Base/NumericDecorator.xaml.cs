@@ -7,7 +7,7 @@ using System.Windows.Input;
 using System.Windows.Markup;
 using WPR.Infrastructure.Commands;
 
-namespace WPR.Base;
+namespace WPR.Controls.Base;
 
 /// <summary>
 /// Базовый шаблон декоратора текстбокса для отображения числовых значений

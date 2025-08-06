@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel;
 using System.Globalization;
 using System.Windows;
-using WPR.Base;
+using WPR.Controls.Base;
 using WPR.Infrastructure.Extensions;
 
 namespace WPR;

@@ -445,3 +445,21 @@ public static class WPRDialogHelper
 
     #endregion
 }
+
+public static class UserDialog
+{
+    private static readonly Style _ModalWindowStyle = (Style)Application.Current.Resources["WPRModalWindow"];
+
+    // Найти панель для отображения диалога
+    [return: MaybeNull]
+    private static WPRDialogPanel FindDialogPanel(DependencyObject uIElement)
+    {
+        if (uIElement == null)
+            return null;
+
+        if (uIElement is Window window)
+            return window.Template?.FindName("WindowDialogPanel", window) as WPRDialogPanel;
+
+        return uIElement.FindVisualParent<WPRDialogPanel>();
+    }
+}

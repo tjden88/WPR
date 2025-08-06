@@ -1,8 +1,9 @@
 ﻿using System.Collections;
 using System.ComponentModel;
 using System.Windows;
+using WPR.Controls.Base;
 
-namespace WPR.Dialogs;
+namespace WPR;
 
 public class InputDialog(IEnumerable<InputDialog.ValidationInfo> validation) : DialogBase, INotifyDataErrorInfo
 {

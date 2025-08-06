@@ -1,8 +1,9 @@
 ﻿using System.Windows;
 using System.Windows.Input;
+using WPR.Controls.Base;
 using WPR.Infrastructure.Commands;
 
-namespace WPR.Dialogs;
+namespace WPR;
 
 public class MessageDialog : DialogBase
 {
