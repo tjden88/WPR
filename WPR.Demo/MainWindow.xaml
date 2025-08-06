@@ -1,0 +1,52 @@
+﻿<Window x:Class="WPR.Demo.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" mc:Ignorable="d"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:wpr="clr-namespace:WPR;assembly=WPR"
+        Topmost="{Binding IsChecked, ElementName=TopMost}"
+        DataContext="{Binding Source={StaticResource Locator}, Path=MainWindowViewModel}"
+        Style="{StaticResource ChromeWindow}"
+        Title="{Binding Title}" Height="900" Width="1200">
+
+    <wpr:Extra.WindowHeaderContent>
+        <StackPanel Margin="3" Orientation="Horizontal" HorizontalAlignment="Left" Width="Auto" >
+            <Button Content="Новый стиль" Command="{Binding SetNewStyleCommand}"  Style="{StaticResource WindowTitleButton}"/>
+            <Button Content="Переключить тему" Command="{Binding SetDarkThemeCommand}"  Style="{StaticResource WindowTitleButton}"/>
+            <Button Content="Как в системе" Command="{Binding SetSystemThemeCommand}"  Style="{StaticResource WindowTitleButton}"/>
+            <Button Content="Тестовое окно" Command="{Binding ShowTestWindowCommand}"  Style="{StaticResource WindowTitleButton}"/>
+            <ToggleButton Name="TopMost" wpr:Extra.FeedbackBrush ="{DynamicResource AccentColorBrush}"
+                          ToolTip="Поверх всех окон">
+                <ToggleButton.Content>
+                    <wpr:Icon Source="ProjectorScreen"
+                                      Foreground="{DynamicResource WindowTitleBackgroundContrastColorBrush}"/>
+                </ToggleButton.Content>
+            </ToggleButton>
+        </StackPanel>
+    </wpr:Extra.WindowHeaderContent>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="250"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+
+        <ListBox ItemsSource="{Binding Pages}"
+                 Margin="4"
+         Style="{StaticResource WPRListBox}"
+         SelectedValue="{Binding SelectedPage}">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock Text="{Binding Title}" />
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+
+        <wpr:Card Grid.Column="1" Margin="10,10,0,0" wpr:Extra.BorderRadius ="8,0,0,0">
+            <Frame Name="PagesFrame" NavigationUIVisibility="Hidden" Content="{Binding SelectedPage}" Navigating="PagesFrame_Navigating">
+                <Frame.RenderTransform>
+                    <TranslateTransform/>
+                </Frame.RenderTransform>
+            </Frame>
+        </wpr:Card>
+    </Grid>
+</Window>

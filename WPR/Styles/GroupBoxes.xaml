@@ -1,0 +1,40 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:wpr="clr-namespace:WPR">
+
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="Base.xaml"/>
+    </ResourceDictionary.MergedDictionaries>
+
+    <ControlTemplate x:Key="WPRGroupBoxTemplate" TargetType="{x:Type GroupBox}">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+
+            <ContentPresenter ContentSource="Header"
+                              RecognizesAccessKey="True" 
+                              Margin="0,0,0,5"
+                              TextBlock.Foreground="{DynamicResource SecondaryColorBrush}"
+                              SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
+
+            <Border Grid.Row="1"
+                    Background="{TemplateBinding Background}"
+                    BorderBrush="{TemplateBinding BorderBrush}"
+                    BorderThickness="{TemplateBinding BorderThickness }"
+                    CornerRadius="{Binding Path= (wpr:Extra.BorderRadius), RelativeSource={RelativeSource TemplatedParent}}">
+                <ContentPresenter  Margin="{TemplateBinding Padding}"
+                                   SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
+            </Border>
+        </Grid>
+    </ControlTemplate>
+
+    <Style x:Key="WPRGroupBox" TargetType="{x:Type GroupBox}" BasedOn="{StaticResource BaseControl}">
+        <Setter Property="BorderBrush" Value="{DynamicResource DividerColorBrush}"/>
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="wpr:Extra.BorderRadius" Value="6"/>
+        <Setter Property="Template" Value="{StaticResource WPRGroupBoxTemplate}"/>
+    </Style>
+
+</ResourceDictionary>

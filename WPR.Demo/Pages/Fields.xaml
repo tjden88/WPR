@@ -1,0 +1,138 @@
+﻿<Page x:Class="WPR.Demo.Pages.Fields"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:wpr="clr-namespace:WPR;assembly=WPR"
+      mc:Ignorable="d" 
+      d:DesignHeight="600" d:DesignWidth="800"
+      Title="Поля и текстбоксы">
+
+    <DockPanel Background="{DynamicResource BackgroundColorBrush}">
+        <StackPanel Width="200" Margin="10">
+            <TextBox Margin="15" wpr:Extra.TextHint="Возраст: 21-100" 
+                     wpr:Extra.TextDescription="ValidatedTextBox" FontSize="40">
+            </TextBox>
+            <TextBox Margin="15" wpr:Extra.TextHint="Подсказка" 
+                     wpr:Extra.TextDescription="Описание"
+                     Text="Текст"/>
+            <Border CornerRadius="15">
+                <TextBox x:Name="Clearable" Margin="10"
+                         BorderThickness="0"
+                         Style="{StaticResource WPRFlatTextBox}" 
+                         wpr:Extra.ClearButton="True"
+                         wpr:Extra.TextHint="Flat Clearable TextBox"/>
+            </Border>
+            <DockPanel>
+                <wpr:Icon Source="Person" Foreground="{Binding ElementName=NameText, Path=BorderBrush}"/>
+                <TextBox wpr:Extra.TextHint="Имя"
+                         VerticalAlignment="Bottom" Margin="5,10,0,0"
+                         wpr:Extra.TextDescription="Представьтесь"
+                         x:Name="NameText"
+                         Background="{DynamicResource AccentColorBrush}" />
+            </DockPanel>
+            <TextBlock Text="RichTextBox" Margin="0,10"/>
+            <RichTextBox Height="100"></RichTextBox>
+        </StackPanel>
+        <StackPanel Width="200">
+            <ComboBox wpr:Extra.TextDescription="Описание"  SelectedIndex="-1"
+          wpr:Extra.TextHint="Not Editable"
+          wpr:Extra.ClearButton="True"
+          Margin="0,30"
+          Name="Box">
+                <ComboBoxItem>
+                    <ComboBoxItem.Content>
+                        <TextBlock FontSize="32">Item 1</TextBlock>
+                    </ComboBoxItem.Content>
+                </ComboBoxItem>
+                <ComboBoxItem Content="Item 2"/>
+                <ComboBoxItem Content="Item 3"/>
+                <ComboBoxItem Content="Item 4"/>
+            </ComboBox>
+            <Button Content="Clear" Click="ClearCB_Click" />
+            <ComboBox wpr:Extra.TextDescription="Описание 2" wpr:Extra.TextHint="Editable" IsEditable="True" Margin="10">
+                <ComboBoxItem Content="Item 1"/>
+                <ComboBoxItem Content="Item 2"/>
+                <ComboBoxItem Content="Item 3"/>
+                <ComboBoxItem Content="Item 4"/>
+            </ComboBox>
+
+            <wpr:NumericIntDecorator Name="IntDecorator" 
+                                             AllowTextExpressions="True"
+                                             PlusMinusButtonsShowing="True"
+                                             MinValue="-500"
+                                             MaxValue="500"
+                                             Increment="2">
+                <TextBox/>
+            </wpr:NumericIntDecorator>
+
+            <TextBlock Text="{Binding ElementName=IntDecorator, Path=Value, StringFormat=IntValue: {0}}" />
+
+            <wpr:NumericIntDecorator Style="{StaticResource WPRNumericIntBorderedDecorator}"
+                                             AllowTextExpressions="False"
+                                             PlusMinusButtonsShowing="True"
+                                             MinValue="-20"
+                                             MaxValue="500"
+                                             Increment="2">
+                <TextBox/>
+            </wpr:NumericIntDecorator>
+
+            <wpr:NumericDoubleDecorator Name="DoubleDecorator" 
+                                                DecimalPlaces="3"
+                                                AllowTextExpressions="False"
+                                                PlusMinusButtonsShowing="True"
+                                                MinValue="-500"
+                                                MaxValue="500"
+                                                Increment="1.2">
+                <TextBox/>
+            </wpr:NumericDoubleDecorator>
+
+            <TextBlock Text="{Binding ElementName=DoubleDecorator, Path=Value, StringFormat=DoubleValue: {0}}" />
+
+
+            <wpr:NumericDoubleDecorator Style="{StaticResource WPRNumericDoubleBorderedDecorator}"
+                                             AllowTextExpressions="True"
+                                             PlusMinusButtonsShowing="True"
+                                             MinValue="-500"
+                                             MaxValue="500"
+                                             Increment="2">
+                <TextBox/>
+            </wpr:NumericDoubleDecorator>
+
+
+        </StackPanel>
+        <StackPanel Width="200" Margin="10">
+            <TextBox Style="{StaticResource WPRBorderedTextBox}" 
+                     wpr:Extra.TextHint="Bordered"
+                     wpr:Extra.TextDescription="Description"
+                     wpr:Extra.ClearButton="True"></TextBox>
+
+            <TextBox Style="{StaticResource WPRBorderedTextBox}" 
+                     wpr:Extra.TextHint="Bordered no Descr"
+                     wpr:Extra.ClearButton="False"/>
+
+            <TextBox Style="{StaticResource WPRBorderedTextBox}" 
+                     BorderBrush="{DynamicResource AccentColorBrush}"
+                     wpr:Extra.MouseOverBrush="{DynamicResource SecondaryColorBrush}"
+                     wpr:Extra.TextHint="Bordered Custom Border"
+                     wpr:Extra.ClearButton="False"></TextBox>
+            <ComboBox wpr:Extra.TextHint="Bordered Combo"
+                      Style="{StaticResource WPRBorderedComboBox}"
+                      wpr:Extra.ClearButton="True"
+                      wpr:Extra.TextDescription="Description">
+                <ComboBoxItem Content="Item1"/>
+                <ComboBoxItem Content="Item2"/>
+                <ComboBoxItem Content="Item3"/>
+            </ComboBox>
+            <ComboBox wpr:Extra.TextHint="Combo no descr"
+                      IsEditable="True"
+                      wpr:Extra.ClearButton="True"
+                      Style="{StaticResource WPRBorderedComboBox}">
+                <ComboBoxItem Content="Item1"/>
+                <ComboBoxItem Content="Item2"/>
+                <ComboBoxItem Content="Item3"/>
+            </ComboBox>
+        </StackPanel>
+
+    </DockPanel>
+</Page>

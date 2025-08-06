@@ -1,0 +1,33 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFrameworks>net8.0-windows;net9.0-windows</TargetFrameworks>
+	  <Description>Библиотека инструментов .NET Core</Description>
+	  <FileVersion>1.0</FileVersion>
+	  <AssemblyVersion>1.0</AssemblyVersion>
+	  <PackageLicenseExpression>MIT</PackageLicenseExpression>
+	  <GeneratePackageOnBuild>False</GeneratePackageOnBuild>
+	  <Authors>tj_d</Authors>
+	  <nullable>enable</nullable>
+	  <Copyright>tj.den88@gmail.com</Copyright>
+	  <PackageProjectUrl>https://github.com/tjden88/WPR/tree/dev/WPR.Tools</PackageProjectUrl>
+	  <PackageIcon>Style XP.png</PackageIcon>
+	  <RepositoryUrl>https://github.com/tjden88/WPR/tree/dev/WPR.Tools</RepositoryUrl>
+	  <PackageReleaseNotes>Первая версия. Добавлен сериализатор</PackageReleaseNotes>
+	  <Version>1.0</Version>
+	  <PackageRequireLicenseAcceptance>False</PackageRequireLicenseAcceptance>
+	  <SignAssembly>False</SignAssembly>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="E:\Мусор\Иконки\Style XP.png">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\WPR\WPR.csproj" />
+  </ItemGroup>
+
+</Project>

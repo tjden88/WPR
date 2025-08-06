@@ -1,0 +1,30 @@
+﻿<Page x:Class="WPR.Demo.Pages.Dialogs"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:wpr="clr-namespace:WPR;assembly=WPR"
+      mc:Ignorable="d" 
+      DataContext="{Binding RelativeSource={RelativeSource Self}}"
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="Диалоги">
+
+    <DockPanel>
+        <StackPanel Margin="10">
+            <Button Content="Информация" Click="Button1_OnClick"/>
+            <Button Content="Вопрос" Click="Button2_OnClick"/>
+            <Button Content="Вопрос с отменой" Click="Button3_OnClick"/>
+            <Button Content="Свои кнопки" Click="Button4_OnClick"/>
+            <Button Content="Ошибка" Click="Button5_OnClick"/>
+            <Button Content="Модальное окно" Click="Button6_OnClick"/>
+            <Button Content="Ввод текста" Click="Button7_OnClick"/>
+            <Button Content="Ввод текста (Multiline)" Click="Button8_OnClick"/>
+            <Button Content="Ввод текста с валидацией" Click="Dlg_OnClick"/>
+            <Button Content="Диалог внутри панели" Click="Button9_OnClick"/>
+        </StackPanel>
+        <wpr:DialogRoot Name="DialogPanel" DialogSource="{Binding PanelDlg}" Background="{DynamicResource LightPrimaryColorBrush}" >
+            <TextBlock HorizontalAlignment="Center" Style="{StaticResource TitleText}" VerticalAlignment="Center" Text="Содержимое внутри панели"></TextBlock>
+        </wpr:DialogRoot>
+    </DockPanel>
+
+</Page>

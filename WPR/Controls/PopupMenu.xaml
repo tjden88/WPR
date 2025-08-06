@@ -1,0 +1,37 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:WPR">
+
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="../Styles/Menus.xaml"/>
+        <ResourceDictionary Source="../Styles/Buttons.xaml"/>
+    </ResourceDictionary.MergedDictionaries>
+
+    <Style TargetType="{x:Type local:PopupMenu}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type local:PopupMenu}">
+                    <Grid>
+                        <Grid.Resources>
+                            <Style TargetType="Menu" BasedOn="{StaticResource WPRVerticalMenu}"/>
+                        </Grid.Resources>
+                        <ToggleButton Style="{StaticResource WPRToolButton}"
+                                      Foreground="{TemplateBinding Foreground}"
+                                      ToolTip="{Binding Path=ToolTip, RelativeSource={RelativeSource TemplatedParent}}"
+                                      VerticalAlignment="Center"
+                                      Name="MenuButton">
+                            <ToggleButton.Content>
+                                <local:Icon Source="{Binding Path=Icon, RelativeSource={RelativeSource TemplatedParent}}"
+                                               IconSize="{Binding Path=IconSize, RelativeSource={RelativeSource TemplatedParent}}"/>
+                            </ToggleButton.Content>
+                        </ToggleButton>
+                        <local:PopupEx IsOpen="{Binding Path=IsChecked, ElementName=MenuButton}"
+                                       CloseOnMouseButtonUp="True">
+                            <ContentPresenter Content="{Binding Path=Content, RelativeSource={RelativeSource TemplatedParent}}"/>
+                        </local:PopupEx>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+</ResourceDictionary>

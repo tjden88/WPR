@@ -1,0 +1,19 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="Ripple.xaml"/>
+        <ResourceDictionary Source="Badge.xaml"/>
+        <ResourceDictionary Source="TitledCard.xaml"/>
+        <ResourceDictionary Source="Card.xaml"/>
+        <ResourceDictionary Source="DialogRoot.xaml"/>
+        <ResourceDictionary Source="Icon.xaml"/>
+        <ResourceDictionary Source="IconText.xaml"/>
+        <ResourceDictionary Source="Base/NumericDecorator.xaml"/>
+        <ResourceDictionary Source="NumericDoubleDecorator.xaml"/>
+        <ResourceDictionary Source="NumericIntDecorator.xaml"/>
+        <ResourceDictionary Source="PopupMenu.xaml"/>
+        <ResourceDictionary Source="IconDecorator.xaml"/>
+        <ResourceDictionary Source="TipDecorator.xaml"/>
+        <ResourceDictionary Source="MessageDialog.xaml"/>
+        <ResourceDictionary Source="InputDialog.xaml"/>
+</ResourceDictionary.MergedDictionaries>
+</ResourceDictionary>
