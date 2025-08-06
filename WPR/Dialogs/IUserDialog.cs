@@ -9,15 +9,15 @@ public interface IUserDialog
 {
 
     /// <summary> Показать информационное сообщение </summary>
-    Task InformationAsync(string message, string Title = null);
+    Task InformationAsync(string message, string Title = null, CancellationToken cancellationToken = default);
 
 
     /// <summary> Вопрос с вариантами ДА, НЕТ </summary>
-    Task<bool> QuestionAsync(string message, string Title = null);
+    Task<bool> QuestionAsync(string message, string Title = null, CancellationToken cancellationToken = default);
 
 
     /// <summary> Вопрос с расширенными вариантами ответов </summary>
-    Task<bool?> QuestionAsync(string message, DialogType dialogType, string Title = null);
+    Task<bool?> QuestionAsync(string message, DialogType dialogType, string Title = null, CancellationToken cancellationToken = default);
 
 
     /// <summary>
@@ -29,23 +29,23 @@ public interface IUserDialog
     /// <param name="RejectCaption">Подпись на кнопке отказа (не будет показана, если null)</param>
     /// <param name="CancelCaption">Подпись на кнопке отмены (не будет показана, если null)</param>
     /// <returns>Результат в соответствии с выбранной кнопкой</returns>
-    Task<bool?> CustomQuestionAsync(string message, string Title, string AcceptCaption, string RejectCaption = null, string CancelCaption = null);
+    Task<bool?> CustomQuestionAsync(string message, string Title, string AcceptCaption, string RejectCaption = null, string CancelCaption = null, CancellationToken cancellationToken = default);
 
 
     /// <summary> Предупреждение об ошибке </summary>
-    Task ErrorMessageAsync(string message, string Title = "Ошибка");
+    Task ErrorMessageAsync(string message, string Title = "Ошибка", CancellationToken cancellationToken = default);
 
 
     /// <summary> Показать произвольный диалог </summary>
-    Task<bool> CustomDialogAsync(IWPRDialog Dialog);
+    Task<bool> CustomDialogAsync(IWPRDialog Dialog, CancellationToken cancellationToken = default);
 
 
     /// <summary> Текстовое поле для ввода. Если null - пользователь отменил ввод </summary>
-    Task<string> InputTextAsync(string title, string DefaultValue = null, string message = null, bool MultiLine = false);
+    Task<string> InputTextAsync(string title, string DefaultValue = null, string message = null, bool MultiLine = false, CancellationToken cancellationToken = default);
 
 
     /// <summary> Текстовое поле для ввода с валидацией введённых данных. Если null - пользователь отменил ввод </summary>
-    Task<string> InputValidatedTextAsync(Action<InputDialogFilterOptions> options);
+    Task<string> InputValidatedTextAsync(Action<InputDialogFilterOptions> options, CancellationToken cancellationToken = default);
 
 
     /// <summary> Показать всплывающее уведомление </summary>

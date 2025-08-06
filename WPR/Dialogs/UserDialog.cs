@@ -3,11 +3,11 @@ using System.Windows;
 using WPR.Infrastructure.Extensions;
 
 namespace WPR.Dialogs;
-
-/// <summary>Диалоговые окна</summary> // todo сделать internal
-public static class UserDialogHelper
+public static class UserDialog
 {
-    private static readonly Style _ModalWindowStyle = (Style) Application.Current.Resources["WPRModalWindow"];
+    #region Internal
+
+    private static readonly Style _ModalWindowStyle = (Style)Application.Current.Resources["WPRModalWindow"];
 
     // Найти панель для отображения диалога
     [return: MaybeNull]
@@ -23,7 +23,13 @@ public static class UserDialogHelper
     }
 
 
-    public static Task<bool> Show(DependencyObject sender, IWPRDialog dialog, CancellationToken cancellationToken = default)
+    /// <summary>
+    /// Показать диалог в потоке UI
+    /// </summary>
+    /// <param name="sender">Может быть Null. Объект, в котором будет найдена панель. Если не найдена - будет вызван ModalDialog</param>
+    /// <param name="dialog">Диалог для показа</param>
+    /// <param name="cancellationToken">Токен отмены. При вызове CancellationRequested будет возвращено false</param>
+    internal static Task<bool> Show(DependencyObject sender, IWPRDialog dialog, CancellationToken cancellationToken = default)
     {
         var dispatcher = sender?.Dispatcher ?? Application.Current.Dispatcher;
 
@@ -32,7 +38,8 @@ public static class UserDialogHelper
 
         var tcs = new TaskCompletionSource<bool>();
 
-        cancellationToken.Register(() =>
+        // Регистрируем отмену
+        var ctr = cancellationToken.Register(() =>
         {
             dispatcher.InvokeAsync(() =>
             {
@@ -42,14 +49,17 @@ public static class UserDialogHelper
             tcs.TrySetResult(false);
         });
 
-        dispatcher.InvokeAsync(() =>
+        dispatcher.InvokeAsync(async () =>
         {
             try
             {
                 var panel = FindDialogPanel(sender);
+
                 if (panel is null)
                 {
-                    tcs.TrySetResult(false);
+                    // Окна нет — показываем модально
+                    var modalResult = await ShowModal(sender, dialog, cancellationToken);
+                    tcs.TrySetResult(modalResult);
                     return;
                 }
 
@@ -71,9 +81,15 @@ public static class UserDialogHelper
     }
 
 
-    public static Task<bool> ShowModal(DependencyObject sender, IWPRDialog content, CancellationToken cancellationToken = default)
+    /// <summary>
+    /// Показать модальный диалог в потоке UI
+    /// </summary>
+    /// <param name="sender">Может быть Null. Объект, в котором будет найдена панель и установлен Owner модального окна. Если не найдена - будет окно поверх всех окон</param>
+    /// <param name="dialog">Диалог для показа</param>
+    /// <param name="cancellationToken">Токен отмены. При вызове CancellationRequested будет возвращено false</param>
+    internal static Task<bool> ShowModal(DependencyObject sender, IWPRDialog dialog, CancellationToken cancellationToken = default)
     {
-        var dispatcher = sender?.Dispatcher ?? Application.Current.Dispatcher; 
+        var dispatcher = sender?.Dispatcher ?? Application.Current.Dispatcher;
 
         if (dispatcher == null || dispatcher.HasShutdownStarted || cancellationToken.IsCancellationRequested)
             return Task.FromResult(false);
@@ -84,7 +100,7 @@ public static class UserDialogHelper
         {
             try
             {
-                var owner = sender as Window ?? sender.FindVisualParent<Window>();
+                var owner = sender is null ? null : sender as Window ?? sender.FindVisualParent<Window>();
                 var panel = FindDialogPanel(owner);
 
                 var dlg = new Window
@@ -92,11 +108,11 @@ public static class UserDialogHelper
                     WindowStartupLocation = panel is null ? WindowStartupLocation.CenterScreen : WindowStartupLocation.CenterOwner,
                     Owner = owner,
                     Topmost = owner is null,
-                    Content = content.DialogContent,
+                    Content = dialog.DialogContent,
                     Style = _ModalWindowStyle
                 };
 
-                content.Completed += b =>
+                dialog.Completed += b =>
                 {
                     if (!tcs.Task.IsCompleted)
                     {
@@ -138,13 +154,22 @@ public static class UserDialogHelper
     }
 
 
-}
+    #endregion
 
-public static class UserDialog
-{
 
     /// <summary>
-    /// Экземпляр диалога, который будет использоваться в приложении.
+    /// Диалог по умолчанию. Показывает уведомления в активном окне.
     /// </summary>
     public static IUserDialog Default { get; } = new WPRUserDialog();
+
+    /// <summary>
+    /// Модальный диалог по умолчанию
+    /// </summary>
+    public static IUserDialog ModalDialog { get; } = new WPRUserDialog {IsModal = true};
+
+
+    /// <summary>
+    /// Получить экземпляр диалога для привязок к конкретным панелям в разметке
+    /// </summary>
+    public static IUserDialog GetUserDialog() => new WPRUserDialog();
 }

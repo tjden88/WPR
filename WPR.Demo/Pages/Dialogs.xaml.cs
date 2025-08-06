@@ -62,9 +62,12 @@ namespace WPR.Demo.Pages
                 DialogType = DialogType.QuestionCancel
             };
             await Task.Delay(100).ConfigureAwait(false);
-            var result = await UserDialogHelper.Show(this, dialog, cts.Token).ConfigureAwait(false);
-            //var result = await UserDialogHelper.ShowModal(this, dialog, cts.Token).ConfigureAwait(false);
-            Debug.WriteLine(result);
+            //var result = await UserDialogHelper.Show(this, dialog, cts.Token).ConfigureAwait(false);
+            //Debug.WriteLine(result);
+
+            //var result2 = await UserDialogHelper.Show(null, dialog, cts.Token).ConfigureAwait(false);
+            //Debug.WriteLine(result2);
+
         }
 
         #endregion

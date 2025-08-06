@@ -1,12 +1,23 @@
-﻿using System.Windows;
+﻿using Microsoft.Win32;
+using System;
+using System.Windows;
 using WPR.Theme;
 
 namespace WPR.Dialogs;
 
-public class WPRUserDialog : IUserDialog
+/// <summary> Реализация сервис диалогов, которая работает только в стилях WPR </summary>
+internal class WPRUserDialog : IUserDialog
 {
+    private static Window ActiveWindow => Application.Current.Windows.Cast<Window>().FirstOrDefault(w => w.IsActive);
 
-    private static Window? Active => Application.Current.Windows.Cast<Window>().FirstOrDefault(w => w.IsActive);
+    private DependencyObject _AssociatedElement;
+    public DependencyObject AssociatedElement
+    {
+        get => _AssociatedElement ?? ActiveWindow;
+        set => _AssociatedElement = value;
+    }
+
+    public bool IsModal { get; set; }
 
 
     //public async Task InformationAsync(string message, string? Title = null) => 
@@ -27,12 +38,10 @@ public class WPRUserDialog : IUserDialog
     //    };
 
 
-
     //public async Task<bool?> CustomQuestionAsync(string message, string? Title, string TrueCaption, string? FalseCaption = null,
     //    string? NullCaption = null) =>
     //    await GetDispatcheredResult(() => WPRDialogHelper
     //        .ShowCustomButtonsDialog(Active, message, Title, TrueCaption, FalseCaption, NullCaption));
-
 
 
     //public async Task ErrorMessageAsync(string message, string? Title = "Ошибка") =>
@@ -130,7 +139,7 @@ public class WPRUserDialog : IUserDialog
     //    {
     //        DefaultDirectory = InitPathName,
     //        Title = Title
-            
+
     //    };
 
     //    if (!dialog.ShowDialog(Active) == true)
@@ -151,45 +160,125 @@ public class WPRUserDialog : IUserDialog
 
     //    return result;
     //}
-    public async Task InformationAsync(string message, string Title = null)
+
+    private Task<bool> Show(IWPRDialog dialog, CancellationToken cancellationToken) =>
+        IsModal 
+            ? UserDialog.ShowModal(AssociatedElement, dialog, cancellationToken)
+            : UserDialog.Show(AssociatedElement, dialog, cancellationToken);
+
+    public async Task InformationAsync(string message, string Title = null, CancellationToken cancellationToken = default)
     {
-        throw new NotImplementedException();
+        var dlg = new MessageDialog
+        {
+            Title = Title,
+            Content = message,
+            DialogType = DialogType.Information
+        };
+
+        await Show(dlg, cancellationToken);
     }
 
-    public async Task<bool> QuestionAsync(string message, string Title = null)
+    public async Task<bool> QuestionAsync(string message, string Title = null, CancellationToken cancellationToken = default)
     {
-        throw new NotImplementedException();
+        var dlg = new MessageDialog
+        {
+            Title = Title,
+            Content = message,
+            DialogType = DialogType.Question
+        };
+
+        return await Show(dlg, cancellationToken);
     }
 
-    public async Task<bool?> QuestionAsync(string message, DialogType dialogType, string Title = null)
+    public async Task<bool?> QuestionAsync(string message, DialogType dialogType, string Title = null, CancellationToken cancellationToken = default)
     {
-        throw new NotImplementedException();
+        var dlg = new MessageDialog
+        {
+            Title = Title,
+            Content = message,
+            DialogType = dialogType
+        };
+
+        var result = await Show(dlg, cancellationToken);
+        if (dlg.IsCancelled) return null;
+        return result;
     }
 
     public async Task<bool?> CustomQuestionAsync(string message, string Title, string AcceptCaption, string RejectCaption = null,
-        string CancelCaption = null)
+        string CancelCaption = null, CancellationToken cancellationToken = default)
     {
-        throw new NotImplementedException();
+        var dialogType = (RejectCaption, CancelCaption) switch
+        {
+            (null, null) => DialogType.Information,
+            (not null, null) => DialogType.Question,
+            (null, not null) => DialogType.InformationCancel,
+            (not null, not null) => DialogType.QuestionCancel
+        };
+
+        var dlg = new MessageDialog
+        {
+            Title = Title,
+            Content = message,
+            AcceptButtonText = AcceptCaption,
+            CancelButtonText = RejectCaption,
+            QuestionAcceptButtonText = AcceptCaption,
+            QuestionCancelButtonText = RejectCaption,
+            DialogType = dialogType
+        };
+
+        var result = await Show(dlg, cancellationToken);
+        if (dlg.IsCancelled) return null;
+        return result;
     }
 
-    public async Task ErrorMessageAsync(string message, string Title = "Ошибка")
+    public async Task ErrorMessageAsync(string message, string Title = "Ошибка", CancellationToken cancellationToken = default)
     {
-        throw new NotImplementedException();
+        var dlg = new MessageDialog
+        {
+            Title = Title,
+            Content = message,
+            DialogType = DialogType.Information,
+            IsErrorMessage = true
+        };
+
+        await Show(dlg, cancellationToken);
     }
 
-    public async Task<bool> CustomDialogAsync(IWPRDialog Dialog)
+    public async Task<bool> CustomDialogAsync(IWPRDialog Dialog, CancellationToken cancellationToken = default) => 
+         await Show(dlg, cancellationToken);
+
+    public async Task<string> InputTextAsync(string title, string DefaultValue = null, string message = null, bool MultiLine = false,
+        CancellationToken cancellationToken = default)
     {
-        throw new NotImplementedException();
+        var input = new InputDialog()
+        {
+            Title = title,
+            Content = message,
+            MultiLine = MultiLine,
+            Text = DefaultValue
+        };
+
+        var result = await Show(input, cancellationToken);
+
+        return result ? input.Text : null;
     }
 
-    public async Task<string> InputTextAsync(string title, string DefaultValue = null, string message = null, bool MultiLine = false)
+    public async Task<string> InputValidatedTextAsync(Action<InputDialogFilterOptions> options, CancellationToken cancellationToken = default)
     {
-        throw new NotImplementedException();
-    }
+        var filter = new InputDialogFilterOptions();
+        options?.Invoke(filter);
 
-    public async Task<string> InputValidatedTextAsync(Action<InputDialogFilterOptions> options)
-    {
-        throw new NotImplementedException();
+        var input = new InputDialog(filter.Validation)
+        {
+            Title = filter.Title,
+            Content = filter.Message,
+            MultiLine = filter.MultiLine,
+            Text = filter.DefaultValue
+        };
+
+        var result = await Show(input, cancellationToken);
+
+        return result ? input.Text : null;
     }
 
     public async Task ShowNotificationAsync(string message, StyleBrushes background = StyleBrushes.BackgroundContrastColorBrush,
@@ -204,18 +293,59 @@ public class WPRUserDialog : IUserDialog
         throw new NotImplementedException();
     }
 
-    public async Task<string> ShowOpenFileDialogAsync(string Title, IEnumerable<FileFilter> Filters = null, string InitFileName = "")
+    public Task<string> ShowOpenFileDialogAsync(string Title, IEnumerable<FileFilter> Filters = null, string InitFileName = "")
     {
-        throw new NotImplementedException();
+        var ofd = new OpenFileDialog()
+        {
+            FileName = InitFileName,
+            Title = Title
+        };
+
+        if (Filters != null)
+        {
+            var ofdFilter = Filters
+                .Select(f => $"{f.Description}|{string.Concat(f.FileMathPatterns.Select(e => $"{e};"))}");
+            ofd.Filter = string.Join("|", ofdFilter);
+        }
+
+        var dialogResult = ofd.ShowDialog(ActiveWindow);
+
+        return Task.FromResult(dialogResult == true ? ofd.FileName : null);
     }
 
-    public async Task<string> ShowSaveFileDialogAsync(string Title, IEnumerable<FileFilter> Filters = null, string InitFileName = "")
+    public Task<string> ShowSaveFileDialogAsync(string Title, IEnumerable<FileFilter>? Filters = null, string InitFileName = "")
     {
-        throw new NotImplementedException();
+        var sfd = new SaveFileDialog
+        {
+            FileName = InitFileName,
+            Title = Title
+        };
+
+        if (Filters != null)
+        {
+            var ofdFilter = Filters
+                .Select(f => $"{f.Description}|{string.Concat(f.FileMathPatterns.Select(e => $"{e};"))}");
+            sfd.Filter = string.Join("|", ofdFilter);
+        }
+
+
+        var dialogResult = sfd.ShowDialog(ActiveWindow);
+
+        return Task.FromResult(dialogResult == true ? sfd.FileName : null);
     }
 
-    public async Task<string> ShowFolderSelectDialogAsync(string Title, string InitPathName = "")
+    public Task<string> ShowFolderSelectDialogAsync(string Title, string InitPathName = "")
     {
-        throw new NotImplementedException();
+        var dialog = new OpenFolderDialog()
+        {
+            DefaultDirectory = InitPathName,
+            Title = Title
+
+        };
+
+        if (!dialog.ShowDialog(ActiveWindow) == true)
+            return Task.FromResult<string?>(null);
+
+        return Task.FromResult(dialog.FolderName)!;
     }
 }

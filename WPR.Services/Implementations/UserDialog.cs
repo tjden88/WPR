@@ -15,7 +15,7 @@ public class UserDialog : IUserDialog
     private static Window? Active => Application.Current.Windows.Cast<Window>().FirstOrDefault(w => w.IsActive);
 
 
-    public async Task InformationAsync(string message, string? Title = null) => 
+    public async Task InformationAsync(string message, string Title = null, CancellationToken cancellationToken = bad) => 
         await DoDispatcheredAction(WPRDialogHelper.InformationAsync(Active, message, Title));
 
 
