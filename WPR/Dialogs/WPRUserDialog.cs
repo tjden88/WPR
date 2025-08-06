@@ -22,8 +22,8 @@ internal class WPRUserDialog : IUserDialog
 
     private Task<bool> Show(IWPRDialog dialog, CancellationToken cancellationToken) =>
         IsModal 
-            ? UserDialog.ShowModal(AssociatedElement, dialog, cancellationToken)
-            : UserDialog.Show(AssociatedElement, dialog, cancellationToken);
+            ? DialogHelper.ShowModal(AssociatedElement, dialog, cancellationToken)
+            : DialogHelper.Show(AssociatedElement, dialog, cancellationToken);
 
     public async Task InformationAsync(string message, string Title = null, CancellationToken cancellationToken = default)
     {
@@ -142,11 +142,11 @@ internal class WPRUserDialog : IUserDialog
 
     public async Task ShowNotificationAsync(string message, StyleBrushes background = StyleBrushes.BackgroundContrastColorBrush,
         int delay = 2000) =>
-        await UserDialog.ShowNotification(AssociatedElement, message, background, delay);
+        await DialogHelper.ShowNotification(AssociatedElement, message, background, delay);
 
     public async Task<bool> ShowQuestionNotificationAsync(string message, string AcceptCaption,
         StyleBrushes background = StyleBrushes.BackgroundContrastColorBrush, int delay = 3000) =>
-        await UserDialog.ShowNotification(AssociatedElement, message, background, delay, AcceptCaption);
+        await DialogHelper.ShowNotification(AssociatedElement, message, background, delay, AcceptCaption);
 
     public Task<string> ShowOpenFileDialogAsync(string Title, IEnumerable<FileFilter> Filters = null, string InitFileName = "")
     {

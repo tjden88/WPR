@@ -20,7 +20,7 @@ public class ActionHelper
         Success
     }
 
-    public IUserDialog UserDialog { get; set; } = Dialogs.UserDialog.Default;
+    public IUserDialog UserDialog { get; set; } = Dialogs.DialogHelper.Default;
 
 
     private bool _SuccessResult;

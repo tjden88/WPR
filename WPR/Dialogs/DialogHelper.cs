@@ -4,7 +4,7 @@ using WPR.Infrastructure.Extensions;
 using WPR.Theme;
 
 namespace WPR.Dialogs;
-public static class UserDialog
+public static class DialogHelper
 {
     #region Private
 

@@ -17,9 +17,9 @@ namespace WPR.Demo.Pages
 
         public Dialogs()
         {
-            PanelDlg = UserDialog.CreateUserDialog();
+            PanelDlg = DialogHelper.CreateUserDialog();
             InitializeComponent();
-            _UserDialog = UserDialog.Default;
+            _UserDialog = DialogHelper.Default;
         }
 
         private async Task ShowNotification(object message) =>
@@ -77,7 +77,7 @@ namespace WPR.Demo.Pages
 
         private void Button6_OnClick(object sender, RoutedEventArgs e)
         {
-            UserDialog.ModalDialog.InformationAsync("Модальное окно", "Модальный заголовок");
+            DialogHelper.ModalDialog.InformationAsync("Модальное окно", "Модальный заголовок");
         }
 
         private async void Button7_OnClick(object sender, RoutedEventArgs e)
