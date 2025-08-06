@@ -31,7 +31,6 @@ namespace WPR.Demo.Pages
         /// <summary>Логика выполнения - Тестовая команда</summary>
         private void OnTestCommandExecuted()
         {
-            WPRDialogHelper.Information(this, "asdad");
         }
 
         #endregion

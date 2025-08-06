@@ -5,6 +5,7 @@ using System.Windows.Input;
 using WPR.Demo.Services.Interfaces;
 using WPR.MVVM.Commands.Base;
 using WPR.MVVM.ViewModels;
+using WPR.Theme;
 
 namespace WPR.Demo.ViewModels
 {
@@ -34,10 +35,7 @@ namespace WPR.Demo.ViewModels
 
         private void OnSetDarkThemeCommandExecuted()
         {
-            if (StyleHelper.IsDarkTheme)
-                StyleHelper.SetLightColorTheme();
-            else
-                StyleHelper.SetDarkColorTheme();
+            StyleHelper.SetColorScheme(StyleHelper.IsDarkTheme ? ColorScheme.Light : ColorScheme.Dark);
         }
         #endregion
 
@@ -56,7 +54,7 @@ namespace WPR.Demo.ViewModels
         /// <summary>Логика выполнения - Системная тема</summary>
         private void OnSetSystemThemeCommandExecuted()
         {
-            StyleHelper.SetSystemTheme();
+            StyleHelper.SetColorScheme(ColorScheme.Auto);
         }
 
         #endregion

@@ -4,10 +4,9 @@ using System.Diagnostics;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using WPR.Abstractions.Interfaces;
 using WPR.Dialogs;
 using WPR.MVVM.Commands.Base;
-using WPR.Services.Implementations;
+using WPR.Theme;
 
 namespace WPR.Demo.Pages
 {
@@ -19,7 +18,6 @@ namespace WPR.Demo.Pages
         public Dialogs()
         {
             InitializeComponent();
-            MsgBox.DialogResult += DialogResult;
         }
 
         private void DialogResult(bool? Obj)
@@ -40,7 +38,6 @@ namespace WPR.Demo.Pages
             //WPRDialogHelper.Information(this, "Текст диалога пользователя", "Заголовок", () => Debug.WriteLine("Диалог закрыт"));
             //WPRDialogHelper.InformationCancel(this, "Текст диалога пользователя", "Заголовок", (b) => Debug.WriteLine($"Диалог закрыт: {b}"));
             //WPRDialogHelper.Question(this, "Текст диалога пользователя", "Заголовок", (b) => Debug.WriteLine($"Диалог закрыт: {b}"));
-            WPRDialogHelper.QuestionCancel(this, "Текст диалога пользователя", "Заголовок", (b) => Debug.WriteLine($"Диалог закрыт: {b}"));
         }
 
         #endregion
@@ -55,11 +52,8 @@ namespace WPR.Demo.Pages
 
         private async void OnShowWindowDialogCommandAsyncExecuted()
         {
-            await WPRDialogHelper.InformationAsync(this, "Текст диалога пользователя");
             //var res = await WPRDialogHelper.InformationCancelAsync(this, "Текст диалога пользователя");
             //var res = await WPRDialogHelper.QuestionAsync(this, "Текст диалога пользователя");
-            var res = await WPRDialogHelper.QuestionCancelAsync(this, "Текст диалога пользователя");
-            Debug.WriteLine($"Асинхронный диалог закрыт: {res}");
         }
 
         #endregion
@@ -74,102 +68,21 @@ namespace WPR.Demo.Pages
 
         private void OnShowModalDialogCommandExecuted()
         {
-            Debug.WriteLine(WPRDialogHelper.ShowModal(this, "Модальный диалог", "Заголовок", true));
         }
 
         #endregion
 
-        private void ButtonBase_OnClick(object Sender, RoutedEventArgs E)
-        {
-            WPRDialogHelper.Bubble(this, "Всплывающее сообщение");
-        }
 
-        private void Button2_OnClick(object Sender, RoutedEventArgs E)
-        {
-            WPRDialogHelper.Bubble(this, "Всплывающее сообщение с кнопкой", "YEP!", _ => Debug.WriteLine("Clicked!"));
-        }
-
-        private void Button3_OnClick(object Sender, RoutedEventArgs E)
-        {
-            WPRDialogHelper.InputText(null,// Модальное
-                "Ввод текста:",
-                (B, S) => {if(B) Debug.WriteLine(S);},
-                "Описание",
-                "Стартовое значение",
-                true,
-                S => S.Length>0,
-                "Поле не может быть пустым");
-        }
-        private void Button4_OnClick(object Sender, RoutedEventArgs E)
-        {
-            WPRDialogHelper.InputText(this,
-                "Ввод текста:",
-                (B, S) => { Debug.WriteLine(B + S); },
-                "Описание",
-                "12",
-                false,
-                S => S?.Length > 3,
-                "Нужно больше 3 символов");
-        }
-
-        class TestCustomDialog : IWPRDialog
-        {
-            private readonly Dialogs _Parent;
-            private int _Count;
-
-            public event Action<bool> Completed;
-            public object DialogContent { get; set; }
-            public bool StaysOpen => false;
-
-            public TestCustomDialog(Dialogs parent, int count)
-            {
-                _Parent = parent;
-                _Count = count;
-                DialogContent = new Button()
-                {
-                    Content =$"Запустить ещё один диалог. Текущий: {count}",
-                    Command = new Command(() => WPRDialogHelper.ShowCustomDialog(parent, new TestCustomDialog(parent, count + 1)))
-                };
-            }
-        }
-
-        private async void CustomDialog_Click(object Sender, RoutedEventArgs E)
-        {
-            Debug.WriteLine(await WPRDialogHelper.ShowCustomDialogAsync(this, new TestCustomDialog(this, 0)));
-        }
-
-        private async void Button_Click(object sender, RoutedEventArgs e)
-        {
-            await WPRDialogHelper.ShowCustomDialogAsync(this, new WprDialog());
-            WPRDialogHelper.ShowCustomDialog(null, new WprDialog(), b => Debug.WriteLine(b));
-        }
 
         private async void Dlg_OnClick(object Sender, RoutedEventArgs E)
         {
-            var dlg = new UserDialog();
+            var dlg = new WPRUserDialog();
 
             var msg = "Сообщение";
             var title = "Заголовок";
 
             await dlg.InformationAsync(msg, title);
-            Debug.WriteLine(await dlg.InputTextAsync(title, MultiLine: false));
-            Debug.WriteLine(await dlg.InputTextAsync(title, MultiLine: true));
-            Debug.WriteLine(await dlg.QuestionAsync(msg, title));
-            Debug.WriteLine(await dlg.QuestionAsync(msg, IUserDialog.DialogTypes.YesNo, title));
-            Debug.WriteLine(await dlg.QuestionAsync(msg, IUserDialog.DialogTypes.OkCancel, title));
-            Debug.WriteLine(await dlg.QuestionAsync(msg, IUserDialog.DialogTypes.YesNoCancel, title));
 
-            Debug.WriteLine(await dlg.CustomQuestionAsync(msg, title, "Accept Button"));
-            Debug.WriteLine(await dlg.CustomQuestionAsync(msg, title, "true", "false"));
-            Debug.WriteLine(await dlg.CustomQuestionAsync(msg, title, "true", null, "null"));
-            Debug.WriteLine(await dlg.CustomQuestionAsync(msg, title, "true", "false", "null"));
-
-            await dlg.ErrorMessageAsync(msg, title);
-
-            Debug.WriteLine(await dlg.CustomDialogAsync(new WprDialog()));
-
-            Debug.WriteLine(await dlg.InputTextAsync(title));
-            Debug.WriteLine(await dlg.InputTextAsync(title, "123", msg));
 
             var val = new List<(Predicate<string> rule, string errorMessage)>()
             {
@@ -200,16 +113,10 @@ namespace WPR.Demo.Pages
                     ;
 
             });
-            await dlg.ShowNotificationAsync("Задержка 5 сек", 5000);
+            await dlg.ShowNotificationAsync("Задержка 5 сек", StyleBrushes.AccentColorBrush, 5000);
 
-            Debug.WriteLine(await dlg.ShowQuestionNotificationAsync(msg, title));
         }
 
-        private void ButtonBase3_OnClick(object Sender, RoutedEventArgs E)
-        {
-            WPRDialogHelper.Bubble(this, "Danger Dialog", "OK", null, 1000, StyleBrushes.DangerColorBrush);
-            WPRDialogHelper.Bubble(this, "Accent Dialog", "OK", null, 1000, StyleBrushes.AccentColorBrush);
-            WPRDialogHelper.Bubble(this, "Success Dialog", "OK", null, 1000, StyleBrushes.SuccessColorBrush);
-        }
+
     }
 }

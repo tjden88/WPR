@@ -76,7 +76,6 @@ namespace WPR.Demo.Pages
 
             Clipboard.SetText(copyText);
 
-            WPRDialogHelper.Bubble(this, "Скопировано в буфер обмена");
         }
     }
 }

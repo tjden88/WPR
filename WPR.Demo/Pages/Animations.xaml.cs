@@ -19,7 +19,6 @@ namespace WPR.Demo.Pages
         {
             new Storyboard()
                 .AddDoubleAnimation("Opacity", 1,0.2,500)
-                .OnComplete(() => WPRDialogHelper.Bubble(this, "Anim completed"))
                 .OnComplete(() => Rect.Opacity = 0.5)
                 .ClearOnComplete()
                 .Begin(Rect);
