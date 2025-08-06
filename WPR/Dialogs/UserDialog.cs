@@ -213,12 +213,12 @@ public static class UserDialog
 
                 if (actionButtonText == null)
                 {
-                    panel.ShowBubble(message, duration, null, null, background);
+                    panel.ShowNotification(message, duration, null, null, background);
                     tcs.TrySetResult(true);
                 }
                 else
                 {
-                    panel.ShowBubble(message, duration, actionButtonText, b => tcs.TrySetResult(b), background);
+                    panel.ShowNotification(message, duration, actionButtonText, b => tcs.TrySetResult(b), background);
                 }
             }
             catch (Exception ex)

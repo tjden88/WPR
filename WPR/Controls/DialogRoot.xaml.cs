@@ -34,8 +34,8 @@ public class DialogRoot : HeaderedContentControl
     public override void OnApplyTemplate()
     {
         base.OnApplyTemplate();
-        if (GetTemplateChild("BubbleButton") is Button b) b.Click += BubbleButton_Click;
-        if (GetTemplateChild("PART_Bubble") is Border br) br.MouseUp += (_, _) => HideBubble();
+        if (GetTemplateChild("NotificationButton") is Button b) b.Click += NotificationButton_Click;
+        if (GetTemplateChild("PART_Notification") is Border br) br.MouseUp += (_, _) => HideNotification();
         if (GetTemplateChild("PART_Rect") is Rectangle r) r.MouseDown += Rect_MouseDown;
 
         _HeaderPopup = GetTemplateChild("PART_Popup") as WPRPopup;
@@ -84,7 +84,7 @@ public class DialogRoot : HeaderedContentControl
     #region CurrentStatus : Status - Статус показа контента
 
     /// <summary>Статус показа контента</summary>
-    public static readonly DependencyProperty CurrentStatusProperty =
+    internal static readonly DependencyProperty CurrentStatusProperty =
         DependencyProperty.Register(
             nameof(CurrentStatus),
             typeof(Status),
@@ -92,7 +92,7 @@ public class DialogRoot : HeaderedContentControl
             new PropertyMetadata(default(Status)));
 
     /// <summary>Статус показа контента</summary>
-    public Status CurrentStatus
+    internal Status CurrentStatus
     {
         get => (Status)GetValue(CurrentStatusProperty);
         set => SetValue(CurrentStatusProperty, value);
@@ -174,16 +174,16 @@ public class DialogRoot : HeaderedContentControl
 
     #region Всплывающая подсказка
 
-    #region BubbleText
+    #region NotificationText
     /// <summary> Текст всплывающей подсказки </summary>
-    public string BubbleText
+    internal string NotificationText
     {
-        get => (string)GetValue(BubbleTextProperty);
-        set => SetValue(BubbleTextProperty, value);
+        get => (string)GetValue(NotificationTextProperty);
+        set => SetValue(NotificationTextProperty, value);
     }
 
-    public static readonly DependencyProperty BubbleTextProperty =
-        DependencyProperty.Register(nameof(BubbleText), typeof(string), typeof(DialogRoot), new PropertyMetadata(""));
+    internal static readonly DependencyProperty NotificationTextProperty =
+        DependencyProperty.Register(nameof(NotificationText), typeof(string), typeof(DialogRoot), new PropertyMetadata(""));
 
 
     #endregion
@@ -196,48 +196,48 @@ public class DialogRoot : HeaderedContentControl
     /// <param name="Duration">Длительность</param>
     /// <param name="ButtonCommandText">Текст кнопки команды</param>
     /// <param name="Callback">True, если кнопка была нажата</param>
-    /// <param name="BubbleBackground">Заливка сообщения</param>
-    public void ShowBubble(string Text, int Duration = 2000, string ButtonCommandText = "", Action<bool> Callback = null, StyleBrushes BubbleBackground = StyleBrushes.BackgroundContrastColorBrush)
+    /// <param name="NotificationBackground">Заливка сообщения</param>
+    public void ShowNotification(string Text, int Duration = 2000, string ButtonCommandText = "", Action<bool> Callback = null, StyleBrushes NotificationBackground = StyleBrushes.BackgroundContrastColorBrush)
     {
-        _StackBubblesQueue.Enqueue(new StackBubbles
+        _StackNotificationsQueue.Enqueue(new StackNotifications
         {
             Text = Text, 
             Duration = Duration,
             Buttontext = ButtonCommandText,
             Action = Callback,
-            Background = BubbleBackground
+            Background = NotificationBackground
         });
-        if (_StackBubblesQueue.Count == 1) ShowBubbleinStack();
+        if (_StackNotificationsQueue.Count == 1) ShowNotificationInStack();
     }
 
-    private void HideBubble()
+    private void HideNotification()
     {
-        var clip = GetTemplateChild("PART_Bubble") as Border;
+        var clip = GetTemplateChild("PART_Notification") as Border;
         _Animout.Completed -= Animout_Completed;
         _Animout = new DoubleAnimation(1, 0, TimeSpan.FromSeconds(0.1));
         _Animout.Completed += Animout_Completed;
         clip?.RenderTransform.BeginAnimation(ScaleTransform.ScaleYProperty, _Animout);
     }
 
-    private void ShowBubbleinStack()
+    private void ShowNotificationInStack()
     {
-        if (!_StackBubblesQueue.TryPeek(out var stack)) return;
-        BubbleText = stack.Text;
+        if (!_StackNotificationsQueue.TryPeek(out var stack)) return;
+        NotificationText = stack.Text;
 
-        if (GetTemplateChild("PART_Bubble") is not Border clip) return;
+        if (GetTemplateChild("PART_Notification") is not Border clip) return;
         clip.Background = StyleHelper.GetBrushFromResource(stack.Background);
 
 
-        if (GetTemplateChild("BubbleButton") is Button commandbutton)
+        if (GetTemplateChild("NotificationButton") is Button button)
         {
 
             if (!string.IsNullOrEmpty(stack.Buttontext))
             {
-                commandbutton.Content = stack.Buttontext;
-                commandbutton.Visibility = Visibility.Visible;
+                button.Content = stack.Buttontext;
+                button.Visibility = Visibility.Visible;
             }
             else
-                commandbutton.Visibility = Visibility.Collapsed;
+                button.Visibility = Visibility.Collapsed;
         }
 
         ScaleTransform trans = new(1, 0);
@@ -254,25 +254,25 @@ public class DialogRoot : HeaderedContentControl
 
     }
 
-    private void BubbleButton_Click(object sender, RoutedEventArgs e)
+    private void NotificationButton_Click(object sender, RoutedEventArgs e)
     {
-        _StackBubblesQueue.Peek().Action?.Invoke(true);
-        HideBubble();
+        _StackNotificationsQueue.Peek().Action?.Invoke(true);
+        HideNotification();
     }
 
     private void Animout_Completed(object sender, EventArgs e)
     {
-        if(_StackBubblesQueue.Count == 0)
+        if(_StackNotificationsQueue.Count == 0)
             return;
 
-        _StackBubblesQueue.Dequeue().Action?.Invoke(false);
-        ShowBubbleinStack();
+        _StackNotificationsQueue.Dequeue().Action?.Invoke(false);
+        ShowNotificationInStack();
     }
 
     private DoubleAnimation _Animout;
 
-    private readonly Queue<StackBubbles> _StackBubblesQueue = new(); // Очередь подсказок
-    private struct StackBubbles
+    private readonly Queue<StackNotifications> _StackNotificationsQueue = new(); // Очередь подсказок
+    private struct StackNotifications
     {
         public string Text;
         public int Duration;

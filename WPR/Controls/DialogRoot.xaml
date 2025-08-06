@@ -52,7 +52,7 @@
                             </controls:WPRPopup.Content>
                         </controls:WPRPopup>
 
-                        <Border x:Name="PART_Bubble" Margin="20"
+                        <Border x:Name="PART_Notification" Margin="20"
                                 RenderTransformOrigin="0.5,1"
                                 HorizontalAlignment="Center"
                                 VerticalAlignment="Bottom"
@@ -64,7 +64,7 @@
                                 <ScaleTransform ScaleY="0"/>
                             </Border.RenderTransform>
                             <Grid>
-                                <Border CornerRadius="4" Background="{Binding Background, ElementName=PART_Bubble}"
+                                <Border CornerRadius="4" Background="{Binding Background, ElementName=PART_Notification}"
                                         Effect="{StaticResource ButtonShadow}"/>
                                 <DockPanel 
                                             HorizontalAlignment="Center"
@@ -72,15 +72,15 @@
 
                                     <Button  Margin="7"
                                              DockPanel.Dock="Right"
-                                             x:Name="BubbleButton"
+                                             x:Name="NotificationButton"
                                              Style="{StaticResource WPRFlatButton}"
                                              Background="{DynamicResource BackgroundContrastColorBrush}"
                                              Foreground="{DynamicResource AccentColorBrush}"
                                              Visibility="Collapsed"/>
 
-                                    <TextBlock Text="{TemplateBinding BubbleText}"   
+                                    <TextBlock Text="{TemplateBinding NotificationText}"   
                                                TextWrapping="Wrap"
-                                               Foreground="{Binding Background, ElementName=PART_Bubble, Converter={StaticResource BrushContrastConverter}}"
+                                               Foreground="{Binding Background, ElementName=PART_Notification, Converter={StaticResource BrushContrastConverter}}"
                                                Margin="15"/>
                                     
                                 </DockPanel>
