@@ -424,7 +424,7 @@
                     <BeginStoryboard Storyboard="{StaticResource InRect}"/>
                     <BeginStoryboard >
                         <Storyboard TargetName="templateRoot" TargetProperty="Background">
-                            <animations:WPRStyleBrushAnimation Duration="0:0:0.3" To="SecondaryBackgroundColorBrush"/>
+                            <animations:StyleBrushAnimation Duration="0:0:0.3" To="SecondaryBackgroundColorBrush"/>
                         </Storyboard>
                     </BeginStoryboard>
                 </Trigger.EnterActions>
@@ -432,7 +432,7 @@
                     <BeginStoryboard Storyboard="{StaticResource OutRect}"/>
                     <BeginStoryboard >
                         <Storyboard TargetName="templateRoot" TargetProperty="Background">
-                            <animations:WPRStyleBrushAnimation Duration="0:0:0.3" AnimateToOrigin="True" 
+                            <animations:StyleBrushAnimation Duration="0:0:0.3" AnimateToOrigin="True" 
                                                                From="SecondaryBackgroundColorBrush"
                                                                To="TransparentBrush"/>
                         </Storyboard>

@@ -4,6 +4,29 @@ using System.Windows.Media.Animation;
 namespace WPR.Animations;
 
 /// <summary>
+/// Коллекция функций плавности приложения
+/// </summary>
+public enum EasingFunctions
+{
+    None,
+    CircleEaseIn,
+    CircleEaseOut,
+    CircleEaseInOut,
+    ElasticEaseIn,
+    ElasticEaseOut,
+    ElasticEaseInOut,
+    SineEaseIn,
+    SineEaseOut,
+    SineEaseInOut,
+    BackEaseIn,
+    BackEaseOut,
+    BackEaseInOut,
+    ExponentialEaseIn,
+    ExponentialEaseOut,
+    ExponentialEaseInOut,
+}
+
+/// <summary>
 /// Методы расширения для управления анимациями WPF
 /// </summary>
 public static class StoryboardExtensions

@@ -10,7 +10,7 @@ namespace WPR.Animations;
 /// <summary>
 /// Анимация кистей на основе цветов текущего стиля
 /// </summary>
-public class WPRStyleBrushAnimation : AnimationTimeline
+public class StyleBrushAnimation : AnimationTimeline
 {
     public override Type TargetPropertyType => typeof(Brush);
 
@@ -58,7 +58,7 @@ public class WPRStyleBrushAnimation : AnimationTimeline
         DependencyProperty.Register(
             nameof(To),
             typeof(StyleBrushes),
-            typeof(WPRStyleBrushAnimation),
+            typeof(StyleBrushAnimation),
             new PropertyMetadata(default(StyleBrushes)));
 
     /// <summary>Кисть назанчения</summary>
@@ -80,7 +80,7 @@ public class WPRStyleBrushAnimation : AnimationTimeline
         DependencyProperty.Register(
             nameof(From),
             typeof(StyleBrushes),
-            typeof(WPRStyleBrushAnimation),
+            typeof(StyleBrushAnimation),
             new PropertyMetadata(default(StyleBrushes)));
 
     /// <summary>Начальная кисть</summary>
@@ -102,7 +102,7 @@ public class WPRStyleBrushAnimation : AnimationTimeline
         DependencyProperty.Register(
             nameof(AnimateToOrigin),
             typeof(bool),
-            typeof(WPRStyleBrushAnimation),
+            typeof(StyleBrushAnimation),
             new PropertyMetadata(default(bool)));
 
     /// <summary>Анимировать от кисти назначения до оригинальной (альтернативный режим для прозрачных кистей назначения)</summary>

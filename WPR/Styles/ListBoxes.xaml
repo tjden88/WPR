@@ -72,7 +72,7 @@
                                              EasingFunction="{StaticResource CircleEaseIn}"
                                              Storyboard.TargetProperty="ScaleX"
                                              Storyboard.TargetName="ScaleSelected" />
-                            <animations:WPRStyleBrushAnimation Storyboard.TargetProperty="Foreground" 
+                            <animations:StyleBrushAnimation Storyboard.TargetProperty="Foreground" 
                                                                    To="PrimaryContrastColorBrush"
                                                                    Duration="0:0:0.3"/>
 
@@ -86,7 +86,7 @@
                                              EasingFunction="{StaticResource CircleEaseOut}"
                                              Storyboard.TargetProperty="ScaleX"
                                              Storyboard.TargetName="ScaleSelected" />
-                            <animations:WPRStyleBrushAnimation Storyboard.TargetProperty="Foreground" 
+                            <animations:StyleBrushAnimation Storyboard.TargetProperty="Foreground" 
                                                                Duration="0:0:0.3"/>
                         </Storyboard>
                     </BeginStoryboard>

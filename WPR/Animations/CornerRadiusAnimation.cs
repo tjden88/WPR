@@ -7,7 +7,7 @@ namespace WPR.Animations;
 /// <summary>
 /// Анимация радиусов
 /// </summary>
-public class WPRCornerRadiusAnimation : AnimationTimeline
+public class CornerRadiusAnimation : AnimationTimeline
 {
     protected override Freezable CreateInstanceCore() => this;
 
@@ -57,7 +57,7 @@ public class WPRCornerRadiusAnimation : AnimationTimeline
         DependencyProperty.Register(
             nameof(From),
             typeof(CornerRadius),
-            typeof(WPRCornerRadiusAnimation),
+            typeof(CornerRadiusAnimation),
             new PropertyMetadata(_NanRadius));
 
     /// <summary>Начальное значение радиуса</summary>
@@ -79,7 +79,7 @@ public class WPRCornerRadiusAnimation : AnimationTimeline
         DependencyProperty.Register(
             nameof(To),
             typeof(CornerRadius),
-            typeof(WPRCornerRadiusAnimation),
+            typeof(CornerRadiusAnimation),
             new PropertyMetadata(_NanRadius));
 
     /// <summary>Конечное значение радиуса</summary>
