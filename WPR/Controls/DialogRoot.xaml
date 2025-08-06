@@ -6,11 +6,11 @@
         <ResourceDictionary Source="../Styles/Buttons.xaml"/>
     </ResourceDictionary.MergedDictionaries>
 
-    <Style TargetType="{x:Type controls:WPRDialogPanel}" BasedOn="{StaticResource BaseControl}">
+    <Style TargetType="{x:Type controls:DialogRoot}" BasedOn="{StaticResource BaseControl}">
         <Setter Property="Focusable" Value="True"/>
         <Setter Property="Template">
             <Setter.Value>
-                <ControlTemplate TargetType="{x:Type controls:WPRDialogPanel}">
+                <ControlTemplate TargetType="{x:Type controls:DialogRoot}">
                     <Grid Background="{TemplateBinding Background}" 
                           Name="RootGrid"
                           HorizontalAlignment="{TemplateBinding HorizontalAlignment}"

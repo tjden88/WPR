@@ -87,7 +87,7 @@
     <!--Шаблон стиля окна-->
     <ControlTemplate TargetType="{x:Type Window}" x:Key="ChromeWindowTemplate">
         <AdornerDecorator>
-            <wpr:WPRDialogPanel x:Name="WindowDialogPanel">
+            <wpr:DialogRoot x:Name="WindowDialogPanel">
                 <Border Background="{TemplateBinding Background }"
                         BorderThickness="0"
                     BorderBrush="{TemplateBinding BorderBrush }">
@@ -198,7 +198,7 @@
 
                     </Grid>
                 </Border>
-            </wpr:WPRDialogPanel>
+            </wpr:DialogRoot>
         </AdornerDecorator>
         <ControlTemplate.Triggers>
             <Trigger Property="IsActive" Value="False">
@@ -211,7 +211,7 @@
     <!--Шаблон стиля окна с полной клиентской областью-->
     <ControlTemplate TargetType="{x:Type Window}" x:Key="NoTitledWindowTemplate">
         <AdornerDecorator>
-            <wpr:WPRDialogPanel x:Name="WindowDialogPanel">
+            <wpr:DialogRoot x:Name="WindowDialogPanel">
                 <Border Background="{TemplateBinding Background }"
                         BorderThickness="1"
                     BorderBrush="{TemplateBinding BorderBrush }">
@@ -286,7 +286,7 @@
 
                     </Grid>
                 </Border>
-            </wpr:WPRDialogPanel>
+            </wpr:DialogRoot>
         </AdornerDecorator>
         <ControlTemplate.Triggers>
             <Trigger Property="IsActive" Value="False">

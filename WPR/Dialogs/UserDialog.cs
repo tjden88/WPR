@@ -10,18 +10,18 @@ public static class UserDialog
 
     // Найти панель для отображения диалога
     [return: MaybeNull]
-    private static WPRDialogPanel FindDialogPanel(DependencyObject element)
+    private static DialogRoot FindDialogPanel(DependencyObject element)
     {
         if (element == null)
             return null;
 
-        if(element is WPRDialogPanel panel)
+        if(element is DialogRoot panel)
             return panel;
 
         if (element is Window window)
-            return window.Template?.FindName("WindowDialogPanel", window) as WPRDialogPanel;
+            return window.Template?.FindName("WindowDialogPanel", window) as DialogRoot;
 
-        return element.FindVisualParent<WPRDialogPanel>();
+        return element.FindVisualParent<DialogRoot>();
     }
 
 

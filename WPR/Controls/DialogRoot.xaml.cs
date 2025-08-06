@@ -12,7 +12,7 @@ using WPR.Theme;
 namespace WPR;
 
 /// <summary> Контрол для обёртки диалоговых окон </summary>
-public class WPRDialogPanel : HeaderedContentControl
+public class DialogRoot : HeaderedContentControl
 {
     public enum Status
     {
@@ -26,9 +26,9 @@ public class WPRDialogPanel : HeaderedContentControl
     private ContentPresenter _Header;
     private WPRPopup _HeaderPopup;
 
-    static WPRDialogPanel()
+    static DialogRoot()
     {
-        DefaultStyleKeyProperty.OverrideMetadata(typeof(WPRDialogPanel), new FrameworkPropertyMetadata(typeof(WPRDialogPanel)));
+        DefaultStyleKeyProperty.OverrideMetadata(typeof(DialogRoot), new FrameworkPropertyMetadata(typeof(DialogRoot)));
     }
 
     public override void OnApplyTemplate()
@@ -55,12 +55,12 @@ public class WPRDialogPanel : HeaderedContentControl
         DependencyProperty.Register(
             nameof(DialogSource),
             typeof(IUserDialog),
-            typeof(WPRDialogPanel),
+            typeof(DialogRoot),
             new PropertyMetadata(null, OnDialogSourceChanged));
 
     private static void OnDialogSourceChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
     {
-        if (e.NewValue is WPRUserDialog dlg && d is WPRDialogPanel panel)
+        if (e.NewValue is WPRUserDialog dlg && d is DialogRoot panel)
             dlg.AssociatedElement = panel;
     }
 
@@ -88,7 +88,7 @@ public class WPRDialogPanel : HeaderedContentControl
         DependencyProperty.Register(
             nameof(CurrentStatus),
             typeof(Status),
-            typeof(WPRDialogPanel),
+            typeof(DialogRoot),
             new PropertyMetadata(default(Status)));
 
     /// <summary>Статус показа контента</summary>
@@ -183,7 +183,7 @@ public class WPRDialogPanel : HeaderedContentControl
     }
 
     public static readonly DependencyProperty BubbleTextProperty =
-        DependencyProperty.Register(nameof(BubbleText), typeof(string), typeof(WPRDialogPanel), new PropertyMetadata(""));
+        DependencyProperty.Register(nameof(BubbleText), typeof(string), typeof(DialogRoot), new PropertyMetadata(""));
 
 
     #endregion
