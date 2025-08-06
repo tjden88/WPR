@@ -1,10 +1,12 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 using System.Windows;
 using WPR.Infrastructure.Extensions;
+using WPR.Theme;
 
 namespace WPR.Dialogs;
 public static class UserDialog
 {
+
     #region Internal
 
     private static readonly Style _ModalWindowStyle = (Style)Application.Current.Resources["WPRModalWindow"];
@@ -154,6 +156,79 @@ public static class UserDialog
     }
 
 
+
+    /// <summary>
+    /// Показать всплывающее уведомление
+    /// </summary>
+    /// <param name="sender">Может быть Null. Объект, в котором будет найдена панель для показа уведомления. Если не найдена - будет модальное окно</param>
+    /// <param name="message">Текст уведомления</param>
+    /// <param name="background">Цвет фона</param>
+    /// <param name="duration">Длительность показа</param>
+    /// <param name="actionButtonText">Если задано - будет ожидать клика, при клике вернёт true. Если не задано - задача вернёт true сразу</param>
+    internal static Task<bool> ShowNotification(
+        DependencyObject sender,
+        string message,
+        StyleBrushes background,
+        int duration,
+        string actionButtonText = null)
+    {
+        var dispatcher = sender?.Dispatcher ?? Application.Current.Dispatcher;
+
+        if (dispatcher == null || dispatcher.HasShutdownStarted)
+            return Task.FromResult(false);
+
+        var tcs = new TaskCompletionSource<bool>();
+
+        dispatcher.InvokeAsync(() =>
+        {
+            try
+            {
+                var panel = FindDialogPanel(sender);
+
+                if (panel == null)
+                {
+                    // Если панели нет — показываем как модальное окно
+                    var dlg = new MessageDialog
+                    {
+                        Content = message,
+                        DialogType = DialogType.Information,
+                        IsErrorMessage = background == StyleBrushes.DangerColorBrush
+                    };
+
+                    // Ждём ShowModal, но внутри InvokeAsync нельзя await, значит:
+                    _ = ShowModal(sender, dlg).ContinueWith(task =>
+                    {
+                        if (task.IsCompletedSuccessfully)
+                            tcs.TrySetResult(task.Result);
+                        else if (task.IsFaulted)
+                            tcs.TrySetException(task.Exception!);
+                        else
+                            tcs.TrySetResult(false);
+                    }, TaskScheduler.FromCurrentSynchronizationContext());
+
+                    return;
+                }
+
+                if (actionButtonText == null)
+                {
+                    panel.ShowBubble(message, duration, null, null, background);
+                    tcs.TrySetResult(true);
+                }
+                else
+                {
+                    panel.ShowBubble(message, duration, actionButtonText, b => tcs.TrySetResult(b), background);
+                }
+            }
+            catch (Exception ex)
+            {
+                tcs.TrySetException(ex);
+            }
+        });
+
+        return tcs.Task;
+    }
+
+
     #endregion
 
 
@@ -165,11 +240,11 @@ public static class UserDialog
     /// <summary>
     /// Модальный диалог по умолчанию
     /// </summary>
-    public static IUserDialog ModalDialog { get; } = new WPRUserDialog {IsModal = true};
+    public static IUserDialog ModalDialog { get; } = new WPRUserDialog { IsModal = true };
 
 
     /// <summary>
     /// Получить экземпляр диалога для привязок к конкретным панелям в разметке
     /// </summary>
-    public static IUserDialog GetUserDialog() => new WPRUserDialog();
+    public static IUserDialog CreateUserDialog() => new WPRUserDialog();
 }
