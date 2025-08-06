@@ -1,8 +1,8 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 using System.Windows;
 using WPR.Abstractions.Interfaces;
-using WPR.Abstractions.Models.Themes;
 using WPR.Extensions;
+using WPR.Theme;
 using WPR.Validation;
 
 namespace WPR.Dialogs;

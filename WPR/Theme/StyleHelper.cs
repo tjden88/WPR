@@ -1,15 +1,17 @@
-﻿using Microsoft.Win32;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Media;
-using WPR.Abstractions.Models.Themes;
+using Microsoft.Win32;
 
-namespace WPR.ColorTheme;
+namespace WPR.Theme;
 
 /// <summary>
 /// Установка и изменение цветовой темы
 /// </summary>
 public static class StyleHelper
 {
+    private static ColorScheme _Scheme = ColorScheme.Light;
+    private static bool _IsStyleChangedInvokable = true;
+
     /// <summary> Цвета текущей сессии </summary>
     public static readonly StyleColors StyleColors = (StyleColors)Application.Current.Resources["StyleColors"];
 
@@ -17,17 +19,7 @@ public static class StyleHelper
     public static event EventHandler StyleChanged;
 
     /// <summary>Установлена ли тёмная тема</summary>
-    public static bool IsDarkTheme
-    {
-        get => StyleColors._DarkColor == StyleColors.BackgroundColor;
-        set
-        {
-            if(value)
-                SetDarkColorTheme();
-            else
-                SetLightColorTheme();
-        }
-    }
+    public static bool IsDarkTheme => StyleColors._DarkColor == StyleColors.BackgroundColor;
 
 
     /// <summary>Задать новый рандомный стиль (цветовую палитру) элементам управления</summary>
@@ -48,7 +40,7 @@ public static class StyleHelper
         StyleColors.LightPrimaryColor = Lighten(color, 1.5);
 
         SetWindowColors(IsDarkTheme);
-        StyleChanged?.Invoke(null, EventArgs.Empty);
+        if (_IsStyleChangedInvokable) StyleChanged?.Invoke(null, EventArgs.Empty);
     }
 
 
@@ -56,7 +48,7 @@ public static class StyleHelper
     public static void SetAccentColor(Color color)
     {
         StyleColors.AccentColor = color;
-        StyleChanged?.Invoke(null, EventArgs.Empty);
+        if (_IsStyleChangedInvokable) StyleChanged?.Invoke(null, EventArgs.Empty);
     }
 
 
@@ -70,12 +62,49 @@ public static class StyleHelper
     }
 
 
-    #region Theme
+    /// <summary> Установить тёмную, светлую или системную тему </summary>
+    public static void SetColorScheme(ColorScheme scheme)
+    {
+        switch (scheme)
+        {
+            case ColorScheme.Dark:
+                SetDarkColorTheme();
+                break;
+            case ColorScheme.Light:
+                SetLightColorTheme();
+                break;
+            case ColorScheme.Auto:
+                SetSystemTheme();
+                break;
+            default:
+                throw new ArgumentOutOfRangeException(nameof(scheme), scheme, null);
+        }
+        _Scheme = scheme;
+    }
+
+
+
+    /// <summary> Получить текущую цветовую схему </summary>
+    public static ColorTheme GetCurrentTheme() => new(StyleColors.PrimaryColor.ToString(), StyleColors.AccentColor.ToString(), _Scheme);
+
+
+    /// <summary> Установить новую цветовую схему </summary>
+    public static void SetColorTheme(ColorTheme theme)
+    {
+        _IsStyleChangedInvokable = false; // Отключаем вызов события StyleChanged
+        SetPrimaryColor((Color)ColorConverter.ConvertFromString(theme.PrimaryColor)!);
+        SetAccentColor((Color)ColorConverter.ConvertFromString(theme.AccentColor)!);
+        SetColorScheme(theme.Scheme);
+        _IsStyleChangedInvokable = true; // Включаем вызов события StyleChanged
+        StyleChanged?.Invoke(null, EventArgs.Empty);
+    }
+
+    #region Scheme
 
     /// <summary>
     /// Установить тёмную тему.
     /// </summary>
-    public static void SetDarkColorTheme()
+    private static void SetDarkColorTheme()
     {
         StyleColors.BackgroundColor = StyleColors._DarkBackgroundColor;
         StyleColors.SecondaryBackgroundColor = StyleColors._DarkSecondaryBackgroundColor;
@@ -84,14 +113,14 @@ public static class StyleHelper
         StyleColors.DividerColor = StyleColors._DarkDividerColor;
 
         SetWindowColors(true);
-        StyleChanged?.Invoke(null, EventArgs.Empty);
+        if (_IsStyleChangedInvokable) StyleChanged?.Invoke(null, EventArgs.Empty);
     }
 
 
     /// <summary>
     /// Установить светлую тему.
     /// </summary>
-    public static void SetLightColorTheme()
+    private static void SetLightColorTheme()
     {
         StyleColors.BackgroundColor = StyleColors._LightBackgroundColor;
         StyleColors.SecondaryBackgroundColor = StyleColors._LightSecondaryBackgroundColor;
@@ -100,22 +129,14 @@ public static class StyleHelper
         StyleColors.DividerColor = StyleColors._LightDividerColor;
 
         SetWindowColors(false);
-        StyleChanged?.Invoke(null, EventArgs.Empty);
-    }
-
-    /// <summary>
-    /// Переключить тему (светлую в тёмную и наоборот)
-    /// </summary>
-    public static void SwitchTheme()
-    {
-        IsDarkTheme = !IsDarkTheme;
+        if (_IsStyleChangedInvokable) StyleChanged?.Invoke(null, EventArgs.Empty);
     }
 
 
     /// <summary>
     /// Установить тему как в системе
     /// </summary>
-    public static void SetSystemTheme()
+    private static void SetSystemTheme()
     {
         var systemTheme = IsLightSystemTheme();
         if (systemTheme) 

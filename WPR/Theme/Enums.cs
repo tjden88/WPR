@@ -1,4 +1,20 @@
-﻿namespace WPR.Abstractions.Models.Themes;
+﻿namespace WPR.Theme;
+
+/// <summary>
+/// Типы цветовой темы
+/// </summary>
+public enum ColorScheme
+{
+    /// <summary> Светлая тема </summary>
+    Light,
+
+    /// <summary> Тёмная тема </summary>
+    Dark,
+
+    /// <summary> Автоматическая тема </summary>
+    Auto
+}
+
 
 /// <summary>
 /// Коллекция кистей цветовой темы

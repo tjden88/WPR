@@ -6,7 +6,6 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using WPR.Abstractions.Interfaces;
 using WPR.Abstractions.Models.Dialogs;
-using WPR.Abstractions.Models.Themes;
 using WPR.Dialogs;
 using WPR.MVVM.Commands.Base;
 using WPR.Services.Implementations;

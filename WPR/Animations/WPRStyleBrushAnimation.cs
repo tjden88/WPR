@@ -3,8 +3,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
-using WPR.Abstractions.Models.Themes;
-using WPR.ColorTheme;
+using WPR.Theme;
 
 namespace WPR.Animations;
 

@@ -3,7 +3,6 @@ using System.Linq;
 using System.Windows.Controls;
 using System.Windows.Input;
 using WPR.Demo.Services.Interfaces;
-using WPR.ColorTheme;
 using WPR.MVVM.Commands.Base;
 using WPR.MVVM.ViewModels;
 

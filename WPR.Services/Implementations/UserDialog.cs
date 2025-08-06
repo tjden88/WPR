@@ -4,8 +4,8 @@ using Microsoft.Win32;
 using WPR.Abstractions.Interfaces;
 using WPR.Abstractions.Models.Dialogs;
 using WPR.Abstractions.Models.Files;
-using WPR.Abstractions.Models.Themes;
 using WPR.Dialogs;
+using WPR.Theme;
 using WPR.Validation;
 
 namespace WPR.Services.Implementations;

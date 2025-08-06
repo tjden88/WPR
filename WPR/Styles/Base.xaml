@@ -2,7 +2,7 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:p="http://schemas.microsoft.com/winfx/2006/xaml/presentation/options"
                     xmlns:converters="clr-namespace:WPR.Converters"
-                    xmlns:colorTheme="clr-namespace:WPR.ColorTheme">
+                    xmlns:theme="clr-namespace:WPR.Theme">
 
     <!--Шрифты-->
     <FontFamily x:Key="RobotoFont">pack://application:,,,/WPR;component/Fonts/#Roboto</FontFamily>
@@ -23,7 +23,7 @@
 
 
     <!--Кисти и цвета-->
-    <colorTheme:StyleColors x:Key="StyleColors"/>
+    <theme:StyleColors x:Key="StyleColors"/>
     <SolidColorBrush x:Key="PrimaryColorBrush" Color="{Binding PrimaryColor, Source={StaticResource StyleColors}}" p:Freeze="True"/>
     <SolidColorBrush x:Key="DarkPrimaryColorBrush"  Color="{Binding DarkPrimaryColor, Source={StaticResource StyleColors}}" p:Freeze="True"/>
     <SolidColorBrush x:Key="LightPrimaryColorBrush" Color="{Binding LightPrimaryColor, Source={StaticResource StyleColors}}" p:Freeze="True"/>

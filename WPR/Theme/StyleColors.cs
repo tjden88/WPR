@@ -1,9 +1,10 @@
 ﻿using System.ComponentModel;
 using System.Windows;
 using System.Windows.Media;
+
 // ReSharper disable InconsistentNaming
 
-namespace WPR.ColorTheme;
+namespace WPR.Theme;
 
 /// <summary>
 /// Свойства - цвета текущей схемы
