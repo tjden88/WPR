@@ -1,4 +1,4 @@
-﻿namespace WPR.Abstractions.Interfaces;
+﻿namespace WPR.Dialogs;
 
 /// <summary> Интерфейс для реализации объекта в качестве диалогового окна </summary>
 public interface IWPRDialog

@@ -17,9 +17,8 @@
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type dialogs:MessageDialog}">
                     <DockPanel>
-                        <TextBlock x:Name="TitleText"
-                                   DockPanel.Dock="Top"
-                                   Text="{TemplateBinding Title}" 
+                        <TextBlock DockPanel.Dock="Top"
+                                   Text="{Binding Path=Title, RelativeSource={RelativeSource TemplatedParent}}" 
                                    FontWeight="Medium" 
                                    TextWrapping="WrapWithOverflow"
                                    Margin="10,10,10,0" 
@@ -41,35 +40,32 @@
                         <StackPanel Orientation="Horizontal"
                                     DockPanel.Dock="Bottom"
                                     HorizontalAlignment="Right" Margin="6">
-                            <Button x:Name="Cancel" Content="ОТМЕНА" Width="100"  IsCancel="True" Style="{StaticResource WPRFlatButton}"
+                            <Button x:Name="Cancel" Content="{Binding Path=CancelButtonText, RelativeSource={RelativeSource TemplatedParent}}" Width="100"  IsCancel="True" Style="{StaticResource WPRFlatButton}"
+                                    Command="{Binding Path=CancelButtonPressedCommand, RelativeSource={RelativeSource TemplatedParent}}"
+                                    Visibility="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=IsCancelButtonVisible , Converter={StaticResource Bool2VisibilityConverter}}"/>
+
+                            <Button x:Name="Ok" Content="{Binding Path=AcceptButtonText, RelativeSource={RelativeSource TemplatedParent}}" Width="100" IsDefault="True"
+                                    Command="{Binding Path=SubmitCommand, RelativeSource={RelativeSource TemplatedParent}}"
+                                    Visibility="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=IsAcceptButtonVisible , Converter={StaticResource Bool2VisibilityConverter}}"/>
+
+                            <Button x:Name="No" Content="{Binding Path=QuestionCancelButtonText, RelativeSource={RelativeSource TemplatedParent}}" Width="100"  Style="{StaticResource WPRFlatButton}"
                                     Command="{Binding Path=CancelCommand, RelativeSource={RelativeSource TemplatedParent}}"
-                                    Visibility="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=CancelButtonVisible , Converter={StaticResource Bool2VisibilityConverter}}"/>
-                            <Button x:Name="Ok" Content="OK" Width="100" IsDefault="True"
-                                    Command="{Binding Path=SetDialogResultCommand, RelativeSource={RelativeSource TemplatedParent}}"
-                                    CommandParameter="{StaticResource True}"
-                                    Visibility="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=YesNoButtonsVisible , Converter={StaticResource Bool2VisibilityConverter}, ConverterParameter=!}"/>
-                            <Button x:Name="No" Content="НЕТ" Width="100"  Style="{StaticResource WPRFlatButton}"
-                                    Command="{Binding Path=SetDialogResultCommand, RelativeSource={RelativeSource TemplatedParent}}"
-                                    CommandParameter="{StaticResource False}"
-                                    Visibility="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=YesNoButtonsVisible , Converter={StaticResource Bool2VisibilityConverter}}"/>
-                            <Button x:Name="Yes" Content="ДА" Width="100" IsDefault="True"
-                                    Command="{Binding Path=SetDialogResultCommand, RelativeSource={RelativeSource TemplatedParent}}"
-                                    CommandParameter="{StaticResource True}"
-                                    Visibility="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=YesNoButtonsVisible , Converter={StaticResource Bool2VisibilityConverter}}"/>
+                                    Visibility="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=IsQuestionButtonsVisible , Converter={StaticResource Bool2VisibilityConverter}}"/>
+
+                            <Button x:Name="Yes" Content="{Binding Path=QuestionAcceptButtonText, RelativeSource={RelativeSource TemplatedParent}}" Width="100" IsDefault="True"
+                                    Command="{Binding Path=SubmitCommand, RelativeSource={RelativeSource TemplatedParent}}"
+                                    Visibility="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=IsQuestionButtonsVisible , Converter={StaticResource Bool2VisibilityConverter}}"/>
+
                         </StackPanel>
+
                         <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto" Focusable="False">
                             <TextBlock TextWrapping="WrapWithOverflow"
-                                       Text="{TemplateBinding Caption}" 
+                                       Text="{Binding Path=Content, RelativeSource={RelativeSource TemplatedParent}}" 
                                        Foreground="{DynamicResource TextColorBrush}" 
                                        Margin="10"/>
                         </ScrollViewer>
                     </DockPanel>
 
-                    <ControlTemplate.Triggers>
-                        <Trigger Property="Title" Value="">
-                            <Setter TargetName="TitleText" Property="Visibility" Value="Collapsed"/>
-                        </Trigger>
-                    </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>

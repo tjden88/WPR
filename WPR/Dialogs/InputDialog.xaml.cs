@@ -2,7 +2,6 @@
 using System.ComponentModel;
 using System.Globalization;
 using System.Windows;
-using WPR.Dialogs.Base;
 using WPR.Validation;
 
 namespace WPR.Dialogs;
