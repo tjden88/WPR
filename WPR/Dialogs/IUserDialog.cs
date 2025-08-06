@@ -1,5 +1,4 @@
-﻿using WPR.Abstractions.Models.Dialogs;
-using WPR.Abstractions.Models.Files;
+﻿using WPR.Theme;
 
 namespace WPR.Dialogs;
 
@@ -8,24 +7,17 @@ namespace WPR.Dialogs;
 /// </summary>
 public interface IUserDialog
 {
-    /// <summary> Типы вариантов диалогов </summary>
-    public enum DialogTypes
-    {
-        YesNo,
-        YesNoCancel,
-        OkCancel,
-    }
 
     /// <summary> Показать информационное сообщение </summary>
-    Task InformationAsync(string message, string? Title = null);
+    Task InformationAsync(string message, string Title = null);
 
 
     /// <summary> Вопрос с вариантами ДА, НЕТ </summary>
-    Task<bool> QuestionAsync(string message, string? Title = null);
+    Task<bool> QuestionAsync(string message, string Title = null);
 
 
     /// <summary> Вопрос с расширенными вариантами ответов </summary>
-    Task<bool?> QuestionAsync(string message, DialogTypes DilaogType, string? Title = null);
+    Task<bool?> QuestionAsync(string message, DialogType dialogType, string Title = null);
 
 
     /// <summary>
@@ -33,31 +25,31 @@ public interface IUserDialog
     /// </summary>
     /// <param name="message">Сообщение</param>
     /// <param name="Title">Заголовок</param>
-    /// <param name="TrueCaption">Подпись на подтверждающей кнопке</param>
-    /// <param name="FalseCaption">Подпись на кнопке отказа (не будет показана, если null)</param>
-    /// <param name="NullCaption">Подпись на кнопке отмены (не будет показана, если null)</param>
+    /// <param name="AcceptCaption">Подпись на подтверждающей кнопке</param>
+    /// <param name="RejectCaption">Подпись на кнопке отказа (не будет показана, если null)</param>
+    /// <param name="CancelCaption">Подпись на кнопке отмены (не будет показана, если null)</param>
     /// <returns>Результат в соответствии с выбранной кнопкой</returns>
-    Task<bool?> CustomQuestionAsync(string message, string? Title, string TrueCaption, string? FalseCaption = null, string? NullCaption = null);
+    Task<bool?> CustomQuestionAsync(string message, string Title, string AcceptCaption, string RejectCaption = null, string CancelCaption = null);
 
 
     /// <summary> Предупреждение об ошибке </summary>
-    Task ErrorMessageAsync(string message, string? Title = "Ошибка");
+    Task ErrorMessageAsync(string message, string Title = "Ошибка");
 
 
-    /// <summary> Показать произвольный диалог и дождаться результата </summary>
+    /// <summary> Показать произвольный диалог </summary>
     Task<bool> CustomDialogAsync(IWPRDialog Dialog);
 
 
     /// <summary> Текстовое поле для ввода. Если null - пользователь отменил ввод </summary>
-    Task<string?> InputTextAsync(string title, string? DefaultValue = null, string? message = null, bool MultiLine = false);
+    Task<string> InputTextAsync(string title, string DefaultValue = null, string message = null, bool MultiLine = false);
 
 
     /// <summary> Текстовое поле для ввода с валидацией введённых данных. Если null - пользователь отменил ввод </summary>
-    Task<string?> InputValidatedTextAsync(Action<InputDialogFilterOptions> options);
+    Task<string> InputValidatedTextAsync(Action<InputDialogFilterOptions> options);
 
 
     /// <summary> Показать всплывающее уведомление </summary>
-    Task ShowNotificationAsync(string message, int delay = 2000, StyleBrushes Backgound = StyleBrushes.BackgroundContrastColorBrush);
+    Task ShowNotificationAsync(string message, StyleBrushes background = StyleBrushes.BackgroundContrastColorBrush, int delay = 2000);
 
 
     /// <summary>
@@ -66,9 +58,9 @@ public interface IUserDialog
     /// <param name="message">Сообщение пользователю</param>
     /// <param name="AcceptCaption">Подпись кнопки подтверждения</param>
     /// <param name="delay">Время показа уведомления</param>
-    /// <param name="Backgound">Фон сообщения</param>
-    /// <returns></returns>
-    Task<bool> ShowQuestionNotificationAsync(string message, string AcceptCaption, int delay = 3000, StyleBrushes Backgound = StyleBrushes.BackgroundContrastColorBrush);
+    /// <param name="background">Фон сообщения</param>
+    /// <returns>True, если пользователь нажал кнопку подтверждения</returns>
+    Task<bool> ShowQuestionNotificationAsync(string message, string AcceptCaption, StyleBrushes background = StyleBrushes.BackgroundContrastColorBrush, int delay = 3000);
 
 
     /// <summary>
@@ -77,10 +69,9 @@ public interface IUserDialog
     /// <param name="Title">Заголовок</param>
     /// <param name="Filters">Список фильтров файлов, доступных для выбора</param>
     /// <param name="InitFileName">Начальное имя файла</param>
-    /// <returns>
-    /// null - пользователь отказался
+    /// <returns> Null - пользователь отказался
     /// </returns>
-    Task<string?> ShowOpenFileDialogAsync(string Title, IEnumerable<FileFilter>? Filters = null, string InitFileName = "");
+    Task<string> ShowOpenFileDialogAsync(string Title, IEnumerable<FileFilter> Filters = null, string InitFileName = "");
 
 
     /// <summary>
@@ -90,9 +81,9 @@ public interface IUserDialog
     /// <param name="Filters">Список фильтров файлов, доступных для выбора</param>
     /// <param name="InitFileName">Начальное имя файла</param>
     /// <returns>
-    /// null - пользователь отказался
+    /// Null - пользователь отказался
     /// </returns>
-    Task<string?> ShowSaveFileDialogAsync(string Title, IEnumerable<FileFilter>? Filters = null, string InitFileName = "");
+    Task<string> ShowSaveFileDialogAsync(string Title, IEnumerable<FileFilter> Filters = null, string InitFileName = "");
 
 
     /// <summary>
@@ -101,7 +92,7 @@ public interface IUserDialog
     /// <param name="Title">Заголовок</param>
     /// <param name="InitPathName">Начальное имя директории</param>
     /// <returns>
-    /// null - пользователь отказался
+    /// Null - пользователь отказался
     /// </returns>
-    Task<string?> ShowFolderSelectDialogAsync(string Title, string InitPathName = "");
+    Task<string> ShowFolderSelectDialogAsync(string Title, string InitPathName = "");
 }

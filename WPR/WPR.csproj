@@ -48,10 +48,6 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<ProjectReference Include="..\WPR.Abstractions\WPR.Abstractions.csproj" />
-	</ItemGroup>
-
-	<ItemGroup>
 		<Resource Include="Fonts\Montserrat-Italic-VariableFont_wght.ttf" />
 		<Resource Include="Fonts\Montserrat-VariableFont_wght.ttf" />
 		<Resource Include="Fonts\Roboto-Bold.ttf" />

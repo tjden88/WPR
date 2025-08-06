@@ -2,12 +2,12 @@
 using System.ComponentModel;
 using System.Windows;
 using WPR.Controls.Base;
+using WPR.Dialogs;
 
 namespace WPR;
 
-public class InputDialog(IEnumerable<InputDialog.ValidationInfo> validation) : DialogBase, INotifyDataErrorInfo
+public class InputDialog(IEnumerable<ValidationInfo> validation) : DialogBase, INotifyDataErrorInfo
 {
-    public record ValidationInfo(Predicate<string> Validated, string Message);
 
     static InputDialog()
     {

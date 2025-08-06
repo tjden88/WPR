@@ -1,4 +1,4 @@
-﻿namespace WPR.Abstractions.Models.Dialogs;
+﻿namespace WPR.Dialogs;
 
 /// <summary> Методы расширения для фильтра пользовательского диалога </summary>
 public static class InputDialogFilterExtensions
@@ -25,9 +25,9 @@ public static class InputDialogFilterExtensions
 
 
     /// <summary> Добавить правило валидации </summary>
-    public static InputDialogFilterOptions AddRule(this InputDialogFilterOptions filter, Predicate<string?> Rule, string ErrorMessage)
+    public static InputDialogFilterOptions AddRule(this InputDialogFilterOptions filter, Predicate<string> Rule, string ErrorMessage)
     {
-        filter.ValidationRules.Add(new ValidationRule(Rule, ErrorMessage));
+        filter.Validation.Add(new ValidationInfo(Rule, ErrorMessage));
         return filter;
     }
 

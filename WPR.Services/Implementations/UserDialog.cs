@@ -2,7 +2,6 @@
 using System.Windows.Threading;
 using Microsoft.Win32;
 using WPR.Abstractions.Interfaces;
-using WPR.Abstractions.Models.Dialogs;
 using WPR.Abstractions.Models.Files;
 using WPR.Dialogs;
 using WPR.Theme;
@@ -66,7 +65,7 @@ public class UserDialog : IUserDialog
             DialogFilter.Title,
             DialogFilter.Message,
             DialogFilter.DefaultValue,
-            DialogFilter.ValidationRules.Select(f => new PredicateValidationRule<string>(f.Rule, f.ErrorMessage)),
+            DialogFilter.Validation.Select(f => new PredicateValidationRule<string>(f.Rule, f.ErrorMessage)),
             DialogFilter.MultiLine));
 
     public Task ShowNotificationAsync(string message, int delay = 2000, StyleBrushes Backgound = StyleBrushes.BackgroundContrastColorBrush)
@@ -96,7 +95,7 @@ public class UserDialog : IUserDialog
         if (Filters != null)
         {
             var ofdFilter = Filters
-                .Select(f => $"{f.Description}|{string.Concat(f.FileMathPattrerns.Select(e => $"{e};"))}");
+                .Select(f => $"{f.Description}|{string.Concat(f.FileMathPatterns.Select(e => $"{e};"))}");
             ofd.Filter = string.Join("|", ofdFilter);
         }
 
@@ -119,7 +118,7 @@ public class UserDialog : IUserDialog
         if (Filters != null)
         {
             var ofdFilter = Filters
-                .Select(f => $"{f.Description}|{string.Concat(f.FileMathPattrerns.Select(e => $"{e};"))}");
+                .Select(f => $"{f.Description}|{string.Concat(f.FileMathPatterns.Select(e => $"{e};"))}");
             sfd.Filter = string.Join("|", ofdFilter);
         }
 
