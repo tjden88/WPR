@@ -5,7 +5,7 @@ using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Markup;
-using WPR.Commands.Base;
+using WPR.Infrastructure.Commands;
 
 namespace WPR.Base;
 

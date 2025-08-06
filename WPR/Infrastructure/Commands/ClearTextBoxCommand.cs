@@ -1,7 +1,7 @@
 ﻿using System.Windows.Controls;
 using System.Windows.Input;
 
-namespace WPR.Commands;
+namespace WPR.Infrastructure.Commands;
 
 internal class ClearTextBoxCommand : ICommand
 {

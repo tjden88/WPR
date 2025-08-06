@@ -1,18 +1,11 @@
 ﻿using System.Windows.Input;
 
-namespace WPR.Commands.Base;
+namespace WPR.Infrastructure.Commands;
 
-internal class BaseCommand : ICommand
+internal class BaseCommand(Action<object> execute, Predicate<object> canExecute) : ICommand
 {
-    private readonly Action<object> _Execute;
-    private readonly Predicate<object> _CanExecute;
+    private readonly Action<object> _Execute = execute ?? throw new ArgumentNullException(nameof(execute));
 
-
-    public BaseCommand(Action<object> Execute, Predicate<object> CanExecute)
-    {
-        _Execute = Execute ?? throw new ArgumentNullException(nameof(Execute));
-        _CanExecute = CanExecute;
-    }
 
     public BaseCommand(Action Execute, Func<bool> CanExecute = null)
         : this(_ => Execute(), CanExecute is null ? null : _ => CanExecute())
@@ -44,7 +37,7 @@ internal class BaseCommand : ICommand
     public virtual void Execute() => Execute(null);
 
     /// <summary>Возможность выполнения команды</summary>
-    protected bool CanExecuteCommand(object P) => _CanExecute?.Invoke(P) ?? true;
+    protected bool CanExecuteCommand(object P) => canExecute?.Invoke(P) ?? true;
 
     /// <summary>Выполнить команду</summary>
     protected void ExecuteCommand(object P) => _Execute(P);
