@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Threading;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -52,8 +54,17 @@ namespace WPR.Demo.Pages
 
         private async void OnShowWindowDialogCommandAsyncExecuted()
         {
-            //var res = await WPRDialogHelper.InformationCancelAsync(this, "Текст диалога пользователя");
-            //var res = await WPRDialogHelper.QuestionAsync(this, "Текст диалога пользователя");
+            using var cts = new CancellationTokenSource(TimeSpan.FromSeconds(5));
+            var dialog = new MessageDialog()
+            {
+                Title = "Заголовок",
+                Content = "Текст диалога пользователя",
+                DialogType = DialogType.QuestionCancel
+            };
+            await Task.Delay(100).ConfigureAwait(false);
+            var result = await UserDialogHelper.Show(this, dialog, cts.Token).ConfigureAwait(false);
+            //var result = await UserDialogHelper.ShowModal(this, dialog, cts.Token).ConfigureAwait(false);
+            Debug.WriteLine(result);
         }
 
         #endregion

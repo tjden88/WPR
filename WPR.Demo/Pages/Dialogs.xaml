@@ -9,34 +9,10 @@
       d:DesignHeight="450" d:DesignWidth="800"
       Title="Диалоги">
 
-    <wpr:WPRCard Background="{DynamicResource BackgroundColorBrush}">
-
-        <StackPanel Orientation="Horizontal">
-            <StackPanel Margin="10" Width="400">
-                <Button Content="Show User Dialog" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                <wpr:WPRCard HorizontalAlignment="Center" >
-                    <wpr:MessageDialog Title="Заголовок"
-                                       x:Name="MsgBox"/>
-                </wpr:WPRCard>
-                <wpr:WPRCard HorizontalAlignment="Center" >
-                    <wpr:InputDialog Title="Введите что-нибудь"
-                                         x:Name="InputBox"/>
-                </wpr:WPRCard>
-                <wpr:WPRTitledCard Name="EditDialog" Header="Кастом диалог" IconSource="Style">
-                    <StackPanel>
-                        <TextBlock Text="Содержание..." HorizontalAlignment="Center" Margin="20"></TextBlock>
-                        <Button Content="Ok"/>
-                    </StackPanel>
-                </wpr:WPRTitledCard>
-            </StackPanel>
-            <StackPanel Width="250">
-                <Button Content="Show Window Dialog" HorizontalAlignment="Center" VerticalAlignment="Center" Command="{Binding ShowWindowDialogCommand}"/>
-                <Button Content="Show Window Dialog Async" HorizontalAlignment="Center" VerticalAlignment="Center" Command="{Binding ShowWindowDialogCommandAsync}"/>
-                <Button Content="Show Modal Dialog" HorizontalAlignment="Center" VerticalAlignment="Center" Command="{Binding ShowModalDialogCommand}"/>
-
-                <Button Content="Сервис Диалогов *долго!" HorizontalAlignment="Center" VerticalAlignment="Center" Click="Dlg_OnClick"/>
-            </StackPanel>
+    <DockPanel>
+        <StackPanel>
+            <Button Content="Тестовый диалог" Command="{Binding ShowWindowDialogCommandAsync}"></Button>
         </StackPanel>
+    </DockPanel>
 
-    </wpr:WPRCard>
 </Page>

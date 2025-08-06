@@ -4,8 +4,8 @@ using WPR.Infrastructure.Extensions;
 
 namespace WPR.Dialogs;
 
-/// <summary>Диалоговые окна</summary>
-internal static class UserDialogHelper
+/// <summary>Диалоговые окна</summary> // todo сделать internal
+public static class UserDialogHelper
 {
     private static readonly Style _ModalWindowStyle = (Style) Application.Current.Resources["WPRModalWindow"];
 
@@ -23,27 +23,118 @@ internal static class UserDialogHelper
     }
 
 
-    private static Task<IWPRDialog> Show(DependencyObject sender, IWPRDialog dialog)
+    public static Task<bool> Show(DependencyObject sender, IWPRDialog dialog, CancellationToken cancellationToken = default)
     {
-        // Ищем панель
-        var panel = FindDialogPanel(sender);
+        var dispatcher = sender?.Dispatcher ?? Application.Current.Dispatcher;
 
-        if (panel is null)
+        if (dispatcher == null || dispatcher.HasShutdownStarted || cancellationToken.IsCancellationRequested)
+            return Task.FromResult(false);
+
+        var tcs = new TaskCompletionSource<bool>();
+
+        cancellationToken.Register(() =>
         {
-           // Modal
-            return Task.FromResult(dialog);
-        }
+            dispatcher.InvokeAsync(() =>
+            {
+                FindDialogPanel(sender)?.Hide();
+            });
 
-        var complete = new TaskCompletionSource<IWPRDialog>();
+            tcs.TrySetResult(false);
+        });
 
-        dialog.Completed += b =>
+        dispatcher.InvokeAsync(() =>
         {
-            panel.Hide();
-            complete.TrySetResult(dialog);
-        };
-        panel.Show(dialog, dialog.StaysOpen);
+            try
+            {
+                var panel = FindDialogPanel(sender);
+                if (panel is null)
+                {
+                    tcs.TrySetResult(false);
+                    return;
+                }
 
-        return complete.Task;
+                dialog.Completed += b =>
+                {
+                    panel.Hide();
+                    tcs.TrySetResult(b);
+                };
+
+                panel.Show(dialog, dialog.StaysOpen);
+            }
+            catch (Exception ex)
+            {
+                tcs.TrySetException(ex);
+            }
+        });
+
+        return tcs.Task;
+    }
+
+
+    public static Task<bool> ShowModal(DependencyObject sender, IWPRDialog content, CancellationToken cancellationToken = default)
+    {
+        var dispatcher = sender?.Dispatcher ?? Application.Current.Dispatcher; 
+
+        if (dispatcher == null || dispatcher.HasShutdownStarted || cancellationToken.IsCancellationRequested)
+            return Task.FromResult(false);
+
+        var tcs = new TaskCompletionSource<bool>();
+
+        dispatcher.InvokeAsync(() =>
+        {
+            try
+            {
+                var owner = sender as Window ?? sender.FindVisualParent<Window>();
+                var panel = FindDialogPanel(owner);
+
+                var dlg = new Window
+                {
+                    WindowStartupLocation = panel is null ? WindowStartupLocation.CenterScreen : WindowStartupLocation.CenterOwner,
+                    Owner = owner,
+                    Topmost = owner is null,
+                    Content = content.DialogContent,
+                    Style = _ModalWindowStyle
+                };
+
+                content.Completed += b =>
+                {
+                    if (!tcs.Task.IsCompleted)
+                    {
+                        tcs.TrySetResult(b);
+                        dlg.Close();
+                    }
+                };
+
+                using var ctr = cancellationToken.Register(() =>
+                {
+                    dispatcher.InvokeAsync(() =>
+                    {
+                        if (!tcs.Task.IsCompleted)
+                        {
+                            dlg.Close();        // Закрываем окно
+                            panel?.Hide();      // Прячем панель
+                            tcs.TrySetResult(false);
+                        }
+                    });
+                });
+
+                panel?.Show(null, true);
+
+                dlg.ShowDialog();
+
+                panel?.Hide();
+
+                // Если Completed не вызвался и токен не отменился
+                if (!tcs.Task.IsCompleted)
+                    tcs.TrySetResult(false);
+            }
+            catch (Exception ex)
+            {
+                tcs.TrySetException(ex);
+            }
+        });
+
+        return tcs.Task;
     }
 
 
