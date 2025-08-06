@@ -2,14 +2,15 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using WPR.Abstractions.Interfaces;
+using WPR.Dialogs;
+using WPR.Theme;
 
 namespace WPR.Tools;
 
 /// <summary>
 /// Помощник рутинных операций
 /// </summary>
-public class ActionHelper(IUserDialog UserDialog)
+public class ActionHelper
 {
 
     public enum MessageType
@@ -19,7 +20,7 @@ public class ActionHelper(IUserDialog UserDialog)
         Success
     }
 
-    private readonly IUserDialog _UserDialog = UserDialog;
+    public IUserDialog UserDialog { get; set; } = Dialogs.UserDialog.Default;
 
 
     private bool _SuccessResult;
@@ -143,7 +144,7 @@ public class ActionHelper(IUserDialog UserDialog)
         var task = new ActionHelperTask(this,
             async () =>
             {
-                var result = await _UserDialog.QuestionAsync(message, Title);
+                var result = await UserDialog.QuestionAsync(message, Title);
                 return result;
             }, OnCancelMessage);
 
@@ -171,7 +172,7 @@ public class ActionHelper(IUserDialog UserDialog)
         var task = new ActionHelperTask(this,
             async () =>
             {
-                await _UserDialog.ShowNotificationAsync(message, Backgound: color);
+                await UserDialog.ShowNotificationAsync(message, background: color);
                 return true;
             }, null);
 
@@ -206,7 +207,7 @@ public class ActionHelper(IUserDialog UserDialog)
             if (await task.ExecuteTaskAsync()) continue;
 
             if (task.HasErrorMessage)
-                await _UserDialog.ErrorMessageAsync(task.ErrorMessage!);
+                await UserDialog.ErrorMessageAsync(task.ErrorMessage!);
             _SuccessResult = false;
 
             if (BreakOnFail)
@@ -249,26 +250,14 @@ public class ActionHelper(IUserDialog UserDialog)
     /// <summary>
     /// Задача для выполнения
     /// </summary>
-    public class ActionHelperTask : IActionHelperTask
+    public class ActionHelperTask(ActionHelper actionHelper, Func<Task<bool>> executingTask, string? onFailMessage)
+        : IActionHelperTask
     {
-        private readonly ActionHelper _ActionHelper;
-
-        private readonly Func<Task<bool>> _ExecutingTask;
-        private readonly string? _ErrorMessage;
-
         private Func<Task>? OnSuccessAction { get; set; }
         private Func<Task>? OnFailAction { get; set; }
 
 
-        public ActionHelperTask(ActionHelper ActionHelper, Func<Task<bool>> ExecutingTask, string? OnFailMessage)
-        {
-            _ErrorMessage = OnFailMessage;
-            _ActionHelper = ActionHelper;
-            _ExecutingTask = ExecutingTask;
-        }
-
-
-        public  ActionHelper Then() => _ActionHelper;
+        public  ActionHelper Then() => actionHelper;
 
 
         /// <summary>
@@ -276,7 +265,7 @@ public class ActionHelper(IUserDialog UserDialog)
         /// </summary>
         /// <param name="BreakOnFail">Прервать выполнение при неудачной проверке выполнения</param>
         /// <returns>True, если все задачи выполнены успешно</returns>
-        public Task<bool> ExecuteAsync(bool BreakOnFail = true) => _ActionHelper.ExecuteAsync(BreakOnFail);
+        public Task<bool> ExecuteAsync(bool BreakOnFail = true) => actionHelper.ExecuteAsync(BreakOnFail);
 
 
         /// <summary>
@@ -333,7 +322,7 @@ public class ActionHelper(IUserDialog UserDialog)
 
         async Task<bool> IActionHelperTask.ExecuteTaskAsync()
         {
-            var result = await _ExecutingTask.Invoke();
+            var result = await executingTask.Invoke();
             if (result)
                 OnSuccessAction?.Invoke();
             else
@@ -341,11 +330,15 @@ public class ActionHelper(IUserDialog UserDialog)
             return result;
         }
 
-        string? IActionHelperTask.ErrorMessage => _ErrorMessage;
+        string? IActionHelperTask.ErrorMessage => onFailMessage;
     }
 
     /// <summary> Типизированная задача с возможностью обработки результата выполнения </summary>
-    public class ActionHelperTask<T> : IActionHelperTask
+    public class ActionHelperTask<T>(
+        ActionHelper actionHelper,
+        Func<Task<ActionHelperTask<T>.ActionResult>> executingTask,
+        string? onFailMessage)
+        : IActionHelperTask
     {
         public readonly struct ActionResult
         {
@@ -360,10 +353,6 @@ public class ActionHelper(IUserDialog UserDialog)
         }
 
 
-        private readonly ActionHelper _ActionHelper;
-        private readonly Func<Task<ActionResult>> _ExecutingTask;
-        private readonly string? _OnFailMessage;
-
         private Func<T, string>? OnSuccessQuestionMessage { get; set; }
 
         private Func<T, string>? OnFailQuestionMessage { get; set; }
@@ -372,16 +361,9 @@ public class ActionHelper(IUserDialog UserDialog)
         private Func<T, Task>? OnFailAction { get; set; }
 
 
-        public ActionHelperTask(ActionHelper ActionHelper, Func<Task<ActionResult>> ExecutingTask, string? OnFailMessage)
-        {
-            _ActionHelper = ActionHelper;
-            _ExecutingTask = ExecutingTask;
-            _OnFailMessage = OnFailMessage;
-        }
-
         async Task<bool> IActionHelperTask.ExecuteTaskAsync()
         {
-            var result = await _ExecutingTask.Invoke();
+            var result = await executingTask.Invoke();
             var success = result.IsSuccess;
             if (success)
             {
@@ -389,7 +371,7 @@ public class ActionHelper(IUserDialog UserDialog)
                     await action.Invoke(result.Result);
 
                 if (OnSuccessQuestionMessage is { } msg)
-                    success = await _ActionHelper._UserDialog.QuestionAsync(msg.Invoke(result.Result));
+                    success = await actionHelper.UserDialog.QuestionAsync(msg.Invoke(result.Result));
             }
             else
             { 
@@ -397,7 +379,7 @@ public class ActionHelper(IUserDialog UserDialog)
                     await faliAction.Invoke(result.Result);
 
                 if (OnFailQuestionMessage is { } msg)
-                    success = await _ActionHelper._UserDialog.QuestionAsync(msg.Invoke(result.Result));
+                    success = await actionHelper.UserDialog.QuestionAsync(msg.Invoke(result.Result));
             }
 
             return success;
@@ -475,10 +457,10 @@ public class ActionHelper(IUserDialog UserDialog)
             return this;
         }
 
-        string? IActionHelperTask.ErrorMessage => _OnFailMessage;
+        string? IActionHelperTask.ErrorMessage => onFailMessage;
 
-        public ActionHelper Then() => _ActionHelper;
+        public ActionHelper Then() => actionHelper;
 
-        public Task<bool> ExecuteAsync(bool BreakOnFail = true) => _ActionHelper.ExecuteAsync(BreakOnFail);
+        public Task<bool> ExecuteAsync(bool BreakOnFail = true) => actionHelper.ExecuteAsync(BreakOnFail);
     }
 }

@@ -6,6 +6,8 @@ using WPR.Theme;
 namespace WPR.Dialogs;
 public static class UserDialog
 {
+    #region Private
+
     private static readonly Style _ModalWindowStyle = (Style)Application.Current.Resources["WPRModalWindow"];
 
     // Найти панель для отображения диалога
@@ -15,7 +17,7 @@ public static class UserDialog
         if (element == null)
             return null;
 
-        if(element is DialogRoot panel)
+        if (element is DialogRoot panel)
             return panel;
 
         if (element is Window window)
@@ -24,6 +26,7 @@ public static class UserDialog
         return element.FindVisualParent<DialogRoot>();
     }
 
+    #endregion
 
     #region Internal
 
