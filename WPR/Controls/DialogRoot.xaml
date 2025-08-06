@@ -27,7 +27,7 @@
                                 <SolidColorBrush x:Name="RectBrush" Color="#7F000000" Opacity="0"/>
                             </Rectangle.Fill>
                         </Rectangle>
-                        <controls:WPRPopup RenderTransformOrigin="0.5,0.5"
+                        <controls:PopupEx RenderTransformOrigin="0.5,0.5"
                                            x:Name="PART_Popup" 
                                            StaysOpen="True" 
                                            AllowMouseMove="True"
@@ -37,20 +37,20 @@
                                            VerticalAlignment="Center">
 
 
-                            <controls:WPRPopup.LayoutTransform>
+                            <controls:PopupEx.LayoutTransform>
                                 <TransformGroup>
                                     <ScaleTransform x:Name="GridScale"/>
                                     <RotateTransform x:Name="GridRotate"/>
                                 </TransformGroup>
-                            </controls:WPRPopup.LayoutTransform>
-                            <controls:WPRPopup.Content>
+                            </controls:PopupEx.LayoutTransform>
+                            <controls:PopupEx.Content>
                                 <ContentPresenter Focusable="True" x:Name="PART_HeaderContent"
                                                       Content="{TemplateBinding Header}"
                                                       KeyboardNavigation.TabNavigation="Cycle"/>
 
 
-                            </controls:WPRPopup.Content>
-                        </controls:WPRPopup>
+                            </controls:PopupEx.Content>
+                        </controls:PopupEx>
 
                         <Border x:Name="PART_Notification" Margin="20"
                                 RenderTransformOrigin="0.5,1"

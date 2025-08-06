@@ -318,7 +318,7 @@
                         Style="{StaticResource WPRToolHiddenButton}"
                         VerticalAlignment="Center"
                         Visibility="{Binding Path=(wpr:Extra.ClearButton), RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource Bool2VisibilityConverter}}">
-                    <wpr:WPRIcon Source="CloseCircle"/>
+                    <wpr:Icon Source="CloseCircle"/>
                 </Button>
 
                 <Rectangle Margin="{TemplateBinding Padding}" x:Name="BottomRect" Grid.Row="0" Grid.ColumnSpan="2"
@@ -572,7 +572,7 @@
                                 Style="{StaticResource WPRToolHiddenButton}"
                                 VerticalAlignment="Center"
                                 Visibility="{Binding Path=(wpr:Extra.ClearButton), RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource Bool2VisibilityConverter}}">
-                            <wpr:WPRIcon Source="CloseCircle"/>
+                            <wpr:Icon Source="CloseCircle"/>
                         </Button>
                     </Grid>
                 </Border>

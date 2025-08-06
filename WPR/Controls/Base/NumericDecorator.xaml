@@ -33,7 +33,7 @@
                                     ToolTip="Увеличить значение"
                                     Foreground="{DynamicResource AccentColorBrush}"
                                     Padding="0">
-                                <wpr:WPRIcon Source="ArrowDropUp" IconSize="22" Margin="1"/>
+                                <wpr:Icon Source="ArrowDropUp" IconSize="22" Margin="1"/>
                                 <Button.RenderTransform>
                                     <TranslateTransform x:Name="AnimatedTranslateTransformPlus" Y="{Binding Path=ActualHeight, RelativeSource={RelativeSource TemplatedParent}}" />
                                 </Button.RenderTransform>
@@ -45,7 +45,7 @@
                                     ToolTip="Уменьшить значение"
                                     Foreground="{DynamicResource AccentColorBrush}"
                                     Padding="0">
-                                <wpr:WPRIcon Source="ArrowDropDown" IconSize="22" Margin="1"/>
+                                <wpr:Icon Source="ArrowDropDown" IconSize="22" Margin="1"/>
                                 <Button.RenderTransform>
                                     <TranslateTransform x:Name="AnimatedTranslateTransformMinus" Y="{Binding Path=ActualHeight, RelativeSource={RelativeSource TemplatedParent}}" />
                                 </Button.RenderTransform>

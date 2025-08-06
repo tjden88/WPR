@@ -5,7 +5,7 @@
         <ResourceDictionary Source="../Styles/Base.xaml"/>
     </ResourceDictionary.MergedDictionaries>
 
-    <Style TargetType="{x:Type local:WPRIconDecorator}">
+    <Style TargetType="{x:Type local:IconDecorator}">
         <Setter Property="Padding" Value="0,14,10,0" />
         <Setter Property="Margin" Value="0,10,0,10"></Setter>
         <Setter Property="VerticalContentAlignment" Value="Top" />
@@ -14,13 +14,13 @@
 
         <Setter Property="Template">
             <Setter.Value>
-                <ControlTemplate TargetType="{x:Type local:WPRIconDecorator}">
+                <ControlTemplate TargetType="{x:Type local:IconDecorator}">
                     <Grid >
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto"/>
                             <ColumnDefinition/>
                         </Grid.ColumnDefinitions>
-                        <local:WPRIcon Source="{Binding Path=Icon, RelativeSource={RelativeSource TemplatedParent}}"
+                        <local:Icon Source="{Binding Path=Icon, RelativeSource={RelativeSource TemplatedParent}}"
                                        IconSize="18"
                                        Foreground="{Binding Path=Content.(local:Extra.MouseOverBrush), RelativeSource={RelativeSource TemplatedParent}}"
                                        VerticalAlignment="{TemplateBinding VerticalContentAlignment}"

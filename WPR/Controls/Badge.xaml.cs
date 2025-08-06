@@ -7,16 +7,16 @@ using System.Windows.Media.Animation;
 namespace WPR;
 
 /// <summary>Наклейка с контентом на элемент</summary>
-public class WPRBage : ContentControl
+public class Badge : ContentControl
 {
-    static WPRBage()
+    static Badge()
     {
-        DefaultStyleKeyProperty.OverrideMetadata(typeof(WPRBage), new FrameworkPropertyMetadata(typeof(WPRBage)));
+        DefaultStyleKeyProperty.OverrideMetadata(typeof(Badge), new FrameworkPropertyMetadata(typeof(Badge)));
     }
 
     /// <summary>Контент бейджа</summary>
     public static readonly DependencyProperty BageContentProperty = DependencyProperty.Register(
-        nameof(BageContent), typeof(object), typeof(WPRBage),
+        nameof(BageContent), typeof(object), typeof(Badge),
         new PropertyMetadata(string.Empty));
 
     public object BageContent
@@ -30,7 +30,7 @@ public class WPRBage : ContentControl
     }
 
     /// <summary> Видимость бейджа </summary>
-    public static readonly DependencyProperty BageVisibleProperty = DependencyProperty.Register(nameof(BageVisible), typeof(bool), typeof(WPRBage), 
+    public static readonly DependencyProperty BageVisibleProperty = DependencyProperty.Register(nameof(BageVisible), typeof(bool), typeof(Badge), 
         new PropertyMetadata(false));
 
     public bool BageVisible
@@ -51,11 +51,11 @@ public class WPRBage : ContentControl
         DependencyProperty.Register(
             nameof(BageMargin),
             typeof(Thickness),
-            typeof(WPRBage),
+            typeof(Badge),
             new PropertyMetadata(default(Thickness)));
 
     /// <summary>Положение бейджа</summary>
-    [Category("WPRBage")]
+    [Category("Badge")]
     [Description("Положение бейджа")]
     public Thickness BageMargin
     {

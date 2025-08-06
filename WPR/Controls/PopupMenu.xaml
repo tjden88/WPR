@@ -7,10 +7,10 @@
         <ResourceDictionary Source="../Styles/Buttons.xaml"/>
     </ResourceDictionary.MergedDictionaries>
 
-    <Style TargetType="{x:Type local:WPRPopupMenu}">
+    <Style TargetType="{x:Type local:PopupMenu}">
         <Setter Property="Template">
             <Setter.Value>
-                <ControlTemplate TargetType="{x:Type local:WPRPopupMenu}">
+                <ControlTemplate TargetType="{x:Type local:PopupMenu}">
                     <Grid>
                         <Grid.Resources>
                             <Style TargetType="Menu" BasedOn="{StaticResource WPRVerticalMenu}"/>
@@ -21,14 +21,14 @@
                                       VerticalAlignment="Center"
                                       Name="MenuButton">
                             <ToggleButton.Content>
-                                <local:WPRIcon Source="{Binding Path=Icon, RelativeSource={RelativeSource TemplatedParent}}"
+                                <local:Icon Source="{Binding Path=Icon, RelativeSource={RelativeSource TemplatedParent}}"
                                                IconSize="{Binding Path=IconSize, RelativeSource={RelativeSource TemplatedParent}}"/>
                             </ToggleButton.Content>
                         </ToggleButton>
-                        <local:WPRPopup IsOpen="{Binding Path=IsChecked, ElementName=MenuButton}"
+                        <local:PopupEx IsOpen="{Binding Path=IsChecked, ElementName=MenuButton}"
                                        CloseOnMouseButtonUp="True">
                             <ContentPresenter Content="{Binding Path=Content, RelativeSource={RelativeSource TemplatedParent}}"/>
-                        </local:WPRPopup>
+                        </local:PopupEx>
                     </Grid>
                 </ControlTemplate>
             </Setter.Value>

@@ -4,12 +4,12 @@ using WPR.Infrastructure.Extensions;
 
 namespace WPR;
 
-public class WPRNumericIntDecorator : NumericDecorator<int>
+public class NumericIntDecorator : NumericDecorator<int>
 {
 
-    static WPRNumericIntDecorator()
+    static NumericIntDecorator()
     {
-        DefaultStyleKeyProperty.OverrideMetadata(typeof(WPRNumericIntDecorator), new FrameworkPropertyMetadata(typeof(WPRNumericIntDecorator)));
+        DefaultStyleKeyProperty.OverrideMetadata(typeof(NumericIntDecorator), new FrameworkPropertyMetadata(typeof(NumericIntDecorator)));
     }
 
     protected override int IncrementValue() => Math.Min(MaxValue, Value + Increment);

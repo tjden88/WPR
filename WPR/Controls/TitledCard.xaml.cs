@@ -6,12 +6,12 @@ using WPR.Icons;
 namespace WPR;
 
 /// <summary> Панелька с заголовком и иконкой </summary>
-public class WPRTitledCard : ContentControl
+public class TitledCard : ContentControl
 {
-    static WPRTitledCard()
+    static TitledCard()
     {
-        DefaultStyleKeyProperty.OverrideMetadata(typeof(WPRTitledCard),
-            new FrameworkPropertyMetadata(typeof(WPRTitledCard)));
+        DefaultStyleKeyProperty.OverrideMetadata(typeof(TitledCard),
+            new FrameworkPropertyMetadata(typeof(TitledCard)));
     }
 
     /// <summary> Текст заголовка </summary>
@@ -22,9 +22,9 @@ public class WPRTitledCard : ContentControl
     }
 
     // Using a DependencyProperty as the backing store for Header.  This enables animation, styling, binding, etc...
-    [Category("WPRTitledCard")]
+    [Category("TitledCard")]
     public static readonly DependencyProperty HeaderProperty =
-        DependencyProperty.Register(nameof(Header), typeof(string), typeof(WPRTitledCard),
+        DependencyProperty.Register(nameof(Header), typeof(string), typeof(TitledCard),
             new PropertyMetadata(string.Empty));
 
 
@@ -36,9 +36,9 @@ public class WPRTitledCard : ContentControl
     }
 
     // Using a DependencyProperty as the backing store for IconSource.  This enables animation, styling, binding, etc...
-    [Category("WPRTitledCard")]
+    [Category("TitledCard")]
     public static readonly DependencyProperty IconSourceProperty =
-        DependencyProperty.Register(nameof(IconSource), typeof(PackIconKind), typeof(WPRTitledCard),
+        DependencyProperty.Register(nameof(IconSource), typeof(PackIconKind), typeof(TitledCard),
             new PropertyMetadata(PackIconKind.InfoCircle));
 
     #region PopupMenu : Menu - Меню в правой части заголовка
@@ -48,11 +48,11 @@ public class WPRTitledCard : ContentControl
         DependencyProperty.Register(
             nameof(PopupMenu),
             typeof(Menu),
-            typeof(WPRTitledCard),
+            typeof(TitledCard),
             new PropertyMetadata(default(Menu)));
 
     /// <summary>Меню в правой части заголовка</summary>
-    [Category("WPRTitledCard")]
+    [Category("TitledCard")]
     [Description("Меню в правой части заголовка")]
     public Menu PopupMenu
     {
@@ -69,11 +69,11 @@ public class WPRTitledCard : ContentControl
         DependencyProperty.Register(
             nameof(ShowMenuButton),
             typeof(bool),
-            typeof(WPRTitledCard),
+            typeof(TitledCard),
             new PropertyMetadata(default(bool)));
 
     /// <summary>Показывать кнопку всплывающего меню</summary>
-    [Category("WPRTitledCard")]
+    [Category("TitledCard")]
     [Description("Показывать кнопку всплывающего меню")]
     public bool ShowMenuButton
     {

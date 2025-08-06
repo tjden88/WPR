@@ -7,15 +7,15 @@
         <ResourceDictionary Source="../Styles/Base.xaml"/>
     </ResourceDictionary.MergedDictionaries>
 
-    <Style TargetType="{x:Type local:WPRIconText}" BasedOn="{StaticResource FrameworkElementStyle}">
+    <Style TargetType="{x:Type local:IconText}" BasedOn="{StaticResource FrameworkElementStyle}">
         <Setter Property="Focusable" Value="False"/>
         <Setter Property="Template">
             <Setter.Value>
-                <ControlTemplate TargetType="{x:Type local:WPRIconText}">
+                <ControlTemplate TargetType="{x:Type local:IconText}">
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                                 Margin="{TemplateBinding Padding}"
                                 VerticalAlignment="{TemplateBinding VerticalContentAlignment}">
-                        <local:WPRIcon x:Name="Icon" 
+                        <local:Icon x:Name="Icon" 
                                        Source="{TemplateBinding IconSource}"
                                        Foreground="{TemplateBinding IconForeground}"/>
                         <TextBlock Text="{TemplateBinding Text}" Foreground="{TemplateBinding Foreground}"

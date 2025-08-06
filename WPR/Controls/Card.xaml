@@ -6,7 +6,7 @@
         <ResourceDictionary Source="../Styles/Base.xaml"/>
     </ResourceDictionary.MergedDictionaries>
 
-    <Style TargetType="{x:Type wpr:WPRCard}" BasedOn="{StaticResource BaseControl}">
+    <Style TargetType="{x:Type wpr:Card}" BasedOn="{StaticResource BaseControl}">
 
         <Setter Property="wpr:Extra.BorderRadius" Value="4"/>
         <Setter Property="Margin" Value="10"/>
@@ -15,7 +15,7 @@
         <Setter Property="wpr:Extra.Shadow" Value="{StaticResource CardShadow}"/>
         <Setter Property="Template">
             <Setter.Value>
-                <ControlTemplate TargetType="{x:Type wpr:WPRCard}">
+                <ControlTemplate TargetType="{x:Type wpr:Card}">
                     <Grid Background="Transparent">
                         <Border x:Name="ShadowBorder"
                                 Background="{TemplateBinding Background}"

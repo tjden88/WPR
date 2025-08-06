@@ -65,7 +65,7 @@
                             <RotateTransform/>
                         </Border.RenderTransform>
 
-                        <wpr:WPRIcon Foreground="{DynamicResource PrimaryColorBrush}"
+                        <wpr:Icon Foreground="{DynamicResource PrimaryColorBrush}"
                                           HorizontalAlignment="Center" VerticalAlignment="Center"
                                           IconSize="18"
                                           Source="ChevronRight"/>

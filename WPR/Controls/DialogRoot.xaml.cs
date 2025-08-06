@@ -24,7 +24,7 @@ public class DialogRoot : HeaderedContentControl
     private IWPRDialog _WPRDialog;
     private bool _StaysOpen;
     private ContentPresenter _Header;
-    private WPRPopup _HeaderPopup;
+    private PopupEx _HeaderPopupEx;
 
     static DialogRoot()
     {
@@ -38,13 +38,13 @@ public class DialogRoot : HeaderedContentControl
         if (GetTemplateChild("PART_Notification") is Border br) br.MouseUp += (_, _) => HideNotification();
         if (GetTemplateChild("PART_Rect") is Rectangle r) r.MouseDown += Rect_MouseDown;
 
-        _HeaderPopup = GetTemplateChild("PART_Popup") as WPRPopup;
+        _HeaderPopupEx = GetTemplateChild("PART_Popup") as PopupEx;
         _Header = GetTemplateChild("PART_HeaderContent") as ContentPresenter;
 
-        if (_HeaderPopup == null)
-            throw new ArgumentNullException(nameof(_HeaderPopup), "Попап не найден в шаблоне!");
+        if (_HeaderPopupEx == null)
+            throw new ArgumentNullException(nameof(_HeaderPopupEx), "Попап не найден в шаблоне!");
 
-        _HeaderPopup.PopupClosed += HeaderPopupOnClosed;
+        _HeaderPopupEx.PopupClosed += HeaderPopupOnClosed;
     }
 
 
@@ -139,7 +139,7 @@ public class DialogRoot : HeaderedContentControl
     {
         if (CurrentStatus != Status.Showing) return;
         CurrentStatus = Status.Hiding;
-        _HeaderPopup.Hide();
+        _HeaderPopupEx.Hide();
         _WPRDialog = null;
     }
 
@@ -152,7 +152,7 @@ public class DialogRoot : HeaderedContentControl
             Focus();
             return;
         }
-        _HeaderPopup.Show();
+        _HeaderPopupEx.Show();
         _StaysOpen = nextContent.staysOpen;
         CurrentStatus = Status.Showing;
 
@@ -298,7 +298,7 @@ public class DialogRoot : HeaderedContentControl
         {
             if (Template.Resources["ShakeAnim"] is Storyboard s)
             {
-                s.Begin(_HeaderPopup);
+                s.Begin(_HeaderPopupEx);
             }
         }
         else

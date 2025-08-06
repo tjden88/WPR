@@ -6,11 +6,11 @@ using WPR.Infrastructure.Extensions;
 
 namespace WPR;
 
-public class WPRNumericDoubleDecorator : NumericDecorator<double>
+public class NumericDoubleDecorator : NumericDecorator<double>
 {
-    static WPRNumericDoubleDecorator()
+    static NumericDoubleDecorator()
     {
-        DefaultStyleKeyProperty.OverrideMetadata(typeof(WPRNumericDoubleDecorator), new FrameworkPropertyMetadata(typeof(WPRNumericDoubleDecorator)));
+        DefaultStyleKeyProperty.OverrideMetadata(typeof(NumericDoubleDecorator), new FrameworkPropertyMetadata(typeof(NumericDoubleDecorator)));
     }
 
 
@@ -21,7 +21,7 @@ public class WPRNumericDoubleDecorator : NumericDecorator<double>
         DependencyProperty.Register(
             nameof(DecimalPlaces),
             typeof(int),
-            typeof(WPRNumericDoubleDecorator),
+            typeof(NumericDoubleDecorator),
             new PropertyMetadata(15, null, (d, BaseValue) =>
                 Math.Max(0, Math.Min(15, (int)BaseValue))));
 

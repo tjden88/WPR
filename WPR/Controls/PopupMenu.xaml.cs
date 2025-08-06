@@ -8,11 +8,11 @@ namespace WPR;
 /// <summary>
 /// Всплывающее меню (попап с кнопкой)
 /// </summary>
-public class WPRPopupMenu : ContentControl
+public class PopupMenu : ContentControl
 {
-    static WPRPopupMenu()
+    static PopupMenu()
     {
-        DefaultStyleKeyProperty.OverrideMetadata(typeof(WPRPopupMenu), new FrameworkPropertyMetadata(typeof(WPRPopupMenu)));
+        DefaultStyleKeyProperty.OverrideMetadata(typeof(PopupMenu), new FrameworkPropertyMetadata(typeof(PopupMenu)));
     }
 
 
@@ -23,11 +23,11 @@ public class WPRPopupMenu : ContentControl
         DependencyProperty.Register(
             nameof(Icon),
             typeof(PackIconKind),
-            typeof(WPRPopupMenu),
+            typeof(PopupMenu),
             new PropertyMetadata(PackIconKind.DotsVertical));
 
     /// <summary>Значок меню</summary>
-    [Category("WPRPopupMenu")]
+    [Category("PopupMenu")]
     [Description("Значок меню")]
     public PackIconKind Icon
     {
@@ -44,11 +44,11 @@ public class WPRPopupMenu : ContentControl
         DependencyProperty.Register(
             nameof(IconSize),
             typeof(double),
-            typeof(WPRPopupMenu),
+            typeof(PopupMenu),
             new PropertyMetadata(18d));
 
     /// <summary>Размер значка</summary>
-    [Category("WPRPopupMenu")]
+    [Category("PopupMenu")]
     [Description("Размер значка")]
     public double IconSize
     {

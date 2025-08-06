@@ -30,7 +30,7 @@
     </Style>
 
 
-    <Style TargetType="{x:Type local:WPRTipDecorator}">
+    <Style TargetType="{x:Type local:TipDecorator}">
         <Setter Property="HorizontalContentAlignment" Value="Left"></Setter>
         <Setter Property="VerticalContentAlignment" Value="Center"></Setter>
         <Setter Property="local:Extra.Shadow" Value="{StaticResource SmallShadow}"></Setter>
@@ -40,7 +40,7 @@
 
         <Setter Property="Template">
             <Setter.Value>
-                <ControlTemplate TargetType="{x:Type local:WPRTipDecorator}">
+                <ControlTemplate TargetType="{x:Type local:TipDecorator}">
                     <Grid>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto"/>

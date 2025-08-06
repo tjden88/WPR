@@ -149,17 +149,17 @@
                                 Background="{TemplateBinding Background}"
                                 Padding="{TemplateBinding Padding}">
                             <Grid>
-                                <wpr:WPRIcon Source="ArrowRight"
+                                <wpr:Icon Source="ArrowRight"
                                              x:Name="RotateArrow"
                                              HorizontalAlignment="Left"
                                              RenderTransformOrigin="0.5,0.5"
                                              Opacity="0"
                                              Margin="-16,0,0,0"
                                              IconSize="12">
-                                    <wpr:WPRIcon.RenderTransform>
+                                    <wpr:Icon.RenderTransform>
                                         <RotateTransform x:Name="RotateArrowSort"/>
-                                    </wpr:WPRIcon.RenderTransform>
-                                </wpr:WPRIcon>
+                                    </wpr:Icon.RenderTransform>
+                                </wpr:Icon>
                                 <ContentPresenter HorizontalAlignment="Stretch" 
                                               RecognizesAccessKey="True"
                                               SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" 

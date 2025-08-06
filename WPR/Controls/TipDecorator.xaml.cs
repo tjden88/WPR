@@ -7,11 +7,11 @@ namespace WPR;
 /// <summary>
 /// Текст в овальной рамке - появляется при наведении на дочерний элемент
 /// </summary>
-public class WPRTipDecorator : ContentControl
+public class TipDecorator : ContentControl
 {
-    static WPRTipDecorator()
+    static TipDecorator()
     {
-        DefaultStyleKeyProperty.OverrideMetadata(typeof(WPRTipDecorator), new FrameworkPropertyMetadata(typeof(WPRTipDecorator)));
+        DefaultStyleKeyProperty.OverrideMetadata(typeof(TipDecorator), new FrameworkPropertyMetadata(typeof(TipDecorator)));
     }
 
     #region Tip : object - Контент подсказки при наведении
@@ -21,11 +21,11 @@ public class WPRTipDecorator : ContentControl
         DependencyProperty.Register(
             nameof(Tip),
             typeof(object),
-            typeof(WPRTipDecorator),
+            typeof(TipDecorator),
             new PropertyMetadata(default(object)));
 
     /// <summary>Контент подсказки при наведении</summary>
-    [Category("WPRTipDecorator")]
+    [Category("TipDecorator")]
     [Description("Контент подсказки при наведени")]
     public object Tip
     {
@@ -43,11 +43,11 @@ public class WPRTipDecorator : ContentControl
         DependencyProperty.Register(
             nameof(TipMargin),
             typeof(Thickness),
-            typeof(WPRTipDecorator),
+            typeof(TipDecorator),
             new PropertyMetadata(default(Thickness)));
 
     /// <summary>Отступ контента подсказки</summary>
-    [Category("WPRTipDecorator")]
+    [Category("TipDecorator")]
     [Description("Отступ контента подсказки")]
     public Thickness TipMargin
     {

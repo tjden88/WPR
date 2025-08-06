@@ -7,13 +7,13 @@ using WPR.Icons;
 namespace WPR;
 
 /// <summary> Иконка (векторная) </summary>
-public class WPRIcon : Control
+public class Icon : Control
 {
     private static readonly Lazy<IDictionary<PackIconKind, string>> DataIndex = new(PackIconDataFactory.Create);
 
-    static WPRIcon()
+    static Icon()
     {
-        DefaultStyleKeyProperty.OverrideMetadata(typeof(WPRIcon), new FrameworkPropertyMetadata(typeof(WPRIcon)));
+        DefaultStyleKeyProperty.OverrideMetadata(typeof(Icon), new FrameworkPropertyMetadata(typeof(Icon)));
     }
 
     #region Source
@@ -25,8 +25,8 @@ public class WPRIcon : Control
     }
     public static readonly DependencyProperty SourceProperty
         = DependencyProperty.Register(nameof(Source), typeof(PackIconKind),
-            typeof(WPRIcon), new PropertyMetadata(PackIconKind.InfoCircle,
-                (d, e) => ((WPRIcon)d).UpdateData()));
+            typeof(Icon), new PropertyMetadata(PackIconKind.InfoCircle,
+                (d, e) => ((Icon)d).UpdateData()));
     #endregion
 
 
@@ -38,11 +38,11 @@ public class WPRIcon : Control
     }
 
     public static readonly DependencyProperty IconSizeProperty =
-        DependencyProperty.Register(nameof(IconSize), typeof(double), typeof(WPRIcon), new PropertyMetadata(16.0));
+        DependencyProperty.Register(nameof(IconSize), typeof(double), typeof(Icon), new PropertyMetadata(16.0));
 
 
     private static readonly DependencyPropertyKey DataPropertyKey
-        = DependencyProperty.RegisterReadOnly(nameof(Data), typeof(string), typeof(WPRIcon), new PropertyMetadata(""));
+        = DependencyProperty.RegisterReadOnly(nameof(Data), typeof(string), typeof(Icon), new PropertyMetadata(""));
 
     public static readonly DependencyProperty DataProperty = DataPropertyKey.DependencyProperty;
 

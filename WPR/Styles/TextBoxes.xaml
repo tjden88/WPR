@@ -226,7 +226,7 @@
                                     Visibility="{Binding Path=(wpr:Extra.ClearButton), 
                                 RelativeSource={RelativeSource TemplatedParent},
                                 Converter={StaticResource Bool2VisibilityConverter}}">
-                                    <wpr:WPRIcon Source="CloseCircle"/>
+                                    <wpr:Icon Source="CloseCircle"/>
                                 </Button>
                             </Grid>
                         </Grid>
@@ -343,7 +343,7 @@
                                             Command="{StaticResource ClearCommand}"
                                             CommandParameter="{Binding RelativeSource={RelativeSource TemplatedParent}}"
                                             Visibility="{Binding Path=(wpr:Extra.ClearButton), RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource Bool2VisibilityConverter}}">
-                                        <wpr:WPRIcon Source="CloseCircle"/>
+                                        <wpr:Icon Source="CloseCircle"/>
                                     </Button>
                                 </Grid>
                             </Grid>

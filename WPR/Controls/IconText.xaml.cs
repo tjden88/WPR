@@ -9,11 +9,11 @@ namespace WPR;
 /// <summary>
 /// Текст с иконкой слева
 /// </summary>
-public class WPRIconText : Control
+public class IconText : Control
 {
-    static WPRIconText()
+    static IconText()
     {
-        DefaultStyleKeyProperty.OverrideMetadata(typeof(WPRIconText), new FrameworkPropertyMetadata(typeof(WPRIconText)));
+        DefaultStyleKeyProperty.OverrideMetadata(typeof(IconText), new FrameworkPropertyMetadata(typeof(IconText)));
     }
 
     #region Text : string - Текст 
@@ -23,11 +23,11 @@ public class WPRIconText : Control
         DependencyProperty.Register(
             nameof(Text),
             typeof(string),
-            typeof(WPRIconText),
+            typeof(IconText),
             new PropertyMetadata(default(string)));
 
     /// <summary>Текст </summary>
-    [Category("WPRIconText")]
+    [Category("IconText")]
     [Description("Текст ")]
     public string Text
     {
@@ -44,11 +44,11 @@ public class WPRIconText : Control
         DependencyProperty.Register(
             nameof(IconSource),
             typeof(PackIconKind),
-            typeof(WPRIconText),
+            typeof(IconText),
             new PropertyMetadata(default(PackIconKind)));
 
     /// <summary>Иконка с текстом</summary>
-    [Category("WPRIconText")]
+    [Category("IconText")]
     [Description("Иконка с текстом")]
     public PackIconKind IconSource
     {
@@ -65,11 +65,11 @@ public class WPRIconText : Control
         DependencyProperty.Register(
             nameof(IconForeground),
             typeof(Brush),
-            typeof(WPRIconText),
+            typeof(IconText),
             new PropertyMetadata(default(Brush)));
 
     /// <summary>Цвет иконки</summary>
-    [Category("WPRIconText")]
+    [Category("IconText")]
     [Description("Цвет иконки")]
     public Brush IconForeground
     {

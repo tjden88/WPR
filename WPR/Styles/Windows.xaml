@@ -336,16 +336,16 @@
                     <Grid x:Name="RootGrid" 
                           Margin="20"
                           Background="Transparent">
-                        <wpr:WPRCard IsDialogShadowStyle="True"     
+                        <wpr:Card IsDialogShadowStyle="True"     
                                           Background="{TemplateBinding Background}"
                                           BorderBrush="{TemplateBinding BorderBrush}"
                                           BorderThickness="{TemplateBinding BorderThickness}"
                                           RenderTransformOrigin="0.5,0.5"
                                           Content="{TemplateBinding Content}">
-                            <wpr:WPRCard.RenderTransform>
+                            <wpr:Card.RenderTransform>
                                 <ScaleTransform x:Name="Transform" ScaleX="0" ScaleY="{Binding RelativeSource={RelativeSource Self}, Path=ScaleX}"/>
-                            </wpr:WPRCard.RenderTransform>
-                        </wpr:WPRCard>
+                            </wpr:Card.RenderTransform>
+                        </wpr:Card>
                     </Grid>
                     <ControlTemplate.Triggers>
                         <EventTrigger RoutedEvent="Loaded">

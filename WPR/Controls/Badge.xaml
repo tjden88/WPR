@@ -5,7 +5,7 @@
         <ResourceDictionary Source="../Styles/Base.xaml"/>
     </ResourceDictionary.MergedDictionaries>
 
-    <Style TargetType="{x:Type local:WPRBage}" BasedOn="{StaticResource BaseControl}">
+    <Style TargetType="{x:Type local:Badge}" BasedOn="{StaticResource BaseControl}">
         <Setter Property="Margin" Value="0"/>
         <Setter Property="Background" Value="{DynamicResource AccentColorBrush}"/>
         <Setter Property="Foreground" Value="{DynamicResource AccentContrastColorBrush}"/>
@@ -17,7 +17,7 @@
         <Setter Property="local:Extra.Shadow" Value="{StaticResource ButtonShadow}"/>
         <Setter Property="Template">
             <Setter.Value>
-                <ControlTemplate TargetType="{x:Type local:WPRBage}">
+                <ControlTemplate TargetType="{x:Type local:Badge}">
                     <Grid>
                         <ContentPresenter/>
                         <Border x:Name="BageBorder" Background="{TemplateBinding Background}"

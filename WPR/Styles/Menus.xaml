@@ -24,23 +24,23 @@
     <ContextMenu x:Key="WPRDefaultContextMenu">
         <MenuItem Command="Cut" Header="Вырезать">
             <MenuItem.Icon>
-                <wpr:WPRIcon Source="ContentCut"/>
+                <wpr:Icon Source="ContentCut"/>
             </MenuItem.Icon>
         </MenuItem>
         <MenuItem Command="Copy" Header="Копировать">
             <MenuItem.Icon>
-                <wpr:WPRIcon Source="ContentCopy" />
+                <wpr:Icon Source="ContentCopy" />
             </MenuItem.Icon>
         </MenuItem>
         <MenuItem Command="Paste" Header="Вставить">
             <MenuItem.Icon>
-                <wpr:WPRIcon Source="ContentPaste" />
+                <wpr:Icon Source="ContentPaste" />
             </MenuItem.Icon>
         </MenuItem>
         <Separator />
         <MenuItem Command="SelectAll" Header="Выбрать всё">
             <MenuItem.Icon>
-                <wpr:WPRIcon Source="SelectAll" />
+                <wpr:Icon Source="SelectAll" />
             </MenuItem.Icon>
         </MenuItem>
     </ContextMenu>

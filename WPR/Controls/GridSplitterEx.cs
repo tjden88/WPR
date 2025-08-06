@@ -10,7 +10,7 @@ namespace WPR;
 /// <summary>
 /// Изменение размера связанного элемента при помощи мыши
 /// </summary>
-public class WPRGridSplitterEx : GridSplitter
+public class GridSplitterEx : GridSplitter
 {
     /// <summary> Расположения элемента относительно целевого объекта </summary>
     public enum Placements
@@ -28,11 +28,11 @@ public class WPRGridSplitterEx : GridSplitter
         DependencyProperty.Register(
             nameof(Tagret),
             typeof(FrameworkElement),
-            typeof(WPRGridSplitterEx),
+            typeof(GridSplitterEx),
             new PropertyMetadata(default(FrameworkElement)));
 
     /// <summary>Цель изменения размера</summary>
-    [Category("WPRGridSplitterEx")]
+    [Category("GridSplitterEx")]
     [Description("Цель изменения размера")]
     public FrameworkElement Tagret
     {
@@ -50,11 +50,11 @@ public class WPRGridSplitterEx : GridSplitter
         DependencyProperty.Register(
             nameof(TargetMinSize),
             typeof(double),
-            typeof(WPRGridSplitterEx),
+            typeof(GridSplitterEx),
             new PropertyMetadata(default(double)));
 
     /// <summary>Минимальный размер цели</summary>
-    [Category("WPRGridSplitterEx")]
+    [Category("GridSplitterEx")]
     [Description("Минимальный размер цели")]
     public double TargetMinSize
     {
