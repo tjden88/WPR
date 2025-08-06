@@ -4,14 +4,10 @@ using System.Windows.Data;
 namespace WPR.Converters.Base;
 
 /// <summary> Типизированный конвертер </summary>
-public class TypeConverter<T> : IValueConverter where T : class
+public class TypeConverter<T>(Converter converter) : IValueConverter
+    where T : class
 {
-    public Converter Converter { get; init; }
-
-    public TypeConverter(Converter Converter)
-    {
-        this.Converter = Converter;
-    }
+    public Converter Converter { get; init; } = converter;
 
     public T Convert(T value, object p = null) => Converter.Convert(value, typeof(T), p, CultureInfo.CurrentCulture) as T;
 
