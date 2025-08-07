@@ -4,7 +4,21 @@
     <TargetFramework>net9.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+    <Title>Mapped Репозитории сущностей EF Core</Title>
+    <Description>Mapped Репозитории сущностей EF Core.
+Для автоматического или ручного маппинга сущности БД в DTO и обратно
+Используется библиотека Mapster внутри</Description>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <PackageIcon>nuget-icon-128.png</PackageIcon>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="\\NAS\home\Личное\Иконки\nuget-icon-128.png">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Mapster" Version="7.4.0" />

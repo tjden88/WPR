@@ -1,9 +1,27 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <TargetFramework>net9.0</TargetFramework>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>enable</Nullable>
-  </PropertyGroup>
+	<PropertyGroup>
+		<TargetFrameworks>net6.0;net7.0;net8.0;net9.0</TargetFrameworks>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+		<LangVersion>latest</LangVersion>
+		<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+		<Title>WPR.Operations</Title>
+		<Description>
+			Используется для передачи значений и результатов некой операции.
+			Возвращает результат операции (успешно или нет), и либо объект при успехе, либо информацию об ошибке.
+			Поддерживает сериализацию (например, для Web-Api запросов)
+		</Description>
+		<PackageIcon>nuget-icon-128.png</PackageIcon>
+		<IncludeSymbols>False</IncludeSymbols>
+		<PackageLicenseExpression>MIT</PackageLicenseExpression>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<None Include="\\NAS\home\Личное\Иконки\nuget-icon-128.png">
+			<Pack>True</Pack>
+			<PackagePath>\</PackagePath>
+		</None>
+	</ItemGroup>
 
 </Project>
