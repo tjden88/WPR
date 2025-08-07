@@ -1,9 +1,6 @@
 ﻿namespace WPR.Demo.Models
 {
-    public class Person(string name, int age)
+    public record Person(string Name, int Age)
     {
-        public string Name { get; set; } = name;
-
-        public int Age { get; set; } = age;
     }
 }
