@@ -10,6 +10,7 @@
     <FontFamily x:Key="Roboto">pack://application:,,,/WPR;component/Fonts/#Roboto</FontFamily>
     <FontFamily x:Key="RobotoLight">pack://application:,,,/WPR;component/Fonts/#Roboto Thin</FontFamily>
     <FontFamily x:Key="Montserrat">pack://application:,,,/WPR;component/Fonts/#Montserrat</FontFamily>
+    <FontFamily x:Key="Raleway">pack://application:,,,/WPR;component/Fonts/#Raleway</FontFamily>
 
     <!--Конвертеры-->
     <converters:BoolToVisibilityConverter x:Key="Bool2VisibilityConverter"/>

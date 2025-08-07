@@ -34,7 +34,7 @@
                    HorizontalAlignment="Center" 
                    VerticalAlignment="Center"
                    FontSize="80" 
-                   FontFamily="{StaticResource RobotoLight}"
+                   FontWeight="Light"
                    Foreground="{DynamicResource PrimaryColorBrush}"/>
             <TextBlock Text="PrimaryColorBrush"
                    Background="{DynamicResource PrimaryColorBrush}" />

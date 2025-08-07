@@ -49,5 +49,6 @@ public enum StyleFont
 {
     Roboto,
     RobotoLight,
-    Montserrat
+    Montserrat,
+    Raleway
 }
