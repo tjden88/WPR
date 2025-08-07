@@ -1,5 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Messaging;
+using System.Diagnostics;
 
 namespace WPR.Mvvm.ViewModels;
 
@@ -7,7 +8,7 @@ namespace WPR.Mvvm.ViewModels;
 /// Базовая модель-представление для MVVM.
 /// Также реализует интерфейс <see cref="ObservableRecipient"/> для поддержки сообщений. Сразу активна.
 /// </summary>
-public abstract partial class ViewModel : ObservableRecipient
+public abstract partial class ViewModel : ObservableRecipient, IDisposable
 {
     protected ViewModel(IMessenger messenger) : base(messenger)
     {
@@ -31,4 +32,11 @@ public abstract partial class ViewModel : ObservableRecipient
     /// Индикатор того, что модель-представление занята выполнением операции.
     /// </summary>
     [ObservableProperty] private bool _IsBusy;
+
+    public void Dispose()
+    {
+        this.InitializeAttributes(true);
+
+        Debug.WriteLine($"Уничтожение {GetType().Name}");
+    }
 }

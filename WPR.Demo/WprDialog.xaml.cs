@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
+using System.Diagnostics;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using WPR.Demo.Models;
@@ -21,7 +22,7 @@ public partial class WprDialog
 }
 
 
-public partial class WprDialogViewModel(Person model) : EditViewModel<Person>(model), IWPRDialog
+public partial class WprDialogViewModel : EditViewModel<Person>, IWPRDialog
 {
     public event Action<bool> Completed;
 
@@ -38,6 +39,12 @@ public partial class WprDialogViewModel(Person model) : EditViewModel<Person>(mo
     [Bind(nameof(Model.Age))]
     [Range(0, 120, ErrorMessage = "Возраст должен быть в диапазоне от 0 до 120 лет.")]
     private int _Age;
+
+    /// <inheritdoc/>
+    public WprDialogViewModel(Person model) : base(model)
+    {
+        
+    }
 
     [AutoNotifyCanExecuteChanged]
     [RelayCommand(CanExecute = nameof(CanSave))]

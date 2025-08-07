@@ -1,5 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Reflection;
 
 namespace WPR.Mvvm.ViewModels;
@@ -8,7 +9,7 @@ namespace WPR.Mvvm.ViewModels;
 /// Модель-представление для редактирования сущности с возможностью отката изменений и автоматической привязкой свойств редактируемой модели с помощью атрибута BindAttribute.
 /// </summary>
 /// <typeparam name="T"></typeparam>
-public abstract class EditViewModel<T> : ObservableValidator where T : class
+public abstract class EditViewModel<T> : ObservableValidator, IDisposable where T : class
 {
     private readonly Dictionary<string, PropertyInfo> _BindProperties = new(); // Свойства модели-представления, которые будут привязаны к свойствам сущности с помощью атрибута BindAttribute
     private readonly Dictionary<string, object?> _OriginalValues = new(); // Словарь для хранения оригинальных значений свойств редактируемой сущности
@@ -179,4 +180,11 @@ public abstract class EditViewModel<T> : ObservableValidator where T : class
             });
 
     #endregion
+
+    public void Dispose()
+    {
+        this.InitializeAttributes(true);
+
+        Debug.WriteLine($"Уничтожение {GetType().Name}");
+    }
 }

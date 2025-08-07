@@ -106,7 +106,7 @@ namespace WPR.Demo.Pages
 
         private async void Button10_OnClick(object sender, RoutedEventArgs e)
         {
-            var context = new WprDialogViewModel(_Person);
+            using var context = new WprDialogViewModel(_Person);
             var dlg = new WprDialog
             {
                 DataContext = context

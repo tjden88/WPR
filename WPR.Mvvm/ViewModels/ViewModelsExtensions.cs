@@ -1,8 +1,6 @@
 ﻿using System.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using System.Reflection;
-using System.Windows;
-using System.Windows.Input;
 
 namespace WPR.Mvvm.ViewModels;
 
@@ -11,7 +9,7 @@ internal static class ViewModelsExtensions
     /// <summary>
     /// Работаем с атрибутами AutoNotifyCanExecuteChanged.
     /// </summary>
-    public static void InitializeAttributes(this INotifyPropertyChanged viewModel)
+    public static void InitializeAttributes(this INotifyPropertyChanged viewModel, bool Unregister = false)
     {
         var viewModelType = viewModel.GetType();
         var methods = viewModelType
@@ -21,27 +19,24 @@ internal static class ViewModelsExtensions
         foreach (var method in methods)
         {
             var attr = method.GetCustomAttribute<AutoNotifyCanExecuteChangedAttribute>()!;
-
-            // Определяем имя команды
-            // Если атрибут пустой, пытаемся догадаться по имени метода
             string commandName = attr.CommandName ?? InferCommandName(method.Name);
 
             var commandProp = viewModelType.GetProperty(commandName, BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
             if (commandProp == null)
-            {
-                throw new InvalidOperationException($"Команда с именем '{commandName}' не найдена в {viewModelType.Name}");
-            }
+                throw new InvalidOperationException($"Команда '{commandName}' не найдена");
 
-            if (commandProp.GetValue(viewModel) is not IRelayCommand relayCommand)
-            {
-                throw new InvalidOperationException($"Свойство '{commandName}' не реализует IRelayCommand");
-            }
+            // Принудительно активируем свойство (чтобы сработал ленивый get => ...)
+            var commandValue = commandProp.GetValue(viewModel);
+            if (commandValue is not IRelayCommand relayCommand)
+                throw new InvalidOperationException($"Свойство '{commandName}' не является IRelayCommand");
 
-            // Подписываемся на CommandManager.RequerySuggested через WeakEventManager
-            WeakEventManager<CommandManager, EventArgs>.AddHandler(null!, nameof(CommandManager.RequerySuggested), (_, _) =>
+            if (Unregister)
+                GlobalCanExecuteNotifier.Unregister(relayCommand);
+            else
             {
-                relayCommand.NotifyCanExecuteChanged();
-            });
+                GlobalCanExecuteNotifier.Register(relayCommand);
+                relayCommand.NotifyCanExecuteChanged(); // сразу обновляем состояние команды
+            }
         }
     }
 
@@ -55,4 +50,5 @@ internal static class ViewModelsExtensions
 
         return methodName + "Command";
     }
+
 }
