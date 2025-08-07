@@ -1,10 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Windows.Controls;
 
-namespace WPR.Demo.Services.Interfaces
+namespace WPR.Demo.Services.Interfaces;
+
+interface IGetPages
 {
-    interface IGetPages
-    {
-        public IEnumerable<Page> GetAllPages();
-    }
+    public IEnumerable<Page> GetAllPages();
 }

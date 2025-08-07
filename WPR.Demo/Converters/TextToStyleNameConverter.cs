@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Globalization;
-using WPR.MVVM.Converters.Base;
+using WPR.Converters.Base;
 
 namespace WPR.Demo.Converters
 {

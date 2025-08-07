@@ -1,15 +1,12 @@
-﻿<Application x:Class="WPR.Demo.App"
+﻿<mvvm:MvvmApp x:Class="WPR.Demo.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:base="clr-namespace:WPR.Demo.ViewModels.Base"
-             StartupUri="MainWindow.xaml">
-    <Application.Resources>
+             xmlns:mvvm="clr-namespace:WPR.Mvvm;assembly=WPR.Mvvm">
+    <mvvm:MvvmApp.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source = "pack://application:,,,/WPR;component/Styles.xaml" />
             </ResourceDictionary.MergedDictionaries>
-
-            <base:VMLocator x:Key="Locator"/>
-        </ResourceDictionary>
-    </Application.Resources>
-</Application>
+</ResourceDictionary>
+    </mvvm:MvvmApp.Resources>
+</mvvm:MvvmApp>
