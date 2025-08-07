@@ -41,3 +41,13 @@ public enum StyleBrushes
     AccentContrastColorBrush,
     SuccessColorBrush
 }
+
+/// <summary>
+/// Шрифты, используемые в приложении
+/// </summary>
+public enum Fonts
+{
+    Roboto,
+    RobotoLight,
+    Montserrat
+}

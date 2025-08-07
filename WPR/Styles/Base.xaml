@@ -5,8 +5,8 @@
                     xmlns:theme="clr-namespace:WPR.Theme">
 
     <!--Шрифты-->
-    <FontFamily x:Key="RobotoFont">pack://application:,,,/WPR;component/Fonts/#Roboto</FontFamily>
-    <FontFamily x:Key="RobotoFontLight">pack://application:,,,/WPR;component/Fonts/#Roboto Thin</FontFamily>
+    <FontFamily x:Key="Roboto">pack://application:,,,/WPR;component/Fonts/#Roboto</FontFamily>
+    <FontFamily x:Key="RobotoLight">pack://application:,,,/WPR;component/Fonts/#Roboto Thin</FontFamily>
     <FontFamily x:Key="Montserrat">pack://application:,,,/WPR;component/Fonts/#Montserrat</FontFamily>
 
     <!--Конвертеры-->
@@ -100,7 +100,7 @@
         <Setter Property="Background" Value="{x:Null}" />
         <Setter Property="Foreground" Value="{DynamicResource TextColorBrush}"/>
         <Setter Property="FontSize" Value="14"/>
-        <Setter Property="FontFamily" Value="{StaticResource RobotoFont}" />
+        <Setter Property="FontFamily" Value="{StaticResource Roboto}" />
         <Setter Property="BorderThickness" Value="0"/>
         <Setter Property="BorderBrush" Value="{DynamicResource SecondaryColorBrush}"></Setter>
         <Setter Property="FocusVisualStyle" Value="{StaticResource BaseFocusVisualStyle}"/>

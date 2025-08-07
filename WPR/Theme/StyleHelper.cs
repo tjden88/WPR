@@ -1,6 +1,7 @@
-﻿using System.Windows;
+﻿using Microsoft.Win32;
+using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Media;
-using Microsoft.Win32;
 
 namespace WPR.Theme;
 
@@ -31,6 +32,42 @@ public static class StyleHelper
         SetAccentColor(Color.FromRgb((byte)rnd.Next(0, 255), (byte)rnd.Next(0, 255), (byte)rnd.Next(0, 255)));
     }
 
+    /// <summary>Найти кисть в ресурсах</summary>
+    /// <param name="BrushName">Имя кисти</param>
+    public static SolidColorBrush GetBrushFromResource(StyleBrushes BrushName)
+    {
+        var br = Application.Current.Resources[BrushName.ToString()] as SolidColorBrush;
+        return br;
+    }
+
+
+    #region Fonts
+
+
+    /// <summary>
+    /// Установить базовый шрифт для всех элементов управления.
+    /// </summary>
+    public static void SetBaseFont(Fonts font)
+    {
+        var fontFamily = Application.Current.Resources[font.ToString()] as FontFamily;
+
+        if (Application.Current.Resources["BaseControl"] is not Style style || fontFamily is null) 
+            throw new InvalidOperationException($"Стиль или шрифт {font} не найдены в ресурсах приложения.");
+
+        var existing = style.Setters
+            .OfType<Setter>()
+            .FirstOrDefault(s => s.Property == Control.FontFamilyProperty);
+
+        if (existing != null)
+            existing.Value = fontFamily;
+        else
+            style.Setters.Add(new Setter(Control.FontFamilyProperty, fontFamily));
+    }
+
+    #endregion
+
+    #region Colors
+
 
     /// <summary>Установить главный цвет (включая тёмный и светлый)</summary>
     public static void SetPrimaryColor(Color color)
@@ -52,15 +89,28 @@ public static class StyleHelper
     }
 
 
+    #endregion
 
-    /// <summary>Найти кисть в ресурсах</summary>
-    /// <param name="BrushName">Имя кисти</param>
-    public static SolidColorBrush GetBrushFromResource(StyleBrushes BrushName)
+    #region Theme
+
+    /// <summary> Получить текущую цветовую схему </summary>
+    public static ColorTheme GetCurrentTheme() => new(StyleColors.PrimaryColor.ToString(), StyleColors.AccentColor.ToString(), _Scheme);
+
+
+    /// <summary> Установить новую цветовую схему </summary>
+    public static void SetColorTheme(ColorTheme theme)
     {
-        var br = Application.Current.Resources[BrushName.ToString()] as SolidColorBrush;
-        return br;
+        _IsStyleChangedInvokable = false; // Отключаем вызов события StyleChanged
+        SetPrimaryColor((Color)ColorConverter.ConvertFromString(theme.PrimaryColor)!);
+        SetAccentColor((Color)ColorConverter.ConvertFromString(theme.AccentColor)!);
+        SetColorScheme(theme.Scheme);
+        _IsStyleChangedInvokable = true; // Включаем вызов события StyleChanged
+        StyleChanged?.Invoke(null, EventArgs.Empty);
     }
 
+    #endregion
+
+    #region Scheme
 
     /// <summary> Установить тёмную, светлую или системную тему </summary>
     public static void SetColorScheme(ColorScheme scheme)
@@ -81,25 +131,6 @@ public static class StyleHelper
         }
         _Scheme = scheme;
     }
-
-
-
-    /// <summary> Получить текущую цветовую схему </summary>
-    public static ColorTheme GetCurrentTheme() => new(StyleColors.PrimaryColor.ToString(), StyleColors.AccentColor.ToString(), _Scheme);
-
-
-    /// <summary> Установить новую цветовую схему </summary>
-    public static void SetColorTheme(ColorTheme theme)
-    {
-        _IsStyleChangedInvokable = false; // Отключаем вызов события StyleChanged
-        SetPrimaryColor((Color)ColorConverter.ConvertFromString(theme.PrimaryColor)!);
-        SetAccentColor((Color)ColorConverter.ConvertFromString(theme.AccentColor)!);
-        SetColorScheme(theme.Scheme);
-        _IsStyleChangedInvokable = true; // Включаем вызов события StyleChanged
-        StyleChanged?.Invoke(null, EventArgs.Empty);
-    }
-
-    #region Scheme
 
     /// <summary>
     /// Установить тёмную тему.
@@ -146,7 +177,6 @@ public static class StyleHelper
     }
 
     #endregion
-
 
     #region Private
 
