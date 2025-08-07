@@ -5,7 +5,6 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
         xmlns:wpr="clr-namespace:WPR;assembly=WPR"
-        DataContext="{Binding Source={StaticResource Locator}, Path=MainWindowViewModel}"
         Style="{StaticResource NoTitledWindow}"
         Title="{Binding Title}" Height="650" Width="1000">
     <wpr:Extra.WindowHeaderContent>

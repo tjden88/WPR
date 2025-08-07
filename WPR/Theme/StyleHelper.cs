@@ -41,27 +41,21 @@ public static class StyleHelper
     }
 
 
-    #region Fonts
+    #region StyleFont
 
 
     /// <summary>
     /// Установить базовый шрифт для всех элементов управления.
     /// </summary>
-    public static void SetBaseFont(Fonts font)
+    public static void SetBaseFont(StyleFont styleFont)
     {
-        var fontFamily = Application.Current.Resources[font.ToString()] as FontFamily;
+        var newFont = Application.Current.Resources[styleFont.ToString()] as FontFamily;
 
-        if (Application.Current.Resources["BaseControl"] is not Style style || fontFamily is null) 
-            throw new InvalidOperationException($"Стиль или шрифт {font} не найдены в ресурсах приложения.");
+        if (newFont is null) 
+            throw new InvalidOperationException($"Ресурс {styleFont} не найден");
 
-        var existing = style.Setters
-            .OfType<Setter>()
-            .FirstOrDefault(s => s.Property == Control.FontFamilyProperty);
-
-        if (existing != null)
-            existing.Value = fontFamily;
-        else
-            style.Setters.Add(new Setter(Control.FontFamilyProperty, fontFamily));
+        // Подменяем ресурс
+        Application.Current.Resources["BaseFont"] = newFont;
     }
 
     #endregion

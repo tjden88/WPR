@@ -45,7 +45,7 @@ public enum StyleBrushes
 /// <summary>
 /// Шрифты, используемые в приложении
 /// </summary>
-public enum Fonts
+public enum StyleFont
 {
     Roboto,
     RobotoLight,

@@ -3,11 +3,22 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:wpr="clr-namespace:WPR;assembly=WPR"
+      xmlns:System="clr-namespace:System;assembly=System.Runtime"
+      xmlns:theme="clr-namespace:WPR.Theme;assembly=WPR"
       mc:Ignorable="d" 
       Tag="1"
       d:DesignHeight="850" d:DesignWidth="800"
       Title="WPR Toolkit" HorizontalAlignment="Stretch" VerticalAlignment="Center">
 
+    <Page.Resources>
+        <ObjectDataProvider x:Key="DataFromEnum" MethodName="GetValues"
+                            ObjectType="{x:Type System:Enum}">
+            <ObjectDataProvider.MethodParameters>
+                <x:Type TypeName="theme:StyleFont"/>
+            </ObjectDataProvider.MethodParameters>
+        </ObjectDataProvider>
+    </Page.Resources>
     <StackPanel>
         <StackPanel Orientation="Vertical">
             <StackPanel.Resources>
@@ -23,7 +34,7 @@
                    HorizontalAlignment="Center" 
                    VerticalAlignment="Center"
                    FontSize="80" 
-                   FontFamily="{StaticResource RobotoFontLight}"
+                   FontFamily="{StaticResource RobotoLight}"
                    Foreground="{DynamicResource PrimaryColorBrush}"/>
             <TextBlock Text="PrimaryColorBrush"
                    Background="{DynamicResource PrimaryColorBrush}" />
@@ -54,6 +65,9 @@
         <TextBlock Text="Regular" HorizontalAlignment="Center" FontWeight="Regular"></TextBlock>
         <TextBlock Text="Medium" HorizontalAlignment="Center" FontWeight="Medium"></TextBlock>
         <TextBlock Text="Bold" HorizontalAlignment="Center" FontWeight="Bold"></TextBlock>
+        <ComboBox x:Name="ComboBoxFont" wpr:Extra.TextDescription="Шрифт стиля"
+                  Margin="20,10"
+                  SelectionChanged="Selector_OnSelectionChanged" ItemsSource="{Binding Source={StaticResource DataFromEnum}}"></ComboBox>
     </StackPanel>
 
 </Page>
