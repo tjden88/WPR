@@ -51,15 +51,6 @@ public interface IReadOnlyRepository<TEntity> where TEntity : class
     /// <returns></returns>
     Task<bool> ExistAsync(Expression<Func<TEntity, bool>>? selector = null, CancellationToken cancellationToken = default);
 
-    /// <summary>
-    /// Проверить существование элемента
-    /// </summary>
-    /// <param name="Entity">Сущность, которую необходимо проверить</param>
-    /// <param name="cancellationToken">Токен отмены</param>
-    /// <returns></returns>
-    public Task<bool> ExistAsync(TEntity Entity, CancellationToken cancellationToken = default) =>
-        ExistAsync(entity => entity.Equals(Entity), cancellationToken);
-
     #endregion
 
     #region Count
