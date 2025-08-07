@@ -16,6 +16,9 @@ internal class JsonFileConfig<T>(string FilePath, JsonSerializerOptions? Options
 
 
     private T? _Config;
+    public Type ConfigType => typeof(T);
+    object IConfigProvider.Config => Config;
+
     public T Config => _Config ??= Load();
 
     public void Save()

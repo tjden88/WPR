@@ -7,10 +7,6 @@
 public interface IConfig<out T> : IConfigProvider
 {
 
-    Type IConfigProvider.ConfigType => typeof(T);
-
-    object IConfigProvider.Config => Config!;
-
     /// <summary>
     /// Объект с настройками
     /// </summary>
