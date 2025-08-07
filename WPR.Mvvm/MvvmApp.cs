@@ -27,7 +27,12 @@ public abstract class MvvmApp : Application
         FrameworkElement.LanguageProperty.OverrideMetadata(typeof(FrameworkElement), new FrameworkPropertyMetadata(XmlLanguage.GetLanguage(ci.Name)));
 
         base.OnStartup(e);
-        ConfigureServices(ServiceResolver.ServiceCollection);
+        var services = ServiceResolver.ServiceCollection;
+        ConfigureServices(services);
+
+        // Регистрация собственных сервисов в контейнере
+        services.AddSingleton(typeof(IResolver<>), typeof(Resolver<>));
+
         RegisterViews(_ViewsRegistrator);
         Resources.MergedDictionaries.Add(_ViewsRegistrator.ResourceDictionary);
         ServiceResolver.IsAllServiceAdded = true;
