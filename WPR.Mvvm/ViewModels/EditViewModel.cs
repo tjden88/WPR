@@ -180,18 +180,3 @@ public abstract class EditViewModel<T> : ObservableValidator where T : class
 
     #endregion
 }
-
-
-
-[AttributeUsage(AttributeTargets.Field | AttributeTargets.Property)]
-public class BindAttribute : Attribute
-{
-    public string? TargetPropertyName { get; }
-
-    public BindAttribute() { }
-
-    public BindAttribute(string targetPropertyName)
-    {
-        TargetPropertyName = targetPropertyName;
-    }
-}

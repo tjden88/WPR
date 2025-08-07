@@ -8,6 +8,9 @@ namespace WPR.Mvvm.ViewModels;
 
 internal static class ViewModelsExtensions
 {
+    /// <summary>
+    /// Работаем с атрибутами AutoNotifyCanExecuteChanged.
+    /// </summary>
     public static void InitializeAttributes(this INotifyPropertyChanged viewModel)
     {
         var viewModelType = viewModel.GetType();
