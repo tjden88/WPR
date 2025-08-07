@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
 using System.Windows.Input;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
@@ -28,25 +29,37 @@ public partial class WprDialogViewModel : EditViewModel<Person>, IWPRDialog
     public object DialogContent { get; set; }
 
     [ObservableProperty]
+    [NotifyDataErrorInfo]
     [Bind]
+    [Required(ErrorMessage = "Имя надда!")]
     private string _Name;
 
     [ObservableProperty]
+    [NotifyDataErrorInfo]
     [Bind(nameof(Model.Age))]
+    [Range(0, 120, ErrorMessage = "Возраст должен быть в диапазоне от 0 до 120 лет.")]
     private int _Age;
 
     public WprDialogViewModel(Person model) : base(model)
     {
+        CommandManager.RequerySuggested += (sender, args) => SaveCommand.NotifyCanExecuteChanged();
         CommandManager.RequerySuggested += (sender, args) => ResetCommand.NotifyCanExecuteChanged();
     }
 
 
-    [RelayCommand]
+    [RelayCommand(CanExecute = nameof(CanSave))]
     private void Save()
     {
-       CommitChanges();
+        ValidateAllProperties();
+        if (HasErrors)
+        {
+            // Если есть ошибки валидации, не сохраняем и не закрываем диалог
+            return;
+        }
+        CommitChanges();
        Completed?.Invoke(true);
     }
+    public bool CanSave() => !HasErrors;
 
     [RelayCommand]
     private void Cancel()

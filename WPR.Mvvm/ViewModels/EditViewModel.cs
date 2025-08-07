@@ -1,6 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using System.ComponentModel;
-using System.Linq.Expressions;
 using System.Reflection;
 
 namespace WPR.Mvvm.ViewModels;
@@ -71,7 +70,6 @@ public abstract class EditViewModel<T> : ObservableValidator where T : class
     private void LoadOriginalValues()
     {
         _OriginalValues.Clear();
-        _DirtyProperties.Clear();
 
         foreach (var (vmPropName, modelProp) in _BindProperties)
         {
@@ -83,6 +81,7 @@ public abstract class EditViewModel<T> : ObservableValidator where T : class
             vmProp.SetValue(this, value);
 
             _OriginalValues[vmPropName] = value;
+            _DirtyProperties.Clear();
         }
     }
 

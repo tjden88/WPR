@@ -10,7 +10,7 @@
         <StackPanel Margin="15">
             <TextBox wpr:Extra.TextHint="Имя" Margin="10" Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}"></TextBox>
             <wpr:NumericIntDecorator Value="{Binding Age}" PlusMinusButtonsShowing="True">
-                <TextBox wpr:Extra.TextHint="Возраст" Margin="10"></TextBox>
+                <TextBox wpr:Extra.TextHint="Возраст" Margin="10" Text="{Binding Age, UpdateSourceTrigger=PropertyChanged}"></TextBox>
             </wpr:NumericIntDecorator>
             <Separator/>
             <DockPanel LastChildFill="False">
