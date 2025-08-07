@@ -1,6 +1,7 @@
 ﻿using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using WPR.Demo.Models;
 using WPR.Dialogs;
 using WPR.Theme;
 
@@ -99,6 +100,20 @@ namespace WPR.Demo.Pages
         private void ButtonBase_OnClick(object sender, RoutedEventArgs e)
         {
             DialogPanel.DialogSource = PanelDlg;
+        }
+
+        private readonly Person _Person = new("Иван", 30);
+
+        private async void Button10_OnClick(object sender, RoutedEventArgs e)
+        {
+            var context = new WprDialogViewModel(_Person);
+            var dlg = new WprDialog
+            {
+                DataContext = context
+            };
+            context.DialogContent = dlg;
+
+            var result = await _UserDialog.CustomDialogAsync(context);
         }
     }
 }

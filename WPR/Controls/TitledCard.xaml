@@ -26,7 +26,7 @@
                                            VerticalAlignment="Center"
                                            Margin="10,10,0,5"
                                            Foreground="{TemplateBinding Foreground}"/>
-                             <ToggleButton Style="{StaticResource ToolButtonNoRipple}" DockPanel.Dock="Right"
+                             <ToggleButton Style="{StaticResource WPRToolButtonNoRipple}" DockPanel.Dock="Right"
                                     Visibility="{TemplateBinding ShowMenuButton, Converter={StaticResource Bool2VisibilityConverter}}"
                                     IsChecked="{Binding IsOpen, ElementName=MenuPopup }"
                                     ToolTip="Меню"

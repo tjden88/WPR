@@ -21,6 +21,7 @@
             <Button Content="Ввод текста (Multiline)" Click="Button8_OnClick"/>
             <Button Content="Ввод текста с валидацией" Click="Dlg_OnClick"/>
             <Button Content="Диалог внутри панели" Click="Button9_OnClick"/>
+            <Button Content="Пользовательский диалог" Click="Button10_OnClick"/>
         </StackPanel>
         <wpr:DialogRoot Name="DialogPanel" DialogSource="{Binding PanelDlg}" Background="{DynamicResource LightPrimaryColorBrush}" >
             <TextBlock HorizontalAlignment="Center" Style="{StaticResource TitleText}" VerticalAlignment="Center" Text="Содержимое внутри панели"></TextBlock>

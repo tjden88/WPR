@@ -35,10 +35,8 @@ public abstract class EditViewModel<T> : ObservableValidator where T : class
         {
             var attr = member
                 .GetCustomAttributes(inherit: true)
-                .FirstOrDefault(a =>
-                    a.GetType() == typeof(BindAttribute) ||
-                    (a.GetType().IsGenericType &&
-                     a.GetType().GetGenericTypeDefinition() == typeof(BindAttribute<>)));
+                .OfType<BindAttribute>()
+                .FirstOrDefault();
 
             if (attr == null) continue;
 
@@ -55,17 +53,7 @@ public abstract class EditViewModel<T> : ObservableValidator where T : class
                 _ => throw new InvalidOperationException("Неподдерживаемый тип члена")
             };
 
-            string? modelPropName = null;
-
-            if (attr is BindAttribute simple)
-            {
-                modelPropName = simple.TargetPropertyName ?? vmPropName;
-            }
-            else // BindAttribute<T>
-            {
-                var prop = attr.GetType().GetProperty("TargetPropertyName");
-                modelPropName = prop?.GetValue(attr) as string ?? vmPropName;
-            }
+            var modelPropName = attr.TargetPropertyName ?? vmPropName;
 
             var modelProp = typeof(T).GetProperty(modelPropName);
             if (modelProp == null)
@@ -76,8 +64,8 @@ public abstract class EditViewModel<T> : ObservableValidator where T : class
 
             _BindProperties[vmPropName] = modelProp;
         }
-
     }
+
 
     // Загрузка оригинальных значений свойств из модели
     private void LoadOriginalValues()
@@ -205,34 +193,5 @@ public class BindAttribute : Attribute
     public BindAttribute(string targetPropertyName)
     {
         TargetPropertyName = targetPropertyName;
-    }
-
-    public BindAttribute(LambdaExpression expr)
-    {
-        if (expr.Body is MemberExpression member)
-        {
-            TargetPropertyName = member.Member.Name;
-        }
-        else
-        {
-            throw new ArgumentException("Должно быть простым выражением, например: p => p.Name");
-        }
-    }
-}
-
-
-[AttributeUsage(AttributeTargets.Field | AttributeTargets.Property)]
-public class BindAttribute<TModel>(Expression<Func<TModel, object>> expression) : Attribute
-{
-    public string TargetPropertyName { get; } = ExtractPropertyName(expression) ?? throw new ArgumentException("Выражение должно быть доступом к свойству, например: x => x.Name");
-
-    private static string? ExtractPropertyName(Expression expression)
-    {
-        return expression switch
-        {
-            LambdaExpression {Body: MemberExpression member} => member.Member.Name,
-            LambdaExpression {Body: UnaryExpression {Operand: MemberExpression member}} => member.Member.Name,
-            _ => null
-        };
     }
 }

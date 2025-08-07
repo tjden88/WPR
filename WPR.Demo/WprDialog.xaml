@@ -4,14 +4,21 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:wpr="clr-namespace:WPR;assembly=WPR"
-             mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
+             xmlns:demo="clr-namespace:WPR.Demo"
+             mc:Ignorable="d" d:DataContext="{d:DesignInstance demo:WprDialogViewModel }">
     <wpr:TitledCard Header="Пользовательский диалог">
         <StackPanel Margin="15">
-            <TextBox wpr:Extra.TextHint="Текст"></TextBox>
+            <TextBox wpr:Extra.TextHint="Имя" Margin="10" Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+            <wpr:NumericIntDecorator Value="{Binding Age}" PlusMinusButtonsShowing="True">
+                <TextBox wpr:Extra.TextHint="Возраст" Margin="10"></TextBox>
+            </wpr:NumericIntDecorator>
             <Separator/>
-            <Button Content="Ок" HorizontalAlignment="Right" Click="Button_Click_1"></Button>
-            <Button Content="Отмена" HorizontalAlignment="Right" Click="Button_Click"></Button>
+            <DockPanel LastChildFill="False">
+                <Button Content="Ок" DockPanel.Dock="Right" Command="{Binding SaveCommand}" ></Button>
+                <Button Content="Отмена" Command="{Binding CancelCommand}" DockPanel.Dock="Right"></Button>
+                <Button Content="Сброс" Command="{Binding ResetCommand}" Style="{StaticResource WPRFlatButton}" DockPanel.Dock="Left"></Button>
+
+            </DockPanel>
         </StackPanel>
 
     </wpr:TitledCard> 
