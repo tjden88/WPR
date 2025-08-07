@@ -12,7 +12,10 @@ public abstract partial class ViewModel : ObservableRecipient
     protected ViewModel(IMessenger messenger) : base(messenger)
     {
         IsActive = true;
+        this.InitializeAttributes();
     }
+
+
 
     protected ViewModel() : this(WeakReferenceMessenger.Default)
     {
@@ -28,4 +31,24 @@ public abstract partial class ViewModel : ObservableRecipient
     /// Индикатор того, что модель-представление занята выполнением операции.
     /// </summary>
     [ObservableProperty] private bool _IsBusy;
+}
+
+
+/// <summary>
+/// Автоматически уведомляет об изменении состояния команды с помощью CommandManager.
+/// </summary>
+[AttributeUsage(AttributeTargets.Method, AllowMultiple = false, Inherited = true)]
+public class AutoNotifyCanExecuteChangedAttribute : Attribute
+{
+    public string? CommandName { get; set; }
+
+    public AutoNotifyCanExecuteChangedAttribute()
+    {
+        
+    }
+
+    public AutoNotifyCanExecuteChangedAttribute(string CommandName)
+    {
+        this.CommandName = CommandName;
+    }
 }

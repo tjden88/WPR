@@ -1,6 +1,5 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
-using System.Windows.Input;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using WPR.Demo.Models;
@@ -22,7 +21,7 @@ public partial class WprDialog
 }
 
 
-public partial class WprDialogViewModel : EditViewModel<Person>, IWPRDialog
+public partial class WprDialogViewModel(Person model) : EditViewModel<Person>(model), IWPRDialog
 {
     public event Action<bool> Completed;
 
@@ -40,13 +39,7 @@ public partial class WprDialogViewModel : EditViewModel<Person>, IWPRDialog
     [Range(0, 120, ErrorMessage = "Возраст должен быть в диапазоне от 0 до 120 лет.")]
     private int _Age;
 
-    public WprDialogViewModel(Person model) : base(model)
-    {
-        CommandManager.RequerySuggested += (sender, args) => SaveCommand.NotifyCanExecuteChanged();
-        CommandManager.RequerySuggested += (sender, args) => ResetCommand.NotifyCanExecuteChanged();
-    }
-
-
+    [AutoNotifyCanExecuteChanged]
     [RelayCommand(CanExecute = nameof(CanSave))]
     private void Save()
     {
@@ -67,6 +60,7 @@ public partial class WprDialogViewModel : EditViewModel<Person>, IWPRDialog
         Completed?.Invoke(false);
     }
 
+    [AutoNotifyCanExecuteChanged]
     [RelayCommand(CanExecute = nameof(CanReset))]
     private void Reset()
     {

@@ -1,12 +1,10 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using WPR.Demo.Converters;
 using WPR.Demo.Models;
-using WPR.Dialogs;
 
 namespace WPR.Demo.Pages
 {

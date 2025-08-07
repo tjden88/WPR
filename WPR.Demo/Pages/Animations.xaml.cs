@@ -1,7 +1,6 @@
 ﻿using System.Windows.Controls;
 using System.Windows.Media.Animation;
 using WPR.Animations;
-using WPR.Dialogs;
 
 namespace WPR.Demo.Pages
 {
