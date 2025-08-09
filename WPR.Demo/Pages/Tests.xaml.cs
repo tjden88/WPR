@@ -22,7 +22,7 @@ namespace WPR.Demo.Pages
         private void Test()
         {
             var generated = new GeneratedViewModel();
-            //generated.Age = 20;
+            generated.Age = 40;
         }
 
     }

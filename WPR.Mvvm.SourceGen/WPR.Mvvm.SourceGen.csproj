@@ -1,0 +1,18 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>netstandard2.0</TargetFramework>
+        <LangVersion>preview</LangVersion>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <!-- Roslyn API для компиляции генератора.
+             PrivateAssets="all" не позволит транзитивно тянуть эти пакеты в проекты-приложения -->
+        <PackageReference Include="Microsoft.CodeAnalysis" Version="4.11.0" PrivateAssets="all" />
+        <PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="4.11.0" PrivateAssets="all" />
+        <!-- (опционально, но полезно) Доп. правила для самих анализаторов -->
+        <PackageReference Include="Microsoft.CodeAnalysis.Analyzers" Version="3.3.4" PrivateAssets="all" />
+    </ItemGroup>
+
+</Project>
