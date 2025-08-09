@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using Microsoft.CodeAnalysis;
@@ -20,17 +21,16 @@ public class ViewModelForModelGenerator : IIncrementalGenerator
 {
     public void Initialize(IncrementalGeneratorInitializationContext context)
     {
-        // 1) Собираем все ClassDeclarationSyntax, у которых есть базовый список (BaseList != null).
+        // Debugger.Launch(); // УБРАНО: вызывало зависание генератора при сборке
+
         var classDeclarations = context.SyntaxProvider
             .CreateSyntaxProvider(
                 predicate: static (node, _) => IsCandidateClass(node),
                 transform: static (ctx, _) => GetSemanticTargetForGeneration(ctx))
-            .Where(static m => m is not null)!; // убираем null-результаты
+            .Where(static m => m is not null)!;
 
-        // 2) Собираем результирующие элементы в один поток
         var compilationAndClasses = context.CompilationProvider.Combine(classDeclarations.Collect());
 
-        // 3) Основной Execute: для каждого найденного класса генерируем код
         context.RegisterSourceOutput(compilationAndClasses, static (spc, source) =>
         {
             var compilation = source.Left;
@@ -40,11 +40,8 @@ public class ViewModelForModelGenerator : IIncrementalGenerator
             {
                 if (item is null) continue;
 
-                // Получаем символ класса и символ типа модели
                 var classSymbol = item.ClassSymbol;
                 var modelType = item.ModelType;
-
-                // Безопасность: если не удалось разрешить тип модели — пропускаем.
                 if (classSymbol == null || modelType == null) continue;
 
                 try
@@ -52,15 +49,12 @@ public class ViewModelForModelGenerator : IIncrementalGenerator
                     var generated = GenerateFor(classSymbol, modelType, compilation);
                     if (!string.IsNullOrWhiteSpace(generated))
                     {
-                        // Имя файла для генерации — Namespace.ClassName.g.cs
                         var hintName = $"{GetFullMetadataName(classSymbol)}.ViewModelFromModel.g.cs";
                         spc.AddSource(hintName.Replace('<', '_').Replace('>', '_'), SourceText.From(generated, Encoding.UTF8));
                     }
                 }
                 catch (Exception ex)
                 {
-                    // Если генератор упал — не ломаем сборку пользователя.
-                    // Добавим diagnostic, чтобы было видно в логах компиляции.
                     var diag = Diagnostic.Create(new DiagnosticDescriptor(
                             "WPRSG0001",
                             "Generator error",
@@ -251,8 +245,8 @@ public class ViewModelForModelGenerator : IIncrementalGenerator
     // Вспомогательный тип для передачи найденного класс+модель
     private record MatchedClass
     {
-        public INamedTypeSymbol? ClassSymbol { get; init; }
-        public ITypeSymbol? ModelType { get; init; }
+        public INamedTypeSymbol? ClassSymbol { get; set; }
+        public ITypeSymbol? ModelType { get; set; }
     }
 
     // Получает корректную декларацию partial класса (имя + generic параметры + ограничения)
@@ -361,12 +355,30 @@ public class ViewModelForModelGenerator : IIncrementalGenerator
     private static string GetFullMetadataName(INamedTypeSymbol type)
     {
         var parts = new Stack<string>();
-        var current = (ISymbol)type;
-        while (current != null && !string.IsNullOrEmpty(current.Name))
+        ISymbol? current = type;
+
+        while (current != null)
         {
-            parts.Push(current.Name + (current is INamedTypeSymbol {TypeParameters.Length: > 0} nts ? $"`{nts.TypeParameters.Length}" : ""));
-            if (current.ContainingType is null && current.ContainingNamespace is {IsGlobalNamespace: true}) break;
+            switch (current)
+            {
+                case INamedTypeSymbol nts:
+                    var name = nts.Name + (nts.TypeParameters.Length > 0 ? $"`{nts.TypeParameters.Length}" : "");
+                    parts.Push(name);
+                    current = (ISymbol) nts.ContainingType ?? nts.ContainingNamespace;
+                    break;
+
+                case INamespaceSymbol ns:
+                    if (!ns.IsGlobalNamespace)
+                        parts.Push(ns.Name);
+                    current = ns.ContainingNamespace;
+                    break;
+
+                default:
+                    current = current.ContainingSymbol;
+                    break;
+            }
         }
+
         return string.Join(".", parts);
     }
 
