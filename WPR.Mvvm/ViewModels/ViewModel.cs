@@ -35,3 +35,21 @@ public abstract partial class ViewModel : ObservableRecipient
     
 }
 
+/// <summary>
+/// Базовая модель-представление для сущности или DTO
+/// Реализует публичные свойства модели с помощью Source Generator -> [Observable Property] nameof(Model.PropertyName)
+/// Если свойство модели - наследник IEnumerable<>, генерируется одноимённое свойство с типом [ObservableCollection]
+/// <typeparam name="T">Модель</typeparam>>
+/// Также реализует интерфейс <see cref="ObservableRecipient"/> для поддержки сообщений. Сразу активна.
+/// </summary>
+public partial class ViewModel<T> : ViewModel
+{
+    
+    public ViewModel()
+    {
+    }
+    
+    public ViewModel(IMessenger messenger) : base(messenger)
+    {
+    }
+}
