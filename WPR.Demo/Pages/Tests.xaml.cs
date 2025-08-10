@@ -1,4 +1,6 @@
-﻿using System.Windows.Controls;
+﻿using System.Collections.ObjectModel;
+using System.Diagnostics;
+using System.Windows.Controls;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using WPR.Demo.Models;
@@ -23,13 +25,15 @@ public partial class Tests : Page
     [RelayCommand]
     private void Test()
     {
-        GeneratedViewModel generated;
+        GeneratedObservableModel generated;
         var person = new Person("Vasya", 32);
         generated = person;
+        generated.PropertyChanged += (sender, args) => Debug.WriteLine("Changed: " + args.PropertyName);
+        
+        
         generated.Name = "Petya";
+        generated.Roles = new(["Admin", "User"]);
 
-        Person changed;
-
-        changed = generated;
+        System.Linq.Enumerable.ToList(generated.Persons);
     }
 }

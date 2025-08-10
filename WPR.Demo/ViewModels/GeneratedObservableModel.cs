@@ -4,12 +4,8 @@ using WPR.Mvvm.ViewModels;
 
 namespace WPR.Demo.ViewModels;
 
-public partial class GeneratedViewModel : ViewModel<Person>
+public partial class GeneratedObservableModel(Person Model) : ObservableModel<Person>(Model)
 {
-    public GeneratedViewModel(Person model) : base(model)
-    {
-    }
-
     void OnNameChanged(string newValue)
     {
         Debug.WriteLine("NameChanged");
