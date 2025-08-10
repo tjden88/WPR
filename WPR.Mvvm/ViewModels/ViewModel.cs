@@ -15,9 +15,7 @@ public abstract partial class ViewModel : ObservableRecipient
         IsActive = true;
         this.InitializeAttributes();
     }
-
-
-
+    
     protected ViewModel() : this(WeakReferenceMessenger.Default)
     {
     }
@@ -42,14 +40,13 @@ public abstract partial class ViewModel : ObservableRecipient
 /// <typeparam name="T">Модель</typeparam>>
 /// Также реализует интерфейс <see cref="ObservableRecipient"/> для поддержки сообщений. Сразу активна.
 /// </summary>
-public partial class ViewModel<T> : ViewModel
+public abstract class ViewModel<T> : ViewModel
 {
-    
-    public ViewModel()
+    protected ViewModel()
     {
     }
-    
-    public ViewModel(IMessenger messenger) : base(messenger)
+
+    protected ViewModel(IMessenger messenger) : base(messenger)
     {
     }
 }

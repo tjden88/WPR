@@ -1,29 +1,30 @@
 ﻿using System.Windows.Controls;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using WPR.Demo.Models;
 using WPR.Demo.ViewModels;
+using WPR.Mvvm.ViewModels;
 
-namespace WPR.Demo.Pages
+namespace WPR.Demo.Pages;
+
+/// <summary>
+/// Логика взаимодействия для Tests.xaml
+/// </summary>
+[ObservableObject]
+public partial class Tests : Page
 {
-    /// <summary>
-    /// Логика взаимодействия для Tests.xaml
-    /// </summary>
-    [ObservableObject]
-    public partial class Tests : Page
+    public Tests()
     {
-        public Tests()
-        {
-            InitializeComponent();
-        }
+        InitializeComponent();
+    }
 
 
 
-        [RelayCommand]
-        private void Test()
-        {
-            var generated = new GeneratedViewModel();
-            generated.Age = 40;
-        }
-
+    [RelayCommand]
+    private void Test()
+    {
+        var generated = new GeneratedViewModel();
+        generated.Age = 40;
+            
     }
 }
