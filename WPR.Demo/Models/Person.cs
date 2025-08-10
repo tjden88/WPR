@@ -1,4 +1,6 @@
-﻿namespace WPR.Demo.Models;
+﻿using System;
+
+namespace WPR.Demo.Models;
 
 public abstract class Entity
 {
@@ -7,6 +9,7 @@ public abstract class Entity
 
 public class Person(string Name, int Age) : Entity
 {
-    public string Name { get; init; } = Name;
-    public int Age { get; init; } = Age;
+    public DateTime Created { get; } = DateTime.Now;
+    public string Name { get; set; } = Name;
+    public int Age { get; set; } = Age;
 }

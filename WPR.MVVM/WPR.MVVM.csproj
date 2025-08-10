@@ -12,22 +12,22 @@
         <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="9.0.8"/>
     </ItemGroup>
 
-    <!--  <ItemGroup>-->
-    <!--    <ProjectReference Include="..\WPR.Mvvm.SourceGen\WPR.Mvvm.SourceGen.csproj"-->
-    <!--                      OutputItemType="Analyzer"-->
-    <!--                      ReferenceOutputAssembly="false"-->
-    <!--                      PrivateAssets="all" />-->
+      <ItemGroup>
+        <ProjectReference Include="..\WPR.Mvvm.SourceGen\WPR.Mvvm.SourceGen.csproj"
+                          OutputItemType="Analyzer"
+                          ReferenceOutputAssembly="false"
+                          PrivateAssets="all" />
 
-    <!--  </ItemGroup>-->
+      </ItemGroup>
 
-    <ItemGroup>
-        <PackageReference Include="WPR.Mvvm.SourceGen" Version="1.0.1">
-            <!-- Эти ассеты используются текущей библиотекой -->
-            <IncludeAssets>analyzers; build; buildTransitive</IncludeAssets>
-            <!-- Эти ассеты не «уходят» транзитивно; analyzers намеренно НЕ включаем,
-                 чтобы они как раз доходили до потребителя -->
-            <PrivateAssets>compile; runtime; native; contentfiles; buildMultitargeting</PrivateAssets>
-        </PackageReference>
-    </ItemGroup>
+<!--    <ItemGroup>-->
+<!--        <PackageReference Include="WPR.Mvvm.SourceGen" Version="1.0.1">-->
+<!--            &lt;!&ndash; Эти ассеты используются текущей библиотекой &ndash;&gt;-->
+<!--            <IncludeAssets>analyzers; build; buildTransitive</IncludeAssets>-->
+<!--            &lt;!&ndash; Эти ассеты не «уходят» транзитивно; analyzers намеренно НЕ включаем,-->
+<!--                 чтобы они как раз доходили до потребителя &ndash;&gt;-->
+<!--            <PrivateAssets>compile; runtime; native; contentfiles; buildMultitargeting</PrivateAssets>-->
+<!--        </PackageReference>-->
+<!--    </ItemGroup>-->
 
 </Project>
