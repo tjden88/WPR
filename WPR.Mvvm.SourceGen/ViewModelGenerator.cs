@@ -227,7 +227,7 @@ public class ObservableModelGenerator : IIncrementalGenerator
             sb.AppendLine("    {");
             sb.AppendLine($"        get => {setterFieldName};");
 
-            if (prop.SetMethod is { DeclaredAccessibility: Accessibility.Public }) // Если не public - пропускаем сеттер
+            if (prop.SetMethod is {DeclaredAccessibility: Accessibility.Public, IsInitOnly: false}) // Если не public - пропускаем сеттер
             {
                 // генерируем сеттер, использующий SetProperty<TModel, T>(T oldValue, T newValue, IEqualityComparer<T> comparer, TModel model, Action<TModel, T> callback
                 if (isCollection)
@@ -252,8 +252,9 @@ public class ObservableModelGenerator : IIncrementalGenerator
         sb.AppendLine(
             $"    public static implicit operator {classSymbol.Name}({modelTypeSymbol.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat)} model)");
         sb.AppendLine("    {");
+        sb.AppendLine($"        if (model is null) return null;");
         sb.AppendLine($"        var vm = new {classSymbol.Name}(model);");
-        sb.AppendLine("        return vm;");
+        sb.AppendLine($"        return vm;");
         sb.AppendLine("    }");
 
         sb.AppendLine("}"); // конец class
@@ -265,7 +266,7 @@ public class ObservableModelGenerator : IIncrementalGenerator
     }
 
 
-// Проверка, является ли целевой тип ObservableCollection<...> (по symbol)
+    // Проверка, является ли целевой тип ObservableCollection<...> (по symbol)
     private static bool IsObservableCollectionTypeSymbol(ITypeSymbol typeSymbol)
     {
         if (typeSymbol is INamedTypeSymbol {IsGenericType: true} named)
