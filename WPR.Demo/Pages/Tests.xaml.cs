@@ -33,7 +33,8 @@ public partial class Tests : Page
         
         generated.Name = "Petya";
         generated.Roles = new(["Admin", "User"]);
+        generated.Persons.Add(new Person("Ivan", 25));
 
-        System.Linq.Enumerable.ToList(generated.Persons);
+        Person p2 = generated;
     }
 }
