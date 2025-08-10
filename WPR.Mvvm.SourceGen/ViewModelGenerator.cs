@@ -243,6 +243,13 @@ public class ViewModelForModelGenerator : IIncrementalGenerator
                 sb.AppendLine();
             }
         }
+        
+        // Оператор преобразования модели
+        sb.AppendLine($"    public static implicit operator {classSymbol.Name}({modelTypeSymbol.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat)} model)");
+        sb.AppendLine("    {");
+        sb.AppendLine($"        var vm = new {classSymbol.Name}(model);");
+        sb.AppendLine("        return vm;");
+        sb.AppendLine("    }");
 
         sb.AppendLine("}"); // конец class
 

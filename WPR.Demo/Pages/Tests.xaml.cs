@@ -23,8 +23,13 @@ public partial class Tests : Page
     [RelayCommand]
     private void Test()
     {
-        var generated = new GeneratedViewModel();
-        generated.Age = 40;
-            
+        GeneratedViewModel generated;
+        var person = new Person("Vasya", 32);
+        generated = person;
+        generated.Name = "Petya";
+
+        Person changed;
+
+        changed = generated;
     }
 }
