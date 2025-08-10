@@ -1,22 +1,33 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <TargetFramework>net9.0-windows</TargetFramework>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>enable</Nullable>
-	  <UseWpf>true</UseWpf>
-  </PropertyGroup>
+    <PropertyGroup>
+        <TargetFramework>net9.0-windows</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+        <UseWpf>true</UseWpf>
+    </PropertyGroup>
 
-  <ItemGroup>
-    <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.0" />
-    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="9.0.8" />
-  </ItemGroup>
+    <ItemGroup>
+        <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.0"/>
+        <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="9.0.8"/>
+    </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\WPR.Mvvm.SourceGen\WPR.Mvvm.SourceGen.csproj"
-                      OutputItemType="Analyzer"
-                      ReferenceOutputAssembly="false" />
+    <!--  <ItemGroup>-->
+    <!--    <ProjectReference Include="..\WPR.Mvvm.SourceGen\WPR.Mvvm.SourceGen.csproj"-->
+    <!--                      OutputItemType="Analyzer"-->
+    <!--                      ReferenceOutputAssembly="false"-->
+    <!--                      PrivateAssets="all" />-->
 
-  </ItemGroup>
+    <!--  </ItemGroup>-->
+
+    <ItemGroup>
+        <PackageReference Include="WPR.Mvvm.SourceGen" Version="1.0.0">
+            <!-- Эти ассеты используются текущей библиотекой -->
+            <IncludeAssets>analyzers; build; buildTransitive</IncludeAssets>
+            <!-- Эти ассеты не «уходят» транзитивно; analyzers намеренно НЕ включаем,
+                 чтобы они как раз доходили до потребителя -->
+            <PrivateAssets>compile; runtime; native; contentfiles; buildMultitargeting</PrivateAssets>
+        </PackageReference>
+    </ItemGroup>
 
 </Project>

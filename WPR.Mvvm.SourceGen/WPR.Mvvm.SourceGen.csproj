@@ -4,6 +4,11 @@
         <TargetFramework>netstandard2.0</TargetFramework>
         <LangVersion>preview</LangVersion>
         <Nullable>enable</Nullable>
+        <IsRoslynComponent>true</IsRoslynComponent>
+        <IncludeBuildOutput>false</IncludeBuildOutput>
+        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+        <Title>Генератор ViewModels для WPR.Mvvm</Title>
+        <PackageIcon>nuget-icon-128.png</PackageIcon>
     </PropertyGroup>
 
     <ItemGroup>
@@ -13,6 +18,15 @@
         <PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="4.11.0" PrivateAssets="all" />
         <!-- (опционально, но полезно) Доп. правила для самих анализаторов -->
         <PackageReference Include="Microsoft.CodeAnalysis.Analyzers" Version="3.3.4" PrivateAssets="all" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <!-- Указываем, что этот проект — анализатор -->
+        <None Include="$(OutputPath)\WPR.Mvvm.SourceGen.dll" Pack="true" PackagePath="analyzers/dotnet/cs" />
+        <None Update="nuget-icon-128.png">
+          <Pack>True</Pack>
+          <PackagePath></PackagePath>
+        </None>
     </ItemGroup>
 
 </Project>

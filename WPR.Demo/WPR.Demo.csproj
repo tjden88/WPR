@@ -22,10 +22,6 @@
     <ProjectReference Include="..\WPR.Mvvm\WPR.Mvvm.csproj" />
     <ProjectReference Include="..\WPR.Tools\WPR.Tools.csproj" />
     <ProjectReference Include="..\WPR\WPR.csproj" />
-    <ProjectReference Include="..\WPR.Mvvm.SourceGen\WPR.Mvvm.SourceGen.csproj"
-                      OutputItemType="Analyzer"
-                      ReferenceOutputAssembly="false" />
-
   </ItemGroup>
 
 </Project>
