@@ -132,14 +132,15 @@ public class ObservableModelGenerator : IIncrementalGenerator
     #region Generation
 
     // Основная логика генерации одного файла для одного класса
-    private static string GenerateFor(INamedTypeSymbol classSymbol, ITypeSymbol modelTypeSymbol, Compilation compilation)
+    private static string GenerateFor(INamedTypeSymbol classSymbol, ITypeSymbol modelTypeSymbol,
+        Compilation compilation)
     {
         // Пространство имён класса (если есть).
         var ns = classSymbol.ContainingNamespace.IsGlobalNamespace
             ? null
             : classSymbol.ContainingNamespace.ToDisplayString();
         var sb = new StringBuilder();
-        
+
         // Имя Protected поля для хранения модели
         const string modelFieldName = "Model";
 
@@ -173,7 +174,7 @@ public class ObservableModelGenerator : IIncrementalGenerator
             return sb.ToString();
         }
 
-        
+
         // Собираем instance-свойства модели
         var modelProperties = GetAllModelProperties(modelNamed);
 
@@ -205,16 +206,16 @@ public class ObservableModelGenerator : IIncrementalGenerator
 
             // Имя приватного поля
             string setterFieldName;
-            
+
             // Коллекция — создаём ObservableCollection<TItem>()
             var isCollection = IsObservableCollectionTypeSymbol(targetTypeSymbol);
-            
+
             if (isCollection)
             {
                 setterFieldName = "_" + ToCamelCase(propName);
-                
+
                 // Инициализируем коллекцию из свойства модели, если свойство модели не null
-                sb.AppendLine($"    private {targetTypeName} {setterFieldName} = {modelFieldName}.{propName} is null ? null : new ({modelFieldName}.{propName});");
+                sb.AppendLine($"    private {targetTypeName} {setterFieldName};");
             }
             else
                 setterFieldName = $"{modelFieldName}.{propName}";
@@ -225,22 +226,33 @@ public class ObservableModelGenerator : IIncrementalGenerator
             // Генерируем публичное свойство
             sb.AppendLine($"    public {targetTypeName} {propName}");
             sb.AppendLine("    {");
-            sb.AppendLine($"        get => {setterFieldName};");
+            
+            if (isCollection)
+                sb.AppendLine($"        get => {setterFieldName} ??= {modelFieldName}.{propName} is null ? null : new {targetTypeName}({modelFieldName}.{propName});");
+            else
+                sb.AppendLine($"        get => {setterFieldName} ;");
 
-            if (prop.SetMethod is {DeclaredAccessibility: Accessibility.Public, IsInitOnly: false}) // Если не public - пропускаем сеттер
+            if (prop.SetMethod is
+                {DeclaredAccessibility: Accessibility.Public, IsInitOnly: false}) // Если не public - пропускаем сеттер
             {
                 // генерируем сеттер, использующий SetProperty<TModel, T>(T oldValue, T newValue, IEqualityComparer<T> comparer, TModel model, Action<TModel, T> callback
                 if (isCollection)
-                    sb.AppendLine($"        set => SetProperty(ref {setterFieldName}, value);");
+                {
+                    sb.AppendLine($"        set");
+                    sb.AppendLine($"        {{");
+                    sb.AppendLine($"            if (SetProperty(ref {setterFieldName}, value) && value == null)");
+                    sb.AppendLine($"                {modelFieldName}.{propName} = null;");
+                    sb.AppendLine($"        }}");
+                }
                 else
-                    sb.AppendLine($"        set => SetProperty({setterFieldName}, value, {modelFieldName}, (m, v) => m.{propName} = v);");
-                    
+                    sb.AppendLine(
+                        $"        set => SetProperty({setterFieldName}, value, {modelFieldName}, (m, v) => m.{propName} = v);");
             }
-                
+
             sb.AppendLine("    }");
             sb.AppendLine();
         }
-        
+
 
         // Оператор преобразования модели
         sb.AppendLine("    /// <summary>");
@@ -248,7 +260,7 @@ public class ObservableModelGenerator : IIncrementalGenerator
             $"    /// Оператор неявного преобразования модели {modelNamed.ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat)}");
         sb.AppendLine("    /// Сгенерировано ObservableModelGenerator.");
         sb.AppendLine("    /// </summary>");
-        
+
         sb.AppendLine(
             $"    public static implicit operator {classSymbol.Name}({modelTypeSymbol.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat)} model)");
         sb.AppendLine("    {");

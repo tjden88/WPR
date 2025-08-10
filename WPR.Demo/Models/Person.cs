@@ -22,7 +22,7 @@ public class Person(string Name, int Age) : Entity
     
     public Person Parent { get; set; }
     
-    public ICollection<string> Roles { get; set; } = [];
+    public ICollection<string> Roles { get; set; }
 
     public IEnumerable<Person> Persons
     {
