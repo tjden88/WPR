@@ -167,12 +167,8 @@ public class ViewModelForModelGenerator : IIncrementalGenerator
         else
         {
             // Собираем публичные instance-свойства модели с get и set
-            var modelProperties = modelNamed.GetMembers()
-                .OfType<IPropertySymbol>()
-                .Where(p => p.DeclaredAccessibility == Accessibility.Public && !p.IsStatic && p.GetMethod != null &&
-                            p.SetMethod != null)
-                .ToList();
-
+            var modelProperties = GetAllModelProperties(modelNamed);
+            
             // Список уже существующих членов ViewModel (имена), чтобы не генерировать дубли
             var existingMemberNames = new HashSet<string>(classSymbol.GetMembers().Select(m => m.Name));
 
@@ -283,6 +279,38 @@ public class ViewModelForModelGenerator : IIncrementalGenerator
 
         return false;
     }
+    
+    // Получаем все публичные instance-свойства модели, включая унаследованные
+    private static List<IPropertySymbol> GetAllModelProperties(INamedTypeSymbol modelTypeSymbol)
+    {
+        var result = new List<IPropertySymbol>();
+        var seenNames = new HashSet<string>(StringComparer.Ordinal);
+
+        var current = modelTypeSymbol;
+
+        while (current != null && current.SpecialType != SpecialType.System_Object)
+        {
+            foreach (var prop in current.GetMembers().OfType<IPropertySymbol>())
+            {
+                if (prop.IsStatic) continue;
+                if (prop.DeclaredAccessibility != Accessibility.Public) continue;
+                if (prop.GetMethod == null || prop.SetMethod == null) continue;
+                if (prop.IsIndexer) continue;
+
+                // Если уже добавили свойство с таким именем — пропускаем (приоритет у самого нижнего в иерархии)
+                if (seenNames.Contains(prop.Name))
+                    continue;
+
+                seenNames.Add(prop.Name);
+                result.Add(prop);
+            }
+
+            current = current.BaseType;
+        }
+
+        return result;
+    }
+
 
     #endregion
 
