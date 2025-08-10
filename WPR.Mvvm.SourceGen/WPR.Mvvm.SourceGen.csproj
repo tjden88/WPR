@@ -9,6 +9,7 @@
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
         <Title>Генератор ViewModels для WPR.Mvvm</Title>
         <PackageIcon>nuget-icon-128.png</PackageIcon>
+        <Version>1.0.1</Version>
     </PropertyGroup>
 
     <ItemGroup>

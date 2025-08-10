@@ -21,7 +21,7 @@
     <!--  </ItemGroup>-->
 
     <ItemGroup>
-        <PackageReference Include="WPR.Mvvm.SourceGen" Version="1.0.0">
+        <PackageReference Include="WPR.Mvvm.SourceGen" Version="1.0.1">
             <!-- Эти ассеты используются текущей библиотекой -->
             <IncludeAssets>analyzers; build; buildTransitive</IncludeAssets>
             <!-- Эти ассеты не «уходят» транзитивно; analyzers намеренно НЕ включаем,
