@@ -5,9 +5,15 @@ using CommunityToolkit.Mvvm.ComponentModel;
 
 namespace WPR.Mvvm.ViewModels;
 
-public abstract class ObservableModel<T>(T Model) : ObservableObject where T : class
+public abstract class ObservableModel<T> : ObservableRecipient where T : class
 {
-    protected readonly T Model = Model ?? throw new ArgumentNullException(nameof(Model));
+    protected readonly T Model;
+
+    protected ObservableModel(T model)
+    {
+        IsActive = true; // Активируем Messenger сразу при создании
+        Model = model ?? throw new ArgumentNullException(nameof(model));
+    }
 
     // преобразование VM -> Model
     public static implicit operator T(ObservableModel<T> vm)

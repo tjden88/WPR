@@ -14,7 +14,7 @@
 
     <!--Конвертеры-->
     <converters:BoolToVisibilityConverter x:Key="Bool2VisibilityConverter"/>
-    <converters:BoolToVisibilityConverter HiddenVisibility="Collapsed" x:Key="Bool2CollapsedVisibilityConverter"/>
+    <converters:BoolToVisibilityConverter HiddenVisibility="Hidden" x:Key="Bool2HiddenVisibilityConverter"/>
     <converters:TextIsNotNullConverter x:Key="TextIsNotNullConverter"/>
     <converters:ValueIsNotNullConverter x:Key="ValueIsNotNullConverter"/>
     <converters:ValueIsNullConverter x:Key="ValueIsNullConverter"/>
