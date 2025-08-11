@@ -20,7 +20,7 @@ public class ActionHelper
         Success
     }
 
-    public IUserDialog UserDialog { get; set; } = Dialogs.DialogHelper.Default;
+    public IUserDialog UserDialog { get; set; } = DialogHelper.Default;
 
 
     private bool _SuccessResult;
@@ -124,20 +124,6 @@ public class ActionHelper
                 var checkSuccess = CheckSuccess(result);
                 return new ActionHelperTask<T>.ActionResult(checkSuccess, result);
             }, OnFailMessage);
-
-        return Add(task);
-    }
-
-    public ActionHelperTask<T> AddTask<T>(Func<Task<T>> action, Predicate<T> CheckSuccess, Func<T, string> ErrorMessage)
-    {
-        T result = default!; // Инициализация переменной для использования в лямбда-выражении
-        var task = new ActionHelperTask<T>(this,
-            async () =>
-            {
-                result = await action();
-                var checkSuccess = CheckSuccess(result);
-                return new ActionHelperTask<T>.ActionResult(checkSuccess, result);
-            }, ErrorMessage.Invoke(result));
 
         return Add(task);
     }
@@ -348,22 +334,13 @@ public class ActionHelper
     }
 
     /// <summary> Типизированная задача с возможностью обработки результата выполнения </summary>
-    public class ActionHelperTask<T>(
-        ActionHelper actionHelper,
-        Func<Task<ActionHelperTask<T>.ActionResult>> executingTask,
-        string? onFailMessage)
-        : IActionHelperTask
+    public class ActionHelperTask<T>(ActionHelper actionHelper, Func<Task<ActionHelperTask<T>.ActionResult>> executingTask, string? onFailMessage): IActionHelperTask
     {
-        public readonly struct ActionResult
-        {
-            public bool IsSuccess { get; }
-            public T Result { get; }
 
-            public ActionResult(bool IsSuccess, T result)
-            {
-                this.IsSuccess = IsSuccess;
-                Result = result;
-            }
+        public readonly struct ActionResult(bool isSuccess, T result)
+        {
+            public bool IsSuccess { get; } = isSuccess;
+            public T Result { get; } = result;
         }
 
 
@@ -458,6 +435,19 @@ public class ActionHelper
         public ActionHelperTask<T> OnFail(Func<T, Task> Action)
         {
             OnFailAction = Action;
+            return this;
+        }
+
+        /// <summary>
+        /// Сообщение или уведомление при провальном исполнении задачи.
+        /// Результат исполнения задачи будет изменён в соответствии с ответом пользователя
+        /// </summary>
+        public ActionHelperTask<T> OnFailMessage(Func<T, string> Message, bool IsNotification = false)
+        {
+
+            OnFailAction = IsNotification 
+            ? arg => actionHelper.UserDialog.ShowNotificationAsync(Message.Invoke(arg), StyleBrushes.DangerColorBrush)
+            : arg => actionHelper.UserDialog.ErrorMessageAsync(Message.Invoke(arg));
             return this;
         }
 
