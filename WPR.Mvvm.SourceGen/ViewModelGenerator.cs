@@ -254,20 +254,33 @@ public class ObservableModelGenerator : IIncrementalGenerator
         }
 
 
-        // Оператор преобразования модели
-        sb.AppendLine("    /// <summary>");
-        sb.AppendLine(
-            $"    /// Оператор неявного преобразования модели {modelNamed.ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat)}");
-        sb.AppendLine("    /// Сгенерировано ObservableModelGenerator.");
-        sb.AppendLine("    /// </summary>");
+        // Оператор преобразования модели — генерируем только если есть конструктор (T model)
+        var hasSingleModelCtor = classSymbol.InstanceConstructors.Any(ctor =>
+            !ctor.IsStatic &&
+            ctor.Parameters.Length == 1 &&
+            SymbolEqualityComparer.Default.Equals(ctor.Parameters[0].Type, modelTypeSymbol));
 
-        sb.AppendLine(
-            $"    public static implicit operator {classSymbol.Name}({modelTypeSymbol.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat)} model)");
-        sb.AppendLine("    {");
-        sb.AppendLine($"        if (model is null) return null;");
-        sb.AppendLine($"        var vm = new {classSymbol.Name}(model);");
-        sb.AppendLine($"        return vm;");
-        sb.AppendLine("    }");
+        if (hasSingleModelCtor)
+        {
+            sb.AppendLine("    /// <summary>");
+            sb.AppendLine(
+                $"    /// Оператор неявного преобразования модели {modelNamed.ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat)}");
+            sb.AppendLine("    /// Сгенерировано ObservableModelGenerator.");
+            sb.AppendLine("    /// </summary>");
+            
+            sb.AppendLine(
+                $"    public static implicit operator {classSymbol.Name}({modelTypeSymbol.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat)} model)");
+            sb.AppendLine("    {");
+            sb.AppendLine($"        if (model is null) return null;");
+            sb.AppendLine($"        var vm = new {classSymbol.Name}(model);");
+            sb.AppendLine($"        return vm;");
+            sb.AppendLine("    }");
+        }
+        else
+        {
+            sb.AppendLine($"    // Пропущено: оператор неявного преобразования не сгенерирован, так как отсутствует конструктор {classSymbol.Name}({modelNamed.ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat)} model).");
+        }
+
 
         sb.AppendLine("}"); // конец class
 
