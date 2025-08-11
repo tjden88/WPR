@@ -1,6 +1,5 @@
 ﻿using Microsoft.Win32;
 using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Media;
 
 namespace WPR.Theme;
@@ -56,6 +55,7 @@ public static class StyleHelper
 
         // Подменяем ресурс
         Application.Current.Resources["BaseFont"] = newFont;
+        StyleChanged?.Invoke(null, EventArgs.Empty);
     }
 
     #endregion
