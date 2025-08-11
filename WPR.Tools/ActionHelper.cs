@@ -128,6 +128,20 @@ public class ActionHelper
         return Add(task);
     }
 
+    public ActionHelperTask<T> AddTask<T>(Func<Task<T>> action, Predicate<T> CheckSuccess, Func<T, string> ErrorMessage)
+    {
+        T result = default!; // Инициализация переменной для использования в лямбда-выражении
+        var task = new ActionHelperTask<T>(this,
+            async () =>
+            {
+                result = await action();
+                var checkSuccess = CheckSuccess(result);
+                return new ActionHelperTask<T>.ActionResult(checkSuccess, result);
+            }, ErrorMessage.Invoke(result));
+
+        return Add(task);
+    }
+
     #endregion
 
     #region Dialogs
