@@ -2,6 +2,7 @@
 using CommunityToolkit.Mvvm.Messaging;
 using System.Diagnostics;
 using System.Reflection;
+using System.Text.Json.Serialization;
 
 namespace WPR.Mvvm.ViewModels;
 
@@ -11,6 +12,9 @@ namespace WPR.Mvvm.ViewModels;
 /// </summary>
 public abstract partial class ViewModel : ObservableRecipient
 {
+    [JsonIgnore]
+    public new bool IsActive { get => base.IsActive; set => base.IsActive = value; }
+    
     protected ViewModel(IMessenger messenger) : base(messenger)
     {
         IsActive = true;
@@ -21,16 +25,4 @@ public abstract partial class ViewModel : ObservableRecipient
     {
     }
 
-    /// <summary>
-    /// Заголовок модели-представления.
-    /// </summary>
-    [ObservableProperty]
-    public virtual string Title { get; set; } = string.Empty;
-
-
-    /// <summary>
-    /// Индикатор того, что модель-представление занята выполнением операции.
-    /// </summary>
-    [ObservableProperty]
-    public virtual bool IsBusy { get; set; }
 }
