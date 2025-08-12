@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using System.Reflection;
+using WPR.Mvvm.Attributes;
 
 namespace WPR.Mvvm.ViewModels;
 
