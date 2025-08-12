@@ -1,33 +1,41 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-    <PropertyGroup>
-        <TargetFramework>netstandard2.0</TargetFramework>
-        <LangVersion>preview</LangVersion>
-        <Nullable>enable</Nullable>
-        <IsRoslynComponent>true</IsRoslynComponent>
-        <IncludeBuildOutput>false</IncludeBuildOutput>
-        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-        <Title>Генератор ViewModels для WPR.Mvvm</Title>
-        <PackageIcon>nuget-icon-128.png</PackageIcon>
-        <Version>1.0.1</Version>
-    </PropertyGroup>
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <LangVersion>preview</LangVersion>
+    <Nullable>enable</Nullable>
 
-    <ItemGroup>
-        <!-- Roslyn API для компиляции генератора.
-             PrivateAssets="all" не позволит транзитивно тянуть эти пакеты в проекты-приложения -->
-        <PackageReference Include="Microsoft.CodeAnalysis" Version="4.11.0" PrivateAssets="all" />
-        <PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="4.11.0" PrivateAssets="all" />
-        <!-- (опционально, но полезно) Доп. правила для самих анализаторов -->
-        <PackageReference Include="Microsoft.CodeAnalysis.Analyzers" Version="3.3.4" PrivateAssets="all" />
-    </ItemGroup>
+    <IsRoslynComponent>true</IsRoslynComponent>
 
-    <ItemGroup>
-        <!-- Указываем, что этот проект — анализатор -->
-        <None Include="$(OutputPath)\WPR.Mvvm.SourceGen.dll" Pack="true" PackagePath="analyzers/dotnet/cs" />
-        <None Update="nuget-icon-128.png">
-          <Pack>True</Pack>
-          <PackagePath></PackagePath>
-        </None>
-    </ItemGroup>
+    <!-- Анализатор/генератор не должен класть сборки в lib/, только в analyzers/ -->
+    <IncludeBuildOutput>false</IncludeBuildOutput>
+
+    <!-- Убираем группы зависимостей в nuspec, чтобы не было NU5128 -->
+    <SuppressDependenciesWhenPacking>true</SuppressDependenciesWhenPacking>
+
+    <!-- (необязательно) маркировка пакета как Analyzer -->
+    <PackageType>Analyzer</PackageType>
+
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <Title>Генератор ViewModels для WPR.Mvvm</Title>
+    <PackageIcon>nuget-icon-128.png</PackageIcon>
+    <Version>1.0.1</Version>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <!-- Roslyn API для компиляции генератора (не попадут в зависимости пакета благодаря PrivateAssets="all") -->
+    <PackageReference Include="Microsoft.CodeAnalysis" Version="4.11.0" PrivateAssets="all" />
+    <PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="4.11.0" PrivateAssets="all" />
+    <PackageReference Include="Microsoft.CodeAnalysis.Analyzers" Version="3.3.4" PrivateAssets="all" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <!-- Кладём сборку генератора в analyzers/dotnet/cs -->
+    <None Include="$(OutputPath)\WPR.Mvvm.SourceGen.dll" Pack="true" PackagePath="analyzers/dotnet/cs" />
+    <None Update="nuget-icon-128.png">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
+  </ItemGroup>
 
 </Project>
