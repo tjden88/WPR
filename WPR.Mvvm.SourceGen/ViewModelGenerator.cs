@@ -18,6 +18,9 @@ public class ObservableModelGenerator : BaseGeneric1Generator
     // Префикс для Diagnostic.Id
     protected override string DiagnosticIdPrefix => "WPRSG";
 
+    // Метадатное имя атрибута исключения свойств
+    private const string SkipPropertyAttributeMetadataName = "WPR.Mvvm.Attributes.SkipPropertyAttribute";
+
     // Основная генерация для конкретного класса + типа модели
     protected override string GenerateFor(INamedTypeSymbol classSymbol, ITypeSymbol modelTypeSymbol, Compilation compilation)
     {
@@ -64,6 +67,9 @@ public class ObservableModelGenerator : BaseGeneric1Generator
             return sb.ToString();
         }
 
+        // Собираем список исключаемых свойств из атрибутов класса VM
+        var skippedPropertyNames = GetSkippedPropertyNames(classSymbol);
+
         var modelProperties = GetAllModelProperties(modelNamed);
         var existingMemberNames = new HashSet<string>(classSymbol.GetMembers().Select(m => m.Name));
 
@@ -72,6 +78,15 @@ public class ObservableModelGenerator : BaseGeneric1Generator
             if (prop.IsIndexer) continue;
 
             var propName = prop.Name;
+
+            // Пропускаем свойство, если оно явно исключено атрибутом
+            if (skippedPropertyNames.Contains(propName))
+            {
+                sb.AppendLine($"    // Пропущено: свойство '{propName}' отмечено атрибутом SkipPropertyAttribute.");
+                sb.AppendLine();
+                continue;
+            }
+
             if (existingMemberNames.Contains(propName))
             {
                 sb.AppendLine($"    // Пропущено: свойство '{propName}' уже определено в {classSymbol.Name}.");
@@ -123,7 +138,6 @@ public class ObservableModelGenerator : BaseGeneric1Generator
                 }
                 else
                 {
-                    //sb.AppendLine($"        set => SetProperty({setterFieldName}, value, {modelFieldName}, (m, v) => m.{propName} = v);");
                     sb.AppendLine("        set");
                     sb.AppendLine("        {");
                     sb.AppendLine($"            if (SetProperty({setterFieldName}, value, {modelFieldName}, (m, v) => m.{propName} = v))");
@@ -177,5 +191,61 @@ public class ObservableModelGenerator : BaseGeneric1Generator
             sb.AppendLine("}"); // end namespace
 
         return sb.ToString();
+    }
+
+    // Собираем имена исключаемых свойств из SkipPropertyAttribute на классе VM
+    private static HashSet<string> GetSkippedPropertyNames(INamedTypeSymbol classSymbol)
+    {
+        var result = new HashSet<string>(StringComparer.Ordinal);
+
+        foreach (var attr in classSymbol.GetAttributes())
+        {
+            var attrClass = attr.AttributeClass;
+            if (attrClass == null) continue;
+
+            var isSkipAttr =
+                string.Equals(attrClass.ToDisplayString(), SkipPropertyAttributeMetadataName, StringComparison.Ordinal)
+                || string.Equals(attrClass.Name, "SkipPropertyAttribute", StringComparison.Ordinal);
+
+            if (!isSkipAttr) continue;
+
+            // Конструктор: params string[] propertyNames
+            if (attr.ConstructorArguments.Length == 1)
+            {
+                var arg = attr.ConstructorArguments[0];
+
+                if (arg.Kind == TypedConstantKind.Array)
+                {
+                    foreach (var v in arg.Values)
+                        if (v.Value is string s && !string.IsNullOrWhiteSpace(s))
+                            result.Add(s);
+                }
+                else if (arg.Value is string s && !string.IsNullOrWhiteSpace(s))
+                {
+                    result.Add(s);
+                }
+            }
+
+            // На всякий случай поддержим именованные аргументы: PropertyName / PropertyNames
+            foreach (var na in attr.NamedArguments)
+            {
+                if (na.Key is "PropertyName" or "PropertyNames")
+                {
+                    var val = na.Value;
+                    if (val.Kind == TypedConstantKind.Array)
+                    {
+                        foreach (var v in val.Values)
+                            if (v.Value is string s && !string.IsNullOrWhiteSpace(s))
+                                result.Add(s);
+                    }
+                    else if (val.Value is string s && !string.IsNullOrWhiteSpace(s))
+                    {
+                        result.Add(s);
+                    }
+                }
+            }
+        }
+
+        return result;
     }
 }
