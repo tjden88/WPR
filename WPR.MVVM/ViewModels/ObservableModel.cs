@@ -28,9 +28,11 @@ public abstract class ObservableModel<T> : ObservableRecipient where T : class
     #region SetCollections
 
 
-    // Переносит данные из ObservableCollection-свойств VM назад в модель,
-    // учитывая различные целевые типы коллекций в модели (List, Array, HashSet и пр.)
-    private void SetCollectionsToModel()
+    /// <summary>
+    /// Переносит данные из ObservableCollection-свойств VM назад в модель,
+    /// учитывая различные целевые типы коллекций в модели (List, Array, HashSet и пр.)
+    /// </summary>
+    protected void SetCollectionsToModel()
     {
         var vmType = GetType();
         var modelType = typeof(T);

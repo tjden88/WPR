@@ -82,13 +82,14 @@ public class ObservableModelGenerator : BaseGeneric1Generator
             var targetTypeName = targetTypeSymbol.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat);
 
             sb.AppendLine("    /// <summary>");
-            sb.AppendLine($"    /// Сгенерированное свойство для модели {modelNamed.ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat)}.{propName}");
-            sb.AppendLine("    /// Сгенерировано ObservableModelGenerator.");
+            sb.AppendLine($"    /// Свойство для модели {modelNamed.ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat)}.{propName}");
             sb.AppendLine("    /// </summary>");
 
             string setterFieldName;
             var isCollection = IsObservableCollectionTypeSymbol(targetTypeSymbol);
-
+            var isPublicSetter = prop.SetMethod is { DeclaredAccessibility: Accessibility.Public, IsInitOnly: false };
+            
+            // Геттер
             if (isCollection)
             {
                 setterFieldName = "_" + ToCamelCase(propName);
@@ -99,7 +100,6 @@ public class ObservableModelGenerator : BaseGeneric1Generator
                 setterFieldName = $"{modelFieldName}.{propName}";
             }
 
-            sb.AppendLine();
             sb.AppendLine($"    public {targetTypeName} {propName}");
             sb.AppendLine("    {");
 
@@ -107,8 +107,9 @@ public class ObservableModelGenerator : BaseGeneric1Generator
                 sb.AppendLine($"        get => {setterFieldName} ??= {modelFieldName}.{propName} is null ? null : new {targetTypeName}({modelFieldName}.{propName});");
             else
                 sb.AppendLine($"        get => {setterFieldName};");
-
-            if (prop.SetMethod is { DeclaredAccessibility: Accessibility.Public, IsInitOnly: false })
+            
+            // Публичный сеттер
+            if (isPublicSetter)
             {
                 if (isCollection)
                 {
@@ -116,15 +117,32 @@ public class ObservableModelGenerator : BaseGeneric1Generator
                     sb.AppendLine("        {");
                     sb.AppendLine($"            if (SetProperty(ref {setterFieldName}, value) && value == null)");
                     sb.AppendLine($"                {modelFieldName}.{propName} = null;");
+                    sb.AppendLine($"                On{propName}Changed(value);");
                     sb.AppendLine("        }");
                 }
                 else
                 {
-                    sb.AppendLine($"        set => SetProperty({setterFieldName}, value, {modelFieldName}, (m, v) => m.{propName} = v);");
+                    //sb.AppendLine($"        set => SetProperty({setterFieldName}, value, {modelFieldName}, (m, v) => m.{propName} = v);");
+                    sb.AppendLine("        set");
+                    sb.AppendLine("        {");
+                    sb.AppendLine($"            if (SetProperty({setterFieldName}, value, {modelFieldName}, (m, v) => m.{propName} = v))");
+                    sb.AppendLine($"                On{propName}Changed(value);");
+                    sb.AppendLine("        }");
                 }
             }
 
             sb.AppendLine("    }");
+
+            if (isPublicSetter)
+            {
+                // OnPropertyChanged Метод
+                sb.AppendLine("    /// <summary>");
+                sb.AppendLine($"    /// Вызывается после изменения свойства {propName}");
+                sb.AppendLine("    /// </summary>");
+                sb.AppendLine($"    protected virtual void On{propName}Changed({targetTypeName} newValue) {{ }}");
+            }
+            
+            sb.AppendLine();
             sb.AppendLine();
         }
 
