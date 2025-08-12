@@ -17,30 +17,34 @@ public class Badge : ContentControl
     /// <summary>Контент бейджа</summary>
     public static readonly DependencyProperty BageContentProperty = DependencyProperty.Register(
         nameof(BageContent), typeof(object), typeof(Badge),
-        new PropertyMetadata(string.Empty));
+        new PropertyMetadata(string.Empty, OnContentChanged));
+
+    private static void OnContentChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+    {
+        if (!Equals(e.NewValue, e.OldValue))
+            ((Badge) d).AnimateBage();
+    }
 
     public object BageContent
     {
         get => GetValue(BageContentProperty);
-        set
-        {
-            SetValue(BageContentProperty, value);
-            AnimateBage();
-        }
+        set => SetValue(BageContentProperty, value);
     }
 
     /// <summary> Видимость бейджа </summary>
     public static readonly DependencyProperty BageVisibleProperty = DependencyProperty.Register(nameof(BageVisible), typeof(bool), typeof(Badge), 
-        new PropertyMetadata(false));
+        new PropertyMetadata(false, BadgeVisibleOnChanged));
+
+    private static void BadgeVisibleOnChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+    {
+        if (!Equals(e.NewValue, e.OldValue) && (bool)e.NewValue)
+            ((Badge) d).AnimateBage();
+    }
 
     public bool BageVisible
     {
         get => (bool)GetValue(BageVisibleProperty);
-        set
-        {
-            SetValue(BageVisibleProperty, value);
-            if (value) AnimateBage();
-        }
+        set => SetValue(BageVisibleProperty, value);
     }
 
 
