@@ -4,7 +4,7 @@
 public interface IWPRDialog
 {
     /// <summary>Установить результат диалога</summary>
-    event Action<bool>? Completed;
+    event Action<bool> Completed;
 
     /// <summary>Контент диалога</summary>
     object DialogContent => this;

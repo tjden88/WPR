@@ -168,7 +168,7 @@ internal class WPRUserDialog : IUserDialog
         return Task.FromResult(dialogResult == true ? ofd.FileName : null);
     }
 
-    public Task<string> ShowSaveFileDialogAsync(string Title, IEnumerable<FileFilter>? Filters = null, string InitFileName = "")
+    public Task<string> ShowSaveFileDialogAsync(string Title, IEnumerable<FileFilter> Filters = null, string InitFileName = "")
     {
         var sfd = new SaveFileDialog
         {
@@ -199,7 +199,7 @@ internal class WPRUserDialog : IUserDialog
         };
 
         if (!dialog.ShowDialog(ActiveWindow) == true)
-            return Task.FromResult<string?>(null);
+            return Task.FromResult<string>(null);
 
         return Task.FromResult(dialog.FolderName)!;
     }
