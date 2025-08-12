@@ -24,11 +24,13 @@ public abstract partial class ViewModel : ObservableRecipient
     /// <summary>
     /// Заголовок модели-представления.
     /// </summary>
-    [ObservableProperty] private string _Title = string.Empty;
+    [ObservableProperty]
+    public virtual string Title { get; set; } = string.Empty;
 
 
     /// <summary>
     /// Индикатор того, что модель-представление занята выполнением операции.
     /// </summary>
-    [ObservableProperty] private bool _IsBusy;
+    [ObservableProperty]
+    public virtual bool IsBusy { get; set; }
 }

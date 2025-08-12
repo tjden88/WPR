@@ -5,6 +5,8 @@ using System.Threading.Tasks;
 
 namespace WPR.Tools;
 
+using System.Diagnostics;
+
 /// <summary>
 /// Потокобезопасный помощник для запуска отменяемых задач.
 /// Каждый новый запуск отменяет предыдущую и ждёт её завершения.
@@ -12,39 +14,35 @@ namespace WPR.Tools;
 /// </summary>
 public class TaskRunner
 {
-    // Текущий токен отмены
     private CancellationTokenSource? _cts;
-
-    // Текущая выполняемая задача
     private Task? _currentTask;
+
+    /// <summary>
+    /// Выполняется ли сейчас задача.
+    /// </summary>
+    public bool IsRunning => _currentTask is { IsCompleted: false };
 
     /// <summary>
     /// Запускает новую задачу, предварительно отменив предыдущую.
     /// </summary>
     public async Task Start(Func<CancellationToken, Task> work)
     {
-        // Создаём новый CTS и атомарно подменяем старый
         var newCts = new CancellationTokenSource();
         var oldCts = Interlocked.Exchange(ref _cts, newCts);
 
-        // Отменяем и освобождаем старый CTS (если был)
         if (oldCts is not null)
         {
             try
             {
                 await oldCts.CancelAsync();
             }
-            catch (ObjectDisposedException)
-            {
-                // Уже освобождён — игнорируем
-            }
+            catch (ObjectDisposedException) { }
             finally
             {
                 oldCts.Dispose();
             }
         }
 
-        // Ждём завершения предыдущей задачи (если была)
         var oldTask = Interlocked.Exchange(ref _currentTask, null);
         if (oldTask is not null)
         {
@@ -52,26 +50,17 @@ public class TaskRunner
             {
                 await oldTask;
             }
-            catch (OperationCanceledException)
-            {
-                // Ожидаемая отмена — игнорируем
-            }
+            catch (OperationCanceledException) { }
         }
 
-        // Запускаем новую задачу
         var task = Task.Run(() => work(newCts.Token), newCts.Token);
-
-        // Сохраняем ссылку на неё
         _currentTask = task;
 
         try
         {
             await task;
         }
-        catch (OperationCanceledException)
-        {
-            // Нормальная отмена
-        }
+        catch (OperationCanceledException) { }
         catch (Exception ex)
         {
             Debug.WriteLine(ex);
@@ -79,7 +68,6 @@ public class TaskRunner
         }
         finally
         {
-            // Сбрасываем CTS только если он всё ещё наш
             Interlocked.CompareExchange(ref _cts, null, newCts);
             newCts.Dispose();
         }
