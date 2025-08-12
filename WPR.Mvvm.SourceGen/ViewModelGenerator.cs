@@ -75,6 +75,7 @@ public class ObservableModelGenerator : BaseGeneric1Generator
             if (existingMemberNames.Contains(propName))
             {
                 sb.AppendLine($"    // Пропущено: свойство '{propName}' уже определено в {classSymbol.Name}.");
+                sb.AppendLine();
                 continue;
             }
 
@@ -139,7 +140,7 @@ public class ObservableModelGenerator : BaseGeneric1Generator
                 sb.AppendLine("    /// <summary>");
                 sb.AppendLine($"    /// Вызывается после изменения свойства {propName}");
                 sb.AppendLine("    /// </summary>");
-                sb.AppendLine($"    protected virtual void On{propName}Changed({targetTypeName} newValue) {{ }}");
+                sb.AppendLine($"    partial void On{propName}Changed({targetTypeName} value);");
             }
             
             sb.AppendLine();
