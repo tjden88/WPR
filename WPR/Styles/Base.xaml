@@ -24,6 +24,7 @@
     <converters:SignPlusMinusConverter x:Key="SignPlusMinusConverter"/>
     <converters:EnumToBoolConverter x:Key="EnumToBoolConverter"/>
     <converters:ValueIsNullToVisibilityConverter x:Key="ValueIsNullToVisibilityConverter"/>
+    <converters:EnumDescriptionConverter x:Key="EnumDescriptionConverter"/>
 
 
     <!--Кисти и цвета-->
