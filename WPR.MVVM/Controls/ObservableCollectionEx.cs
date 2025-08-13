@@ -69,6 +69,21 @@ public class ObservableCollectionEx<T> : ObservableCollection<T>
             OnPropertyChanged(new PropertyChangedEventArgs("Item[]"));
         }
     }
+    
+    /// <summary>
+    /// Заменяет элемент <paramref name="oldItem"/> на <paramref name="newItem"/> в коллекции, сохраняя позицию.
+    /// Если oldItem не найден — ничего не делает.
+    /// Генерирует корректные события коллекции.
+    /// </summary>
+    public bool Replace(T oldItem, T newItem)
+    {
+        var index = IndexOf(oldItem);
+        if (index < 0)
+            return false; // не нашли
+
+        SetItem(index, newItem);
+        return true;
+    }
 
     /// <summary>
     /// Заменяет все элементы коллекции на новые, вызвав одно событие обновления.
