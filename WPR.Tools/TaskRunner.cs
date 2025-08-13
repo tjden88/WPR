@@ -10,13 +10,13 @@ namespace WPR.Tools;
 /// </summary>
 public class TaskRunner
 {
-    private CancellationTokenSource? _cts;
-    private Task? _currentTask;
+    private CancellationTokenSource? _Cts;
+    private Task? _CurrentTask;
 
     /// <summary>
     /// Выполняется ли сейчас задача.
     /// </summary>
-    public bool IsRunning => _currentTask is { IsCompleted: false };
+    public bool IsRunning => _CurrentTask is { IsCompleted: false };
 
     /// <summary>
     /// Запускает новую задачу без результата, предварительно отменив предыдущую.
@@ -30,21 +30,24 @@ public class TaskRunner
         });
     }
 
+
     /// <summary>
     /// Запускает новую задачу с результатом, предварительно отменив предыдущую.
+    /// При отмене возвращает заданное значение.
     /// </summary>
-    public async Task<T> Start<T>(Func<CancellationToken, Task<T>> work)
+    public async Task<T> Start<T>(Func<CancellationToken, Task<T>> work, T onCancelResult = default!)
     {
-        var result = await StartInternal(work);
+        var result = await StartInternal(work, onCancelResult);
         return result;
     }
+
 
     /// <summary>
     /// Принудительно отменяет текущую задачу и ждёт её завершения.
     /// </summary>
     public async Task Cancel()
     {
-        var oldCts = Interlocked.Exchange(ref _cts, null);
+        var oldCts = Interlocked.Exchange(ref _Cts, null);
         if (oldCts is not null)
         {
             try
@@ -58,7 +61,7 @@ public class TaskRunner
             }
         }
 
-        var oldTask = Interlocked.Exchange(ref _currentTask, null);
+        var oldTask = Interlocked.Exchange(ref _CurrentTask, null);
         if (oldTask is not null)
         {
             try
@@ -69,11 +72,11 @@ public class TaskRunner
         }
     }
 
-    // Общая реализация, которая принимает Task<T>
-    private async Task<T> StartInternal<T>(Func<CancellationToken, Task<T>> work)
+    // Общая реализация, которая принимает Task<T> и возвращает результат или onCancelResult при отмене
+    private async Task<T> StartInternal<T>(Func<CancellationToken, Task<T>> work, T onCancelResult = default!)
     {
         var newCts = new CancellationTokenSource();
-        var oldCts = Interlocked.Exchange(ref _cts, newCts);
+        var oldCts = Interlocked.Exchange(ref _Cts, newCts);
 
         // Отменяем старый CTS
         if (oldCts is not null)
@@ -90,7 +93,7 @@ public class TaskRunner
         }
 
         // Ждём завершения старой задачи
-        var oldTask = Interlocked.Exchange(ref _currentTask, null);
+        var oldTask = Interlocked.Exchange(ref _CurrentTask, null);
         if (oldTask is not null)
         {
             try
@@ -102,7 +105,7 @@ public class TaskRunner
 
         // Запускаем новую
         var task = Task.Run(() => work(newCts.Token), newCts.Token);
-        _currentTask = task;
+        _CurrentTask = task;
 
         try
         {
@@ -110,11 +113,11 @@ public class TaskRunner
         }
         catch (OperationCanceledException)
         {
-            return default!;
+            return onCancelResult;
         }
         finally
         {
-            Interlocked.CompareExchange(ref _cts, null, newCts);
+            Interlocked.CompareExchange(ref _Cts, null, newCts);
             newCts.Dispose();
         }
     }
