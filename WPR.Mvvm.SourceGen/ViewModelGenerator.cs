@@ -26,7 +26,7 @@ public class ObservableModelGenerator : BaseGeneric1Generator
     {
         // Генерируем ТОЛЬКО для ПРЯМЫХ наследников ObservableModel<T>, чтобы не дублировать свойства в потомках
         if (classSymbol.BaseType is not INamedTypeSymbol { IsGenericType: true, TypeArguments.Length: 1 } directBase
-            || directBase.Name != TargetBaseTypeName)
+            || directBase.Name != TargetBaseTypeName && directBase.Name != "ObservableRecipientModel")
         {
             return string.Empty;
         }
