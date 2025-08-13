@@ -4,6 +4,10 @@ using CommunityToolkit.Mvvm.Input;
 
 namespace WPR.Mvvm.ViewModels;
 
+/// <summary>
+/// Регистрация команд RelayCommand в Command Manager WPF.
+/// Свойства, помеченные атрибутом AutoNotifyCanExecuteChangedAttribute, будут автоматически зарегистрированы  в обработчике
+/// </summary>
 internal static class GlobalCanExecuteNotifier
 {
     private static readonly List<WeakReference<IRelayCommand>> _Commands = new();

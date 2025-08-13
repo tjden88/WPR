@@ -1,19 +1,18 @@
 ﻿using System.Collections;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Reflection;
 using CommunityToolkit.Mvvm.ComponentModel;
 
 namespace WPR.Mvvm.ViewModels;
 
-public abstract class ObservableModel<T> : ObservableRecipient where T : class
+/// <summary>
+/// Представляет базовый класс для создания моделей представлений, которые охватывают определенный тип модели и предоставляют уведомления об изменении свойств.
+/// </summary>
+/// <typeparam name="T">Тип обёрнутой модели. Должен быть ссылочным типом.</typeparam>
+public abstract class ObservableModel<T>(T Model) : ObservableObject where T : class
 {
-    protected readonly T Model;
-
-    protected ObservableModel(T model)
-    {
-        IsActive = true; // Активируем Messenger сразу при создании
-        Model = model ?? throw new ArgumentNullException(nameof(model));
-    }
+    protected readonly T Model = Model ?? throw new ArgumentNullException(nameof(Model));
 
     // преобразование VM -> Model
     public static implicit operator T(ObservableModel<T> vm)
@@ -23,10 +22,35 @@ public abstract class ObservableModel<T> : ObservableRecipient where T : class
         return vm.Model;
     }
 
-    
-    
-    #region SetCollections
+    protected override void OnPropertyChanged(PropertyChangedEventArgs e)
+    {
+        base.OnPropertyChanged(e);
 
+        var name = e.PropertyName;
+        if (!string.IsNullOrEmpty(name) && _ModelPropertyNames.Value.Contains(name))
+            OnModelPropertyChanged(name);
+    }
+
+    /// <summary>
+    /// Вызывается, когда происходит изменение свойства модели
+    /// </summary>
+    /// <param name="propertyName">Имя изменённого свойства</param>
+    protected virtual void OnModelPropertyChanged(string propertyName) { }
+
+
+    // Кэш имён свойств модели T, чтобы быстро определять "модельные" изменения
+    private static readonly Lazy<HashSet<string>> _ModelPropertyNames
+        = new(() =>
+        {
+            var set = new HashSet<string>(StringComparer.Ordinal);
+            foreach (var p in typeof(T).GetProperties(BindingFlags.Instance | BindingFlags.Public))
+                if (p.GetIndexParameters().Length == 0)
+                    set.Add(p.Name);
+            return set;
+        });
+
+
+    #region SetCollections
 
     /// <summary>
     /// Переносит данные из ObservableCollection-свойств VM назад в модель,
@@ -64,6 +88,7 @@ public abstract class ObservableModel<T> : ObservableRecipient where T : class
                     var existing = modelProp.GetValue(Model);
                     TryClearCollection(existing);
                 }
+
                 continue;
             }
 
@@ -97,7 +122,7 @@ public abstract class ObservableModel<T> : ObservableRecipient where T : class
             .First(m => m.Name == nameof(Enumerable.Cast) && m.GetParameters().Length == 1)
             .MakeGenericMethod(itemType);
 
-        return castMethod.Invoke(null, new[] { sourceEnumerable })!;
+        return castMethod.Invoke(null, new[] {sourceEnumerable})!;
     }
 
     // Создаёт новую коллекцию соответствующую типу свойства модели
@@ -167,14 +192,14 @@ public abstract class ObservableModel<T> : ObservableRecipient where T : class
             var collType = existing.GetType();
             var clear = collType.GetMethod("Clear");
             var add = collType.GetMethod("Add", [itemType]);
-            
-            if(clear is null || add is null)
+
+            if (clear is null || add is null)
                 return false;
 
             clear?.Invoke(existing, null);
 
-            foreach (var item in (IEnumerable)enumerableTyped)
-                add?.Invoke(existing, new[] { item });
+            foreach (var item in (IEnumerable) enumerableTyped)
+                add?.Invoke(existing, new[] {item});
 
             return true;
         }
@@ -183,10 +208,11 @@ public abstract class ObservableModel<T> : ObservableRecipient where T : class
         if (existing is IList nonGenericList)
         {
             nonGenericList.Clear();
-            foreach (var item in (IEnumerable)enumerableTyped)
+            foreach (var item in (IEnumerable) enumerableTyped)
                 nonGenericList.Add(item);
             return true;
         }
+
         return false;
     }
 
@@ -200,18 +226,18 @@ public abstract class ObservableModel<T> : ObservableRecipient where T : class
         {
             var collType = existing.GetType();
             var clear = collType.GetMethod("Clear");
-            var add = collType.GetMethod("Add", new[] { itemType });
+            var add = collType.GetMethod("Add", new[] {itemType});
 
             clear?.Invoke(existing, null);
-            foreach (var item in (IEnumerable)enumerableTyped)
-                add?.Invoke(existing, new[] { item });
+            foreach (var item in (IEnumerable) enumerableTyped)
+                add?.Invoke(existing, new[] {item});
             return;
         }
 
         if (existing is IList nonGenericList)
         {
             nonGenericList.Clear();
-            foreach (var item in (IEnumerable)enumerableTyped)
+            foreach (var item in (IEnumerable) enumerableTyped)
                 nonGenericList.Add(item);
         }
     }
@@ -242,7 +268,7 @@ public abstract class ObservableModel<T> : ObservableRecipient where T : class
         var toArray = typeof(Enumerable).GetMethods(BindingFlags.Static | BindingFlags.Public)
             .First(m => m.Name == nameof(Enumerable.ToArray) && m.GetParameters().Length == 1)
             .MakeGenericMethod(itemType);
-        return toArray.Invoke(null, new[] { enumerableTyped })!;
+        return toArray.Invoke(null, new[] {enumerableTyped})!;
     }
 
     private static object ToList(object enumerableTyped, Type itemType)
@@ -250,15 +276,15 @@ public abstract class ObservableModel<T> : ObservableRecipient where T : class
         var toList = typeof(Enumerable).GetMethods(BindingFlags.Static | BindingFlags.Public)
             .First(m => m.Name == nameof(Enumerable.ToList) && m.GetParameters().Length == 1)
             .MakeGenericMethod(itemType);
-        return toList.Invoke(null, new[] { enumerableTyped })!;
+        return toList.Invoke(null, new[] {enumerableTyped})!;
     }
 
     private static object? CreateWithIEnumerableCtor(Type targetType, Type itemType, object enumerableTyped)
     {
         var ienumerableOfT = typeof(IEnumerable<>).MakeGenericType(itemType);
-        var ctor = targetType.GetConstructor(new[] { ienumerableOfT });
+        var ctor = targetType.GetConstructor(new[] {ienumerableOfT});
         if (ctor == null) return null;
-        return ctor.Invoke(new[] { enumerableTyped });
+        return ctor.Invoke(new[] {enumerableTyped});
     }
 
     private static bool IsGenericTypeDefinition(Type type, Type genericDef)
@@ -266,7 +292,6 @@ public abstract class ObservableModel<T> : ObservableRecipient where T : class
 
     private static bool IsGenericInterface(Type type, Type genericDef)
         => type.IsInterface && type.IsGenericType && type.GetGenericTypeDefinition() == genericDef;
-    
 
     #endregion
 }

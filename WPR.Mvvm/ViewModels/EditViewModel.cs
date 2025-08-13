@@ -9,7 +9,6 @@ namespace WPR.Mvvm.ViewModels;
 /// <summary>
 /// Модель-представление для редактирования сущности с возможностью отката изменений и автоматической привязкой свойств редактируемой модели с помощью атрибута BindAttribute.
 /// </summary>
-/// <typeparam name="T"></typeparam>
 public abstract class EditViewModel<T> : ObservableValidator where T : class
 {
     private readonly Dictionary<string, PropertyInfo> _BindProperties = new(); // Свойства модели-представления, которые будут привязаны к свойствам сущности с помощью атрибута BindAttribute

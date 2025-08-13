@@ -1,28 +1,17 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
-using CommunityToolkit.Mvvm.Messaging;
 using System.Diagnostics;
 using System.Reflection;
-using System.Text.Json.Serialization;
 
 namespace WPR.Mvvm.ViewModels;
 
 /// <summary>
-/// Базовая модель-представление для MVVM.
-/// Также реализует интерфейс <see cref="ObservableRecipient"/> для поддержки сообщений. Сразу активна.
+/// Базовая модель-представление для MVVM. Реализует <see cref="ObservableObject"/>
 /// </summary>
-public abstract partial class ViewModel : ObservableRecipient
+[ObservableRecipient] // Todo: убрать после рефакторинга
+public abstract partial class ViewModel : ObservableObject
 {
-    [JsonIgnore]
-    public new bool IsActive { get => base.IsActive; set => base.IsActive = value; }
-    
-    protected ViewModel(IMessenger messenger) : base(messenger)
+    protected ViewModel()
     {
-        IsActive = true;
         this.InitializeAttributes();
     }
-
-    protected ViewModel() : this(WeakReferenceMessenger.Default)
-    {
-    }
-
 }
