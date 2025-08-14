@@ -20,12 +20,38 @@ public class ActionHelper
         Success
     }
 
+    /// <summary>
+    /// Диалог, который будет использоваться для показа уведомлений
+    /// </summary>
     public IUserDialog UserDialog { get; set; } = DialogHelper.Default;
+
+    /// <summary>
+    /// Действие, которое будет выполнено перед каждым вызовом ExecuteAsync
+    /// </summary>
+    public Action? StartAction { get; set; }
+
+    /// <summary>
+    /// Действие, которое будет выполнено в любом случае после завершения очереди задач
+    /// </summary>
+    public Action? EndAction { get; set; }
 
 
     private bool _SuccessResult;
     private readonly List<IActionHelperTask> _Tasks = new();// Очередь задач
 
+
+    #region Check
+
+    /// <summary>
+    /// Проверить состояние.
+    /// </summary>
+    public ActionHelperTask Check(Func<bool> CheckSuccess, string? OnFailMessage = null)
+    {
+        var task = new ActionHelperTask(this, () => Task.FromResult(CheckSuccess()), OnFailMessage);
+        return Add(task);
+    }
+
+    #endregion
 
     #region AddActions
 
@@ -85,6 +111,7 @@ public class ActionHelper
     public ActionHelperTask AddTask(Func<Task> action) => AddTask(action, () => true);
 
 
+
     /// <summary>
     /// Добавить задачу в очередь выполнения
     /// </summary>
@@ -123,6 +150,27 @@ public class ActionHelper
                 var result = await action();
                 var checkSuccess = CheckSuccess(result);
                 return new ActionHelperTask<T>.ActionResult(checkSuccess, result);
+            }, OnFailMessage);
+
+        return Add(task);
+    }
+
+    /// <summary>
+    /// Добавить задачу в очередь выполнения с проверкой результата
+    /// Работает с типами, которые можно явно или неявно преобразовать в bool
+    /// Если тип не умеет такого - будет ошибка в рантайме!
+    /// </summary>
+    /// <param name="action">Задача на выполнение</param>
+    /// <param name="OnFailMessage">Сообщение пользователю при неудаче</param>
+
+    public ActionHelperTask<T> AddTaskAndCheck<T>(Func<Task<T>> action, string? OnFailMessage = null)
+    {
+        var task = new ActionHelperTask<T>(this,
+            async () =>
+            {
+                var result = await action();
+                var success = (bool) (dynamic)result!;
+                return new ActionHelperTask<T>.ActionResult(success, result);
             }, OnFailMessage);
 
         return Add(task);
@@ -201,21 +249,30 @@ public class ActionHelper
         if (!_Tasks.Any())
             throw new InvalidOperationException("Список задач пуст!");
 
-        _SuccessResult = true;
-        foreach (var task in _Tasks)
+        StartAction?.Invoke();
+
+        try
         {
-            if (await task.ExecuteTaskAsync()) continue;
+            _SuccessResult = true;
+            foreach (var task in _Tasks)
+            {
+                if (await task.ExecuteTaskAsync()) continue;
 
-            if (task.HasErrorMessage)
-                await UserDialog.ErrorMessageAsync(task.ErrorMessage!);
-            _SuccessResult = false;
+                if (task.HasErrorMessage)
+                    await UserDialog.ErrorMessageAsync(task.ErrorMessage!);
+                _SuccessResult = false;
 
-            if (BreakOnFail)
-                break;
+                if (BreakOnFail)
+                    break;
+            }
+            return _SuccessResult;
+
         }
-
-        _Tasks.Clear();
-        return _SuccessResult;
+        finally
+        {
+            _Tasks.Clear();
+            EndAction?.Invoke();
+        }
     }
 
     /// <summary>
