@@ -408,10 +408,12 @@ public class ActionHelper
         private Func<T, Task>? OnSuccessAction { get; set; }
         private Func<T, Task>? OnFailAction { get; set; }
 
+        private T? _Result;
 
         async Task<bool> IActionHelperTask.ExecuteTaskAsync()
         {
             var result = await executingTask.Invoke();
+            _Result = result.Result;
             var success = result.IsSuccess;
             if (success)
             {
@@ -522,6 +524,23 @@ public class ActionHelper
 
         public ActionHelper Then() => actionHelper;
 
+        public ActionHelperWithResult<T> ThenWithResult()
+        {
+
+            return new ActionHelperWithResult<T>(actionHelper, _Result);
+        }
+
         public Task<bool> ExecuteAsync(bool BreakOnFail = true) => actionHelper.ExecuteAsync(BreakOnFail);
     }
+}
+
+public class ActionHelperWithResult<T>(ActionHelper Helper, T? Result)
+{
+    public ActionHelper.ActionHelperTask<U> AddAction<U>(Func<T, U> action, Predicate<U> checkSuccess, string? onFailMessage = null)
+        => Helper.AddAction(() => action(Result), checkSuccess, onFailMessage);
+
+    public ActionHelper.ActionHelperTask<U> AddTask<U>(Func<T, Task<U>> action, Predicate<U> checkSuccess, string? onFailMessage = null)
+        => Helper.AddTask(() => action(Result), checkSuccess, onFailMessage);
+
+    public ActionHelper Then() => Helper;
 }
