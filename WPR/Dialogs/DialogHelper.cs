@@ -8,7 +8,7 @@ public static class DialogHelper
 {
     #region Private
 
-    private static readonly Style _ModalWindowStyle = (Style)Application.Current.Resources["WPRModalWindow"];
+    private static readonly Style _ModalWindowStyle = Application.Current?.TryFindResource("WPRModalWindow") as Style;
 
     // Найти панель для отображения диалога
     [return: MaybeNull]
@@ -110,14 +110,17 @@ public static class DialogHelper
                 var owner = sender is null ? null : sender as Window ?? sender.FindVisualParent<Window>();
                 var panel = FindDialogPanel(owner);
 
+                var style = _ModalWindowStyle;
                 var dlg = new Window
                 {
                     WindowStartupLocation = panel is null ? WindowStartupLocation.CenterScreen : WindowStartupLocation.CenterOwner,
                     Owner = owner,
                     Topmost = owner is null,
                     Content = dialog.DialogContent,
-                    Style = _ModalWindowStyle
+                    
                 };
+                if(style is not null)
+                    dlg.Style = style;
 
                 dialog.Completed += b =>
                 {
