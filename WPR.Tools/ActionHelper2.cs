@@ -18,7 +18,7 @@ public interface IActionChain
     /// Если какой-либо шаг вернул false — дальнейшие шаги не выполняются.
     /// Если шаг выбросил исключение — выполнение прекращается, исключение уходит вверх.
     /// </summary>
-    Task ExecuteAsync(CancellationToken cancel = default);
+    Task<bool> ExecuteAsync(CancellationToken cancel = default);
 }
 
 /// <summary>
@@ -49,7 +49,7 @@ internal sealed class ActionChain(IEnumerable<IChainStep> steps) : IActionChain
     /// Если какой-либо шаг вернул false — дальнейшие шаги не выполняются.
     /// Если шаг выбросил исключение — выполнение прекращается, исключение уходит вверх.
     /// </summary>
-    public async Task ExecuteAsync(CancellationToken cancel = default)
+    public async Task<bool> ExecuteAsync(CancellationToken cancel = default)
     {
         if (_IsRunning)
             throw new InvalidOperationException("Одновременое выполнение не поддерживается!");
@@ -68,14 +68,17 @@ internal sealed class ActionChain(IEnumerable<IChainStep> steps) : IActionChain
                 var shouldContinue = await step.ExecuteAsync(cancel).ConfigureAwait(false);
 
                 if (!shouldContinue)
-                    break;
+                {
+                    return false;
+                }
             }
+            return true;
         }
         finally
         {
             _IsRunning = false;
+           
         }
-
     }
 }
 
@@ -248,7 +251,7 @@ public class ActionBuilder
     /// <summary>
     /// Выполнить цепочку.
     /// </summary>
-    public Task ExecuteAsync(CancellationToken token = default) => Build().ExecuteAsync(token);
+    public Task<bool> ExecuteAsync(CancellationToken token = default) => Build().ExecuteAsync(token);
 
 
     /// <summary>
@@ -295,16 +298,15 @@ public sealed class ActionBuilder<T> : ActionBuilder
     /// </summary>
     public ActionBuilder<TU> ThenIf<TU>(
         Predicate<T> condition,
-        Func<T, Task> onFail,
+        Func<T, Task>? onFail,
         Func<CancellationToken, Task<TU>> action,
         Predicate<TU>? predicate = null)
     {
         if (condition == null) throw new ArgumentNullException(nameof(condition));
-        if (onFail == null) throw new ArgumentNullException(nameof(onFail));
         if (action == null) throw new ArgumentNullException(nameof(action));
 
         // Промежуточная проверка, использующая результат текущего шага
-        Context.Add(new CheckStep(() => condition(_Step.Result!), () => onFail(_Step.Result!)));
+        Context.Add(new CheckStep(() => condition(_Step.Result!), onFail is null ? null : () => onFail(_Step.Result!)));
 
         var next = new ThenStep<TU>(action, predicate);
         Context.Add(next);
@@ -317,12 +319,12 @@ public sealed class ActionBuilder<T> : ActionBuilder
 #region Статический фасад
 
 /// <summary>
-/// Статический фасад для удобного старта/запуска цепочек.
+/// Помощник запуска цепочек действий и задач
 /// </summary>
 public static class ActionHelper2
 {
     /// <summary>
-    /// Начать построение новой цепочки без начальной проверки.
+    /// Начать построение новой цепочки.
     /// </summary>
     public static ActionBuilder Start() => new(new BuilderContext());
 
@@ -334,12 +336,12 @@ public static class ActionHelper2
     /// <summary>
     /// Запустить готовую цепочку.
     /// </summary>
-    public static Task ExecuteAsync(IActionChain chain, CancellationToken cancel = default) => chain.ExecuteAsync(cancel);
+    public static Task<bool> ExecuteAsync(IActionChain chain, CancellationToken cancel = default) => chain.ExecuteAsync(cancel);
 
     /// <summary>
     /// Запустить цепочку, возвращаясь от билдера.
     /// </summary>
-    public static Task ExecuteAsync(ActionBuilder builder, CancellationToken cancel = default) => builder.ExecuteAsync(cancel);
+    public static Task<bool> ExecuteAsync(ActionBuilder builder, CancellationToken cancel = default) => builder.ExecuteAsync(cancel);
 }
 
 #endregion
