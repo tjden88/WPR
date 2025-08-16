@@ -157,10 +157,38 @@ public static class ActionHelper2
         }
     }
 
+    private class ThenTaskStep : IActionStep
+    {
+        private readonly Func<CancellationToken, Task> _action;
+
+        public ThenTaskStep(Func<CancellationToken, Task> action)
+            => _action = action;
+
+        public async Task<bool> ExecuteAsync(ActionContext context, CancellationToken cancel)
+        {
+            await _action(cancel);
+            return true;
+        }
+    }
+
+    private class ThenVoidStep : IActionStep
+    {
+        private readonly Action _action;
+
+        public ThenVoidStep(Action action) => _action = action;
+
+        public Task<bool> ExecuteAsync(ActionContext context, CancellationToken cancel)
+        {
+            _action();
+            return Task.FromResult(true);
+        }
+    }
+
     #endregion
 
     #region Методы-расширения для ActionChain
 
+    // Асинхронное действие с результатом
     public static ActionChain Then<T>(
         this ActionChain chain,
         Func<CancellationToken, Task<T>> action,
@@ -170,12 +198,25 @@ public static class ActionHelper2
         return chain;
     }
 
-    public static ActionChain Then(this ActionChain chain, Action action)
+    // Асинхронное действие без результата
+    public static ActionChain Then(
+        this ActionChain chain,
+        Func<CancellationToken, Task> action)
     {
-        chain.Add(new ThenSyncStep(action));
+        chain.Add(new ThenTaskStep(action));
         return chain;
     }
 
+    // Синхронное действие без результата
+    public static ActionChain Then(
+        this ActionChain chain,
+        Action action)
+    {
+        chain.Add(new ThenVoidStep(action));
+        return chain;
+    }
+
+    // OnFail / OnSuccess как раньше
     public static ActionChain OnFail<T>(this ActionChain chain, Func<T, Task> onFail)
     {
         chain.Add(new OnFailStep<T>(onFail));
@@ -187,6 +228,8 @@ public static class ActionHelper2
         chain.Add(new OnSuccessStep<T>(onSuccess));
         return chain;
     }
+
+
 
     #endregion
 }
