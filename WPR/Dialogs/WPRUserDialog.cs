@@ -7,7 +7,29 @@ namespace WPR.Dialogs;
 /// <summary> Реализация сервис диалогов, которая работает только в стилях WPR </summary>
 internal class WPRUserDialog : IUserDialog
 {
-    private static Window ActiveWindow => Application.Current.Windows.Cast<Window>().FirstOrDefault(w => w.IsActive);
+    /// <summary>
+    /// Возвращает текущее активное окно, гарантируя доступ из UI-потока
+    /// </summary>
+    public static Window ActiveWindow
+    {
+        get
+        {
+            if (Application.Current == null)
+                return null;
+
+            if (Application.Current.Dispatcher.CheckAccess())
+            {
+                return Application.Current.Windows
+                    .Cast<Window>()
+                    .FirstOrDefault(w => w.IsActive);
+            }
+
+            return Application.Current.Dispatcher.Invoke(() =>
+                Application.Current.Windows
+                    .Cast<Window>()
+                    .FirstOrDefault(w => w.IsActive));
+        }
+    }
 
     private DependencyObject _AssociatedElement;
     public DependencyObject AssociatedElement
