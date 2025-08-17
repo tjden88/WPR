@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>net8.0-windows;net9.0-windows</TargetFrameworks>
+    <TargetFrameworks>net8.0;net9.0</TargetFrameworks>
 	  <Description>Библиотека инструментов .NET Core</Description>
 	  <FileVersion>1.0</FileVersion>
 	  <AssemblyVersion>1.0</AssemblyVersion>
@@ -18,9 +18,5 @@
 	  <PackageRequireLicenseAcceptance>False</PackageRequireLicenseAcceptance>
 	  <SignAssembly>False</SignAssembly>
   </PropertyGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\WPR\WPR.csproj" />
-  </ItemGroup>
 
 </Project>

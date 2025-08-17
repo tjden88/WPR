@@ -8,6 +8,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\WPR.Tools\WPR.Tools.csproj" />
+    <ProjectReference Include="..\WPR\WPR.csproj" />
   </ItemGroup>
 
 </Project>
