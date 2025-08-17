@@ -176,7 +176,7 @@ public abstract class BaseGeneric1Generator : IIncrementalGenerator
     protected static bool IsObservableCollectionTypeSymbol(ITypeSymbol typeSymbol)
     {
         if (typeSymbol is INamedTypeSymbol { IsGenericType: true } named)
-            return named.ConstructedFrom.ToDisplayString() == "System.Collections.ObjectModel.ObservableCollection<T>";
+            return named.ConstructedFrom.ToDisplayString() == "WPR.Mvvm.Controls.ObservableCollectionEx<T>";
 
         return false;
     }
@@ -201,7 +201,7 @@ public abstract class BaseGeneric1Generator : IIncrementalGenerator
         {
             var itemType = named.TypeArguments[0];
 
-            var obsColl = compilation.GetTypeByMetadataName("System.Collections.ObjectModel.ObservableCollection`1");
+            var obsColl = compilation.GetTypeByMetadataName("WPR.Mvvm.Controls.ObservableCollectionEx`1");
             if (obsColl != null)
                 return obsColl.Construct(itemType);
         }

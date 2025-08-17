@@ -24,6 +24,8 @@ public static class ActionHelper2Extensions
 
     private static readonly IUserDialog _Dialog = DialogHelper.Default;
 
+    #region ActionBuilder
+
     /// <summary>
     /// Добавляет шаг для отображения диалогового сообщения (ошибка или информация).
     /// </summary>
@@ -82,7 +84,10 @@ public static class ActionHelper2Extensions
 
         builder.Then(_ => _Dialog.ShowNotificationAsync(message, color));
         return builder;
-    }
+    } 
+    #endregion
+
+    #region ActionBuilder<T>
 
     /// <summary>
     /// Регистрирует обработчик неуспешного выполнения шага, который показывает ошибку в диалоге.
@@ -129,10 +134,10 @@ public static class ActionHelper2Extensions
     /// <returns>Тот же экземпляр <see cref="ActionBuilder{T}"/> для цепочки вызовов.</returns>
     public static ActionBuilder<T> OnSuccessInfo<T>(this ActionBuilder<T> builder, Func<T, string> message)
     {
-        builder.OnSuccess(async (value, token) =>
+        builder.OnSuccess((value, token) =>
         {
             var msg = message.Invoke(value);
-            await _Dialog.InformationAsync(msg, cancellationToken: token);
+            return _Dialog.InformationAsync(msg, cancellationToken: token);
         });
 
         return builder;
@@ -147,12 +152,64 @@ public static class ActionHelper2Extensions
     /// <returns>Тот же экземпляр <see cref="ActionBuilder{T}"/> для цепочки вызовов.</returns>
     public static ActionBuilder<T> OnSuccessNotification<T>(this ActionBuilder<T> builder, Func<T, string> message)
     {
-        builder.OnSuccess(async (value, _) =>
+        builder.OnSuccess((value, _) =>
         {
             var msg = message.Invoke(value);
-            await _Dialog.ShowNotificationAsync(msg, StyleBrushes.SuccessColorBrush);
+            return _Dialog.ShowNotificationAsync(msg, StyleBrushes.SuccessColorBrush);
         });
 
         return builder;
     }
+    #endregion
+
+    #region CheckActionBuilder
+
+    /// <summary>
+    /// Регистрирует обработчик неуспешного выполнения шага проверки, который показывает ошибку в диалоге.
+    /// </summary>
+    /// <param name="builder">Экземпляр <see cref="CheckActionBuilder"/>.</param>
+    /// <param name="message">Текст ошибки</param>
+    /// <returns>Тот же экземпляр <see cref="CheckActionBuilder"/> для цепочки вызовов.</returns>
+    public static CheckActionBuilder OnFailErrorMessage(this CheckActionBuilder builder, string message)
+    {
+        builder.OnFail(ct => _Dialog.ErrorMessageAsync(message, cancellationToken: ct));
+        return builder;
+    }
+
+    /// <summary>
+    /// Регистрирует обработчик неуспешного выполнения шага проверки, который показывает уведомление об ошибке.
+    /// </summary>
+    /// <param name="builder">Экземпляр <see cref="CheckActionBuilder"/>.</param>
+    /// <param name="message">Текст ошибки</param>
+    /// <returns>Тот же экземпляр <see cref="CheckActionBuilder"/> для цепочки вызовов.</returns>
+    public static CheckActionBuilder OnFailErrorNotification(this CheckActionBuilder builder, string message)
+    {
+        builder.OnFail(_ => _Dialog.ShowNotificationAsync(message, StyleBrushes.DangerColorBrush));
+        return builder;
+    }
+
+    /// <summary>
+    /// Регистрирует обработчик успешного выполнения шага проверки, который показывает информационный диалог.
+    /// </summary>
+    /// <param name="builder">Экземпляр <see cref="CheckActionBuilder"/>.</param>
+    /// <param name="message">Текст ошибки</param>
+    /// <returns>Тот же экземпляр <see cref="CheckActionBuilder"/> для цепочки вызовов.</returns>
+    public static CheckActionBuilder OnSuccessInfo(this CheckActionBuilder builder, string message)
+    {
+        builder.OnSuccess(ct => _Dialog.InformationAsync(message, cancellationToken: ct));
+        return builder;
+    }
+
+    /// <summary>
+    /// Регистрирует обработчик успешного выполнения шага проверки, который показывает информационное уведомление.
+    /// </summary>
+    /// <param name="builder">Экземпляр <see cref="CheckActionBuilder"/>.</param>
+    /// <param name="message">Текст ошибки</param>
+    /// <returns>Тот же экземпляр <see cref="CheckActionBuilder"/> для цепочки вызовов.</returns>
+    public static CheckActionBuilder OnSuccessNotification(this CheckActionBuilder builder, string message)
+    {
+        builder.OnSuccess(_ => _Dialog.ShowNotificationAsync(message, StyleBrushes.SuccessColorBrush));
+        return builder;
+    } 
+    #endregion
 }
