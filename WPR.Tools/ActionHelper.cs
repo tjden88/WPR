@@ -10,6 +10,7 @@ namespace WPR.Tools;
 /// <summary>
 /// Помощник рутинных операций
 /// </summary>
+[Obsolete]
 public class ActionHelper
 {
 

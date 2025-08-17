@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -198,8 +199,11 @@ internal sealed class ThenStep<T>(Func<CancellationToken, Task<T>> Action, Predi
 /// Содержит список фабрик шагов для выполнения.
 /// Чтобы метод Build возвращал новую цепочку для использования в многопотоке
 /// </summary>
-internal class BuilderContext
+internal class BuilderContext(ActionHelper2? actionHelper)
 {
+    /// <summary> Нужен, если цепочка началась из инстанса ActionHelper, для корректного выполнения </summary>
+    public ActionHelper2? ActionHelper { get; } = actionHelper;
+
     public class StepAccessor(Func<IChainStep> factory)
     {
         private IChainStep? _Step;
@@ -270,6 +274,65 @@ public class ActionBuilder
     }
 
     /// <summary>
+    /// Добавляет шаг с асинхронным действием, результат которого автоматически преобразуется в bool.
+    /// Поддерживает: bool, null, IConvertible, dynamic-преобразование и другие типы через try-catch.
+    /// Также проверит: int > 0, string != IsNullOrEmpty
+    /// </summary>
+    /// <typeparam name="T">Тип возвращаемого значения действия.</typeparam>
+    /// <param name="action">Асинхронное действие, возвращающее значение для проверки.</param>
+    /// <exception cref="ArgumentNullException">Если action равен null.</exception>
+    public ActionBuilder<T> DynamicCheck<T>(Func<CancellationToken, Task<T>> action)
+    {
+        if (action == null)
+            throw new ArgumentNullException(nameof(action));
+
+        var step = Context.Add(() => new ThenStep<T>(action, value =>
+        {
+            switch (value)
+            {
+                case null:
+                    return false;
+                case bool b:
+                    return b;
+                case int i:
+                    return i != 0;
+                case string s:
+                    return !string.IsNullOrEmpty(s);
+                case IConvertible convertible:
+                    try
+                    {
+                        return convertible.ToBoolean(CultureInfo.InvariantCulture);
+                    }
+                    catch
+                    {
+                        return false;
+                    }
+                default:
+                    try
+                    {
+                        return (bool)(dynamic)value;
+                    }
+                    catch
+                    {
+                        return false;
+                    }
+            }
+        }));
+
+        return new ActionBuilder<T>(Context, step);
+    }
+
+    /// <summary>
+    /// Добавляет шаг с синхронным действием, результат которого автоматически преобразуется в bool.
+    /// Поддерживает: bool, null, IConvertible, dynamic-преобразование и другие типы через try-catch.
+    /// Также проверит: int > 0, string != IsNullOrEmpty
+    /// </summary>
+    /// <typeparam name="T">Тип возвращаемого значения действия.</typeparam>
+    /// <param name="action">Действие, возвращающее значение для проверки.</param>
+    /// <exception cref="ArgumentNullException">Если action равен null.</exception>
+    public ActionBuilder<T> DynamicCheck<T>(Func<T> action) => DynamicCheck(_ => Task.FromResult(action.Invoke()));
+
+    /// <summary>
     /// Начальная или промежуточная асинхронная проверка без типизации результата.
     /// </summary>
     public CheckActionBuilder Check(Func<CancellationToken, Task<bool>> condition)
@@ -277,6 +340,7 @@ public class ActionBuilder
         var step = Context.Add(() => new CheckStep(condition));
         return new CheckActionBuilder(Context, step);
     }
+
 
     /// <summary>
     /// Начальная или промежуточная синхронная проверка без типизации результата.
@@ -290,7 +354,13 @@ public class ActionBuilder
     /// <summary>
     /// Выполнить цепочку.
     /// </summary>
-    public Task<bool> ExecuteAsync(CancellationToken token = default) => BuildChain().ExecuteAsync(token);
+    public Task<bool> ExecuteAsync(CancellationToken token = default)
+    {
+        if (Context.ActionHelper is { } helper)
+            return helper.ExecuteAsync(this, token);
+
+        return BuildChain().ExecuteAsync(token);
+    }
 
     private readonly object _Sync = new();
 
@@ -479,7 +549,7 @@ public class ActionHelper2
     /// <summary>
     /// Действие, выполняемое перед каждым запуском цепочки
     /// </summary>
-    public Action? StarAction { get; set; }
+    public Action? StartAction { get; set; }
 
     /// <summary>
     /// Действие, выполняемое после выполнения цепочки с любым результатом
@@ -496,24 +566,26 @@ public class ActionHelper2
     /// <summary>
     /// Начать построение новой цепочки.
     /// </summary>
-    public static ActionBuilder Start() => new(new BuilderContext());
+    public static ActionBuilder Start() => new(new BuilderContext(null));
+
+    private ActionBuilder StartLocal() => new(new BuilderContext(this));
 
     /// <summary>
     /// Начать построение новой цепочки с начальной проверки.
     /// </summary>
-    public static ActionBuilder Check(Func<bool> condition) => Start().Check(condition);
+    public CheckActionBuilder Check(Func<bool> condition) => StartLocal().Check(condition);
 
     /// <summary>
     /// Начать построение новой цепочки с начальной асинхронной проверки.
     /// </summary>
-    public static ActionBuilder Check(Func<CancellationToken, Task<bool>> condition) => Start().Check(condition);
+    public CheckActionBuilder Check(Func<CancellationToken, Task<bool>> condition) => StartLocal().Check(condition);
 
     /// <summary>
     /// Запустить готовую цепочку.
     /// </summary>
     public async Task<bool> ExecuteAsync(IActionChain chain, CancellationToken cancel = default)
     {
-        StarAction?.Invoke();
+        StartAction?.Invoke();
         var executingResult = false;
         try
         {
