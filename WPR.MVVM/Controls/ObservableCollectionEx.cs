@@ -1,17 +1,28 @@
 ﻿using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.ComponentModel;
+using System.Windows;
 
 namespace WPR.Mvvm.Controls;
 
 /// <summary>
-/// Расширенная коллекция с поддержкой массового добавления, удаления и замены элементов с минимальным количеством событий.
+/// Расширенная ObservableCollection с поддержкой массовых операций 
+/// и автоматической маршализацией событий в UI-поток
 /// </summary>
-/// <typeparam name="T">Тип элементов коллекции.</typeparam>
 public class ObservableCollectionEx<T> : ObservableCollection<T>
 {
+    public ObservableCollectionEx() { }
+
+    public ObservableCollectionEx(IEnumerable<T> items) : base(items) { }
+    public ObservableCollectionEx(List<T> items) : base(items) { }
+
+
     // Флаг, блокирующий уведомления, чтобы не спамить событиями при массовых операциях
-    private bool _suppressNotification = false;
+    private bool _SuppressNotification = false;
+
+    /// <summary> Проверяет, нужно ли маршализовать вызов в UI-поток </summary>
+    private static bool NeedsInvoke => Application.Current?.Dispatcher != null &&
+                                       !Application.Current.Dispatcher.CheckAccess();
 
     /// <summary>
     /// Добавляет сразу несколько элементов в коллекцию, вызвав одно событие обновления.
@@ -23,7 +34,7 @@ public class ObservableCollectionEx<T> : ObservableCollection<T>
         if (items == null)
             throw new ArgumentNullException(nameof(items));
 
-        _suppressNotification = true;
+        _SuppressNotification = true;
 
         try
         {
@@ -34,11 +45,9 @@ public class ObservableCollectionEx<T> : ObservableCollection<T>
         }
         finally
         {
-            _suppressNotification = false;
+            _SuppressNotification = false;
             // Одно событие: сброс коллекции, чтобы UI обновился корректно
-            OnCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset));
-            OnPropertyChanged(new PropertyChangedEventArgs(nameof(Count)));
-            OnPropertyChanged(new PropertyChangedEventArgs("Item[]"));
+            NotifyReset();
         }
     }
 
@@ -52,7 +61,7 @@ public class ObservableCollectionEx<T> : ObservableCollection<T>
         if (items == null)
             throw new ArgumentNullException(nameof(items));
 
-        _suppressNotification = true;
+        _SuppressNotification = true;
 
         try
         {
@@ -63,10 +72,8 @@ public class ObservableCollectionEx<T> : ObservableCollection<T>
         }
         finally
         {
-            _suppressNotification = false;
-            OnCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset));
-            OnPropertyChanged(new PropertyChangedEventArgs(nameof(Count)));
-            OnPropertyChanged(new PropertyChangedEventArgs("Item[]"));
+            _SuppressNotification = false;
+            NotifyReset();
         }
     }
     
@@ -95,7 +102,7 @@ public class ObservableCollectionEx<T> : ObservableCollection<T>
         if (newItems == null)
             throw new ArgumentNullException(nameof(newItems));
 
-        _suppressNotification = true;
+        _SuppressNotification = true;
 
         try
         {
@@ -108,11 +115,9 @@ public class ObservableCollectionEx<T> : ObservableCollection<T>
         }
         finally
         {
-            _suppressNotification = false;
+            _SuppressNotification = false;
             // Уведомляем UI, что коллекция полностью обновлена
-            OnCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset));
-            OnPropertyChanged(new PropertyChangedEventArgs(nameof(Count)));
-            OnPropertyChanged(new PropertyChangedEventArgs("Item[]"));
+            NotifyReset();
         }
     }
 
@@ -121,8 +126,16 @@ public class ObservableCollectionEx<T> : ObservableCollection<T>
     /// </summary>
     protected override void OnCollectionChanged(NotifyCollectionChangedEventArgs e)
     {
-        if (!_suppressNotification)
+        if (_SuppressNotification) return;
+
+        if (NeedsInvoke)
+        {
+            Application.Current.Dispatcher.InvokeAsync(() => base.OnCollectionChanged(e));
+        }
+        else
+        {
             base.OnCollectionChanged(e);
+        }
     }
 
     /// <summary>
@@ -130,8 +143,22 @@ public class ObservableCollectionEx<T> : ObservableCollection<T>
     /// </summary>
     protected override void OnPropertyChanged(PropertyChangedEventArgs e)
     {
-        if (!_suppressNotification)
+        if (_SuppressNotification) return;
+
+        if (NeedsInvoke)
+        {
+            Application.Current.Dispatcher.InvokeAsync(() => base.OnPropertyChanged(e));
+        }
+        else
+        {
             base.OnPropertyChanged(e);
+        }
     }
-    
+
+    private void NotifyReset()
+    {
+        OnCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset));
+        OnPropertyChanged(new PropertyChangedEventArgs(nameof(Count)));
+        OnPropertyChanged(new PropertyChangedEventArgs("Item[]"));
+    }
 }
