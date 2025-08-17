@@ -38,7 +38,7 @@ internal interface IChainStep
 /// </summary>
 internal sealed class ActionChain(IEnumerable<IChainStep> steps) : IActionChain
 {
-    private readonly List<IChainStep> _Steps = [..steps];
+    private readonly List<IChainStep> _Steps = [.. steps];
 
     private bool _IsRunning;
 
@@ -72,7 +72,12 @@ internal sealed class ActionChain(IEnumerable<IChainStep> steps) : IActionChain
                     return false;
                 }
             }
+
             return true;
+        }
+        catch (OperationCanceledException)
+        {
+            return false;
         }
         finally
         {
@@ -88,20 +93,25 @@ internal sealed class ActionChain(IEnumerable<IChainStep> steps) : IActionChain
 /// <summary>
 /// Шаг-проверка. Если условие ложно — опционально вызываем onFail и прерываем цепочку.
 /// </summary>
-internal sealed class CheckStep(Func<bool> Condition, Func<Task>? OnFail) : IChainStep
+internal sealed class CheckStep(
+    Func<CancellationToken, Task<bool>> Condition) : IChainStep
 {
-    private readonly Func<bool> _Condition = Condition ?? throw new ArgumentNullException(nameof(Condition));
+    private readonly Func<CancellationToken, Task<bool>> _Condition = Condition ?? throw new ArgumentNullException(nameof(Condition));
+
+    public Func<CancellationToken, Task>? OnFail { get; set; }
+    public Func<CancellationToken, Task>? OnSuccess { get; set; }
 
     public void Reset() { /* состояния нет */ }
 
     public async Task<bool> ExecuteAsync(CancellationToken cancel)
     {
-        if (_Condition()) return true;
+        var result = await _Condition.Invoke(cancel).ConfigureAwait(false);
+        if (result)
+            OnSuccess?.Invoke(cancel).ConfigureAwait(false);
+        else
+            OnFail?.Invoke(cancel).ConfigureAwait(false);
 
-        if (OnFail != null)
-            await OnFail().ConfigureAwait(false);
-
-        return false; // прервать цепочку
+        return result;
     }
 }
 
@@ -147,8 +157,8 @@ internal sealed class ThenStep<T>(Func<CancellationToken, Task<T>> Action, Predi
     private readonly Func<CancellationToken, Task<T>> _Action = Action ?? throw new ArgumentNullException(nameof(Action));
 
     // Обработчики результата. Устанавливаются билдером.
-    public Func<T, Task>? OnFail { get; set; }
-    public Func<T, Task>? OnSuccess { get; set; }
+    public Func<T,CancellationToken, Task>? OnFail { get; set; }
+    public Func<T, CancellationToken, Task>? OnSuccess { get; set; }
 
     // Результат последнего выполнения этого шага (используется, например, в ThenIf)
     public T? Result { get; private set; }
@@ -160,25 +170,17 @@ internal sealed class ThenStep<T>(Func<CancellationToken, Task<T>> Action, Predi
 
     public async Task<bool> ExecuteAsync(CancellationToken cancel)
     {
-        // 1) Выполняем действие и сохраняем результат
         var result = await _Action(cancel).ConfigureAwait(false);
         Result = result;
 
-        // 2) Определяем, успешен ли шаг
         var ok = Predicate?.Invoke(result) ?? true;
 
         if (!ok)
-        {
-            // 3a) Неуспех: вызвать OnFail (если задан) и остановить цепочку
-            if (OnFail != null) await OnFail(result).ConfigureAwait(false);
+            if (OnFail != null) await OnFail(result, cancel).ConfigureAwait(false);
+        else
+            if (OnSuccess != null) await OnSuccess(result, cancel).ConfigureAwait(false);
 
-            return false;
-        }
-
-        // 3b) Успех: вызвать OnSuccess (если задан) и продолжать
-        if (OnSuccess != null) await OnSuccess(result).ConfigureAwait(false);
-
-        return true;
+        return ok;
     }
 }
 
@@ -190,9 +192,9 @@ internal sealed class ThenStep<T>(Func<CancellationToken, Task<T>> Action, Predi
 /// Содержит список цепочек для выполнения.
 /// Чтобы метод Build возвращал новую цепочку для использования в многопотоке
 /// </summary>
-class BuilderContext
+internal class BuilderContext
 {
-    private readonly List<IChainStep> _Steps = [];
+    private readonly IList<IChainStep> _Steps = [];
 
     public void Add(IChainStep step) => _Steps.Add(step);
 
@@ -240,13 +242,23 @@ public class ActionBuilder
     }
 
     /// <summary>
-    /// Начальная проверка (или промежуточная) без типизации результата.
-    /// Если условие ложно — вызывается onFail (если задан), выполнение цепочки прерывается.
+    /// Начальная или промежуточная асинхронная проверка без типизации результата.
     /// </summary>
-    public ActionBuilder Check(Func<bool> condition, Func<Task>? onFail = null)
+    public CheckActionBuilder Check(Func<CancellationToken, Task<bool>> condition)
     {
-        Context.Add(new CheckStep(condition, onFail));
-        return this;
+        var step = new CheckStep(condition);
+        Context.Add(step);
+        return new CheckActionBuilder(Context, step);
+    }
+
+    /// <summary>
+    /// Начальная или промежуточная синхронная проверка без типизации результата.
+    /// </summary>
+    public CheckActionBuilder Check(Func<bool> condition)
+    {
+        var step = new CheckStep(_ => Task.FromResult(condition.Invoke()));
+        Context.Add(step);
+        return new CheckActionBuilder(Context, step);
     }
 
     /// <summary>
@@ -259,6 +271,61 @@ public class ActionBuilder
     /// Получить цепочку для дальнейшего использования
     /// </summary>
     public IActionChain Build() => new ActionChain(Context.Steps);
+}
+
+public sealed class CheckActionBuilder : ActionBuilder
+{
+    private readonly CheckStep _Step;
+
+    internal CheckActionBuilder(BuilderContext context, CheckStep step) : base(context)
+    {
+        _Step = step;
+    }
+
+    /// <summary>
+    /// Зарегистрировать обработчик неуспеха этого шага.
+    /// </summary>
+    public ActionBuilder OnFail(Func<CancellationToken, Task> onFail)
+    {
+        _Step.OnFail = onFail ?? throw new ArgumentNullException(nameof(onFail));
+        return this;
+    }
+
+    /// <summary>
+    /// Зарегистрировать синхронный обработчик неуспеха этого шага.
+    /// </summary>
+    public ActionBuilder OnFail(Action onFail)
+    {
+        _Step.OnFail = onFail is null ? throw new ArgumentNullException(nameof(onFail)): _ =>
+        {
+            onFail.Invoke();
+            return Task.CompletedTask;
+        };
+        return this;
+    }
+
+    /// <summary>
+    /// Зарегистрировать обработчик успеха этого шага.
+    /// </summary>
+    public ActionBuilder OnSuccess(Func<CancellationToken, Task> onSuccess)
+    {
+        _Step.OnSuccess = onSuccess ?? throw new ArgumentNullException(nameof(onSuccess));
+        return this;
+    }
+
+    /// <summary>
+    /// Зарегистрировать синхронный обработчик успеха этого шага.
+    /// </summary>
+    public ActionBuilder OnSuccess(Action onSuccess)
+    {
+        _Step.OnSuccess = onSuccess is null ? throw new ArgumentNullException(nameof(onSuccess)) : _ =>
+        {
+            onSuccess.Invoke();
+            return Task.CompletedTask;
+        };
+        return this;
+    }
+
 }
 
 /// <summary>
@@ -277,41 +344,93 @@ public sealed class ActionBuilder<T> : ActionBuilder
     /// <summary>
     /// Зарегистрировать обработчик неуспеха этого шага (predicate == false).
     /// </summary>
-    public ActionBuilder<T> OnFail(Func<T, Task> onFail)
+    public ActionBuilder<T> OnFail(Func<T, CancellationToken, Task> onFail)
     {
         _Step.OnFail = onFail ?? throw new ArgumentNullException(nameof(onFail));
         return this;
     }
 
     /// <summary>
+    /// Зарегистрировать синхронный обработчик неуспеха этого шага (predicate == false).
+    /// </summary>
+    public ActionBuilder<T> OnFail(Action<T> onFail)
+    {
+        _Step.OnFail = onFail is null ? throw new ArgumentNullException(nameof(onFail)) : (t, _) =>
+        {
+            onFail.Invoke(t);
+            return Task.CompletedTask;
+        };
+        return this;
+    }
+
+    /// <summary>
     /// Зарегистрировать обработчик успеха этого шага (predicate == true).
     /// </summary>
-    public ActionBuilder<T> OnSuccess(Func<T, Task> onSuccess)
+    public ActionBuilder<T> OnSuccess(Func<T, CancellationToken, Task> onSuccess)
     {
         _Step.OnSuccess = onSuccess ?? throw new ArgumentNullException(nameof(onSuccess));
         return this;
     }
 
+
     /// <summary>
-    /// Ветвление: проверить условие над результатом этого шага.
-    /// Если условие ложно — вызвать onFail и прервать цепочку.
-    /// Если истинно — выполнить следующий типизированный шаг.
+    /// Зарегистрировать синхронный обработчик успеха этого шага (predicate == true).
     /// </summary>
-    public ActionBuilder<TU> ThenIf<TU>(
-        Predicate<T> condition,
-        Func<T, Task>? onFail,
-        Func<CancellationToken, Task<TU>> action,
-        Predicate<TU>? predicate = null)
+    public ActionBuilder<T> OnSuccess(Action<T> onSuccess)
     {
-        if (condition == null) throw new ArgumentNullException(nameof(condition));
+        _Step.OnSuccess = onSuccess is null ? throw new ArgumentNullException(nameof(onSuccess)) : (t, _) =>
+        {
+            onSuccess.Invoke(t);
+            return Task.CompletedTask;
+        };
+        return this;
+    }
+
+    /// <summary>
+    /// Выполнить следующий типизированный шаг с использованием результата предыдущего
+    /// </summary>
+    public ActionBuilder<TNew> ThenWithResult<TNew>(Func<T, CancellationToken, Task<TNew>> action, Predicate<TNew>? predicate = null)
+    {
         if (action == null) throw new ArgumentNullException(nameof(action));
 
-        // Промежуточная проверка, использующая результат текущего шага
-        Context.Add(new CheckStep(() => condition(_Step.Result!), onFail is null ? null : () => onFail(_Step.Result!)));
-
-        var next = new ThenStep<TU>(action, predicate);
+        var next = new ThenStep<TNew>(token => action.Invoke(_Step.Result!, token), predicate);
         Context.Add(next);
-        return new ActionBuilder<TU>(Context, next);
+        return new ActionBuilder<TNew>(Context, next);
+    }
+
+    /// <summary>
+    /// Выполнить следующий типизированный шаг синхронно с использованием результата предыдущего
+    /// </summary>
+    public ActionBuilder<TNew> ThenWithResult<TNew>(Func<T, TNew> action, Predicate<TNew>? predicate = null)
+    {
+        if (action == null) throw new ArgumentNullException(nameof(action));
+
+        var next = new ThenStep<TNew>(_ =>
+        {
+            var result = action.Invoke(_Step.Result!);
+            return Task.FromResult(result);
+        }, predicate);
+
+        Context.Add(next);
+        return new ActionBuilder<TNew>(Context, next);
+    }
+
+    public ActionBuilder ThenWithResult(Action<T> action)
+    {
+        if (action == null) throw new ArgumentNullException(nameof(action));
+
+        var next = new ThenVoidStep(() => action.Invoke(_Step.Result!));
+        Context.Add(next);
+        return new ActionBuilder(Context);
+    }
+
+    public ActionBuilder ThenWithResult(Func<T, CancellationToken, Task<T>> action)
+    {
+        if (action == null) throw new ArgumentNullException(nameof(action));
+
+        var next = new ThenTaskStep(ct => action.Invoke(_Step.Result!, ct));
+        Context.Add(next);
+        return new ActionBuilder(Context);
     }
 }
 
@@ -349,7 +468,12 @@ public class ActionHelper2
     /// <summary>
     /// Начать построение новой цепочки с начальной проверки.
     /// </summary>
-    public static ActionBuilder Check(Func<bool> condition, Func<Task>? onFail = null) => Start().Check(condition, onFail);
+    public static ActionBuilder Check(Func<bool> condition) => Start().Check(condition);
+
+    /// <summary>
+    /// Начать построение новой цепочки с начальной асинхронной проверки.
+    /// </summary>
+    public static ActionBuilder Check(Func<CancellationToken, Task<bool>> condition) => Start().Check(condition);
 
     /// <summary>
     /// Запустить готовую цепочку.
