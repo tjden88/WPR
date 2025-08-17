@@ -77,7 +77,6 @@ internal sealed class ActionChain(IEnumerable<IChainStep> steps) : IActionChain
         finally
         {
             _IsRunning = false;
-           
         }
     }
 }
@@ -198,6 +197,7 @@ class BuilderContext
     public void Add(IChainStep step) => _Steps.Add(step);
 
     public IEnumerable<IChainStep> Steps => _Steps;
+
 }
 
 /// <summary>
@@ -209,6 +209,7 @@ public class ActionBuilder
     internal BuilderContext Context { get; }
 
     internal ActionBuilder(BuilderContext context) => Context = context ?? throw new ArgumentNullException(nameof(context));
+
 
     /// <summary>
     /// Синхронное действие без результата (void).
@@ -316,13 +317,30 @@ public sealed class ActionBuilder<T> : ActionBuilder
 
 #endregion
 
-#region Статический фасад
+#region Фасад
 
 /// <summary>
 /// Помощник запуска цепочек действий и задач
 /// </summary>
-public static class ActionHelper2
+public class ActionHelper2
 {
+    /// <summary>
+    /// Действие, выполняемое перед каждым запуском цепочки
+    /// </summary>
+    public Action? StarAction { get; set; }
+
+    /// <summary>
+    /// Действие, выполняемое после выполнения цепочки с любым результатом
+    /// Подставляет результат выполнения цепочки
+    /// </summary>
+    public Action<bool>? EndAction { get; set; }
+
+    /// <summary>
+    /// Если задано - будет вызвано при исключении любого типа.
+    /// Если не задано - ошибки ловиться не будут
+    /// </summary>
+    public Action<Exception>? OnExceptionAction { get; set; }
+
     /// <summary>
     /// Начать построение новой цепочки.
     /// </summary>
@@ -336,12 +354,34 @@ public static class ActionHelper2
     /// <summary>
     /// Запустить готовую цепочку.
     /// </summary>
-    public static Task<bool> ExecuteAsync(IActionChain chain, CancellationToken cancel = default) => chain.ExecuteAsync(cancel);
+    public async Task<bool> ExecuteAsync(IActionChain chain, CancellationToken cancel = default)
+    {
+        StarAction?.Invoke();
+        var executingResult = false;
+        try
+        {
+            executingResult = await chain.ExecuteAsync(cancel);
+            return executingResult;
+        }
+        catch (Exception ex)
+        {
+            if (OnExceptionAction != null)
+                OnExceptionAction(ex);
+            else
+                throw;
+        }
+        finally
+        {
+            EndAction?.Invoke(executingResult);
+        }
+
+        return executingResult;
+    }
 
     /// <summary>
     /// Запустить цепочку, возвращаясь от билдера.
     /// </summary>
-    public static Task<bool> ExecuteAsync(ActionBuilder builder, CancellationToken cancel = default) => builder.ExecuteAsync(cancel);
+    public Task<bool> ExecuteAsync(ActionBuilder builder, CancellationToken cancel = default) => ExecuteAsync(builder.Build(), cancel);
 }
 
 #endregion
