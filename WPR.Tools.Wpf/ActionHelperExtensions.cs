@@ -4,23 +4,25 @@ using WPR.Theme;
 namespace WPR.Tools.Wpf;
 
 /// <summary>
+/// Тип сообщения для стилизации уведомлений.
+/// </summary>
+public enum MessageType
+{
+    /// <summary>Стандартное сообщение</summary>
+    Default,
+    /// <summary>Сообщение об ошибке (опасное действие)</summary>
+    Danger,
+    /// <summary>Сообщение об успешном выполнении</summary>
+    Success
+}
+
+
+/// <summary>
 /// Расширения для <see cref="ActionBuilder"/> и <see cref="ActionBuilder{T}"/>,
 /// добавляющие методы для отображения сообщений и уведомлений.
 /// </summary>
-public static class ActionHelper2Extensions
+public static class ActionHelperExtensions
 {
-    /// <summary>
-    /// Тип сообщения для стилизации уведомлений.
-    /// </summary>
-    public enum MessageType
-    {
-        /// <summary>Стандартное сообщение</summary>
-        Default,
-        /// <summary>Сообщение об ошибке (опасное действие)</summary>
-        Danger,
-        /// <summary>Сообщение об успешном выполнении</summary>
-        Success
-    }
 
     private static readonly IUserDialog _Dialog = DialogHelper.Default;
 
