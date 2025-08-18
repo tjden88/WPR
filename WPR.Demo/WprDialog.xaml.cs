@@ -5,6 +5,7 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using WPR.Demo.Models;
 using WPR.Dialogs;
+using WPR.Mvvm.Attributes;
 using WPR.Mvvm.ViewModels;
 
 namespace WPR.Demo;

@@ -53,7 +53,6 @@ namespace WPR.Demo.ViewModels
 
         public MainWindowViewModel(IGetPages GetPages)
         {
-            Title = "WPR.Demo";
             Pages = GetPages.GetAllPages();
             SelectedPage = Pages.First();
         }
