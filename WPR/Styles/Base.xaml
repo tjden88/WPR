@@ -25,6 +25,7 @@
     <converters:EnumToBoolConverter x:Key="EnumToBoolConverter"/>
     <converters:ValueIsNullToVisibilityConverter x:Key="ValueIsNullToVisibilityConverter"/>
     <converters:EnumDescriptionConverter x:Key="EnumDescriptionConverter"/>
+    <converters:ConverterProxy x:Key="ConverterProxy"/>
 
 
     <!--Кисти и цвета-->

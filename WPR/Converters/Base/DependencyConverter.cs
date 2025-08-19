@@ -31,7 +31,6 @@ public class DependencyConverter : Freezable, IValueConverter
 
     #endregion
 
-
     #region ConverterParameter : object - Параметр конвертера
 
     /// <summary>Параметр конвертера</summary>
@@ -57,5 +56,5 @@ public class DependencyConverter : Freezable, IValueConverter
 
     public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) => Converter?.ConvertBack(value, targetType, ConverterParameter ?? parameter, culture);
 
-    protected override Freezable CreateInstanceCore() => this;
+    protected override Freezable CreateInstanceCore() => new DependencyConverter();
 }
