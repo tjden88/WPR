@@ -56,5 +56,5 @@ public class DependencyConverter : Freezable, IValueConverter
 
     public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) => Converter?.ConvertBack(value, targetType, ConverterParameter ?? parameter, culture);
 
-    protected override Freezable CreateInstanceCore() => new DependencyConverter();
+    protected override Freezable CreateInstanceCore() => new DependencyConverter {Converter = Converter, ConverterParameter = ConverterParameter};
 }
