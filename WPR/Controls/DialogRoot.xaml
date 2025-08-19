@@ -73,6 +73,7 @@
                                     <Button  Margin="7"
                                              DockPanel.Dock="Right"
                                              x:Name="NotificationButton"
+                                             VerticalAlignment="Center"
                                              Style="{StaticResource WPRFlatButton}"
                                              Background="{DynamicResource BackgroundContrastColorBrush}"
                                              Foreground="{DynamicResource AccentColorBrush}"

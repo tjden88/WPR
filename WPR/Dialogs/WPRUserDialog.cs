@@ -19,15 +19,19 @@ internal class WPRUserDialog : IUserDialog
 
             if (Application.Current.Dispatcher.CheckAccess())
             {
-                return Application.Current.Windows
+                var active = Application.Current.Windows
                     .Cast<Window>()
                     .FirstOrDefault(w => w.IsActive);
+                return active ?? Application.Current.MainWindow ?? Application.Current.Windows.Cast<Window>().FirstOrDefault();
             }
 
             return Application.Current.Dispatcher.Invoke(() =>
-                Application.Current.Windows
+            {
+                var active = Application.Current.Windows
                     .Cast<Window>()
-                    .FirstOrDefault(w => w.IsActive));
+                    .FirstOrDefault(w => w.IsActive);
+                return active ?? Application.Current.MainWindow ?? Application.Current.Windows.Cast<Window>().FirstOrDefault();
+            });
         }
     }
 
