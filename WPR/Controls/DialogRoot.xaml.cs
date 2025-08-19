@@ -256,7 +256,9 @@ public class DialogRoot : HeaderedContentControl
 
     private void NotificationButton_Click(object sender, RoutedEventArgs e)
     {
-        _StackNotificationsQueue.Peek().Action?.Invoke(true);
+        if (_StackNotificationsQueue.TryPeek(out var result))
+            result.Action?.Invoke(true);
+
         HideNotification();
     }
 
