@@ -49,36 +49,36 @@ internal class WPRUserDialog : IUserDialog
 
     public async Task InformationAsync(string message, string Title = null, CancellationToken cancellationToken = default)
     {
-        var dlg = new MessageDialog
+        var dlg = CreateDialog(() => new MessageDialog
         {
             Title = Title,
             Content = message,
             DialogType = DialogType.Information
-        };
+        });
 
         await Show(dlg, cancellationToken);
     }
 
     public async Task<bool> QuestionAsync(string message, string Title = null, CancellationToken cancellationToken = default)
     {
-        var dlg = new MessageDialog
+        var dlg = CreateDialog(() => new MessageDialog
         {
             Title = Title,
             Content = message,
             DialogType = DialogType.Question
-        };
+        });
 
         return await Show(dlg, cancellationToken);
     }
 
     public async Task<bool?> QuestionAsync(string message, DialogType dialogType, string Title = null, CancellationToken cancellationToken = default)
     {
-        var dlg = new MessageDialog
+        var dlg = CreateDialog(() => new MessageDialog
         {
             Title = Title,
             Content = message,
             DialogType = dialogType
-        };
+        });
 
         var result = await Show(dlg, cancellationToken);
         if (dlg.IsCancelled) return null;
@@ -96,7 +96,7 @@ internal class WPRUserDialog : IUserDialog
             (not null, not null) => DialogType.QuestionCancel
         };
 
-        var dlg = new MessageDialog
+        var dlg = CreateDialog(() => new MessageDialog
         {
             Title = Title,
             Content = message,
@@ -105,7 +105,7 @@ internal class WPRUserDialog : IUserDialog
             QuestionAcceptButtonText = AcceptCaption,
             QuestionCancelButtonText = RejectCaption,
             DialogType = dialogType
-        };
+        });
 
         var result = await Show(dlg, cancellationToken);
         if (dlg.IsCancelled) return null;
@@ -114,13 +114,13 @@ internal class WPRUserDialog : IUserDialog
 
     public async Task ErrorMessageAsync(string message, string Title = "Ошибка", CancellationToken cancellationToken = default)
     {
-        var dlg = new MessageDialog
+        var dlg = CreateDialog(() => new MessageDialog
         {
             Title = Title,
             Content = message,
             DialogType = DialogType.Information,
             IsErrorMessage = true
-        };
+        });
 
         await Show(dlg, cancellationToken);
     }
@@ -131,13 +131,13 @@ internal class WPRUserDialog : IUserDialog
     public async Task<string> InputTextAsync(string message, string defaultValue = null, string title = null, bool MultiLine = false,
         CancellationToken cancellationToken = default)
     {
-        var input = new InputDialog()
+        var input = CreateDialog(() =>  new InputDialog()
         {
             Title = title,
             Content = message,
             MultiLine = MultiLine,
             Text = defaultValue
-        };
+        });
 
         var result = await Show(input, cancellationToken);
 
@@ -149,13 +149,13 @@ internal class WPRUserDialog : IUserDialog
         var filter = new InputDialogFilterOptions();
         options?.Invoke(filter);
 
-        var input = new InputDialog(filter.Validation)
+        var input = CreateDialog(() => new InputDialog(filter.Validation)
         {
             Title = filter.Title,
             Content = filter.Message,
             MultiLine = filter.MultiLine,
             Text = filter.DefaultValue
-        };
+        });
 
         var result = await Show(input, cancellationToken);
 
@@ -172,11 +172,11 @@ internal class WPRUserDialog : IUserDialog
 
     public Task<string> ShowOpenFileDialogAsync(string Title, IEnumerable<FileFilter> Filters = null, string InitFileName = "")
     {
-        var ofd = new OpenFileDialog
+        var ofd = CreateDialog(() =>  new OpenFileDialog
         {
             FileName = InitFileName,
             Title = Title
-        };
+        });
 
         if (Filters != null)
         {
@@ -192,11 +192,11 @@ internal class WPRUserDialog : IUserDialog
 
     public Task<string> ShowSaveFileDialogAsync(string Title, IEnumerable<FileFilter> Filters = null, string InitFileName = "")
     {
-        var sfd = new SaveFileDialog
+        var sfd = CreateDialog(() =>  new SaveFileDialog
         {
             FileName = InitFileName,
             Title = Title
-        };
+        });
 
         if (Filters != null)
         {
@@ -213,16 +213,25 @@ internal class WPRUserDialog : IUserDialog
 
     public Task<string> ShowFolderSelectDialogAsync(string Title, string InitPathName = "")
     {
-        var dialog = new OpenFolderDialog
+        var dialog = CreateDialog(() =>  new OpenFolderDialog
         {
             DefaultDirectory = InitPathName,
             Title = Title
 
-        };
+        });
 
-        if (!dialog.ShowDialog(ActiveWindow) == true)
-            return Task.FromResult<string>(null);
+        return !dialog.ShowDialog(ActiveWindow) == true 
+            ? Task.FromResult<string>(null) 
+            : Task.FromResult(dialog.FolderName)!;
+    }
 
-        return Task.FromResult(dialog.FolderName)!;
+
+    private T CreateDialog<T>(Func<T> action)
+    {
+        var dispatcher = Application.Current.Dispatcher;
+        if (dispatcher == null || dispatcher.HasShutdownStarted)
+            throw new InvalidOperationException("Application is shutting down or not initialized.");
+
+        return dispatcher.CheckAccess() ? action.Invoke() : dispatcher.Invoke(action);
     }
 }
