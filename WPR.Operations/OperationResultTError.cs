@@ -1,4 +1,6 @@
-﻿namespace WPR.Operations;
+﻿using System.Text.Json.Serialization;
+
+namespace WPR.Operations;
 
 /// <summary>
 /// Универсальная обертка для операций, возвращающих значение типа T с возможностью указания ошибки типа TError.
@@ -10,6 +12,12 @@ public readonly struct OperationResult<T, TError> : IOperationResult<TError>
     public T? Value { get; init; }
     public TError Error { get; init; }
     public bool IsSuccess => Error == null;
+    
+    /// <summary>
+    /// Указывает, что операция завершилась неудачей.
+    /// </summary>
+    [JsonIgnore]
+    public bool IsFailure => !IsSuccess;
 
     private OperationResult(T? value, TError error)
     {

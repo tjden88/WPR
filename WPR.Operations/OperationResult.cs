@@ -1,4 +1,6 @@
-﻿namespace WPR.Operations;
+﻿using System.Text.Json.Serialization;
+
+namespace WPR.Operations;
 
 /// <summary>
 /// Универсальная обертка для операций, не возвращающих значение, с возможностью указания ошибки.
@@ -19,6 +21,7 @@ public readonly struct OperationResult : IOperationResult<string>
     /// <summary>
     /// Указывает, что операция завершилась неудачей.
     /// </summary>
+    [JsonIgnore]
     public bool IsFailure => !IsSuccess;
 
     public string Error { get; init; }
