@@ -24,7 +24,7 @@ public abstract class EfCoreBaseReadOnlyRepository<T> : IReadOnlyRepository<T> w
             : Items.Where(predicate);
 
         return orderBy is not null
-            ? await orderBy(query).ToArrayAsync(cancellationToken).ConfigureAwait(false)
+            ? await orderBy(query).ToListAsync(cancellationToken).ConfigureAwait(false)
             : await query.ToListAsync(cancellationToken).ConfigureAwait(false);
     }
 
