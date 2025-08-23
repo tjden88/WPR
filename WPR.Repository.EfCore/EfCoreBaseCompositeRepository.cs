@@ -5,30 +5,53 @@ using WPR.Repository.Abstractions;
 namespace WPR.Repository.EfCore;
 
 /// <summary>
-/// Базовая реализация составного репозитория для Entity Framework Core.
-/// Репозиторий оборачивает два типа сущностей и позволяет выполнять запросы и управлять
-/// их связями в указанном DbContext.
+/// Базовая реализация составного репозитория для EF Core.
+/// Работает ТОЛЬКО с анонимными типами при Join/GroupJoin и умеет переключаться
+/// между INNER (includeUnmatched = false) и LEFT (includeUnmatched = true).
 /// </summary>
-/// <typeparam name="T">Тип левой сущности в составной связи.</typeparam>
-/// <typeparam name="T1">Тип правой сущности в составной связи.</typeparam>
-/// <remarks>
-/// Использует QueryTrackingBehavior из Entity Framework Core для управления настройками отслеживания сущностей.
-/// Данная реализация регистрируется и используется через внедрение зависимостей в сценариях,
-/// связанных с составными связями между двумя сущностями.
-/// </remarks>
+/// <typeparam name="T">Первая сущность</typeparam>
+/// <typeparam name="T1">Вторая сущность</typeparam>
 public abstract class EfCoreBaseCompositeRepository<T, T1>(
     DbContext db,
     Expression<Func<T, object>> leftKey,
     Expression<Func<T1, object>> rightKey,
-    QueryTrackingBehavior trackingBehavior = QueryTrackingBehavior.NoTracking) : ICompositeRepository<T, T1>
+    QueryTrackingBehavior trackingBehavior = QueryTrackingBehavior.NoTracking)
+    : ICompositeRepository<T, T1> // как в твоём интерфейсе
     where T : class
     where T1 : class
 {
-    
+    /// <summary>
+    /// Собрать пары (Left, Right) анонимного типа в зависимости от режима.
+    /// </summary>
+    private IQueryable BuildPairs(bool includeUnmatched)
+    {
+        var leftQuery = db.Set<T>().AsTracking(trackingBehavior);
+        var rightQuery = db.Set<T1>().AsTracking(trackingBehavior);
+
+        if (includeUnmatched)
+        {
+            // LEFT JOIN: берём все Left, Right может быть null
+            return leftQuery
+                .GroupJoin(
+                    rightQuery,
+                    leftKey,
+                    rightKey,
+                    (l, rs) => new { Left = l, Rights = rs })
+                .SelectMany(
+                    x => x.Rights.DefaultIfEmpty(),
+                    (x, r) => new { x.Left, Right = r });
+        }
+
+        // INNER JOIN: только совпавшие пары
+        return leftQuery.Join(
+            rightQuery,
+            leftKey,
+            rightKey,
+            (l, r) => new { Left = l, Right = r });
+    }
+
     // Применить Where к IQueryable<аноним>, подставив Left/Right в предикат (l, r) => ...
-    private static IQueryable ApplyPairWhere(
-        IQueryable pairs,
-        Expression<Func<T, T1, bool>> predicate)
+    private static IQueryable ApplyPairWhere(IQueryable pairs, Expression<Func<T, T1, bool>> predicate)
     {
         var anonType = pairs.ElementType;
         var p = Expression.Parameter(anonType, "p");
@@ -37,7 +60,7 @@ public abstract class EfCoreBaseCompositeRepository<T, T1>(
 
         var body = new ReplaceParametersVisitor(new Dictionary<ParameterExpression, Expression>
         {
-            { predicate.Parameters[0], left },
+            { predicate.Parameters[0], left  },
             { predicate.Parameters[1], right }
         }).Visit(predicate.Body)!;
 
@@ -48,14 +71,11 @@ public abstract class EfCoreBaseCompositeRepository<T, T1>(
             .First(m => m.Name == "Where" && m.GetParameters().Length == 2)
             .MakeGenericMethod(anonType);
 
-        var result = (IQueryable)whereMi.Invoke(null, [pairs, lambda])!;
-        return result;
+        return (IQueryable)whereMi.Invoke(null, new object[] { pairs, lambda })!;
     }
-    
+
     // Применить Select к IQueryable<аноним>, подставив Left/Right в selector (l, r) => TResult
-    private static IQueryable<TResult> ApplyPairSelect<TResult>(
-        IQueryable pairs,
-        Expression<Func<T, T1, TResult>> selector)
+    private static IQueryable<TResult> ApplyPairSelect<TResult>(IQueryable pairs, Expression<Func<T, T1, TResult>> selector)
     {
         var anonType = pairs.ElementType;
         var p = Expression.Parameter(anonType, "p");
@@ -64,7 +84,7 @@ public abstract class EfCoreBaseCompositeRepository<T, T1>(
 
         var body = new ReplaceParametersVisitor(new Dictionary<ParameterExpression, Expression>
         {
-            { selector.Parameters[0], left },
+            { selector.Parameters[0], left  },
             { selector.Parameters[1], right }
         }).Visit(selector.Body)!;
 
@@ -72,94 +92,81 @@ public abstract class EfCoreBaseCompositeRepository<T, T1>(
         var lambda = Expression.Lambda(funcType, body, p);
 
         var selectMi = typeof(Queryable).GetMethods()
-            .First(m => m.Name == "Select"
-                        && m.GetParameters().Length == 2)
+            .First(m => m.Name == "Select" && m.GetParameters().Length == 2)
             .MakeGenericMethod(anonType, typeof(TResult));
 
-        var result = (IQueryable<TResult>)selectMi.Invoke(null, [pairs, lambda])!;
-        return result;
+        return (IQueryable<TResult>)selectMi.Invoke(null, new object[] { pairs, lambda })!;
     }
-    
+
+    /// <summary>
+    /// Общая «сборка» запроса: пары -> where (если есть) -> select -> orderBy (если есть)
+    /// </summary>
     private IQueryable<TResult> ResultQuery<TResult>(
         Expression<Func<T, T1, TResult>> selector,
-        Expression<Func<T, T1, bool>>? predicate = null,
-        Func<IQueryable<TResult>, IOrderedQueryable<TResult>>? orderBy = null)
+        Expression<Func<T, T1, bool>>? predicate,
+        Func<IQueryable<TResult>, IOrderedQueryable<TResult>>? orderBy,
+        bool includeUnmatched)
     {
-        var leftQuery = db.Set<T>().AsTracking(trackingBehavior);
-        var rightQuery = db.Set<T1>().AsTracking(trackingBehavior);
+        IQueryable pairs = BuildPairs(includeUnmatched);
 
-        // Join в анонимный тип
-        IQueryable pairs = leftQuery.Join(
-            rightQuery,
-            leftKey,
-            rightKey,
-            (l, r) => new { Left = l, Right = r });
-
-        // Фильтрация по паре ПОСЛЕ Join (если задана)
         if (predicate is not null)
             pairs = ApplyPairWhere(pairs, predicate);
 
-        // Проекция к TResult
         var projected = ApplyPairSelect(pairs, selector);
 
-        // Сортировка (после проекции)
         if (orderBy is not null)
             projected = orderBy(projected);
 
         return projected;
     }
 
+    // ===== Реализация интерфейса (как в твоём ICompositeRepository) =====
+
     public async Task<List<TResult>> GetAsync<TResult>(
         Expression<Func<T, T1, TResult>> selector,
         Expression<Func<T, T1, bool>>? predicate = null,
         Func<IQueryable<TResult>, IOrderedQueryable<TResult>>? orderBy = null,
+        bool includeUnmatched = false,
         CancellationToken cancellationToken = default)
     {
-        var resultQuery = ResultQuery(
-            selector,
-            predicate,
-            orderBy);
-
-        return await resultQuery.ToListAsync(cancellationToken);
+        var query = ResultQuery(selector, predicate, orderBy, includeUnmatched);
+        return await query.ToListAsync(cancellationToken);
     }
-    
+
     public async Task<List<T>> GetLeftsAsync(
         Expression<Func<T, T1, bool>>? predicate = null,
         Func<IQueryable<T>, IOrderedQueryable<T>>? orderBy = null,
+        bool includeUnmatched = false,
         CancellationToken cancellationToken = default)
     {
-        var resultQuery = ResultQuery(
-            (l, r) => l,
-            predicate,
-            orderBy: null);
-
-        var dist = resultQuery.Distinct();
-        if (orderBy is not null)
-            dist = orderBy(dist);
-        return await dist.ToListAsync(cancellationToken);
+        var query = ResultQuery((l, r) => l, predicate, null, includeUnmatched).Distinct();
+        if (orderBy is not null) query = orderBy(query);
+        return await query.ToListAsync(cancellationToken);
     }
-    
+
     public async Task<List<T1>> GetRightsAsync(
         Expression<Func<T, T1, bool>>? predicate = null,
         Func<IQueryable<T1>, IOrderedQueryable<T1>>? orderBy = null,
+        bool includeUnmatched = false,
         CancellationToken cancellationToken = default)
     {
-        var resultQuery = ResultQuery(
-            (l, r) => r,
-            predicate,
-            orderBy: null);
+        // Если includeUnmatched = true, Right может быть null — отфильтруем перед Distinct,
+        // чтобы не тащить null'ы в материализацию.
+        var query = ResultQuery((l, r) => r, predicate, null, includeUnmatched)
+            .Where(x => x != null) // EF переведёт в IS NOT NULL
+            .Distinct();
 
-        var dist = resultQuery.Distinct();
-        if (orderBy is not null)
-            dist = orderBy(dist);
-        return await dist.ToListAsync(cancellationToken);
+        if (orderBy is not null) query = orderBy(query);
+        return await query.ToListAsync(cancellationToken);
     }
 
-    private sealed class ReplaceParametersVisitor(IReadOnlyDictionary<ParameterExpression, Expression> map)
-        : ExpressionVisitor
+    /// <summary>
+    /// Заменяет параметры исходной лямбды на произвольные выражения (Left/Right).
+    /// Никаких Invoke — всё остаётся переводимым в SQL.
+    /// </summary>
+    private sealed class ReplaceParametersVisitor(IReadOnlyDictionary<ParameterExpression, Expression> map) : ExpressionVisitor
     {
         protected override Expression VisitParameter(ParameterExpression node) =>
             map.TryGetValue(node, out var replacement) ? replacement : base.VisitParameter(node);
-
     }
 }
