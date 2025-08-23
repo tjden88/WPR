@@ -18,7 +18,6 @@
 
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <Title>Генератор ViewModels для WPR.Mvvm</Title>
-    <PackageIcon>nuget-icon-128.png</PackageIcon>
     <Version>1.0.1</Version>
   </PropertyGroup>
 
@@ -32,10 +31,6 @@
   <ItemGroup>
     <!-- Кладём сборку генератора в analyzers/dotnet/cs -->
     <None Include="$(OutputPath)\WPR.Mvvm.SourceGen.dll" Pack="true" PackagePath="analyzers/dotnet/cs" />
-    <None Update="nuget-icon-128.png">
-      <Pack>True</Pack>
-      <PackagePath></PackagePath>
-    </None>
   </ItemGroup>
 
 </Project>

@@ -13,7 +13,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Include="\\NAS\home\Личное\Иконки\nuget-icon-128.png">
+    <None Include="..\nuget-icon-128.png">
       <Pack>True</Pack>
       <PackagePath>\</PackagePath>
     </None>

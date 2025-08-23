@@ -10,10 +10,11 @@
 		<Description>Интерфейсы Generic репозиториев</Description>
 		<PackageIcon>nuget-icon-128.png</PackageIcon>
 		<PackageLicenseExpression>MIT</PackageLicenseExpression>
+		<Version>1.0.2</Version>
 	</PropertyGroup>
 
 	<ItemGroup>
-	  <None Include="\\NAS\home\Личное\Иконки\nuget-icon-128.png">
+	  <None Include="..\nuget-icon-128.png">
 	    <Pack>True</Pack>
 	    <PackagePath>\</PackagePath>
 	  </None>

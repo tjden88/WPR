@@ -88,4 +88,62 @@ public static class Registrator
 
         return services;
     }
+    
+    /// <summary>
+    /// Регистрирует ICompositeRepository&lt;TLeft, TRight&gt; для всех пар сущностей,
+    /// объявленных как DbSet&lt;&gt; в указанном контексте TContext.
+    /// Реализация: DbCompositeRepository&lt;TLeft, TRight, TContext&gt;.
+    /// </summary>
+    public static IServiceCollection AddCompositeRepositories<TContext>(
+        this IServiceCollection services,
+        QueryTrackingBehavior trackingBehavior = QueryTrackingBehavior.NoTracking,
+        bool includeSelfPairs = false)
+        where TContext : DbContext
+    {
+        var entityTypes = typeof(TContext)
+            .GetProperties(BindingFlags.Instance | BindingFlags.Public)
+            .Where(p => p.PropertyType.IsGenericType &&
+                        p.PropertyType.GetGenericTypeDefinition() == typeof(DbSet<>))
+            .Select(p => p.PropertyType.GetGenericArguments()[0])
+            .Distinct()
+            .ToArray();
+
+        for (int i = 0; i < entityTypes.Length; i++)
+        {
+            for (int j = 0; j < entityTypes.Length; j++)
+            {
+                if (!includeSelfPairs && i == j) continue;
+
+                var left = entityTypes[i];
+                var right = entityTypes[j];
+
+                var serviceType = typeof(ICompositeRepository<,>).MakeGenericType(left, right);
+                var implType = typeof(EfCoreCompositeRepository<,,>).MakeGenericType(left, right, typeof(TContext));
+
+                services.AddScoped(serviceType, sp =>
+                    ActivatorUtilities.CreateInstance(sp, implType, trackingBehavior));
+            }
+        }
+
+        return services;
+    }
+
+    /// <summary>
+    /// Точечная регистрация конкретной пары сущностей.
+    /// </summary>
+    public static IServiceCollection AddCompositeRepository<TLeft, TRight, TContext>(
+        this IServiceCollection services,
+        QueryTrackingBehavior trackingBehavior = QueryTrackingBehavior.NoTracking)
+        where TLeft : class
+        where TRight : class
+        where TContext : DbContext
+    {
+        services.AddScoped(typeof(ICompositeRepository<TLeft, TRight>), sp =>
+            ActivatorUtilities.CreateInstance(
+                sp,
+                typeof(EfCoreCompositeRepository<TLeft, TRight, TContext>),
+                trackingBehavior));
+
+        return services;
+    }
 }

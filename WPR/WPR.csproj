@@ -21,7 +21,6 @@
 		<PackageProjectUrl>https://github.com/tjden88/WPR.Styles</PackageProjectUrl>
 		<RepositoryUrl>https://github.com/tjden88/WPR.Styles</RepositoryUrl>
 		<PackageTags>WPF;Styles;Templates</PackageTags>
-		<PackageIcon>Style XP.png</PackageIcon>
 		<SignAssembly>false</SignAssembly>
 		<ImplicitUsings>enable</ImplicitUsings>
 	</PropertyGroup>
@@ -48,13 +47,6 @@
 	<ItemGroup>
 		<Resource Include="Fonts\Montserrat-Italic-VariableFont_wght.ttf" />
 		<Resource Include="Fonts\Montserrat-VariableFont_wght.ttf" />
-	</ItemGroup>
-
-	<ItemGroup>
-		<None Update="Style XP.png">
-			<Pack>True</Pack>
-			<PackagePath>\</PackagePath>
-		</None>
 	</ItemGroup>
 
 </Project>
