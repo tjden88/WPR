@@ -10,7 +10,7 @@
     <Description>Репозитории сущностей EF Core</Description>
     <PackageIcon>nuget-icon-128.png</PackageIcon>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
-    <Version>1.0.2</Version>
+    <Version>1.0.3</Version>
   </PropertyGroup>
 
   <ItemGroup>
@@ -22,10 +22,7 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="9.0.8" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\WPR.Repository.Abstractions\WPR.Repository.Abstractions.csproj" />
+    <PackageReference Include="WPR.Repository.Abstractions" Version="1.0.3" />
   </ItemGroup>
 
 </Project>

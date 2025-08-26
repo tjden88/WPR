@@ -10,7 +10,7 @@
 		<Description>Интерфейсы Generic репозиториев</Description>
 		<PackageIcon>nuget-icon-128.png</PackageIcon>
 		<PackageLicenseExpression>MIT</PackageLicenseExpression>
-		<Version>1.0.2</Version>
+		<Version>1.0.3</Version>
 	</PropertyGroup>
 
 	<ItemGroup>

@@ -11,7 +11,7 @@
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <PackageIcon>nuget-icon-128.png</PackageIcon>
-    <Version>1.1.1</Version>
+    <Version>1.0.3</Version>
   </PropertyGroup>
 
   <ItemGroup>
@@ -23,10 +23,7 @@
 
   <ItemGroup>
     <PackageReference Include="Mapster" Version="7.4.0" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\WPR.Repository.EfCore\WPR.Repository.EfCore.csproj" />
+    <PackageReference Include="WPR.Repository.EfCore" Version="1.0.3" />
   </ItemGroup>
 
 </Project>
