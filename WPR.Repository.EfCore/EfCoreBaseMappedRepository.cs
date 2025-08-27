@@ -14,6 +14,9 @@ public abstract class EfCoreBaseMappedRepository<TSrc, TDest>(DbContext Db) : Ef
 
     protected abstract TSrc MapToSource(TDest dest);
 
+    /// <summary> После добавления в БД src, изменить исходный item </summary>
+    protected abstract void MapBackAfterAdded(TDest item, TSrc src);
+
     protected virtual void OnItemAdded(TSrc item) { }
     protected virtual void OnItemUpdated(TSrc item) { }
     protected virtual void OnItemDeleted(TSrc item) { }
@@ -29,7 +32,10 @@ public abstract class EfCoreBaseMappedRepository<TSrc, TDest>(DbContext Db) : Ef
         var src = MapToSource(item);
         await Db.Set<TSrc>().AddAsync(src, cancellationToken).ConfigureAwait(false);
         OnItemAdded(src);
-        return await SaveChangesAsync(cancellationToken).ConfigureAwait(false);
+        var saved = await SaveChangesAsync(cancellationToken).ConfigureAwait(false);
+        if(saved)
+            MapBackAfterAdded(item, src);
+        return saved;
     }
 
     protected sealed override async Task<bool> UpdateItem(TDest item, CancellationToken cancellationToken)
