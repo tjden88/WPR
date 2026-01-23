@@ -7,187 +7,219 @@ using WPR.Mvvm.Interfaces;
 
 namespace WPR.Mvvm.Services;
 
-internal class ViewsRegistrator(IServiceCollection ServiceCollection) : IViewsRegistrator
+/// <summary>
+/// Регистратор представлений и моделей-представлений:
+/// 1) Регистрирует ViewModel в DI с указанным временем жизни.
+/// 2) Добавляет DataTemplate (ViewModel -> View) в <see cref="ResourceDictionary"/>.
+/// 3) Регистрирует фабрику View/Window для использования инжектором/навигацией.
+/// </summary>
+/// <remarks>
+/// ВАЖНО: View/Window создаются через DI (ActivatorUtilities), поэтому конструктор по умолчанию не требуется.
+/// </remarks>
+internal sealed class ViewsRegistrator(IServiceCollection serviceCollection) : IViewsRegistrator
 {
     /// <summary>
-    /// Подготовленный для добавления в ресурсы приложения словарь ресурсов
+    /// Подготовленный для добавления в ресурсы приложения словарь ресурсов.
     /// </summary>
     public ResourceDictionary ResourceDictionary { get; } = new();
 
+    #region Public API: Views
 
-    public IViewsRegistrator AddSingleton<TView, TViewModel>(string? Name = null) where TView : FrameworkElement, new()
+    /// <inheritdoc />
+    public IViewsRegistrator AddSingleton<TView, TViewModel>(string? Name = null)
+        where TView : FrameworkElement
+        => AddView<TView>(typeof(TViewModel), Name, ServiceLifetime.Singleton);
+
+    /// <inheritdoc />
+    public IViewsRegistrator AddSingleton<TView>(string? Name = null)
+        where TView : FrameworkElement
+        => AddView<TView>(FindViewModelTypeOrThrow(typeof(TView)), Name, ServiceLifetime.Singleton);
+
+    /// <inheritdoc />
+    public IViewsRegistrator AddTransient<TView, TViewModel>(string? Name = null)
+        where TView : FrameworkElement
+        => AddView<TView>(typeof(TViewModel), Name, ServiceLifetime.Transient);
+
+    /// <inheritdoc />
+    public IViewsRegistrator AddTransient<TView>(string? Name = null)
+        where TView : FrameworkElement
+        => AddView<TView>(FindViewModelTypeOrThrow(typeof(TView)), Name, ServiceLifetime.Transient);
+
+    /// <inheritdoc />
+    public IViewsRegistrator AddScoped<TView, TViewModel>(string? Name = null)
+        where TView : FrameworkElement
+        => AddView<TView>(typeof(TViewModel), Name, ServiceLifetime.Scoped);
+
+    /// <inheritdoc />
+    public IViewsRegistrator AddScoped<TView>(string? Name = null)
+        where TView : FrameworkElement
+        => AddView<TView>(FindViewModelTypeOrThrow(typeof(TView)), Name, ServiceLifetime.Scoped);
+
+    /// <inheritdoc />
+    public IViewsRegistrator AddTemplateOnly<TView>()
+        where TView : FrameworkElement
     {
-        var type = typeof(TViewModel);
-        var name = Name ?? type.Name;
-        Register<TView>(type, name, ServiceLifetime.Singleton);
-
+        var viewType = typeof(TView);
+        var vmType = FindViewModelTypeOrThrow(viewType);
+        AddDataTemplate(viewType, vmType);
         return this;
     }
 
-    public IViewsRegistrator AddSingleton<TView>(string? Name = null) where TView : FrameworkElement, new()
+    /// <inheritdoc />
+    public IViewsRegistrator AddTemplateOnly<TView, TViewModel>()
+        where TView : FrameworkElement
     {
-        var type = typeof(TView);
-        var viewModelType = type.Assembly.GetTypes().FirstOrDefault(t => t.Name == $"{type.Name}ViewModel") ?? throw new InvalidOperationException($"Модель представления для типа {type.Name} не найдена. Искомое имя - {type.Name}ViewModel");
-        Register<TView>(viewModelType, Name ?? viewModelType.Name, ServiceLifetime.Singleton);
-
+        AddDataTemplate(typeof(TView), typeof(TViewModel));
         return this;
     }
 
+    #endregion
 
-    public IViewsRegistrator AddTransient<TView, TViewModel>(string? Name = null) where TView : FrameworkElement, new()
-    {
-        var type = typeof(TViewModel);
-        var name = Name ?? type.Name;
-        Register<TView>(type, name, ServiceLifetime.Transient);
-        return this;
-    }
+    #region Public API: Windows
 
-    public IViewsRegistrator AddTransient<TView>(string? Name = null) where TView : FrameworkElement, new()
-    {
-        var type = typeof(TView);
-        var viewModelType = type.Assembly.GetTypes().FirstOrDefault(t => t.Name == $"{type.Name}ViewModel") ?? throw new InvalidOperationException($"Модель представления для типа {type.Name} не найдена. Искомое имя - {type.Name}ViewModel");
+    /// <inheritdoc />
+    public IViewsRegistrator AddTransientWindow<TWindow, TViewModel>(string? Name = null)
+        where TWindow : Window
+        => AddWindow<TWindow>(typeof(TViewModel), Name, ServiceLifetime.Transient, isMainWindow: false);
 
-        Register<TView>(viewModelType, Name ?? viewModelType.Name, ServiceLifetime.Transient);
+    /// <inheritdoc />
+    public IViewsRegistrator AddMainWindow<TWindow, TViewModel>(string? Name = null)
+        where TWindow : Window
+        => AddWindow<TWindow>(typeof(TViewModel), Name, ServiceLifetime.Singleton, isMainWindow: true);
 
-        return this;
-    }
+    #endregion
 
-    public IViewsRegistrator AddScoped<TView, TViewModel>(string? Name = null) where TView : FrameworkElement, new()
-    {
-        var type = typeof(TViewModel);
-        var name = Name ?? type.Name;
-        Register<TView>(type, name, ServiceLifetime.Scoped);
-        return this;
-    }
-
-    public IViewsRegistrator AddScoped<TView>(string? Name = null) where TView : FrameworkElement, new()
-    {
-        var type = typeof(TView);
-        var viewModelType = type.Assembly.GetTypes().FirstOrDefault(t => t.Name == $"{type.Name}ViewModel") ?? throw new InvalidOperationException($"Модель представления для типа {type.Name} не найдена. Искомое имя - {type.Name}ViewModel");
-        Register<TView>(viewModelType, Name ?? viewModelType.Name, ServiceLifetime.Scoped);
-        return this;
-    }
-
-
-    public IViewsRegistrator AddTransientWindow<TWindow, TViewModel>(string? Name = null) where TWindow : Window, new()
-    {
-        var viewModelType = typeof(TViewModel);
-        var windowType = typeof(TWindow);
-        var name = Name ?? viewModelType.Name;
-
-        RegisterViewModelDataTemplate(name, viewModelType);
-
-
-        ServiceCollection.AddTransient(windowType);
-
-        ServiceCollection.AddTransient(s =>
-        {
-            var viewModel = s.GetRequiredService(viewModelType);
-            var view = new TWindow
-            {
-                DataContext = viewModel
-            };
-            if (viewModel is IDisposable disposable)
-                view.Closed += (_, _) => disposable.Dispose();
-
-            return view;
-        });
-        ServiceCollection.AddTransient(viewModelType);
-
-        AddDataTemplate(windowType, viewModelType);
-        return this;
-    }
-
-    public IViewsRegistrator AddMainWindow<TWindow, TViewModel>(string? Name = null) where TWindow : Window, new()
-    {
-        var viewModelType = typeof(TViewModel);
-        var windowType = typeof(TWindow);
-        var name = Name ?? viewModelType.Name;
-
-        RegisterViewModelDataTemplate(name, viewModelType);
-
-
-        ServiceCollection.AddSingleton(windowType);
-
-        ServiceCollection.AddSingleton(s =>
-        {
-            var viewModel = s.GetRequiredService(viewModelType);
-            var view = new TWindow
-            {
-                DataContext = viewModel
-            };
-
-            view.Closed += (_, _) => Application.Current.Shutdown();
-            return view;
-        });
-
-        ServiceCollection.AddSingleton(viewModelType);
-
-        AddDataTemplate(windowType, viewModelType);
-        return this;
-    }
-
-    public IViewsRegistrator AddTemplateOnly<TView>() where TView : FrameworkElement, new()
-    {
-        var type = typeof(TView);
-        var viewModelType = type.Assembly.GetTypes().FirstOrDefault(t => t.Name == $"{type.Name}ViewModel") ?? throw new InvalidOperationException($"Модель представления для типа {type.Name} не найдена. Искомое имя - {type.Name}ViewModel");
-        AddDataTemplate(type, viewModelType);
-        return this;
-    }
-
-    public IViewsRegistrator AddTemplateOnly<TView, TViewModel>() where TView : FrameworkElement, new()
-    {
-        var type = typeof(TViewModel);
-        AddDataTemplate(typeof(TView), type);
-        return this;
-    }
-
+    #region Core registration
 
     /// <summary>
-    /// Регистрация представления и модели-представления в коллекции сервисов.
+    /// Регистрирует View + ViewModel и добавляет DataTemplate.
     /// </summary>
-    private void Register<TView>(Type ViewModelType, string RegisterName, ServiceLifetime Lifetime) where TView : FrameworkElement, new()
+    private IViewsRegistrator AddView<TView>(Type viewModelType, string? registerName, ServiceLifetime lifetime)
+        where TView : FrameworkElement
     {
-        RegisterViewModelDataTemplate(RegisterName, ViewModelType);
+        var viewType = typeof(TView);
+        var name = registerName ?? viewModelType.Name;
 
-        switch (Lifetime) // Регистрация модели-представления в зависимости от жизненного цикла
+        RegisterViewModel(name, viewModelType);
+        AddViewModel(viewModelType, lifetime);
+
+        // View создаётся через DI, чтобы не требовать конструктор по умолчанию.
+        serviceCollection.AddTransient(sp =>
         {
-            case ServiceLifetime.Singleton:
-                ServiceCollection.AddSingleton(ViewModelType);
-                break;
-            case ServiceLifetime.Scoped:
-                ServiceCollection.AddScoped(ViewModelType);
-                break;
-            case ServiceLifetime.Transient:
-                ServiceCollection.AddTransient(ViewModelType);
-                break;
-            default:
-                throw new ArgumentOutOfRangeException(nameof(Lifetime), Lifetime, null);
-        }
-
-        ServiceCollection.AddTransient(sp => // View для инжектора
-        {
-            var vm = sp.GetRequiredService(ViewModelType);
-            var view = new TView // Создание нового экземпляра представления
-            {
-                DataContext = vm
-            };
-
+            var vm = sp.GetRequiredService(viewModelType);
+            var view = ActivatorUtilities.CreateInstance<TView>(sp);
+            view.DataContext = vm;
             return view;
         });
 
-        AddDataTemplate(typeof(TView), ViewModelType);
+        AddDataTemplate(viewType, viewModelType);
+        return this;
     }
 
-
-    // Зарегистрировать модель-представление в словаре
-    private void RegisterViewModelDataTemplate(string Name, Type type)
+    /// <summary>
+    /// Регистрирует Window + ViewModel и добавляет DataTemplate.
+    /// </summary>
+    private IViewsRegistrator AddWindow<TWindow>(Type viewModelType, string? registerName, ServiceLifetime lifetime, bool isMainWindow)
+        where TWindow : Window
     {
-        if (!Mvvm.RegisteredViews.TryAdd(Name, type))
-            throw new ArgumentException("Такое имя уже зарегистрировано", nameof(Name));
+        var windowType = typeof(TWindow);
+        var name = registerName ?? viewModelType.Name;
+
+        RegisterViewModel(name, viewModelType);
+        AddViewModel(viewModelType, lifetime);
+
+        // Окно тоже создаём через DI.
+        if (lifetime == ServiceLifetime.Singleton)
+        {
+            serviceCollection.AddSingleton(sp => CreateWindow<TWindow>(sp, viewModelType, isMainWindow));
+        }
+        else
+        {
+            serviceCollection.AddTransient(sp => CreateWindow<TWindow>(sp, viewModelType, isMainWindow));
+        }
+
+        AddDataTemplate(windowType, viewModelType);
+        return this;
     }
 
-    // Добавить шаблон данных в ресурсы
+    /// <summary>
+    /// Создаёт окно через DI и назначает DataContext.
+    /// </summary>
+    private static TWindow CreateWindow<TWindow>(IServiceProvider sp, Type viewModelType, bool isMainWindow)
+        where TWindow : Window
+    {
+        var vm = sp.GetRequiredService(viewModelType);
+        var window = ActivatorUtilities.CreateInstance<TWindow>(sp);
+        window.DataContext = vm;
+
+        if (isMainWindow)
+        {
+            window.Closed += (_, _) => Application.Current.Shutdown();
+        }
+
+        // Если VM disposable, освобождаем при закрытии окна.
+        if (vm is IDisposable disposable)
+            window.Closed += (_, _) => disposable.Dispose();
+
+        return window;
+    }
+
+    /// <summary>
+    /// Регистрирует ViewModel в DI согласно <paramref name="lifetime"/>.
+    /// </summary>
+    private void AddViewModel(Type viewModelType, ServiceLifetime lifetime)
+    {
+        switch (lifetime)
+        {
+            case ServiceLifetime.Singleton:
+                serviceCollection.AddSingleton(viewModelType);
+                break;
+            case ServiceLifetime.Scoped:
+                serviceCollection.AddScoped(viewModelType);
+                break;
+            case ServiceLifetime.Transient:
+                serviceCollection.AddTransient(viewModelType);
+                break;
+            default:
+                throw new ArgumentOutOfRangeException(nameof(lifetime), lifetime, null);
+        }
+    }
+
+    #endregion
+
+    #region ViewModel discovery/registry
+
+    /// <summary>
+    /// Ищет тип ViewModel по соглашению об именовании: {ИмяView}ViewModel.
+    /// </summary>
+    private static Type FindViewModelTypeOrThrow(Type viewType)
+    {
+        var expectedName = $"{viewType.Name}ViewModel";
+
+        var vmType = viewType.Assembly
+            .GetTypes()
+            .FirstOrDefault(t => t.Name == expectedName);
+
+        return vmType ?? throw new InvalidOperationException(
+            $"Модель представления для типа {viewType.Name} не найдена. Искомое имя - {expectedName}");
+    }
+
+    /// <summary>
+    /// Регистрирует ViewModel в реестре MVVM, чтобы можно было искать типы по строковому имени.
+    /// </summary>
+    private static void RegisterViewModel(string name, Type type)
+    {
+        if (!Mvvm.RegisteredViews.TryAdd(name, type))
+            throw new ArgumentException("Такое имя уже зарегистрировано", nameof(name));
+    }
+
+    #endregion
+
+    #region DataTemplate
+
+    /// <summary>
+    /// Добавляет DataTemplate (ViewModel -> View) в ресурсы.
+    /// </summary>
     private void AddDataTemplate(Type view, Type viewModel)
     {
         var stringReader = new StringReader(
@@ -198,8 +230,12 @@ internal class ViewsRegistrator(IServiceCollection ServiceCollection) : IViewsRe
                                 DataType=""{x:Type vm:" + viewModel.Name + @"}"">
                     <v:" + view.Name + @" DataContext=""{Binding}""/>
                 </DataTemplate>");
+
         var xmlReader = XmlReader.Create(stringReader);
         var template = (DataTemplate)XamlReader.Load(xmlReader);
+
         ResourceDictionary.Add(template.DataTemplateKey!, template);
     }
+
+    #endregion
 }

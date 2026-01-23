@@ -43,7 +43,7 @@ public class Injector : Control
             throw new InvalidOperationException($"Тип должен быть указан в свойстве {nameof(Inject)}.");
 
         var type = t;
-        if (!ServiceResolver.IsAllServiceAdded) // Работаем в дизайнере
+        if (!ServiceResolver.IsInitialized) // Работаем в дизайнере
         {
             var content = Activator.CreateInstance(type);
             injector.Content = content ?? throw new InvalidOperationException($"Не удалось создать экземпляр объекта {type.FullName} в дизайнере. Проверьте, что конструктор не требует параметров или все параметры доступны в дизайнере.");
