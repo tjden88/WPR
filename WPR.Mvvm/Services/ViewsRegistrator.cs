@@ -220,7 +220,7 @@ internal sealed class ViewsRegistrator(IServiceCollection serviceCollection) : I
     /// <summary>
     /// Добавляет DataTemplate (ViewModel -> View) в ресурсы.
     /// </summary>
-    private void AddDataTemplate(Type view, Type viewModel)
+    private void AddDataTemplate2(Type view, Type viewModel)
     {
         var stringReader = new StringReader(
             @"<DataTemplate xmlns=""http://schemas.microsoft.com/winfx/2006/xaml/presentation""
@@ -237,5 +237,22 @@ internal sealed class ViewsRegistrator(IServiceCollection serviceCollection) : I
         ResourceDictionary.Add(template.DataTemplateKey!, template);
     }
 
+    private void AddDataTemplate(Type view, Type viewModel)
+    {
+        var stringReader = new StringReader(
+            @"<DataTemplate xmlns=""http://schemas.microsoft.com/winfx/2006/xaml/presentation""
+                            xmlns:x=""http://schemas.microsoft.com/winfx/2006/xaml""
+                            xmlns:vm=""clr-namespace:" + viewModel.Namespace + @";assembly=" + viewModel.Assembly.GetName().Name + @"""
+                            xmlns:v=""clr-namespace:" + view.Namespace + @";assembly=" + view.Assembly.GetName().Name + @"""
+                            xmlns:mvvm=""clr-namespace:WPR.Mvvm;assembly=WPR.Mvvm""
+                            DataType=""{x:Type vm:" + viewModel.Name + @"}"">
+                <mvvm:DiDataTemplateViewHost ViewType=""{x:Type v:" + view.Name + @"}""/>
+            </DataTemplate>");
+
+        var xmlReader = XmlReader.Create(stringReader);
+        var template = (DataTemplate)XamlReader.Load(xmlReader);
+
+        ResourceDictionary.Add(template.DataTemplateKey!, template);
+    }
     #endregion
 }
