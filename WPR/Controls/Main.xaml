@@ -6,6 +6,7 @@
         <ResourceDictionary Source="Card.xaml"/>
         <ResourceDictionary Source="DialogRoot.xaml"/>
         <ResourceDictionary Source="Icon.xaml"/>
+        <ResourceDictionary Source="IconManual.xaml"/>
         <ResourceDictionary Source="IconText.xaml"/>
         <ResourceDictionary Source="Base/NumericDecorator.xaml"/>
         <ResourceDictionary Source="NumericDoubleDecorator.xaml"/>
