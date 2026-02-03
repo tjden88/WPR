@@ -76,6 +76,7 @@ public static class DialogHelper
                     tcs.TrySetResult(b);
                 };
 
+                dialog.BeforeShowing();
                 panel.Show(dialog, dialog.StaysOpen);
             }
             catch (Exception ex)
@@ -146,6 +147,7 @@ public static class DialogHelper
 
                 panel?.Show(null, true);
 
+                dialog.BeforeShowing();
                 dlg.ShowDialog();
 
                 panel?.Hide();

@@ -12,4 +12,6 @@ public interface IWPRDialog
     /// <summary> Оставлять диалог открытым при клике вне его области </summary>
     bool StaysOpen => true;
 
+    /// <summary> Вызывается при старте показа </summary>
+    void BeforeShowing() {}
 }
