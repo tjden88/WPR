@@ -26,7 +26,7 @@ public sealed class ResolveExtension : MarkupExtension
     /// <param name="serviceProvider">Сервис-провайдер разметки WPF.</param>
     /// <returns>Экземпляр сервиса из DI.</returns>
     /// <exception cref="InvalidOperationException">
-    ///     Если глобальный ServiceProvider не установлен, либо Type не задан.
+    ///     Если Type не задан.
     /// </exception>
     public override object ProvideValue(IServiceProvider serviceProvider)
     {
@@ -35,8 +35,9 @@ public sealed class ResolveExtension : MarkupExtension
 
         if (!ServiceResolver.IsInitialized) // Работаем в дизайнере
         {
-            var content = Activator.CreateInstance(Type);
-            return content ?? $"Не удалось создать тип {Type}";
+            return null!;
+            //var content = Activator.CreateInstance(Type);
+            //return content ?? $"Не удалось создать тип {Type}";
         }
 
         // GetRequiredService бросит понятное исключение, если сервис не зарегистрирован.
