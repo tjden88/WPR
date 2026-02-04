@@ -20,6 +20,6 @@ public abstract partial class InactiveRecipient : ObservableRecipient
     
     protected InactiveRecipient(IMessenger messenger) : base(messenger)
     {
-        this.InitializeAttributes();
+        this.InitializeAutoNotifyCanExecuteChangedAttribute();
     }
 }

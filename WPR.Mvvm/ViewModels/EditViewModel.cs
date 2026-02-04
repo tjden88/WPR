@@ -23,7 +23,7 @@ public abstract class EditViewModel<T> : ObservableValidator where T : class
         PropertyChanged += OnViewModelPropertyChanged;
         InitializeBindings();
         LoadOriginalValues();
-        this.InitializeAttributes();
+        this.InitializeAutoNotifyCanExecuteChangedAttribute();
     }
 
     private void InitializeBindings()

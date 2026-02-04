@@ -10,7 +10,7 @@ internal static class ViewModelsExtensions
     /// <summary>
     /// Работаем с атрибутами AutoNotifyCanExecuteChanged.
     /// </summary>
-    public static void InitializeAttributes(this INotifyPropertyChanged viewModel, bool Unregister = false)
+    public static void InitializeAutoNotifyCanExecuteChangedAttribute(this INotifyPropertyChanged viewModel, bool Unregister = false)
     {
         var viewModelType = viewModel.GetType();
         var methods = viewModelType
