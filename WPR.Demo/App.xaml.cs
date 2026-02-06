@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System;
+using System.Windows;
 using Microsoft.Extensions.DependencyInjection;
 using WPR.Demo.Services;
 using WPR.Demo.Services.Interfaces;
@@ -9,10 +10,9 @@ namespace WPR.Demo;
 
 public partial class App
 {
-    protected override void OnStartup(StartupEventArgs e)
-    {
-        base.OnStartup(e);
 
+    protected override void OnAfterStartup(IServiceProvider services, StartupEventArgs e)
+    {
         var window = Services.GetRequiredService<MainWindow>();
         window.Show();
     }
