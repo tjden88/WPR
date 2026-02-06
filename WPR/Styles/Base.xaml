@@ -26,6 +26,7 @@
     <converters:ValueIsNullToVisibilityConverter x:Key="ValueIsNullToVisibilityConverter"/>
     <converters:EnumDescriptionConverter x:Key="EnumDescriptionConverter"/>
     <converters:ConverterProxy x:Key="ConverterProxy"/>
+    <converters:EmptyTextToParameterValueConverter x:Key="EmptyTextToParameterValueConverter"/>
 
 
     <!--Кисти и цвета-->
