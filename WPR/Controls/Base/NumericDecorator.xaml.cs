@@ -157,6 +157,27 @@ public abstract class NumericDecorator<T> : NumericDecorator where T : struct, I
 
     #endregion
 
+    #region UpdateSourceTrigger : UpdateSourceTrigger - Условие обновления значения Value в текстбоксе
+
+    /// <summary>Условие обновления значения Value в текстбоксе</summary>
+    public static readonly DependencyProperty UpdateSourceTriggerProperty =
+        DependencyProperty.Register(
+            nameof(UpdateSourceTrigger),
+            typeof(UpdateSourceTrigger),
+            typeof(NumericDecorator),
+            new PropertyMetadata(UpdateSourceTrigger.PropertyChanged));
+
+    /// <summary>Условие обновления значения Value в текстбоксе</summary>
+    [Category("NumericDecorator")]
+    [Description("Условие обновления значения Value в текстбоксе")]
+    public UpdateSourceTrigger UpdateSourceTrigger
+    {
+        get => (UpdateSourceTrigger) GetValue(UpdateSourceTriggerProperty);
+        set => SetValue(UpdateSourceTriggerProperty, value);
+    }
+
+    #endregion
+
     #region Increment : T - Шаг изменения значения при использовании кнопок управления или колеса мыши
 
     /// <summary>Шаг изменения значения при использовании кнопок управления или колеса мыши</summary>
@@ -352,7 +373,7 @@ public abstract class NumericDecorator<T> : NumericDecorator where T : struct, I
             var textBinding = new Binding()
             {
                 Path = new PropertyPath(nameof(Text)),
-                UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged,
+                UpdateSourceTrigger = UpdateSourceTrigger,
                 Source = this,
                 ValidationRules =
                 {
@@ -375,7 +396,12 @@ public abstract class NumericDecorator<T> : NumericDecorator where T : struct, I
 
     private void OnValueUpdated(T value)
     {
-        if (!Equals(value, default(T)) || !string.IsNullOrWhiteSpace(Text))
+        //if (!Equals(value, default(T)) || !string.IsNullOrWhiteSpace(Text))
+        //    Text = SetText(value);
+
+        if (Equals(value, default(T)))
+            Text = string.Empty;
+        else
             Text = SetText(value);
         ValueChanged?.Invoke(this, EventArgs.Empty);
         CommandManager.InvalidateRequerySuggested();
