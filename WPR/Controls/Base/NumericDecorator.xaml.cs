@@ -129,6 +129,27 @@ public abstract class NumericDecorator<T> : NumericDecorator where T : struct, I
 
     #endregion
 
+    #region UpdateValueOnTextChanged : bool - Обновлять значение немедленно при изменении текста. При False - значение будет обновлено при потере фокуса или нажатии Enter
+
+    /// <summary>Обновлять значение немедленно при изменении текста. При False - значение будет обновлено при потере фокуса или нажатии Enter</summary>
+    public static readonly DependencyProperty UpdateValueOnTextChangedProperty =
+        DependencyProperty.Register(
+            nameof(UpdateValueOnTextChanged),
+            typeof(bool),
+            typeof(NumericDecorator),
+            new PropertyMetadata(true));
+
+    /// <summary>Обновлять значение немедленно при изменении текста. При False - значение будет обновлено при потере фокуса или нажатии Enter</summary>
+    [Category("NumericDecorator")]
+    [Description("Обновлять значение немедленно при изменении текста. При False - значение будет обновлено при потере фокуса или нажатии Enter")]
+    public bool UpdateValueOnTextChanged
+    {
+        get => (bool) GetValue(UpdateValueOnTextChangedProperty);
+        set => SetValue(UpdateValueOnTextChangedProperty, value);
+    }
+
+    #endregion
+
     #region Value : T - Значение
 
     /// <summary>Значение</summary>
@@ -153,27 +174,6 @@ public abstract class NumericDecorator<T> : NumericDecorator where T : struct, I
     {
         get => (T)GetValue(ValueProperty);
         set => SetValue(ValueProperty, value);
-    }
-
-    #endregion
-
-    #region UpdateSourceTrigger : UpdateSourceTrigger - Условие обновления значения Value в текстбоксе
-
-    /// <summary>Условие обновления значения Value в текстбоксе</summary>
-    public static readonly DependencyProperty UpdateSourceTriggerProperty =
-        DependencyProperty.Register(
-            nameof(UpdateSourceTrigger),
-            typeof(UpdateSourceTrigger),
-            typeof(NumericDecorator),
-            new PropertyMetadata(UpdateSourceTrigger.PropertyChanged));
-
-    /// <summary>Условие обновления значения Value в текстбоксе</summary>
-    [Category("NumericDecorator")]
-    [Description("Условие обновления значения Value в текстбоксе")]
-    public UpdateSourceTrigger UpdateSourceTrigger
-    {
-        get => (UpdateSourceTrigger) GetValue(UpdateSourceTriggerProperty);
-        set => SetValue(UpdateSourceTriggerProperty, value);
     }
 
     #endregion
@@ -373,7 +373,7 @@ public abstract class NumericDecorator<T> : NumericDecorator where T : struct, I
             var textBinding = new Binding()
             {
                 Path = new PropertyPath(nameof(Text)),
-                UpdateSourceTrigger = UpdateSourceTrigger,
+                UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged,
                 Source = this,
                 ValidationRules =
                 {
@@ -388,7 +388,7 @@ public abstract class NumericDecorator<T> : NumericDecorator where T : struct, I
     {
         const string allowedSymbols = "-.,";
 
-        if (AllowTextExpressions || allowedSymbols.Any(NewValue.EndsWith))
+        if (AllowTextExpressions || allowedSymbols.Any(NewValue.EndsWith) || !UpdateValueOnTextChanged)
             return;
 
         CalculateNewValue(false);
