@@ -19,18 +19,17 @@
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type local:Badge}">
                     <Grid>
-                        <ContentPresenter/>
-                        <Border x:Name="BageBorder" Background="{TemplateBinding Background}"
-                                Margin="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=BageMargin}"
+                        <Border x:Name="BadgeBorder" Background="{TemplateBinding Background}"
+                                Margin="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=BadgeMargin}"
                                 BorderBrush="{TemplateBinding BorderBrush}"
                                 BorderThickness="{TemplateBinding BorderThickness}"
                                 HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                                 VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
                                 CornerRadius="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(local:Extra.BorderRadius)}"
                                 MinHeight="10" MinWidth="{Binding  Path =ActualHeight, RelativeSource={RelativeSource Self}}"
-                                Visibility="{TemplateBinding BageVisible, Converter={StaticResource Bool2VisibilityConverter}}"
+                                Visibility="{TemplateBinding BadgeVisible, Converter={StaticResource Bool2VisibilityConverter}}"
                                 Effect="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(local:Extra.Shadow)}">
-                            <ContentPresenter Content="{TemplateBinding BageContent}"
+                            <ContentPresenter Content="{TemplateBinding Content}"
                                               Margin="{TemplateBinding Padding}"
                                               HorizontalAlignment="Center"
                                               VerticalAlignment="Center"/>

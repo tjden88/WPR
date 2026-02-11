@@ -14,46 +14,36 @@ public class Badge : ContentControl
         DefaultStyleKeyProperty.OverrideMetadata(typeof(Badge), new FrameworkPropertyMetadata(typeof(Badge)));
     }
 
-    /// <summary>Контент бейджа</summary>
-    public static readonly DependencyProperty BageContentProperty = DependencyProperty.Register(
-        nameof(BageContent), typeof(object), typeof(Badge),
-        new PropertyMetadata(string.Empty, OnContentChanged));
-
-    private static void OnContentChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+    protected override void OnContentChanged(object oldContent, object newContent)
     {
-        if (!Equals(e.NewValue, e.OldValue))
-            ((Badge) d).AnimateBage();
-    }
-
-    public object BageContent
-    {
-        get => GetValue(BageContentProperty);
-        set => SetValue(BageContentProperty, value);
+        base.OnContentChanged(oldContent, newContent);
+        if (!Equals(oldContent, newContent))
+            AnimateBadge();
     }
 
     /// <summary> Видимость бейджа </summary>
-    public static readonly DependencyProperty BageVisibleProperty = DependencyProperty.Register(nameof(BageVisible), typeof(bool), typeof(Badge), 
-        new PropertyMetadata(false, BadgeVisibleOnChanged));
+    public static readonly DependencyProperty BadgeVisibleProperty = DependencyProperty.Register(nameof(BadgeVisible), typeof(bool), typeof(Badge), 
+        new PropertyMetadata(true, BadgeVisibleOnChanged));
 
     private static void BadgeVisibleOnChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
     {
         if (!Equals(e.NewValue, e.OldValue) && (bool)e.NewValue)
-            ((Badge) d).AnimateBage();
+            ((Badge) d).AnimateBadge();
     }
 
-    public bool BageVisible
+    public bool BadgeVisible
     {
-        get => (bool)GetValue(BageVisibleProperty);
-        set => SetValue(BageVisibleProperty, value);
+        get => (bool)GetValue(BadgeVisibleProperty);
+        set => SetValue(BadgeVisibleProperty, value);
     }
 
 
-    #region BageMargin : Thickness - Положение бейджа
+    #region BadgeMargin : Thickness - Положение бейджа
 
     /// <summary>Положение бейджа</summary>
-    public static readonly DependencyProperty BageMarginProperty =
+    public static readonly DependencyProperty BadgeMarginProperty =
         DependencyProperty.Register(
-            nameof(BageMargin),
+            nameof(BadgeMargin),
             typeof(Thickness),
             typeof(Badge),
             new PropertyMetadata(default(Thickness)));
@@ -61,18 +51,18 @@ public class Badge : ContentControl
     /// <summary>Положение бейджа</summary>
     [Category("Badge")]
     [Description("Положение бейджа")]
-    public Thickness BageMargin
+    public Thickness BadgeMargin
     {
-        get => (Thickness) GetValue(BageMarginProperty);
-        set => SetValue(BageMarginProperty, value);
+        get => (Thickness) GetValue(BadgeMarginProperty);
+        set => SetValue(BadgeMarginProperty, value);
     }
 
     #endregion
 
 
-    private void AnimateBage()
+    private void AnimateBadge()
     {
-        if (GetTemplateChild("BageBorder") is not Border border) return;
+        if (GetTemplateChild("BadgeBorder") is not Border border) return;
         ScaleTransform scaleTransform = new(1.7, 1.7, border.ActualWidth / 2, border.ActualHeight / 2);
         border.RenderTransform = scaleTransform;
         DoubleAnimation doubleAnimation = new()
