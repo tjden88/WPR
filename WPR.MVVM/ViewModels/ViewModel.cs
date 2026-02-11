@@ -10,7 +10,14 @@ namespace WPR.Mvvm.ViewModels;
 /// </summary>
 public abstract class ViewModel : ObservableObject
 {
-    private readonly HashSet<string> _skipAfterPropertyChanged = new(StringComparer.Ordinal);
+    private readonly HashSet<string> _raiseAfterPropertyChanged = new(StringComparer.Ordinal);
+
+    /// <summary>
+    /// Отключает вызов AfterPropertyChanged для всех свойств, даже помеченных атрибутом RaiseAfterPropertyChangedAttribute.
+    /// По умолчанию выключено, то есть AfterPropertyChanged НЕ будет вызываться для свойств с атрибутом RaiseAfterPropertyChangedAttribute.
+    /// Рекомендуется включать только после инициализации модели-представления, чтобы избежать лишних вызовов AfterPropertyChanged во время конструктора инициализации.
+    /// </summary>
+    protected bool EnableAfterPropertyChangedInvocation { get; set; }
 
     protected ViewModel()
     {
@@ -22,25 +29,27 @@ public abstract class ViewModel : ObservableObject
     {
         base.OnPropertyChanged(e);
 
+        if(!EnableAfterPropertyChangedInvocation)
+            return;
+
+        var propertyName = e.PropertyName;
+
         // Если имя свойства не задано (null/empty) - это сигнал "изменилось всё".
         // В этом случае пропускать AfterPropertyChanged по атрибутам бессмысленно.
-        var propertyName = e.PropertyName;
         if (string.IsNullOrWhiteSpace(propertyName))
         {
             AfterPropertyChanged(e);
             return;
         }
 
-        // Если свойство помечено SkipAfterPropertyChangedAttribute - AfterPropertyChanged не вызываем.
-        if (_skipAfterPropertyChanged.Contains(propertyName))
-            return;
-
-        AfterPropertyChanged(e);
+        // Если свойство помечено RaiseAfterPropertyChangedAttribute - вызываем AfterPropertyChanged.
+        if (_raiseAfterPropertyChanged.Contains(propertyName))
+            AfterPropertyChanged(e);
     }
 
     /// <summary>
     /// Вызывается после OnPropertyChanged, только в том случае, если свойство, которое инициировало OnPropertyChanged
-    /// не помечено атрибутом SkipAfterPropertyChangedAttribute.
+    /// помечено атрибутом RaiseAfterPropertyChangedAttribute.
     /// </summary>
     protected virtual void AfterPropertyChanged(PropertyChangedEventArgs e) { }
 
@@ -59,8 +68,8 @@ public abstract class ViewModel : ObservableObject
 
         foreach (var p in props)
         {
-            if (p.GetCustomAttribute<SkipAfterPropertyChangedAttribute>(inherit: true) is not null)
-                _skipAfterPropertyChanged.Add(p.Name);
+            if (p.GetCustomAttribute<RaiseAfterPropertyChangedAttribute>(inherit: true) is not null)
+                _raiseAfterPropertyChanged.Add(p.Name);
         }
     }
 
