@@ -7,12 +7,8 @@ namespace WPR.Mvvm.ViewModels;
 /// Базовая модель-представление для MVVM.
 /// Также реализует <see cref="ObservableRecipient"/> для поддержки сообщений. Сразу активна (готова к приёму сообщений).
 /// </summary>
-public abstract partial class ActiveRecipient : InactiveRecipient
+public abstract class ActiveRecipient : InactiveRecipient
 {
-
-    protected ActiveRecipient() : this(WeakReferenceMessenger.Default)
-    {
-    }
 
     protected ActiveRecipient(IMessenger messenger) : base(messenger)
     {
