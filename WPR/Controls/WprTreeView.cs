@@ -1,0 +1,275 @@
+﻿using System;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
+using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Threading;
+using WPR.Infrastructure.Commands;
+using WPR.Infrastructure.Extensions;
+
+namespace WPR.Controls
+{
+    /// <summary>
+    /// TreeView с управляемым выбором для MVVM.
+    /// </summary>
+    public class WprTreeView : TreeView
+    {
+        #region SelectedItem
+
+        /// <summary>
+        /// Выбранный элемент (TwoWay). Может становиться null.
+        /// </summary>
+        public new object? SelectedItem
+        {
+            get => GetValue(SelectedItemProperty);
+            set => SetValue(SelectedItemProperty, value);
+        }
+
+        /// <summary>
+        /// DependencyProperty для <see cref="SelectedItem"/>.
+        /// </summary>
+        public new static readonly DependencyProperty SelectedItemProperty =
+            DependencyProperty.Register(
+                nameof(SelectedItem),
+                typeof(object),
+                typeof(WprTreeView),
+                new FrameworkPropertyMetadata(
+                    null,
+                    FrameworkPropertyMetadataOptions.BindsTwoWayByDefault,
+                    OnSelectedItemChanged));
+
+        private static void OnSelectedItemChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            var tree = (WprTreeView)d;
+
+            if (e.NewValue is null)
+            {
+                tree.TryClearSelectionInExpanded(tree);
+                return;
+            }
+
+            if (tree.AutoExpandToSelected)
+            {
+                tree.Dispatcher.BeginInvoke(new Action(() =>
+                {
+                    tree.ExpandToItem(e.NewValue);
+                    tree.TrySelectInExpandedBranches(e.NewValue);
+                }), DispatcherPriority.Background);
+
+                return;
+            }
+
+            tree.TrySelectInExpandedBranches(e.NewValue);
+        }
+
+        #endregion
+
+        #region AutoExpandToSelected
+
+        /// <summary>
+        /// Если включено, при изменении <see cref="SelectedItem"/> дерево будет раскрывать ветки
+        /// до выбранного элемента (если он найден в ItemsSource) и выделять его.
+        /// </summary>
+        public bool AutoExpandToSelected
+        {
+            get => (bool)GetValue(AutoExpandToSelectedProperty);
+            set => SetValue(AutoExpandToSelectedProperty, value);
+        }
+
+        /// <summary>
+        /// DependencyProperty для <see cref="AutoExpandToSelected"/>.
+        /// </summary>
+        public static readonly DependencyProperty AutoExpandToSelectedProperty =
+            DependencyProperty.Register(
+                nameof(AutoExpandToSelected),
+                typeof(bool),
+                typeof(WprTreeView),
+                new FrameworkPropertyMetadata(false));
+
+        #endregion
+
+        #region RevealSelectedCommand
+
+        /// <summary>
+        /// Команда "Показать выбранный элемент".
+        /// Раскрывает дерево до <see cref="SelectedItem"/> и пытается выделить/проскроллить его.
+        /// </summary>
+        public ICommand RevealSelectedCommand => field ??= new BaseCommand(RevealSelected);
+
+        private void RevealSelected()
+        {
+            if (SelectedItem is null)
+                return;
+
+            Dispatcher.BeginInvoke(new Action(() =>
+            {
+                ExpandToItem(SelectedItem);
+                TrySelectInExpandedBranches(SelectedItem);
+            }), DispatcherPriority.Background);
+        }
+
+        #endregion
+
+        /// <inheritdoc />
+        protected override void OnInitialized(EventArgs e)
+        {
+            base.OnInitialized(e);
+
+            // Эти события нужны для восстановления выбора при раскрытии.
+            AddHandler(TreeViewItem.ExpandedEvent, new RoutedEventHandler(OnAnyItemExpanded));
+
+            // Ловим только клик по стрелке, так как остальные варианты всё равно выделят корень - и это нормально.
+            // А вот клик по стрелке может сворачивать ветку с выбранным элементом внутри, и тогда нужно снять выделение заранее, чтобы оно не перешло на родителя.
+            AddHandler(PreviewMouseLeftButtonDownEvent, new MouseButtonEventHandler(OnPreviewMouseLeftButtonDown), true);
+        }
+
+        /// <inheritdoc />
+        protected override void OnSelectedItemChanged(RoutedPropertyChangedEventArgs<object> e)
+        {
+            base.OnSelectedItemChanged(e);
+
+            if (base.SelectedItem == null)
+                return;
+
+            SelectedItem = e.NewValue;
+        }
+
+        private void OnAnyItemExpanded(object sender, RoutedEventArgs e)
+        {
+            // После раскрытия могли появиться контейнеры. Попробуем восстановить выбор.
+            if (SelectedItem is not null)
+                TrySelectInExpandedBranches(SelectedItem);
+        }
+
+        private void OnPreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            // Если клик по стрелочке/expander-у, и узел будет свёрнут -> снимем выделение заранее.
+            if (e.OriginalSource is not DependencyObject origin)
+                return;
+
+            var toggle = origin.FindVisualParent<ToggleButton>();
+            if (toggle is not { Name: "Expander" })
+                return;
+
+            var item = toggle.FindVisualParent<TreeViewItem>();
+            if (item is null)
+                return;
+
+            // Если сейчас развёрнут, то клик приведёт к сворачиванию.
+            if (item.IsExpanded)
+                TryClearSelectionInExpanded(item);
+        }
+
+
+        // При сворачивании ветки снимаем выделение, но только если оно внутри сворачиваемого поддерева, и только в уже созданных контейнерах (то есть в видимых развёрнутых ветках).
+        private void TryClearSelectionInExpanded(ItemsControl root)
+        {
+            foreach (var container in EnumerateContainers(root))
+            {
+                if (container.IsSelected)
+                {
+                    // Снимаем ТОЛЬКО визуальное выделение.
+                    container.IsSelected = false;
+                    return;
+                }
+            }
+        }
+
+        // При разворачивании ветки пытаемся восстановить выделение, но только если элемент уже видим в раскрытых ветках (то есть его контейнер уже создан).
+        private void TrySelectInExpandedBranches(object? item)
+        {
+            if (item is null)
+                return;
+
+            var container = FindContainerInExpandedBranches(this, item);
+            if (container is null)
+                return;
+
+            container.IsSelected = true;
+            container.BringIntoView();
+        }
+
+        /// <summary>
+        /// Обходит уже созданные TreeViewItem-контейнеры.
+        /// В детей спускаемся только по развёрнутым веткам (это важно: в свёрнутых контейнеров детей обычно нет).
+        /// </summary>
+        private static IEnumerable<TreeViewItem> EnumerateContainers(ItemsControl parent)
+        {
+            foreach (var item in parent.Items)
+            {
+                if (parent.ItemContainerGenerator.ContainerFromItem(item) is not TreeViewItem container)
+                    continue;
+
+                yield return container;
+
+                if (!container.IsExpanded)
+                    continue;
+
+                foreach (var child in EnumerateContainers(container))
+                    yield return child;
+            }
+        }
+
+        /// <summary>
+        /// Ищет контейнер для item, спускаясь только по развёрнутым веткам.
+        /// </summary>
+        private static TreeViewItem? FindContainerInExpandedBranches(ItemsControl parent, object targetItem)
+        {
+            if (parent.ItemContainerGenerator.ContainerFromItem(targetItem) is TreeViewItem direct)
+                return direct;
+
+            foreach (var item in parent.Items)
+            {
+                if (parent.ItemContainerGenerator.ContainerFromItem(item) is not TreeViewItem container)
+                    continue;
+
+                if (!container.IsExpanded)
+                    continue;
+
+                var found = FindContainerInExpandedBranches(container, targetItem);
+                if (found is not null)
+                    return found;
+            }
+
+            return null;
+        }
+
+        /// <summary>
+        /// Раскрывает дерево до указанного элемента.
+        /// Если элемент не найден в ItemsSource, ничего не делает.
+        /// </summary>
+        private void ExpandToItem(object targetItem)
+        {
+            ExpandToItemCore(this, targetItem);
+        }
+
+        private static bool ExpandToItemCore(ItemsControl parent, object targetItem)
+        {
+            // Контейнер уже создан и найден напрямую.
+            if (parent.ItemContainerGenerator.ContainerFromItem(targetItem) is TreeViewItem)
+                return true;
+
+            foreach (var item in parent.Items)
+            {
+                if (parent.ItemContainerGenerator.ContainerFromItem(item) is not TreeViewItem container)
+                    continue;
+
+                // Пробуем найти в текущем контейнере без раскрытия.
+                if (ReferenceEquals(item, targetItem))
+                    return true;
+
+                // Раскрываем ветку, чтобы WPF создал контейнеры детей.
+                if (!container.IsExpanded)
+                    container.IsExpanded = true;
+
+                // Важно: после раскрытия дочерние контейнеры могут появиться не мгновенно,
+                // но на практике генератор успевает к следующей итерации/вызову.
+                if (ExpandToItemCore(container, targetItem))
+                    return true;
+            }
+
+            return false;
+        }
+    }
+}
