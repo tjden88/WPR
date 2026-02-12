@@ -1,6 +1,7 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:wpr="clr-namespace:WPR">
+                    xmlns:wpr="clr-namespace:WPR"
+                    xmlns:controls="clr-namespace:WPR.Controls">
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="Styles\Base.xaml"/>
         <ResourceDictionary Source="Controls\Main.xaml"/>
@@ -56,6 +57,7 @@
     <Style TargetType="DataGrid" BasedOn="{StaticResource WPRDataGrid}"/>
     <Style TargetType="RichTextBox" BasedOn="{StaticResource WPRRichTextBox}"/>
     <Style TargetType="TreeView" BasedOn="{StaticResource WPRTreeView}"/>
+    <Style TargetType="controls:WprTreeView" BasedOn="{StaticResource WPRTreeView}"/>
     <Style TargetType="TreeViewItem" BasedOn="{StaticResource WPRTreeViewItem}"/>
     <Style TargetType="Separator" BasedOn="{StaticResource WPRSeparator}"/>
     <Style TargetType="GroupBox" BasedOn="{StaticResource WPRGroupBox}"/>
