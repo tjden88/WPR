@@ -102,6 +102,7 @@
         <Setter Property="HorizontalContentAlignment" Value="{Binding HorizontalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type TreeView}}}"/>
         <Setter Property="VerticalContentAlignment" Value="{Binding VerticalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type TreeView}}}"/>
         <Setter Property="Padding" Value="{Binding Path=Padding, RelativeSource={RelativeSource AncestorType={x:Type TreeView}}}"/>
+        <Setter Property="wpr:Extra.BorderRadius" Value="4"></Setter>
         <Setter Property="Cursor" Value="Hand"/>
         <Setter Property="Template">
             <Setter.Value>
@@ -124,8 +125,15 @@
                                 <ColumnDefinition Width="Auto"/>
                                 <ColumnDefinition/>
                             </Grid.ColumnDefinitions>
-                            <Border Grid.Column="0" Grid.ColumnSpan="2" Name="SelectedBorder" Opacity="0" Background="{DynamicResource AnimationEnterColorBrush}" CornerRadius="4"/>
-                            <wpr:ClippingBorder Grid.Column="0" Grid.ColumnSpan="2" x:Name="ClippingBorder" ClipToBounds="True" CornerRadius="4">
+                            <Border Grid.Column="0" Grid.ColumnSpan="2"  Background="{TemplateBinding Background}"
+                                    BorderThickness="{TemplateBinding BorderThickness}"
+                                    BorderBrush="{TemplateBinding BorderBrush}"
+                                    CornerRadius="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(wpr:Extra.BorderRadius)}"/>
+                            <Border Grid.Column="0" Grid.ColumnSpan="2" Name="SelectedBorder" Opacity="0" Background="{DynamicResource AnimationEnterColorBrush}" 
+                                    CornerRadius="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(wpr:Extra.BorderRadius)}"/>
+                            <wpr:ClippingBorder Grid.Column="0" 
+                                                Grid.ColumnSpan="2" x:Name="ClippingBorder" ClipToBounds="True" 
+                                                CornerRadius="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(wpr:Extra.BorderRadius)}">
                                 <wpr:Ripple Background="{Binding Path=(wpr:Extra.FeedbackBrush), RelativeSource={RelativeSource  AncestorType={x:Type TreeView}}}"
                                                  VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
                                                  HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}">

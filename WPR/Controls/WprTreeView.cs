@@ -55,7 +55,8 @@ namespace WPR.Controls
                 return;
             }
 
-            tree.TrySelectInExpandedBranches(e.NewValue);
+            if (!tree.TrySelectInExpandedBranches(e.NewValue))
+                tree.TryClearSelectionInExpanded(tree);
         }
 
         #endregion
@@ -172,17 +173,18 @@ namespace WPR.Controls
         }
 
         // При разворачивании ветки пытаемся восстановить выделение, но только если элемент уже видим в раскрытых ветках (то есть его контейнер уже создан).
-        private void TrySelectInExpandedBranches(object? item)
+        private bool TrySelectInExpandedBranches(object? item)
         {
             if (item is null)
-                return;
+                return false;
 
             var container = FindContainerInExpandedBranches(this, item);
             if (container is null)
-                return;
+                return false;
 
             container.IsSelected = true;
             container.BringIntoView();
+            return true;
         }
 
         /// <summary>
