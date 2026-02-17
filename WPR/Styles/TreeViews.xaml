@@ -119,7 +119,7 @@
                         <ToggleButton x:Name="Expander" ClickMode="Press"
                                       IsChecked="{Binding Path=IsExpanded, RelativeSource={RelativeSource TemplatedParent}}"
                                       Style="{StaticResource WPRTreeViewToggleButton}"/>
-                        <Grid Grid.Row="0" Grid.Column="1">
+                        <Grid Grid.Row="0" Grid.Column="1" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}">
 
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="Auto"/>
