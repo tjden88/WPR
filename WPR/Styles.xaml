@@ -57,9 +57,10 @@
     <Style TargetType="DataGrid" BasedOn="{StaticResource WPRDataGrid}"/>
     <Style TargetType="RichTextBox" BasedOn="{StaticResource WPRRichTextBox}"/>
     <Style TargetType="TreeView" BasedOn="{StaticResource WPRTreeView}"/>
-    <Style TargetType="controls:WprTreeView" BasedOn="{StaticResource WPRTreeView}"/>
     <Style TargetType="TreeViewItem" BasedOn="{StaticResource WPRTreeViewItem}"/>
     <Style TargetType="Separator" BasedOn="{StaticResource WPRSeparator}"/>
     <Style TargetType="GroupBox" BasedOn="{StaticResource WPRGroupBox}"/>
     <Style TargetType="wpr:GridSplitterEx" BasedOn="{StaticResource WPRGridSplitter}"/>
+    <Style TargetType="controls:WprTreeView" BasedOn="{StaticResource WPRTreeView}"/>
+    <Style TargetType="controls:PassthroughScrollViewer" BasedOn="{StaticResource WPRScrollViewer}"/>
 </ResourceDictionary>

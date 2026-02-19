@@ -24,9 +24,9 @@ public class GridSplitterEx : GridSplitter
     #region Tagret : FrameworkElement - Цель изменения размера
 
     /// <summary>Цель изменения размера</summary>
-    public static readonly DependencyProperty TagretProperty =
+    public static readonly DependencyProperty TargetProperty =
         DependencyProperty.Register(
-            nameof(Tagret),
+            nameof(Target),
             typeof(FrameworkElement),
             typeof(GridSplitterEx),
             new PropertyMetadata(default(FrameworkElement)));
@@ -34,10 +34,10 @@ public class GridSplitterEx : GridSplitter
     /// <summary>Цель изменения размера</summary>
     [Category("GridSplitterEx")]
     [Description("Цель изменения размера")]
-    public FrameworkElement Tagret
+    public FrameworkElement Target
     {
-        get => (FrameworkElement)GetValue(TagretProperty);
-        set => SetValue(TagretProperty, value);
+        get => (FrameworkElement)GetValue(TargetProperty);
+        set => SetValue(TargetProperty, value);
     }
 
     #endregion
@@ -86,12 +86,12 @@ public class GridSplitterEx : GridSplitter
             case Placements.Left:
             case Placements.Right:
                 _Delta = e.GetPosition(_Parent).X;
-                _TargetSize = Tagret.ActualWidth;
+                _TargetSize = Target.ActualWidth;
                 break;
             case Placements.Top:
             case Placements.Bottom:
                 _Delta = e.GetPosition(_Parent).Y;
-                _TargetSize = Tagret.ActualHeight;
+                _TargetSize = Target.ActualHeight;
                 break;
             default:
                 throw new ArgumentOutOfRangeException();
@@ -114,24 +114,24 @@ public class GridSplitterEx : GridSplitter
                 position = e.GetPosition(_Parent).X;
                 delta = position - _Delta;
                 
-                Tagret.Width = Math.Max(_TargetSize - delta, targetMinSize);
+                Target.Width = Math.Max(_TargetSize - delta, targetMinSize);
                 break;
 
             case Placements.Top:
                 position = e.GetPosition(_Parent).Y;
                 delta = position - _Delta;
-                Tagret.Height = Math.Max(_TargetSize - delta, targetMinSize);
+                Target.Height = Math.Max(_TargetSize - delta, targetMinSize);
                 break;
             case Placements.Right:
                 position = e.GetPosition(_Parent).X;
                 delta = position - _Delta;
-                Tagret.Width = Math.Max(_TargetSize + delta, targetMinSize);
+                Target.Width = Math.Max(_TargetSize + delta, targetMinSize);
                 break;
 
             case Placements.Bottom:
                 position = e.GetPosition(_Parent).Y;
                 delta = position - _Delta;
-                Tagret.Height = Math.Max(_TargetSize + delta, targetMinSize);
+                Target.Height = Math.Max(_TargetSize + delta, targetMinSize);
                 break;
             default:
                 throw new ArgumentOutOfRangeException();
