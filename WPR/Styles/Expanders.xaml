@@ -12,13 +12,13 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type ToggleButton}">
-                    <Grid Background="Transparent">
+                    <Grid Background="{StaticResource TransparentBrush}">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto"/>
                             <ColumnDefinition />
                         </Grid.ColumnDefinitions>
                         <wpr:Icon x:Name="ExpandPath" Source="ChevronDown"
-                                          VerticalAlignment="Top"
+                                          VerticalAlignment="Center"
                                             Margin="-5,0,5,0"
                                             IconSize="24"
                                             Foreground="{TemplateBinding BorderBrush}"
@@ -31,7 +31,7 @@
                         <ContentPresenter Margin="0" 
                                           Content="{TemplateBinding Content}"
                                           ContentTemplate="{TemplateBinding ContentTemplate}"
-                                          HorizontalAlignment="Left"
+                                          HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                                           VerticalAlignment="Center"
                                           Grid.Column="1"/>
                     </Grid>
@@ -99,9 +99,9 @@
                                               DockPanel.Dock="Bottom"
                                               Opacity="0"
                                               Focusable="false"
-                                              HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                              HorizontalAlignment="Stretch"
                                               Margin="{TemplateBinding Padding}"
-                                              VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                              VerticalAlignment="Stretch"
                                               LayoutTransform="{StaticResource TopBottomScale}">
                                 <!--<ContentPresenter.LayoutTransform>
                                     <ScaleTransform x:Name="ScaleContent" ScaleX="1" ScaleY="0"/>

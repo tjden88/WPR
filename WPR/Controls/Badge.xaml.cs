@@ -10,6 +10,9 @@ namespace WPR;
 /// <summary>Наклейка с контентом на элемент</summary>
 public class Badge : ContentControl
 {
+
+    private readonly DispatcherTimer _timer = new(DispatcherPriority.Background);
+
     static Badge()
     {
         DefaultStyleKeyProperty.OverrideMetadata(typeof(Badge), new FrameworkPropertyMetadata(typeof(Badge)));
@@ -18,35 +21,50 @@ public class Badge : ContentControl
     public Badge()
     {
         IsVisibleChanged += OnIsVisibleChanged;
+        _timer.Tick += (_, _) => AnimateBadge();
+        UpdatePulse();
+
+        Loaded += OnLoaded;
+        Unloaded += OnUnloaded;
     }
+
+    private void OnLoaded(object sender, RoutedEventArgs e) => UpdatePulse(); // запустить таймер если надо
+    private void OnUnloaded(object sender, RoutedEventArgs e) => _timer.Stop();
 
     private void OnIsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
     {
         if (Visibility == Visibility.Visible)
-            Dispatcher.BeginInvoke(new Action(() =>
-            {
-                AnimateBadge();
-            }), DispatcherPriority.Background);
+            Dispatcher.BeginInvoke(new Action(AnimateBadge), DispatcherPriority.Background);
+
+        UpdatePulse();
     }
 
     protected override void OnContentChanged(object oldContent, object newContent)
     {
         base.OnContentChanged(oldContent, newContent);
-        if (!Equals(oldContent, newContent))
-            AnimateBadge();
+        AnimateBadge();
     }
 
-    /// <summary> Видимость бейджа </summary>
-    public static readonly DependencyProperty BadgeVisibleProperty = DependencyProperty.Register(nameof(BadgeVisible), typeof(bool), typeof(Badge), 
-        new PropertyMetadata(true));
+    #region BadgeVisible : bool - Видимость бейджа
 
+    /// <summary>Видимость бейджа</summary>
+    public static readonly DependencyProperty BadgeVisibleProperty =
+        DependencyProperty.Register(
+            nameof(BadgeVisible),
+            typeof(bool),
+            typeof(Badge),
+            new PropertyMetadata(true));
 
+    /// <summary>Видимость бейджа</summary>
+    [Category("Badge")]
+    [Description("Видимость бейджа")]
     public bool BadgeVisible
     {
         get => (bool)GetValue(BadgeVisibleProperty);
         set => SetValue(BadgeVisibleProperty, value);
     }
 
+    #endregion
 
     #region BadgeMargin : Thickness - Положение бейджа
 
@@ -63,12 +81,47 @@ public class Badge : ContentControl
     [Description("Положение бейджа")]
     public Thickness BadgeMargin
     {
-        get => (Thickness) GetValue(BadgeMarginProperty);
+        get => (Thickness)GetValue(BadgeMarginProperty);
         set => SetValue(BadgeMarginProperty, value);
     }
 
     #endregion
 
+    #region PulsePeriod : TimeSpan - Период пульсации бейджа, когда он видим
+
+    /// <summary>Период пульсации бейджа, когда он видим</summary>
+    public static readonly DependencyProperty PulsePeriodProperty =
+        DependencyProperty.Register(
+            nameof(PulsePeriod),
+            typeof(TimeSpan),
+            typeof(Badge),
+            new PropertyMetadata(TimeSpan.Zero, OnPulsePeriodChanged));
+
+    private static void OnPulsePeriodChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+    {
+        var badge = (Badge)d;
+        badge._timer.Interval = (TimeSpan)e.NewValue;
+        badge.UpdatePulse();
+    }
+
+    /// <summary>Период пульсации бейджа, когда он видим</summary>
+    [Category("Badge")]
+    [Description("Период пульсации бейджа, когда он видим")]
+    public TimeSpan PulsePeriod
+    {
+        get => (TimeSpan)GetValue(PulsePeriodProperty);
+        set => SetValue(PulsePeriodProperty, value);
+    }
+
+    #endregion
+
+    private void UpdatePulse()
+    {
+        if (Visibility != Visibility.Visible || _timer.Interval <= TimeSpan.Zero)
+            _timer.Stop();
+        else
+            _timer.Start();
+    }
 
     private void AnimateBadge()
     {
