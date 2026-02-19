@@ -41,6 +41,7 @@ namespace WPR.Controls
             if (e.NewValue is null)
             {
                 tree.TryClearSelectionInExpanded(tree);
+                tree.CheckIsSelectionHidden(); 
                 return;
             }
 
@@ -50,6 +51,7 @@ namespace WPR.Controls
                 {
                     tree.ExpandToItem(e.NewValue);
                     tree.TrySelectInExpandedBranches(e.NewValue);
+                    tree.CheckIsSelectionHidden();
                 }), DispatcherPriority.Background);
 
                 return;
@@ -57,6 +59,7 @@ namespace WPR.Controls
 
             if (!tree.TrySelectInExpandedBranches(e.NewValue))
                 tree.TryClearSelectionInExpanded(tree);
+            tree.CheckIsSelectionHidden();
         }
 
         #endregion
@@ -84,6 +87,28 @@ namespace WPR.Controls
                 new FrameworkPropertyMetadata(false));
 
         #endregion
+
+        #region readonly SelectedElementIsHidden : bool - Указывает, что выбранный элемент не null и скрыт в дереве
+
+        /// <summary>Указывает, что выбранный элемент не null и скрыт в дереве</summary>
+        private static readonly DependencyPropertyKey SelectedElementIsHiddenPropertyKey =
+            DependencyProperty.RegisterReadOnly(
+                nameof(SelectedElementIsHidden),
+                typeof(bool),
+                typeof(WprTreeView),
+                new PropertyMetadata(false));
+
+        /// <summary>Указывает, что выбранный элемент не null и скрыт в дереве</summary>
+        public static readonly DependencyProperty SelectedElementIsHiddenProperty = SelectedElementIsHiddenPropertyKey.DependencyProperty;
+
+        /// <summary>Указывает, что выбранный элемент не null и скрыт в дереве</summary>
+        public bool SelectedElementIsHidden
+        {
+            get => (bool)GetValue(SelectedElementIsHiddenProperty);
+            private set => SetValue(SelectedElementIsHiddenPropertyKey, value);
+        }
+
+        #endregion SelectedElementIsHidden : bool - Указывает, что выбранный элемент не null и скрыт в дереве
 
         #region RevealSelectedCommand
 
@@ -126,9 +151,18 @@ namespace WPR.Controls
             base.OnSelectedItemChanged(e);
 
             if (base.SelectedItem == null)
+            {
+                CheckIsSelectionHidden();
                 return;
+            }
 
             SelectedItem = e.NewValue;
+            CheckIsSelectionHidden();
+        }
+
+        private void CheckIsSelectionHidden()
+        {
+            SelectedElementIsHidden = SelectedItem != null && base.SelectedItem == null;
         }
 
         private void OnAnyItemExpanded(object sender, RoutedEventArgs e)
