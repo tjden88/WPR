@@ -3,6 +3,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
+using System.Windows.Threading;
 
 namespace WPR;
 
@@ -14,6 +15,20 @@ public class Badge : ContentControl
         DefaultStyleKeyProperty.OverrideMetadata(typeof(Badge), new FrameworkPropertyMetadata(typeof(Badge)));
     }
 
+    public Badge()
+    {
+        IsVisibleChanged += OnIsVisibleChanged;
+    }
+
+    private void OnIsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
+    {
+        if (Visibility == Visibility.Visible)
+            Dispatcher.BeginInvoke(new Action(() =>
+            {
+                AnimateBadge();
+            }), DispatcherPriority.Background);
+    }
+
     protected override void OnContentChanged(object oldContent, object newContent)
     {
         base.OnContentChanged(oldContent, newContent);
@@ -23,13 +38,8 @@ public class Badge : ContentControl
 
     /// <summary> Видимость бейджа </summary>
     public static readonly DependencyProperty BadgeVisibleProperty = DependencyProperty.Register(nameof(BadgeVisible), typeof(bool), typeof(Badge), 
-        new PropertyMetadata(true, BadgeVisibleOnChanged));
+        new PropertyMetadata(true));
 
-    private static void BadgeVisibleOnChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-    {
-        if (!Equals(e.NewValue, e.OldValue) && (bool)e.NewValue)
-            ((Badge) d).AnimateBadge();
-    }
 
     public bool BadgeVisible
     {

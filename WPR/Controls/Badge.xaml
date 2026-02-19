@@ -27,7 +27,6 @@
                                 VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
                                 CornerRadius="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(local:Extra.BorderRadius)}"
                                 MinHeight="10" MinWidth="{Binding  Path =ActualHeight, RelativeSource={RelativeSource Self}}"
-                                Visibility="{TemplateBinding BadgeVisible, Converter={StaticResource Bool2VisibilityConverter}}"
                                 Effect="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(local:Extra.Shadow)}">
                             <ContentPresenter Content="{TemplateBinding Content}"
                                               Margin="{TemplateBinding Padding}"
@@ -35,6 +34,11 @@
                                               VerticalAlignment="Center"/>
                         </Border>
                     </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="BadgeVisible" Value="False">
+                            <Setter Property="Visibility" Value="Collapsed"></Setter>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
