@@ -41,7 +41,7 @@ namespace WPR.Controls
             if (e.NewValue is null)
             {
                 tree.TryClearSelectionInExpanded(tree);
-                tree.CheckIsSelectionHidden(); 
+                tree.CheckIsSelectionHidden();
                 return;
             }
 
@@ -131,6 +131,19 @@ namespace WPR.Controls
         }
 
         #endregion
+
+
+        /// <summary>
+        /// Раскрывает дерево до указанного элемента.
+        /// Если элемент не найден в ItemsSource, вернёт false.
+        /// </summary>
+        public void ExpandToItem(object item) => ExpandToItemCore(this, item, false);
+
+        /// <summary>
+        /// Раскрывает дерево с указанным элементом.
+        /// Если элемент не найден в ItemsSource, вернёт false.
+        /// </summary>
+        public void ExpandItemContainer(object item) => ExpandToItemCore(this, item, true);
 
         /// <inheritdoc />
         protected override void OnInitialized(EventArgs e)
@@ -266,41 +279,40 @@ namespace WPR.Controls
             return null;
         }
 
-        /// <summary>
-        /// Раскрывает дерево до указанного элемента.
-        /// Если элемент не найден в ItemsSource, ничего не делает.
-        /// </summary>
-        private void ExpandToItem(object targetItem)
-        {
-            ExpandToItemCore(this, targetItem);
-        }
 
-        private static bool ExpandToItemCore(ItemsControl parent, object targetItem)
+        private static void ExpandToItemCore(ItemsControl parent, object targetItem, bool expandTarget)
         {
-            // Контейнер уже создан и найден напрямую.
-            if (parent.ItemContainerGenerator.ContainerFromItem(targetItem) is TreeViewItem)
-                return true;
+            // Если контейнер уже существует — отлично.
+            if (parent.ItemContainerGenerator.ContainerFromItem(targetItem) is TreeViewItem direct)
+            {
+                if (expandTarget)
+                    direct.IsExpanded = true;
+
+                return;
+            }
 
             foreach (var item in parent.Items)
             {
                 if (parent.ItemContainerGenerator.ContainerFromItem(item) is not TreeViewItem container)
                     continue;
 
-                // Пробуем найти в текущем контейнере без раскрытия.
                 if (ReferenceEquals(item, targetItem))
-                    return true;
+                {
+                    if (expandTarget)
+                        container.IsExpanded = true;
 
-                // Раскрываем ветку, чтобы WPF создал контейнеры детей.
+                    return;
+                }
+
                 if (!container.IsExpanded)
                     container.IsExpanded = true;
 
-                // Важно: после раскрытия дочерние контейнеры могут появиться не мгновенно,
-                // но на практике генератор успевает к следующей итерации/вызову.
-                if (ExpandToItemCore(container, targetItem))
-                    return true;
+                // Продолжаем рекурсию уже после генерации дочерних контейнеров
+                container.Dispatcher.BeginInvoke(new Action(() =>
+                {
+                    ExpandToItemCore(container, targetItem, expandTarget);
+                }), DispatcherPriority.Loaded);
             }
-
-            return false;
         }
     }
 }
