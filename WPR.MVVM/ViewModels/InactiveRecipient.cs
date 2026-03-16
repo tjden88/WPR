@@ -15,4 +15,9 @@ public abstract partial class InactiveRecipient : ViewModel
     {
         Messenger = messenger;
     }
+
+    protected InactiveRecipient() : this(WeakReferenceMessenger.Default)
+    {
+
+    }
 }

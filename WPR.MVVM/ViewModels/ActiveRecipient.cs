@@ -14,4 +14,9 @@ public abstract class ActiveRecipient : InactiveRecipient
     {
         IsActive = true;
     }
+
+    protected ActiveRecipient() : this(WeakReferenceMessenger.Default)
+    {
+        
+    }
 }
