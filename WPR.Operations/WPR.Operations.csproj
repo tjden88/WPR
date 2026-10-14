@@ -1,7 +1,8 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-		<TargetFrameworks>net6.0;net7.0;net8.0;net9.0</TargetFrameworks>
+		<!-- net6.0 и net7.0 исключены: их срок поддержки истёк, обновления безопасности не выпускаются. -->
+		<TargetFrameworks>net8.0;net9.0;net10.0</TargetFrameworks>
 		<ImplicitUsings>enable</ImplicitUsings>
 		<Nullable>enable</Nullable>
 		<LangVersion>latest</LangVersion>
@@ -12,14 +13,25 @@
 			Возвращает результат операции (успешно или нет), и либо объект при успехе, либо информацию об ошибке.
 			Поддерживает сериализацию (например, для Web-Api запросов)
 		</Description>
+		<PackageId>WPR.Operations</PackageId>
+		<Authors>Denis</Authors>
 		<PackageIcon>nuget-icon-128.png</PackageIcon>
-		<Version>1.0.2</Version>
+		<PackageReadmeFile>README.md</PackageReadmeFile>
+		<Version>1.1.0</Version>
 		<IncludeSymbols>False</IncludeSymbols>
 		<PackageLicenseExpression>MIT</PackageLicenseExpression>
+		<PackageProjectUrl>https://github.com/tjden88/WPR</PackageProjectUrl>
+		<RepositoryUrl>https://github.com/tjden88/WPR</RepositoryUrl>
+		<RepositoryType>git</RepositoryType>
+		<PackageTags>result;operation;operation-result;functional;railway-oriented;web-api;serialization</PackageTags>
 	</PropertyGroup>
 
 	<ItemGroup>
 		<None Include="..\nuget-icon-128.png">
+			<Pack>True</Pack>
+			<PackagePath>\</PackagePath>
+		</None>
+		<None Include="README.md">
 			<Pack>True</Pack>
 			<PackagePath>\</PackagePath>
 		</None>
